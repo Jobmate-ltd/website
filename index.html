@@ -1,624 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>IncidentFlow – Incident Reporting Made Effortless</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- ─── SEO ─── -->
+<title>Jobmate — Field Service Management Software for Trade Businesses</title>
+<meta name="description" content="Jobmate is the cloud-based field service management platform for UK trade businesses. Manage jobs, report incidents, stay compliant — from sole traders to enterprise."/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://jobmate.cloud/"/>
+
+<!-- ─── Open Graph ─── -->
+<meta property="og:type"        content="website"/>
+<meta property="og:url"         content="https://jobmate.cloud/"/>
+<meta property="og:title"       content="Jobmate — Field Service Management for Trade Businesses"/>
+<meta property="og:description" content="Cloud-based field service management for UK trade businesses. Manage jobs, log incidents, stay compliant."/>
+<meta property="og:image"       content="https://jobmate.cloud/_assets/images/og-jobmate.png"/>
+<meta property="og:locale"      content="en_GB"/>
+<meta property="og:site_name"   content="Jobmate"/>
+
+<!-- ─── Twitter Card ─── -->
+<meta name="twitter:card"        content="summary_large_image"/>
+<meta name="twitter:title"       content="Jobmate — Field Service Management for Trade Businesses"/>
+<meta name="twitter:description" content="Cloud-based field service management for UK trade businesses. Manage jobs, log incidents, stay compliant."/>
+<meta name="twitter:image"       content="https://jobmate.cloud/_assets/images/og-jobmate.png"/>
+
+<!-- ─── Favicon ─── -->
+<link rel="icon"             href="/favicon.ico" sizes="any"/>
+<link rel="icon"             href="/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+<!-- ─── Fonts ─── -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#E63946;
-  --red-dark:#B52D38;
-  --red-glow:rgba(230,57,70,0.18);
-  --bg:#07080A;
-  --bg2:#0F1115;
-  --bg3:#161A20;
-  --bg4:#1E2229;
-  --border:rgba(255,255,255,0.08);
-  --border-strong:rgba(255,255,255,0.14);
-  --text:#FFFFFF;
-  --text-muted:rgba(255,255,255,0.55);
-  --text-dim:rgba(255,255,255,0.35);
-  --accent-amber:#F59E0B;
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Barlow',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  line-height:1.6;
-  font-size:16px;
-}
 
-/* ── Typography ── */
-h1,h2,h3,.display{font-family:'Barlow Condensed',sans-serif;font-weight:800;line-height:1.05;letter-spacing:-0.01em}
+<!-- ─── Styles ─── -->
+<link rel="stylesheet" href="/_assets/css/base.css"/>
+<link rel="stylesheet" href="/_assets/css/components.css"/>
 
-/* ── Layout ── */
-.container{width:90%;max-width:1160px;margin:0 auto}
-section{padding:100px 0}
-
-/* ── Animation ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),transform 0.65s cubic-bezier(0.22,1,0.36,1)}
-.reveal.visible{opacity:1;transform:none}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-.reveal-delay-4{transition-delay:0.4s}
-.reveal-delay-5{transition-delay:0.5s}
-.reveal-delay-6{transition-delay:0.6s}
-
-/* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;transition:all 0.2s ease;cursor:pointer;border:none}
-.btn-primary{background:var(--red);color:#fff}
-.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px)}
-.btn-secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-strong)}
-.btn-secondary:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.04)}
-.btn-group{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-
-/* ── Eyebrow ── */
-.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
-
-/* ─────────────────── HERO ─────────────────── */
-.hero{
-  position:relative;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  padding:120px 0 80px;
-  overflow:hidden;
+<!-- ─── JSON-LD: Organization ─── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jobmate Ltd",
+  "url": "https://jobmate.cloud",
+  "logo": "https://jobmate.cloud/_assets/images/jobmate-logo.png",
+  "description": "Cloud-based field service management platform for UK trade businesses. Products include JobSafe (HSSE incident reporting), Jobmate Pro and Jobmate Lite.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "GB"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/jobmate",
+    "https://twitter.com/jobmatecloud"
+  ]
 }
-.hero-noise{
-  position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:0.025;
-  pointer-events:none;
-}
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;
-}
-.hero-glow{
-  position:absolute;
-  top:-200px;right:-200px;
-  width:700px;height:700px;
-  background:radial-gradient(circle,rgba(230,57,70,0.15) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hero-inner{position:relative;z-index:1}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 14px 6px 10px;
-  border:1px solid rgba(230,57,70,0.4);
-  border-radius:100px;
-  font-size:0.78rem;
-  font-weight:600;
-  color:rgba(255,255,255,0.75);
-  background:rgba(230,57,70,0.08);
-  margin-bottom:28px;
-}
-.hero-badge span.dot{width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
-
-.hero h1{
-  font-size:clamp(4rem,9vw,8.5rem);
-  line-height:0.95;
-  margin-bottom:28px;
-}
-.hero h1 em{
-  font-style:normal;
-  color:var(--red);
-}
-.hero-sub{
-  font-size:1.2rem;
-  color:var(--text-muted);
-  max-width:540px;
-  line-height:1.7;
-  font-weight:400;
-}
-.hero-stats{
-  display:flex;flex-wrap:wrap;gap:32px;
-  margin-top:56px;
-  padding-top:40px;
-  border-top:1px solid var(--border);
-}
-.hero-stat strong{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:2.2rem;
-  font-weight:900;
-  color:var(--text);
-  display:block;
-}
-.hero-stat span{
-  font-size:0.82rem;
-  color:var(--text-dim);
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-  font-weight:600;
-}
-
-/* ─────────────────── PROBLEM ─────────────────── */
-.problem{background:var(--bg2);position:relative;overflow:hidden}
-.problem::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(230,57,70,0.5),transparent);
-}
-.problem-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.problem h2{font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:20px}
-.problem h2 span{color:var(--red)}
-.problem-desc{color:var(--text-muted);font-size:1.05rem;line-height:1.75}
-
-.problem-list{list-style:none;display:flex;flex-direction:column;gap:4px}
-.problem-list li{
-  display:flex;align-items:flex-start;gap:16px;
-  padding:20px 24px;
-  border-radius:6px;
-  border:1px solid var(--border);
-  background:var(--bg3);
-  font-weight:500;
-  transition:border-color 0.2s,background 0.2s;
-  position:relative;
-  overflow:hidden;
-}
-.problem-list li::before{
-  content:'';
-  position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--red);
-  border-radius:3px 0 0 3px;
-}
-.problem-list li:hover{border-color:var(--border-strong);background:var(--bg4)}
-.problem-list li .num{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:0.9rem;
-  color:var(--red);
-  opacity:0.7;
-  min-width:20px;
-  padding-top:1px;
-}
-
-/* ─────────────────── SOLUTION ─────────────────── */
-.solution{text-align:center}
-.solution h2{font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:16px}
-.solution-intro{color:var(--text-muted);font-size:1.1rem;max-width:580px;margin:0 auto 64px}
-
-.features-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:2px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:48px;
-}
-.feature-item{
-  background:var(--bg2);
-  padding:32px 28px;
-  display:flex;align-items:flex-start;gap:16px;
-  transition:background 0.2s;
-}
-.feature-item:hover{background:var(--bg3)}
-.feature-icon{
-  width:40px;height:40px;border-radius:8px;
-  background:var(--red-glow);
-  border:1px solid rgba(230,57,70,0.25);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  font-size:1rem;
-}
-.feature-text strong{display:block;font-weight:600;margin-bottom:4px;font-size:0.95rem}
-.feature-text span{font-size:0.83rem;color:var(--text-muted)}
-
-/* ─────────────────── HOW IT WORKS ─────────────────── */
-.how{background:var(--bg2);position:relative;overflow:hidden}
-.how-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.how h2{font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:12px}
-.how-desc{color:var(--text-muted);font-size:1rem;margin-bottom:48px;line-height:1.75}
-.steps{display:flex;flex-direction:column;gap:0}
-.step{
-  display:flex;gap:24px;align-items:flex-start;
-  padding:28px 0;
-  border-bottom:1px solid var(--border);
-}
-.step:last-child{border-bottom:none}
-.step-num{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:3.5rem;
-  line-height:1;
-  color:rgba(255,255,255,0.07);
-  min-width:56px;
-  padding-top:4px;
-}
-.step-content strong{font-weight:700;font-size:1.05rem;display:block;margin-bottom:6px}
-.step-content p{color:var(--text-muted);font-size:0.9rem;line-height:1.65}
-
-.how-visual{
-  position:sticky;top:120px;
-  border-radius:16px;
-  border:1px solid var(--border);
-  overflow:hidden;
-  background:var(--bg3);
-}
-.how-visual-header{
-  padding:16px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:8px;
-}
-.dot-row{display:flex;gap:6px}
-.dot-row span{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
-.dot-row span:nth-child(1){background:#E63946}
-.dot-row span:nth-child(2){background:#F59E0B}
-.dot-row span:nth-child(3){background:#22C55E}
-.how-visual-body{padding:24px}
-.report-card{
-  background:var(--bg4);
-  border-radius:10px;
-  border:1px solid var(--border);
-  padding:20px;
-  margin-bottom:12px;
-}
-.report-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.badge{font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:0.08em}
-.badge.open{background:rgba(230,57,70,0.15);color:#F87171;border:1px solid rgba(230,57,70,0.3)}
-.badge.resolved{background:rgba(34,197,94,0.12);color:#4ADE80;border:1px solid rgba(34,197,94,0.25)}
-.badge.review{background:rgba(245,158,11,0.12);color:#FCD34D;border:1px solid rgba(245,158,11,0.25)}
-.report-title{font-weight:600;font-size:0.9rem;margin-bottom:6px}
-.report-meta{font-size:0.75rem;color:var(--text-dim);display:flex;gap:12px}
-.progress-bar{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:14px;overflow:hidden}
-.progress-fill{height:100%;border-radius:2px;background:var(--red)}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.mini-stat{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px 12px;text-align:center}
-.mini-stat strong{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;display:block}
-.mini-stat span{font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em}
-.mini-stat.red strong{color:#F87171}
-.mini-stat.amber strong{color:#FCD34D}
-.mini-stat.green strong{color:#4ADE80}
-
-/* ─────────────────── BENEFITS ─────────────────── */
-.benefits{text-align:center}
-.benefits h2{font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:60px}
-.benefits-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  text-align:left;
-  margin-bottom:56px;
-}
-.benefit-card{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:32px 28px;
-  transition:border-color 0.2s,transform 0.2s;
-  position:relative;
-  overflow:hidden;
-}
-.benefit-card::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--red),transparent);
-  opacity:0;transition:opacity 0.2s;
-}
-.benefit-card:hover{border-color:var(--border-strong);transform:translateY(-3px)}
-.benefit-card:hover::after{opacity:1}
-.benefit-card h3{font-size:1.05rem;font-weight:700;margin-bottom:10px}
-.benefit-card p{font-size:0.88rem;color:var(--text-muted);line-height:1.7}
-.benefit-icon-wrap{
-  width:44px;height:44px;border-radius:10px;
-  background:var(--red-glow);
-  border:1px solid rgba(230,57,70,0.25);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;font-size:1.1rem;
-}
-
-/* ─────────────────── FINAL CTA ─────────────────── */
-.final-cta{
-  background:var(--bg2);
-  position:relative;overflow:hidden;
-}
-.final-cta::before{
-  content:'';
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-.final-cta-glow{
-  position:absolute;
-  bottom:-300px;left:50%;transform:translateX(-50%);
-  width:800px;height:600px;
-  background:radial-gradient(circle,rgba(230,57,70,0.12) 0%,transparent 65%);
-  pointer-events:none;
-}
-.final-cta-inner{
-  position:relative;z-index:1;
-  text-align:center;
-  max-width:680px;margin:0 auto;
-}
-.final-cta h2{font-size:clamp(2.8rem,6vw,5.5rem);margin-bottom:20px}
-.final-cta p{font-size:1.1rem;color:var(--text-muted);margin-bottom:0}
-.final-cta .btn-group{justify-content:center}
-
-/* ─────────────────── FOOTER STRIP ─────────────────── */
-.footer-strip{
-  background:var(--bg);
-  border-top:1px solid var(--border);
-  padding:28px 0;
-  display:flex;align-items:center;justify-content:center;
-}
-.footer-strip span{font-size:0.8rem;color:var(--text-dim);font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
-.footer-strip strong{color:var(--red)}
-
-/* ─────────────────── RESPONSIVE ─────────────────── */
-@media(max-width:860px){
-  .problem-layout,.how-layout{grid-template-columns:1fr;gap:48px}
-  .how-visual{position:static}
-  section{padding:72px 0}
-  .hero h1{font-size:clamp(3.2rem,12vw,5.5rem)}
-}
-@media(max-width:520px){
-  .hero-stats{gap:20px}
-  .features-grid{grid-template-columns:1fr}
-  .stats-row{grid-template-columns:repeat(3,1fr)}
-}
-</style>
+</script>
 </head>
-<body>
+<body data-page="home">
+
+<!-- Component: nav injected here -->
+<div id="site-header"></div>
 
 <!-- ═══ HERO ═══ -->
-<header class="hero">
-  <div class="hero-noise"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
+<header class="hero" role="banner">
+  <div class="hero-noise" aria-hidden="true"></div>
+  <div class="hero-grid"  aria-hidden="true"></div>
+  <div class="hero-glow"  aria-hidden="true"></div>
   <div class="container">
     <div class="hero-inner">
-      <div class="hero-badge reveal"><span class="dot"></span> Now with real-time dashboard analytics</div>
-      <h1 class="reveal reveal-delay-1">Record.<br><em>Resolve.</em><br>Prevent.</h1>
-      <p class="hero-sub reveal reveal-delay-2">IncidentFlow helps teams capture incidents in seconds, improve compliance, and build a stronger safety culture — from the field to the boardroom.</p>
+
+      <div class="hero-badge reveal" role="note">
+        <span class="dot" aria-hidden="true"></span>
+        JobSafe — workplace incident reporting is now live
+      </div>
+
+      <h1 class="reveal reveal-delay-1">
+        Field Service.<br>
+        <em>Managed.</em>
+      </h1>
+
+      <p class="hero-sub reveal reveal-delay-2">
+        Jobmate is the cloud platform built for UK trade businesses.
+        Quote jobs. Log incidents. Stay compliant.
+        From the field to the boardroom.
+      </p>
+
       <div class="btn-group reveal reveal-delay-3">
-        <a href="#" class="btn btn-primary">Start Free Trial →</a>
-        <a href="#" class="btn btn-secondary">Book a Demo</a>
+        <a href="/jobsafe" class="btn btn-primary">Explore JobSafe →</a>
+        <a href="/#contact" class="btn btn-secondary">Book a Demo</a>
       </div>
+
       <div class="hero-stats reveal reveal-delay-4">
-        <div class="hero-stat"><strong>3×</strong><span>Faster Reporting</span></div>
-        <div class="hero-stat"><strong>98%</strong><span>Compliance Rate</span></div>
-        <div class="hero-stat"><strong>60%</strong><span>Fewer Repeat Incidents</span></div>
-        <div class="hero-stat"><strong>Zero</strong><span>Paperwork</span></div>
+        <div class="hero-stat">
+          <strong>100%</strong>
+          <span>Cloud-Native</span>
+        </div>
+        <div class="hero-stat">
+          <strong>UK</strong>
+          <span>Based &amp; Supported</span>
+        </div>
+        <div class="hero-stat">
+          <strong>HSSE</strong>
+          <span>Compliant</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Zero</strong>
+          <span>Setup Cost</span>
+        </div>
       </div>
+
     </div>
   </div>
 </header>
 
-<!-- ═══ PROBLEM ═══ -->
-<section class="problem">
+<!-- ═══ PRODUCTS ═══ -->
+<section class="products-section" id="products" aria-labelledby="products-heading">
+  <div class="container">
+    <p class="eyebrow reveal">The Jobmate Platform</p>
+    <h2 id="products-heading" class="reveal reveal-delay-1">One platform.<br>Every tool your business needs.</h2>
+    <p class="section-intro reveal reveal-delay-2">
+      Built for trade businesses that can't afford downtime, complexity, or missed compliance.
+      Start with what you need. Scale when you're ready.
+    </p>
+
+    <div class="products-grid">
+
+      <!-- JobSafe — featured -->
+      <article class="product-card featured reveal reveal-delay-1">
+        <span class="product-label">Available now</span>
+        <h3>JobSafe</h3>
+        <p>
+          Workplace incident reporting and HSSE compliance built for real working environments.
+          Report incidents in seconds. Resolve them faster. Build a safer site.
+        </p>
+        <a href="/jobsafe" class="product-link" aria-label="Learn more about JobSafe">
+          Learn more →
+        </a>
+      </article>
+
+      <!-- Jobmate Pro -->
+      <article class="product-card reveal reveal-delay-2">
+        <span class="product-label">Coming soon</span>
+        <h3>Jobmate Pro</h3>
+        <p>
+          Full job management for SMEs — quotes, scheduling, invoicing, and customer
+          management in one place.
+        </p>
+        <span class="product-coming" aria-label="Coming soon">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          In development
+        </span>
+      </article>
+
+      <!-- Jobmate Lite -->
+      <article class="product-card reveal reveal-delay-3">
+        <span class="product-label">Coming soon</span>
+        <h3>Jobmate Lite</h3>
+        <p>
+          Stripped-back job management for sole traders. Quote it, book it, invoice it —
+          from your phone.
+        </p>
+        <span class="product-coming" aria-label="Coming soon">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          In development
+        </span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY JOBMATE ═══ -->
+<section aria-labelledby="why-heading">
   <div class="container">
     <div class="problem-layout">
       <div>
-        <p class="eyebrow reveal">The Problem</p>
-        <h2 class="reveal reveal-delay-1">Safety is too important for <span>broken systems</span></h2>
-        <p class="problem-desc reveal reveal-delay-2">Paper forms, spreadsheets, and legacy tools slow everything down — and in safety, slow means risk. Every delayed report is a hazard waiting to repeat itself.</p>
+        <p class="eyebrow reveal">Built for the Field</p>
+        <h2 id="why-heading" class="reveal reveal-delay-1">Software that works <span>where you work</span></h2>
+        <p class="problem-desc reveal reveal-delay-2">
+          Most business software is designed for offices. Jobmate is designed for
+          vans, sites, and warehouses — where signal is patchy, time is short,
+          and getting it wrong has real consequences.
+        </p>
       </div>
-      <ul class="problem-list">
-        <li class="reveal reveal-delay-1"><span class="num">01</span> Delayed reporting creates compliance gaps before anyone notices</li>
-        <li class="reveal reveal-delay-2"><span class="num">02</span> Incomplete information undermines root cause investigations</li>
-        <li class="reveal reveal-delay-3"><span class="num">03</span> No real-time visibility means managers react instead of prevent</li>
-        <li class="reveal reveal-delay-4"><span class="num">04</span> Spreadsheets can't scale across teams, sites, or regulations</li>
-        <li class="reveal reveal-delay-5"><span class="num">05</span> Preventable incidents keep recurring with no pattern analysis</li>
+
+      <ul class="problem-list" aria-label="Jobmate advantages">
+        <li class="reveal reveal-delay-1">
+          <span class="num" aria-hidden="true">01</span>
+          Cloud-native — access everything from any device, anywhere, with nothing to install
+        </li>
+        <li class="reveal reveal-delay-2">
+          <span class="num" aria-hidden="true">02</span>
+          Offline-first design — works without signal and syncs when you're back online
+        </li>
+        <li class="reveal reveal-delay-3">
+          <span class="num" aria-hidden="true">03</span>
+          Mobile-first — built for workers on the move, not tied to a desk
+        </li>
+        <li class="reveal reveal-delay-4">
+          <span class="num" aria-hidden="true">04</span>
+          UK-based support — real people who understand UK compliance requirements
+        </li>
+        <li class="reveal reveal-delay-5">
+          <span class="num" aria-hidden="true">05</span>
+          Priced for trade — no enterprise contracts, no setup fees, no surprises
+        </li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ═══ SOLUTION ═══ -->
-<section class="solution">
-  <div class="container">
-    <p class="eyebrow reveal">Meet IncidentFlow</p>
-    <h2 class="reveal reveal-delay-1">Everything your team needs.<br>Nothing they don't.</h2>
-    <p class="solution-intro reveal reveal-delay-2">The fastest, simplest way to capture, manage, and learn from workplace incidents — built for real environments, not just offices.</p>
-
-    <div class="features-grid reveal reveal-delay-2">
-      <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-text"><strong>One-tap capture</strong><span>Log an incident before you've left the scene</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📶</div>
-        <div class="feature-text"><strong>Offline mode</strong><span>Works without signal, syncs when back online</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📸</div>
-        <div class="feature-text"><strong>Photo, video &amp; voice</strong><span>Rich media attached in seconds</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📍</div>
-        <div class="feature-text"><strong>Auto GPS &amp; timestamp</strong><span>Every report is anchored in time and place</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔔</div>
-        <div class="feature-text"><strong>Real-time alerts</strong><span>Supervisors notified the moment it happens</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">🔒</div>
-        <div class="feature-text"><strong>Full audit trail</strong><span>Immutable, timestamped record for every action</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📊</div>
-        <div class="feature-text"><strong>Dashboard analytics</strong><span>Spot patterns before they become incidents</span></div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">✅</div>
-        <div class="feature-text"><strong>HSSE compliance</strong><span>Aligned with industry reporting standards</span></div>
-      </div>
-    </div>
-
-    <div class="reveal"><a href="#" class="btn btn-primary">See How It Works →</a></div>
-  </div>
-</section>
-
-<!-- ═══ HOW IT WORKS ═══ -->
-<section class="how">
-  <div class="container">
-    <div class="how-layout">
-      <div>
-        <p class="eyebrow reveal">How It Works</p>
-        <h2 class="reveal reveal-delay-1">Four steps from incident to insight</h2>
-        <p class="how-desc reveal reveal-delay-2">IncidentFlow guides your team through a proven process — from the moment something happens to the changes that stop it happening again.</p>
-        <div class="steps">
-          <div class="step reveal reveal-delay-1">
-            <span class="step-num">01</span>
-            <div class="step-content">
-              <strong>Capture</strong>
-              <p>Workers log incidents instantly with guided prompts, media uploads, and automatic location tagging — even offline.</p>
-            </div>
-          </div>
-          <div class="step reveal reveal-delay-2">
-            <span class="step-num">02</span>
-            <div class="step-content">
-              <strong>Review</strong>
-              <p>Supervisors receive instant alerts, verify the details, and assign corrective actions to the right people.</p>
-            </div>
-          </div>
-          <div class="step reveal reveal-delay-3">
-            <span class="step-num">03</span>
-            <div class="step-content">
-              <strong>Resolve</strong>
-              <p>Track every corrective action through to completion with automated reminders and escalation paths.</p>
-            </div>
-          </div>
-          <div class="step reveal reveal-delay-4">
-            <span class="step-num">04</span>
-            <div class="step-content">
-              <strong>Analyse</strong>
-              <p>Dashboard analytics surface patterns, high-risk areas, and trends — so you can act before the next incident.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mock UI -->
-      <div class="how-visual reveal reveal-delay-2">
-        <div class="how-visual-header">
-          <div class="dot-row"><span></span><span></span><span></span></div>
-          <span style="font-size:0.75rem;color:var(--text-dim);margin-left:8px">IncidentFlow — Live Dashboard</span>
-        </div>
-        <div class="how-visual-body">
-          <div class="stats-row" style="margin-top:0;margin-bottom:12px">
-            <div class="mini-stat red"><strong>4</strong><span>Open</span></div>
-            <div class="mini-stat amber"><strong>7</strong><span>In Review</span></div>
-            <div class="mini-stat green"><strong>23</strong><span>Resolved</span></div>
-          </div>
-          <div class="report-card">
-            <div class="report-card-header">
-              <span style="font-size:0.72rem;color:var(--text-dim)">INC-0042 · 09:14 today</span>
-              <span class="badge open">Open</span>
-            </div>
-            <div class="report-title">Near miss — forklift & pedestrian crossing</div>
-            <div class="report-meta"><span>📍 Warehouse Bay 3</span><span>Assigned: J. Morris</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
-          </div>
-          <div class="report-card">
-            <div class="report-card-header">
-              <span style="font-size:0.72rem;color:var(--text-dim)">INC-0041 · Yesterday 14:32</span>
-              <span class="badge review">In Review</span>
-            </div>
-            <div class="report-title">Spill — chemical storage aisle</div>
-            <div class="report-meta"><span>📍 Site B — Level 1</span><span>Assigned: K. Patel</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:60%;background:var(--accent-amber)"></div></div>
-          </div>
-          <div class="report-card">
-            <div class="report-card-header">
-              <span style="font-size:0.72rem;color:var(--text-dim)">INC-0039 · 3 days ago</span>
-              <span class="badge resolved">Resolved</span>
-            </div>
-            <div class="report-title">Trip hazard — loading dock ramp</div>
-            <div class="report-meta"><span>📍 Dock 7</span><span>Closed by: L. Chen</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#22C55E"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ BENEFITS ═══ -->
-<section class="benefits">
-  <div class="container">
-    <p class="eyebrow reveal">Why Teams Choose IncidentFlow</p>
-    <h2 class="reveal reveal-delay-1">Results you'll see from day one</h2>
-
-    <div class="benefits-grid">
-      <div class="benefit-card reveal reveal-delay-1">
-        <div class="benefit-icon-wrap">⚡</div>
-        <h3>Faster reporting</h3>
-        <p>Workers submit a full incident report in under 60 seconds. No missed incidents from forms that get filled in "later".</p>
-      </div>
-      <div class="benefit-card reveal reveal-delay-2">
-        <div class="benefit-icon-wrap">🔍</div>
-        <h3>Stronger investigations</h3>
-        <p>Rich data — photos, GPS, timestamps, witness notes — gives investigators everything they need from the outset.</p>
-      </div>
-      <div class="benefit-card reveal reveal-delay-3">
-        <div class="benefit-icon-wrap">✅</div>
-        <h3>Improved compliance</h3>
-        <p>Audit-ready records, HSSE-aligned workflows, and automatic documentation that keeps regulators satisfied.</p>
-      </div>
-      <div class="benefit-card reveal reveal-delay-4">
-        <div class="benefit-icon-wrap">📋</div>
-        <h3>Reduced admin</h3>
-        <p>No more chasing paperwork or manually entering data. Automated routing gets every report to the right person instantly.</p>
-      </div>
-      <div class="benefit-card reveal reveal-delay-5">
-        <div class="benefit-icon-wrap">📉</div>
-        <h3>Proactive risk reduction</h3>
-        <p>Analytics identify patterns before they become repeat incidents. Prevention, not just reaction.</p>
-      </div>
-      <div class="benefit-card reveal reveal-delay-6">
-        <div class="benefit-icon-wrap">👷</div>
-        <h3>Safer workplaces</h3>
-        <p>When reporting is effortless, people actually report. More data means better decisions and a stronger safety culture.</p>
-      </div>
-    </div>
-
-    <div class="reveal"><a href="#" class="btn btn-primary">Start Free Trial →</a></div>
-  </div>
-</section>
-
 <!-- ═══ FINAL CTA ═══ -->
-<section class="final-cta">
-  <div class="final-cta-glow"></div>
+<section class="final-cta" id="contact" aria-labelledby="cta-heading">
+  <div class="final-cta-glow" aria-hidden="true"></div>
   <div class="container">
     <div class="final-cta-inner">
       <p class="eyebrow reveal">Get Started</p>
-      <h2 class="reveal reveal-delay-1">Ready to modernise your incident reporting?</h2>
-      <p class="reveal reveal-delay-2">Empower your workforce. Strengthen your safety culture. Reduce risk.</p>
+      <h2 id="cta-heading" class="reveal reveal-delay-1">Ready to modernise your business?</h2>
+      <p class="reveal reveal-delay-2">Start with JobSafe. Zero setup cost. Cancel any time.</p>
       <div class="btn-group reveal reveal-delay-3">
-        <a href="#" class="btn btn-primary">Start Free Trial →</a>
+        <a href="/jobsafe" class="btn btn-primary">Explore JobSafe →</a>
         <a href="#" class="btn btn-secondary">Book a Demo</a>
       </div>
     </div>
   </div>
 </section>
 
-<div class="footer-strip">
-  <span><strong>IncidentFlow</strong> &nbsp;·&nbsp; Record. Resolve. Prevent.</span>
-</div>
+<!-- Component: footer injected here -->
+<div id="site-footer"></div>
 
-<script>
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-reveals.forEach(el => observer.observe(el));
-</script>
+<script src="/_assets/js/main.js" defer></script>
 </body>
 </html>
