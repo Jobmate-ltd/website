@@ -1,0 +1,63 @@
+/* ─────────────────── RESET ─────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ─────────────────── VARIABLES ─────────────────── */
+:root{
+  --red:#E63946;
+  --red-dark:#B52D38;
+  --red-glow:rgba(230,57,70,0.18);
+  --bg:#07080A;
+  --bg2:#0F1115;
+  --bg3:#161A20;
+  --bg4:#1E2229;
+  --border:rgba(255,255,255,0.08);
+  --border-strong:rgba(255,255,255,0.14);
+  --text:#FFFFFF;
+  --text-muted:rgba(255,255,255,0.55);
+  --text-dim:rgba(255,255,255,0.35);
+  --accent-amber:#F59E0B;
+}
+
+/* ─────────────────── BASE ─────────────────── */
+html{scroll-behavior:smooth}
+body{
+  font-family:'Barlow',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.6;
+  font-size:16px;
+}
+
+/* ─────────────────── TYPOGRAPHY ─────────────────── */
+h1,h2,h3,.display{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+}
+
+/* ─────────────────── LAYOUT ─────────────────── */
+.container{width:90%;max-width:1160px;margin:0 auto}
+section{padding:100px 0}
+
+/* ─────────────────── SCROLL ANIMATIONS ─────────────────── */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),
+             transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-5{transition-delay:0.5s}
+.reveal-delay-6{transition-delay:0.6s}
+
+/* ─────────────────── KEYFRAMES ─────────────────── */
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.5;transform:scale(1.3)}
+}
