@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
+import { BorderBeam } from '@/components/ui/border-beam'
 
 export default function Hero() {
   return (
@@ -35,7 +36,6 @@ export default function Hero() {
 
           {/* Left — text content */}
           <div className="flex flex-col w-full lg:w-[60%]">
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,6 @@ export default function Hero() {
               Available at £2.99 per license
             </motion.div>
 
-            {/* Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -62,7 +61,6 @@ export default function Hero() {
               Prevent.
             </motion.h1>
 
-            {/* Subheading */}
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -72,7 +70,6 @@ export default function Hero() {
               JobSafe helps teams capture incidents in seconds, improve compliance, and build a stronger safety culture — from the field to the boardroom.
             </motion.p>
 
-            {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -93,7 +90,6 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Stats row */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -119,23 +115,13 @@ export default function Hero() {
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="hidden lg:flex lg:w-[40%] justify-center"
+            className="hidden lg:flex lg:w-[40%] justify-center pl-8"
           >
-            <motion.div
-              className="w-full aspect-[9/16] max-h-[480px] mx-auto rounded-2xl bg-[#111] border-2 border-[#e5342a]/40 flex flex-col items-center justify-center gap-4"
-              animate={{
-                opacity: [0.4, 1, 0.4],
-                boxShadow: [
-                  '0 0 0px rgba(229,52,42,0.3)',
-                  '0 0 30px rgba(229,52,42,0.6)',
-                  '0 0 0px rgba(229,52,42,0.3)',
-                ],
-              }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            >
+            <div className="relative overflow-hidden w-full aspect-[9/16] max-h-[480px] mx-auto rounded-2xl bg-[#111] border border-white/10 flex flex-col items-center justify-center gap-4">
+              <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={80} borderWidth={2} />
               <Play className="text-[#e5342a] opacity-60 size-12" strokeWidth={1.5} />
-              <p className="text-white/20 text-xs mt-3">Product walkthrough coming soon</p>
-            </motion.div>
+              <p className="text-white/60 text-xs mt-3">Product walkthrough coming soon</p>
+            </div>
           </motion.div>
 
         </div>
