@@ -1,168 +1,192 @@
 'use client'
-import React, { useState } from 'react'
+import NumberFlow from '@number-flow/react'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { CheckCheck } from 'lucide-react'
 
-const STANDARD_RATE = 2.99
-const VOLUME_RATE = 1.99
-const STANDARD_THRESHOLD = 500
-const MAX_LICENCES = 10000
-
-function calculateMonthly(licences: number): number {
-  if (licences <= STANDARD_THRESHOLD) {
-    return licences * STANDARD_RATE
-  }
-  return (STANDARD_THRESHOLD * STANDARD_RATE) + ((licences - STANDARD_THRESHOLD) * VOLUME_RATE)
-}
-
-const features = [
-  'Unlimited incident reports',
-  'Dashboard analytics',
-  'Photo, video & voice attachments',
-  'Offline mode & GPS tagging',
-  'Real-time supervisor alerts',
-  'Email support',
+const plans = [
+  {
+    name: 'Starter',
+    description: 'For small teams getting started with workplace safety reporting.',
+    monthlyPrice: 2.99,
+    annualPrice: 2.69,
+    buttonText: 'Start Free Trial',
+    popular: false,
+    includes: 'Everything you need to get started:',
+    features: [
+      'Up to 25 users',
+      'Incident & near-miss reporting',
+      'Photo, GPS & timestamp capture',
+      'Supervisor notifications',
+      'Basic analytics dashboard',
+      'UK data storage',
+    ],
+  },
+  {
+    name: 'Professional',
+    description: 'For growing teams that need deeper insights and compliance tooling.',
+    monthlyPrice: 2.75,
+    annualPrice: 2.48,
+    buttonText: 'Start Free Trial',
+    popular: true,
+    includes: 'Everything in Starter, plus:',
+    features: [
+      'Unlimited users',
+      'Custom report workflows',
+      'Multi-site management',
+      'Advanced analytics & trends',
+      'HSSE audit-ready exports',
+      'Priority support',
+    ],
+  },
+  {
+    name: 'Enterprise',
+    description: 'For large organisations with custom security, compliance, and integration needs.',
+    monthlyPrice: null,
+    annualPrice: null,
+    buttonText: 'Contact Sales',
+    popular: false,
+    includes: 'Everything in Professional, plus:',
+    features: [
+      'SSO & custom auth',
+      'Dedicated account manager',
+      'Custom SLA & uptime guarantee',
+      'API access & integrations',
+      'On-site onboarding',
+      'Custom contract & invoicing',
+    ],
+  },
 ]
 
 export default function Pricing() {
-  const [licences, setLicences] = useState(10)
-  const [annual, setAnnual] = useState(false)
-
-  const isCustom = licences >= MAX_LICENCES
-  const monthlyBase = calculateMonthly(licences)
-  const monthlyDisplay = annual ? monthlyBase * 0.9 : monthlyBase
-  const annualTotal = monthlyDisplay * 12
-  const isVolume = licences > STANDARD_THRESHOLD
+  const [isAnnual, setIsAnnual] = useState(false)
 
   return (
     <section id="pricing" className="py-24 bg-[#0a0a0a]">
-      <div className="text-center mb-16 px-4">
-        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Pricing</p>
-        <h2 className="text-4xl md:text-5xl font-black text-white">Simple pricing. No surprises.</h2>
-        <p className="text-white/50 mt-4 text-sm">
-          Start for free. Scale when you&apos;re ready. No long-term contracts, no hidden fees.
-        </p>
-      </div>
+      <div className="mx-auto max-w-5xl px-4">
 
-      {/* Monthly / Annual toggle */}
-      <div className="flex justify-center mb-10">
-        <div className="flex items-center gap-1 bg-[#111] border border-white/10 rounded-full p-1">
-          <button
-            onClick={() => setAnnual(false)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              !annual ? 'bg-[#e5342a] text-white' : 'text-white/50 hover:text-white'
-            }`}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setAnnual(true)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              annual ? 'bg-[#e5342a] text-white' : 'text-white/50 hover:text-white'
-            }`}
-          >
-            Annual <span className="text-xs opacity-70">–10%</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="max-w-3xl mx-auto px-4 flex flex-col md:flex-row gap-6">
-
-        {/* Left card — slider */}
-        <div className="flex-1 rounded-xl border border-white/10 bg-[#111] p-8">
-          <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase mb-6">
-            Calculate your pricing
-          </h3>
-
-          <div className="text-3xl font-black text-white mb-2">
-            {isCustom ? '10,000+' : licences.toLocaleString()}{' '}
-            <span className="text-base font-normal text-white/50">licences</span>
-          </div>
-
-          <input
-            type="range"
-            min={1}
-            max={MAX_LICENCES}
-            step={1}
-            value={licences}
-            onChange={(e) => setLicences(Number(e.target.value))}
-            className="w-full appearance-none h-2 rounded-full my-8"
-            style={{
-              background: `linear-gradient(to right, #e5342a 0%, #e5342a ${(licences / MAX_LICENCES) * 100}%, rgba(255,255,255,0.1) ${(licences / MAX_LICENCES) * 100}%, rgba(255,255,255,0.1) 100%)`,
-            }}
-          />
-
-          {isCustom && (
-            <p className="text-sm text-white/50 mt-4">
-              Need a custom solution?{' '}
-              <a href="#" className="text-[#e5342a] font-medium hover:underline">
-                Get in touch →
-              </a>
-            </p>
-          )}
+        {/* Header */}
+        <div className="text-center mb-12">
+          <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Pricing</p>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+            Simple, per-license pricing
+          </h2>
+          <p className="text-white/50 text-sm max-w-md mx-auto">
+            No setup fees. No hidden costs. Cancel any time.
+          </p>
         </div>
 
-        {/* Right card — plan summary (hidden at 10,000+) */}
-        {!isCustom && (
-          <div className="flex-1 rounded-xl border border-white/10 bg-[#111] p-8">
-            <h3 className="text-xs font-bold tracking-widest text-white/50 uppercase mb-6">
-              Your plan
-            </h3>
-
-            {/* Price */}
-            <div className="text-4xl font-black text-white">
-              £{monthlyDisplay.toFixed(2)}
-              <span className="text-base font-normal text-white/50"> / mo</span>
-            </div>
-            <p className="text-xs text-white/40 mt-1">
-              {isVolume ? '£2.99 / £1.99 per licence' : '£2.99 per licence'}
-            </p>
-            {annual && (
-              <p className="text-xs text-white/40 mt-0.5">
-                Billed annually at £{annualTotal.toFixed(2)}
-              </p>
-            )}
-
-            {/* Badges */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {isVolume && (
-                <span className="bg-[#e5342a]/10 border border-[#e5342a]/20 text-[#e5342a] text-xs px-3 py-1 rounded-full">
-                  Volume pricing above 500 licences
-                </span>
-              )}
-              {annual && (
-                <span className="bg-[#e5342a]/10 border border-[#e5342a]/20 text-[#e5342a] text-xs px-3 py-1 rounded-full">
-                  10% annual discount applied
-                </span>
-              )}
-            </div>
-
-            {/* Feature checklist */}
-            <ul className="mt-8 space-y-3 text-sm text-white/70">
-              {features.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="text-[#e5342a] font-bold">✓</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA */}
-            <a
-              href="#"
-              className="mt-8 block w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-4 rounded-md transition-colors"
+        {/* Toggle */}
+        <div className="flex justify-center mb-12">
+          <div className="relative flex bg-white/5 border border-white/10 rounded-full p-1">
+            <button
+              onClick={() => setIsAnnual(false)}
+              className="relative z-10 px-5 py-2 text-sm font-medium rounded-full transition-colors"
+              style={{ color: !isAnnual ? '#fff' : 'rgba(255,255,255,0.4)' }}
             >
-              START FREE — NO CARD NEEDED →
-            </a>
+              {!isAnnual && (
+                <motion.span
+                  layoutId="pill"
+                  className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                />
+              )}
+              <span className="relative">Monthly</span>
+            </button>
+            <button
+              onClick={() => setIsAnnual(true)}
+              className="relative z-10 px-5 py-2 text-sm font-medium rounded-full transition-colors flex items-center gap-2"
+              style={{ color: isAnnual ? '#fff' : 'rgba(255,255,255,0.4)' }}
+            >
+              {isAnnual && (
+                <motion.span
+                  layoutId="pill"
+                  className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                />
+              )}
+              <span className="relative">Annual</span>
+              <span className="relative rounded-full bg-[#e5342a]/20 border border-[#e5342a]/30 text-[#e5342a] text-xs px-2 py-0.5 font-bold">
+                Save 10%
+              </span>
+            </button>
           </div>
-        )}
-      </div>
+        </div>
 
-      <p className="text-center text-white/30 text-sm mt-8 px-4">
-        Need more licences or enterprise features?{' '}
-        <a href="#" className="text-white/50 hover:text-white underline transition-colors">
-          Get in touch
-        </a>{' '}
-        — we&apos;ll put together a plan that fits.
-      </p>
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className="relative flex flex-col rounded-2xl border p-8"
+              style={{
+                background: plan.popular ? '#111' : 'transparent',
+                borderColor: plan.popular ? '#e5342a' : 'rgba(255,255,255,0.1)',
+                boxShadow: plan.popular ? '0 0 40px rgba(229,52,42,0.12)' : 'none',
+              }}
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-[#e5342a] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+
+              {/* Price */}
+              <div className="mb-6">
+                {plan.monthlyPrice !== null ? (
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-white text-4xl font-black">
+                      £<NumberFlow
+                        value={isAnnual ? plan.annualPrice! : plan.monthlyPrice}
+                        format={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}
+                        className="text-4xl font-black"
+                      />
+                    </span>
+                    <span className="text-white/40 text-sm">/user/mo</span>
+                  </div>
+                ) : (
+                  <div className="text-4xl font-black text-white">Custom</div>
+                )}
+              </div>
+
+              {/* Name + description */}
+              <h3 className="text-xl font-black text-white mb-2">{plan.name}</h3>
+              <p className="text-white/50 text-sm leading-relaxed mb-8">{plan.description}</p>
+
+              {/* CTA */}
+              <a
+                href={plan.name === 'Enterprise' ? '#contact' : '#get-started'}
+                className="block text-center font-bold text-sm px-6 py-3 rounded-lg mb-8 transition-colors"
+                style={
+                  plan.popular
+                    ? { background: '#e5342a', color: '#fff' }
+                    : { background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }
+                }
+              >
+                {plan.buttonText}
+              </a>
+
+              {/* Features */}
+              <p className="text-white/30 text-xs uppercase tracking-widest font-bold mb-4">
+                {plan.includes}
+              </p>
+              <ul className="space-y-3">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#e5342a]/10 border border-[#e5342a]/20 flex items-center justify-center">
+                      <CheckCheck className="w-3 h-3 text-[#e5342a]" />
+                    </span>
+                    <span className="text-sm text-white/60">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </section>
   )
 }

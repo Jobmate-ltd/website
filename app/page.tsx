@@ -1,6 +1,5 @@
 import Navbar from '@/components/sections/Navbar'
 import Hero from '@/components/sections/Hero'
-import TheProblem from '@/components/sections/TheProblem'
 import FeaturesMarquee from '@/components/sections/FeaturesMarquee'
 import HowItWorks from '@/components/sections/HowItWorks'
 import AnimatedForm from '@/components/sections/AnimatedForm'
@@ -17,12 +16,11 @@ export default function Page() {
     <main className="bg-[#0a0a0a] min-h-screen">
       <Navbar />
       <Hero />
-      <TheProblem />
+      <Industries />
       <FeaturesMarquee />
       <HowItWorks />
       <AnimatedForm />
       <ResultsGrid />
-      <Industries />
       <Pricing />
       <Testimonials />
       <FAQ />

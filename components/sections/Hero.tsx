@@ -42,7 +42,7 @@ export default function Hero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5342a] opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e5342a]" />
           </span>
-          Now with real-time dashboard analytics
+          Available at £2.99 per license
         </motion.div>
 
         {/* Heading */}

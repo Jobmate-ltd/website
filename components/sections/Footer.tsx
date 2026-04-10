@@ -23,7 +23,6 @@ const LinkedInIcon = ({ size = 24, strokeWidth = 1.5, className }: SvgProps) => 
 )
 
 const navLinks = [
-  { label: 'The Problem', href: '#the-problem' },
   { label: 'Features', href: '#features' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Industries', href: '#industries' },
@@ -46,13 +45,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           {/* Brand column */}
-          <div className="md:col-span-2 flex flex-col gap-6">
+          <div className="md:col-span-2 flex flex-col gap-6 items-start">
             <Image
               src="/images/jobsafe_logo-removebg-preview.png"
               alt="JobSafe"
-              width={140}
-              height={40}
-              className="object-contain w-auto h-8"
+              width={160}
+              height={52}
+              className="h-12 w-auto"
             />
             <p className="text-white/50 text-sm leading-relaxed max-w-sm">
               Record. Resolve. Prevent. — Workplace incident reporting built for the field.
