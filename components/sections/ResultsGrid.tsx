@@ -48,14 +48,12 @@ export default function ResultsGrid() {
         </h2>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden border border-white/10">
+      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3">
         {results.map((result) => (
           <motion.div
             key={result.title}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             <FeatureCard
               feature={{
@@ -69,7 +67,7 @@ export default function ResultsGrid() {
                   />
                 ),
               }}
-              className="bg-[#111] h-full [&_h3]:text-white [&_p]:text-white/50"
+              className="bg-transparent h-full border border-[#e5342a]/15 [&_h3]:text-white [&_p]:text-white/50"
             />
           </motion.div>
         ))}

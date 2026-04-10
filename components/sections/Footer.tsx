@@ -48,7 +48,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="md:col-span-2 flex flex-col gap-6">
             <Image
-              src="/images/jobsafe-logo.png"
+              src="/images/jobsafe_logo-removebg-preview.png"
               alt="JobSafe"
               width={120}
               height={32}

@@ -23,7 +23,7 @@ export function Navbar() {
       'bg-black/40 backdrop-blur-lg supports-[backdrop-filter]:bg-black/40',
     )}>
       <nav className="mx-auto flex items-center justify-between p-1.5 px-4">
-        <Image src="/images/jobsafe-logo.png" alt="JobSafe" width={120} height={40} />
+        <Image src="/images/jobsafe_logo-removebg-preview.png" alt="JobSafe" width={120} height={40} />
         <div className="hidden items-center gap-1 lg:flex">
           {links.map((link) => (
             <a key={link.href} className={buttonVariants({ variant: 'ghost', size: 'sm' })} href={link.href}>

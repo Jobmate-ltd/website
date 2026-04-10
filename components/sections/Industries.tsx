@@ -6,37 +6,37 @@ const options = [
   {
     title: 'Construction',
     description: 'Track near misses, falls, and equipment incidents across complex, multi-site builds before they become HSE notifications.',
-    image: '/images/industries/construction.jpg',
+    image: '/images/industries/construction.png',
     icon: <HardHat size={20} strokeWidth={1.5} className="text-white" />,
   },
   {
     title: 'Facilities Management',
     description: 'Manage contractor safety, maintenance hazards, and compliance across your entire portfolio from a single dashboard.',
-    image: '/images/industries/facilities.jpg',
+    image: '/images/industries/facilities.png',
     icon: <Building2 size={20} strokeWidth={1.5} className="text-white" />,
   },
   {
     title: 'Manufacturing',
     description: 'Log machinery faults, COSHH exposures, and production-line hazards in real time, with evidence attached at the point of capture.',
-    image: '/images/industries/manufacturing.jpg',
+    image: '/images/industries/manufacturing.png',
     icon: <Factory size={20} strokeWidth={1.5} className="text-white" />,
   },
   {
     title: 'Energy & Utilities',
     description: 'Capture high-consequence incidents with the regulatory detail required — from site to submission, fully audit-ready.',
-    image: '/images/industries/energy.jpg',
+    image: '/images/industries/energy.png',
     icon: <Zap size={20} strokeWidth={1.5} className="text-white" />,
   },
   {
     title: 'Logistics & Warehousing',
     description: 'Report forklift incidents, manual handling injuries, and loading bay hazards the moment they happen — before shift handover.',
-    image: '/images/industries/logistics.jpg',
+    image: '/images/industries/logistics.png',
     icon: <Truck size={20} strokeWidth={1.5} className="text-white" />,
   },
   {
     title: 'Field Services',
     description: 'Give lone workers a fast, offline-capable way to report incidents wherever the job takes them — no signal required.',
-    image: '/images/industries/field-services.jpg',
+    image: '/images/industries/field-services.png',
     icon: <Briefcase size={20} strokeWidth={1.5} className="text-white" />,
   },
 ]

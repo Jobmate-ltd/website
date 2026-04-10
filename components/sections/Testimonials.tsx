@@ -122,14 +122,32 @@ const TestimonialsColumn = (props: {
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-[#0a0a0a] overflow-hidden">
+    <section className="relative py-24 bg-[#0a0a0a] overflow-hidden">
+      {/* Red glow — centred behind columns */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"
+        style={{ background: 'radial-gradient(circle, rgba(229,52,42,0.12) 0%, transparent 70%)' }}
+      />
+
       <div className="text-center mb-16 px-4">
         <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Testimonials</p>
         <h2 className="text-4xl md:text-5xl font-black text-white">
           Trusted by safety teams<br />across the UK
         </h2>
       </div>
-      <div className="flex gap-6 justify-center max-h-[600px] overflow-hidden">
+
+      <div className="relative flex gap-6 justify-center max-h-[600px] overflow-hidden">
+        {/* Top fade */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-32 z-10"
+          style={{ background: 'linear-gradient(to bottom, #0a0a0a, transparent)' }}
+        />
+        {/* Bottom fade */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-10"
+          style={{ background: 'linear-gradient(to top, #0a0a0a, transparent)' }}
+        />
+
         <TestimonialsColumn testimonials={col1} duration={25} />
         <TestimonialsColumn testimonials={col2} duration={18} className="hidden md:block" />
         <TestimonialsColumn testimonials={col3} duration={22} className="hidden lg:block" />
