@@ -50,9 +50,9 @@ export default function Footer() {
             <Image
               src="/images/jobsafe_logo-removebg-preview.png"
               alt="JobSafe"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
+              width={140}
+              height={40}
+              className="object-contain w-auto h-8"
             />
             <p className="text-white/50 text-sm leading-relaxed max-w-sm">
               Record. Resolve. Prevent. — Workplace incident reporting built for the field.

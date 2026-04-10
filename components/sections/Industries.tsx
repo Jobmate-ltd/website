@@ -119,28 +119,24 @@ export default function Industries() {
 
                 {/* Bottom gradient shadow */}
                 <div
-                  className="absolute left-0 right-0 pointer-events-none"
+                  className="absolute inset-x-0 bottom-0 pointer-events-none"
                   style={{
-                    bottom: isActive ? '0' : '-40px',
-                    height: '120px',
-                    boxShadow: isActive
-                      ? 'inset 0 -120px 120px -120px #000, inset 0 -120px 120px -80px #000'
-                      : 'inset 0 -120px 0px -120px #000, inset 0 -120px 0px -80px #000',
-                    transition: 'bottom 700ms ease-in-out, box-shadow 700ms ease-in-out',
+                    height: '180px',
+                    background: 'linear-gradient(to top, #000000 0%, rgba(0,0,0,0.85) 40%, transparent 100%)',
                   }}
                 />
 
                 {/* Label row */}
-                <div className="absolute left-0 right-0 bottom-5 flex items-center px-4 gap-3 z-10 pointer-events-none">
+                <div className="absolute left-0 right-0 bottom-5 flex items-center px-4 gap-3 z-10 pointer-events-none backdrop-blur-sm">
                   {/* Icon bubble */}
-                  <div className="shrink-0 w-[44px] h-[44px] flex items-center justify-center rounded-full bg-black/70 backdrop-blur-sm border border-white/20">
+                  <div className="shrink-0 w-[44px] h-[44px] flex items-center justify-center rounded-full bg-black/80 backdrop-blur-sm border border-white/20">
                     {option.icon}
                   </div>
 
                   {/* Title + description — slide in from right when active */}
                   <div className="overflow-hidden">
                     <div
-                      className="font-bold text-base text-white leading-tight"
+                      className="font-bold text-lg text-white leading-tight"
                       style={{
                         opacity: isActive ? 1 : 0,
                         transform: isActive ? 'translateX(0)' : 'translateX(20px)',
@@ -150,7 +146,7 @@ export default function Industries() {
                       {option.title}
                     </div>
                     <div
-                      className="text-sm text-white/60 mt-1 leading-snug"
+                      className="text-sm text-white/90 mt-1 leading-snug"
                       style={{
                         opacity: isActive ? 1 : 0,
                         transform: isActive ? 'translateX(0)' : 'translateX(20px)',

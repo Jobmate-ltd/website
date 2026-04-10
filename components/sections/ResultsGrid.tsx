@@ -50,11 +50,8 @@ export default function ResultsGrid() {
 
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3">
         {results.map((result) => (
-          <motion.div
-            key={result.title}
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          <div key={result.title} className="relative">
+            {/* Static card content — never animates */}
             <FeatureCard
               feature={{
                 title: result.title,
@@ -67,9 +64,15 @@ export default function ResultsGrid() {
                   />
                 ),
               }}
-              className="bg-transparent h-full border border-[#e5342a]/15 [&_h3]:text-white [&_p]:text-white/50"
+              className="bg-transparent h-full [&_h3]:text-white [&_p]:text-white/50"
             />
-          </motion.div>
+            {/* Pulsing border overlay — only this animates */}
+            <motion.div
+              className="pointer-events-none absolute inset-0 rounded-xl border border-[#e5342a]/20"
+              animate={{ opacity: [0.3, 0.8, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
         ))}
       </div>
 
