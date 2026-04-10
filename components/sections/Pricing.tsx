@@ -8,56 +8,58 @@ import { CheckCheck } from 'lucide-react'
 import { motion } from 'motion/react'
 import React, { useRef, useState } from 'react'
 
+const baseFeatures = [
+  'Unlimited incident reports',
+  'Dashboard analytics',
+  'Offline mode & GPS tagging',
+  'Photo, video & voice attachments',
+  'Real-time supervisor alerts',
+  'Full audit trail',
+  'HSSE compliance tools',
+  'Email support',
+]
+
 const plans = [
   {
     name: 'Starter',
-    description: 'For small teams getting started with workplace safety reporting.',
+    description: 'For teams of up to 500 users. Full access to every JobSafe feature from day one.',
     price: 2.99,
     yearlyPrice: 2.69,
     isCustom: false,
-    buttonText: 'Start Free Trial',
+    threshold: 'Up to 500 licences',
+    buttonText: 'Start 3-Day Free Trial',
     popular: false,
-    includes: [
-      'Everything you need to start:',
-      'Up to 25 users',
-      'Incident & near-miss reporting',
-      'Photo, GPS & timestamp capture',
-      'Supervisor notifications',
-      'Basic analytics dashboard',
-    ],
+    featuresHeader: 'Everything included:',
+    features: baseFeatures,
   },
   {
     name: 'Professional',
-    description: 'For growing teams that need deeper insights and compliance tooling.',
+    description: 'For teams of 500–1,000 users. Same full feature set at a better per-licence rate.',
     price: 2.75,
     yearlyPrice: 2.48,
     isCustom: false,
-    buttonText: 'Start Free Trial',
+    threshold: '500–1,000 licences',
+    buttonText: 'Start 3-Day Free Trial',
     popular: true,
-    includes: [
-      'Everything in Starter, plus:',
-      'Unlimited users',
-      'Custom report workflows',
-      'Multi-site management',
-      'HSSE audit-ready exports',
-      'Priority support',
-    ],
+    featuresHeader: 'Everything included:',
+    features: baseFeatures,
   },
   {
     name: 'Enterprise',
-    description: 'For large organisations with custom security, compliance, and integration needs.',
+    description: 'For organisations with 1,000+ users. Custom pricing, dedicated support, and SLA guarantees.',
     price: 0,
     yearlyPrice: 0,
     isCustom: true,
-    buttonText: 'Contact Sales',
+    threshold: '1,000+ licences',
+    buttonText: 'Request a Free Trial',
     popular: false,
-    includes: [
-      'Everything in Professional, plus:',
-      'SSO & custom auth',
+    featuresHeader: 'Everything included, plus:',
+    features: [
+      ...baseFeatures,
       'Dedicated account manager',
-      'Custom SLA & uptime guarantee',
-      'API access & integrations',
-      'On-site onboarding',
+      'Custom SLA guarantee',
+      'GDPR data processing agreement',
+      'Priority support',
     ],
   },
 ]
@@ -155,7 +157,7 @@ export default function Pricing() {
                 containerClassName="justify-start flex-wrap"
                 transition={{ type: 'spring', stiffness: 250, damping: 40, delay: 0 }}
               >
-                Simple, per-license pricing
+                Simple, per-licence pricing
               </VerticalCutReveal>
             </h2>
             <TimelineContent
@@ -165,7 +167,7 @@ export default function Pricing() {
               customVariants={revealVariants}
               className="text-white/50 text-sm max-w-xs"
             >
-              No setup fees. No hidden costs. Cancel any time.
+              One product. Every feature. Price scales with your team size.
             </TimelineContent>
           </div>
 
@@ -215,7 +217,7 @@ export default function Pricing() {
                     {plan.isCustom ? (
                       <span className="text-4xl font-black text-white">Custom</span>
                     ) : (
-                      <div className="flex items-baseline gap-1">
+                      <div className="flex items-baseline gap-1 flex-wrap">
                         <span className="text-4xl font-black text-white">
                           £<NumberFlow
                             value={isYearly ? plan.yearlyPrice : plan.price}
@@ -223,9 +225,12 @@ export default function Pricing() {
                             className="text-4xl font-black text-white"
                           />
                         </span>
-                        <span className="text-white/40 text-sm ml-1">/user/mo</span>
+                        <span className="text-white/40 text-sm ml-1">
+                          {isYearly ? 'per licence / mo, billed annually' : 'per licence / mo'}
+                        </span>
                       </div>
                     )}
+                    <p className="text-white/30 text-xs mt-2">{plan.threshold}</p>
                   </div>
 
                   <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
@@ -233,10 +238,10 @@ export default function Pricing() {
 
                   <div className="space-y-3 pt-4 border-t border-white/10">
                     <h4 className="font-bold text-xs uppercase tracking-widest text-white/30 mb-3">
-                      {plan.includes[0]}
+                      {plan.featuresHeader}
                     </h4>
                     <ul className="space-y-2">
-                      {plan.includes.slice(1).map((feature, featureIndex) => (
+                      {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start gap-3">
                           <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#e5342a]/10 border border-[#e5342a]/20 flex items-center justify-center">
                             <CheckCheck className="w-3 h-3 text-[#e5342a]" />
@@ -265,6 +270,10 @@ export default function Pricing() {
             </TimelineContent>
           ))}
         </TimelineContent>
+
+        <p className="text-center text-white/30 text-sm mt-8">
+          All plans include a 3-day free trial. No credit card required.
+        </p>
 
       </div>
     </section>
