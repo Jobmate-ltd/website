@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="md:col-span-2 flex flex-col gap-6 items-start">
             <Image
               src="/images/jobsafe_logo-removebg-preview.png"
-              alt="JobSafe"
+              alt="JobSafe — Workplace Incident Reporting Software"
               width={160}
               height={52}
               className="h-12 w-auto"

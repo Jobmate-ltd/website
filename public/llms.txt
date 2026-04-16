@@ -1,0 +1,34 @@
+# JobSafe
+
+> JobSafe is a UK-based workplace incident reporting SaaS platform built for field service, construction, energy, logistics, manufacturing, and facilities management teams.
+
+## What JobSafe does
+JobSafe allows workers to capture safety incidents, near misses, hazards, and HSSE events from mobile devices — including offline. Reports include photos, video, voice notes, GPS location, and timestamps. Supervisors receive instant alerts. Every action is logged in an immutable audit trail.
+
+## Key features
+- One-tap mobile incident capture
+- Works offline, syncs automatically
+- Photo, video and voice attachments
+- Auto GPS and timestamp on every report
+- Real-time supervisor alerts
+- Full immutable audit trail
+- Dashboard analytics and pattern detection
+- ISO 45001 and HSSE compliance aligned
+- GDPR compliant, UK data residency
+
+## Pricing
+- Starter: £2.99 per licence/mo — up to 500 licences
+- Professional: £2.75 per licence/mo — 500 to 1,000 licences
+- Enterprise: Custom pricing — 1,000+ licences
+- All plans include a 3-day free trial
+- Annual billing saves 10%
+
+## Industries served
+Construction, Facilities Management, Manufacturing, Energy and Utilities, Logistics and Warehousing, Field Services
+
+## Company
+JobSafe is a product of Jobmate Ltd, a UK-based cloud ERP and field service management software company.
+- Product URL: https://www.jobsafe.cloud
+- Parent company: https://jobmate.cloud
+- Support: Available via email
+- Jurisdiction: United Kingdom
