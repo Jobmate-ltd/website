@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     siteName: 'JobSafe',
     images: [
       {
-        url: '/images/jobsafe_logo-removebg-preview.png',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'JobSafe — Workplace Incident Reporting Software',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'JobSafe — Workplace Incident Reporting Software',
     description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £2.99 per licence.',
-    images: ['/images/jobsafe_logo-removebg-preview.png'],
+    images: ['/images/og-image.png'],
   },
   alternates: {
     canonical: 'https://www.jobsafe.cloud',
