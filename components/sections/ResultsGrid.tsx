@@ -78,10 +78,10 @@ export default function ResultsGrid() {
 
       <div className="flex justify-center mt-12">
         <a
-          href="#"
+          href="tel:03338000883"
           className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
         >
-          START FREE TRIAL →
+          Call 0333 8000 883
         </a>
       </div>
     </section>

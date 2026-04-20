@@ -77,10 +77,10 @@ export default function Hero() {
               className="flex flex-wrap items-center justify-start gap-4 mb-16"
             >
               <a
-                href="#get-started"
+                href="tel:03338000883"
                 className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
               >
-                START FREE TRIAL →
+                Call 0333 8000 883
               </a>
               <a
                 href="#how-it-works"

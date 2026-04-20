@@ -27,7 +27,7 @@ const plans = [
     yearlyPrice: 2.69,
     isCustom: false,
     threshold: 'Up to 500 licences',
-    buttonText: 'Start 3-Day Free Trial',
+    buttonText: 'Call to Get Started',
     popular: false,
     featuresHeader: 'Everything included:',
     features: baseFeatures,
@@ -39,7 +39,7 @@ const plans = [
     yearlyPrice: 2.48,
     isCustom: false,
     threshold: '500–1,000 licences',
-    buttonText: 'Start 3-Day Free Trial',
+    buttonText: 'Call to Get Started',
     popular: true,
     featuresHeader: 'Everything included:',
     features: baseFeatures,
@@ -51,7 +51,7 @@ const plans = [
     yearlyPrice: 0,
     isCustom: true,
     threshold: '1,000+ licences',
-    buttonText: 'Request a Free Trial',
+    buttonText: 'Call Us',
     popular: false,
     featuresHeader: 'Everything included, plus:',
     features: [
@@ -255,7 +255,7 @@ export default function Pricing() {
 
                 <CardFooter>
                   <a
-                    href={plan.isCustom ? '#contact' : '#get-started'}
+                    href="tel:03338000883"
                     className={cn(
                       'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition-colors',
                       plan.popular

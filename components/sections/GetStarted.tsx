@@ -27,7 +27,7 @@ export default function GetStarted() {
           transition={{ duration: 0.5 }}
           className="text-xs font-bold tracking-widest text-white/50 uppercase mb-6"
         >
-          Get Started
+          Get In Touch
         </motion.p>
 
         <motion.h2
@@ -58,16 +58,16 @@ export default function GetStarted() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
-            href="#"
+            href="tel:03338000883"
             className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#e5342a] hover:bg-[#c42d24] text-white font-semibold text-sm tracking-wide transition-colors"
           >
-            START FREE — NO CARD NEEDED →
+            Call 0333 8000 883
           </a>
           <a
-            href="#"
+            href="tel:03338000883"
             className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 hover:border-white/40 text-white font-semibold text-sm tracking-wide transition-colors"
           >
-            BOOK A DEMO
+            Book a Demo
           </a>
         </motion.div>
       </div>

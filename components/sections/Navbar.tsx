@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { MenuIcon } from 'lucide-react'
+import { MenuIcon, Phone } from 'lucide-react'
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -31,8 +31,13 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <Button size="sm" variant="ghost" className="text-white">Log In</Button>
-          <Button size="sm" className="bg-[#e5342a] hover:bg-[#c42d24] text-white">Sign Up</Button>
+          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors font-medium">
+            <Phone className="size-4" strokeWidth={1.5} />
+            0333 8000 883
+          </a>
+          <a href="tel:03338000883" className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-colors">
+            Call Us
+          </a>
           <Sheet open={open} onOpenChange={setOpen}>
             <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="lg:hidden border-white/10">
               <MenuIcon className="size-4" />
@@ -46,8 +51,9 @@ export function Navbar() {
                 ))}
               </div>
               <SheetFooter>
-                <Button variant="outline" className="border-white/10 text-white">Log In</Button>
-                <Button className="bg-[#e5342a] hover:bg-[#c42d24] text-white">Sign Up</Button>
+                <a href="tel:03338000883" className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-colors">
+                  Call 0333 8000 883
+                </a>
               </SheetFooter>
             </SheetContent>
           </Sheet>

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Phone } from 'lucide-react'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -56,6 +57,13 @@ export default function Footer() {
             <p className="text-white/50 text-sm leading-relaxed max-w-sm">
               Record. Resolve. Prevent. — Workplace incident reporting built for the field.
             </p>
+            <a
+              href="tel:03338000883"
+              className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
+            >
+              <Phone className="size-4" strokeWidth={1.5} />
+              0333 8000 883
+            </a>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
