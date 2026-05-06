@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: 'JobSafe — Workplace Incident Reporting Software',
     template: '%s | JobSafe',
   },
-  description: 'JobSafe helps field service and industrial teams capture incidents in seconds, improve HSSE compliance, and build a stronger safety culture. Offline-capable, ISO 45001 aligned, from £2.99 per licence.',
+  description: 'Incident reporting for field teams & transport operators. HSSE compliant, offline-capable, ISO 45001 aligned. From £2.99/licence.',
   metadataBase: new URL('https://www.jobsafe.cloud'),
   keywords: [
     'incident reporting software UK',
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/images/og-image.png',
-        width: 1200,
-        height: 630,
+        width: 1203,
+        height: 633,
         alt: 'JobSafe — Workplace Incident Reporting Software',
       },
     ],
@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@JobSafeCloud',
     title: 'JobSafe — Workplace Incident Reporting Software',
     description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £2.99 per licence.',
     images: ['/images/og-image.png'],
