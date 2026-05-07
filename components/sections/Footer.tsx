@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Mail, Phone } from 'lucide-react'
+import { Download, Mail, Phone } from 'lucide-react'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -70,6 +70,14 @@ export default function Footer() {
             >
               <Mail className="size-4" strokeWidth={1.5} />
               sales@jobsafe.cloud
+            </a>
+            <a
+              href="/jobsafe-brochure.pdf"
+              download
+              className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
+            >
+              <Download className="size-4" strokeWidth={1.5} />
+              Download brochure (PDF)
             </a>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
