@@ -9,6 +9,7 @@ import Image from 'next/image'
 export function Navbar() {
   const [open, setOpen] = React.useState(false)
   const links = [
+    { label: 'Home', href: '#hero' },
     { label: 'Features', href: '#features' },
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'Industries', href: '#industries' },
