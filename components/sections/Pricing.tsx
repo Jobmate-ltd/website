@@ -23,8 +23,8 @@ const plans = [
   {
     name: 'Starter',
     description: 'For teams of up to 500 users. Full access to every JobSafe feature from day one.',
-    price: 2.99,
-    yearlyPrice: 2.69,
+    price: 3.00,
+    yearlyPrice: 2.70,
     isCustom: false,
     threshold: 'Up to 500 licences',
     buttonText: 'Call to Get Started',
@@ -35,8 +35,8 @@ const plans = [
   {
     name: 'Professional',
     description: 'For teams of 500–1,000 users. Same full feature set at a better per-licence rate.',
-    price: 2.75,
-    yearlyPrice: 2.48,
+    price: 2.50,
+    yearlyPrice: 2.25,
     isCustom: false,
     threshold: '500–1,000 licences',
     buttonText: 'Call to Get Started',
@@ -230,10 +230,9 @@ export default function Pricing() {
                         </span>
                       </div>
                     )}
-                    <p className="text-white/60 text-xs mt-2">{plan.threshold}</p>
                   </div>
 
-                  <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
+                  <h3 className="text-2xl font-black text-white mb-2">{plan.threshold}</h3>
                   <p className="text-sm text-white/50 mb-6 leading-relaxed">{plan.description}</p>
 
                   <div className="space-y-3 pt-4 border-t border-white/10">
