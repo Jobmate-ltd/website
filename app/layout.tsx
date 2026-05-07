@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({
@@ -123,6 +124,18 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} min-h-full flex flex-col`}>
         {children}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-KB69331C7J"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-KB69331C7J');
+          `}
+        </Script>
       </body>
     </html>
   )
