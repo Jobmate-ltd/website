@@ -104,7 +104,7 @@ export default function Hero() {
               ].map(({ stat, label }) => (
                 <div key={label} className="text-left">
                   <div className="text-2xl font-black text-white">{stat}</div>
-                  <div className="text-xs text-white/40 uppercase tracking-widest mt-1">{label}</div>
+                  <div className="text-xs text-white/60 uppercase tracking-widest mt-1">{label}</div>
                 </div>
               ))}
             </motion.div>

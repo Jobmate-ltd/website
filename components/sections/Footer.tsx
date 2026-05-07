@@ -80,7 +80,7 @@ export default function Footer() {
 
           {/* Nav column */}
           <div className="flex flex-col gap-3">
-            <span className="text-xs font-bold tracking-widest text-white/30 uppercase mb-1">
+            <span className="text-xs font-bold tracking-widest text-white/60 uppercase mb-1">
               Navigation
             </span>
             {navLinks.map(({ label, href }) => (
@@ -100,14 +100,14 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-5xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/30 text-xs">
+          <p className="text-white/60 text-xs">
             © JobSafe {year}. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <a href="/privacy-policy" className="text-white/30 hover:text-white/60 text-xs transition-colors">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <a href="/privacy-policy" className="inline-flex items-center min-h-11 px-2 text-white/60 hover:text-white text-xs transition-colors">
               Privacy Policy
             </a>
-            <a href="/terms" className="text-white/30 hover:text-white/60 text-xs transition-colors">
+            <a href="/terms" className="inline-flex items-center min-h-11 px-2 text-white/60 hover:text-white text-xs transition-colors">
               Terms and Conditions
             </a>
           </div>

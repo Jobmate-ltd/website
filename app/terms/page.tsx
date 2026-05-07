@@ -11,7 +11,7 @@ export default function Terms() {
       <div className="max-w-3xl mx-auto">
         <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to JobSafe</a>
         <h1 className="text-4xl font-black text-white mb-4">Terms &amp; Conditions</h1>
-        <p className="text-white/40 text-sm mb-16">Last updated: January 2024</p>
+        <p className="text-white/60 text-sm mb-16">Last updated: January 2024</p>
         <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed space-y-8">
 
           <p className="text-white/60 leading-relaxed">All services provided by JobSafe and orders for software services are subject to the following terms and conditions. No additions or variations shall apply unless expressly agreed in writing by JobSafe. JobSafe is provided as a SaaS (Software as a Service) platform. Access is through web services or mobile applications.</p>

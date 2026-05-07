@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import Image from 'next/image'
 import { motion } from 'motion/react'
 
 type Testimonial = {
@@ -99,12 +100,13 @@ const TestimonialsColumn = (props: {
               >
                 <p className="text-white/80 text-sm leading-relaxed">{text}</p>
                 <div className="flex items-center gap-3 mt-5">
-                  <img
+                  <Image
                     width={40}
                     height={40}
                     src={image}
                     alt={`${name}, ${role}`}
                     className="h-10 w-10 rounded-full"
+                    unoptimized
                   />
                   <div className="flex flex-col">
                     <span className="text-white font-medium tracking-tight leading-5">{name}</span>

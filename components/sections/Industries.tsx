@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { HardHat, Building2, Factory, Zap, Truck, Briefcase } from 'lucide-react'
 
 const options = [
@@ -44,6 +45,7 @@ const options = [
 export default function Industries() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [animated, setAnimated] = useState<number[]>([])
+  const [failed, setFailed] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
@@ -100,19 +102,27 @@ export default function Industries() {
                 }}
               >
                 {/* Image — hides itself on 404, placeholder shows through */}
-                <img
-                  src={option.image}
-                  alt=""
-                  aria-hidden
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
+                {!failed.has(index) && (
+                  <Image
+                    src={option.image}
+                    alt=""
+                    aria-hidden
+                    fill
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    className="object-cover"
+                    onError={() =>
+                      setFailed((prev) => {
+                        const next = new Set(prev)
+                        next.add(index)
+                        return next
+                      })
+                    }
+                  />
+                )}
 
                 {/* Placeholder — visible when image is missing */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <span className="text-white/20 text-xs font-medium text-center px-2 leading-snug">
+                  <span className="text-white/50 text-xs font-medium text-center px-2 leading-snug">
                     {option.title}
                   </span>
                 </div>

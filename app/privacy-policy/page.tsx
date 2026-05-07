@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
       <div className="max-w-3xl mx-auto">
         <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to JobSafe</a>
         <h1 className="text-4xl font-black text-white mb-4">Privacy Policy</h1>
-        <p className="text-white/40 text-sm mb-16">Last updated: January 2024</p>
+        <p className="text-white/60 text-sm mb-16">Last updated: January 2024</p>
         <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed space-y-8">
 
           <article>

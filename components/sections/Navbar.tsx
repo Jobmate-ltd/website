@@ -31,7 +31,7 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors font-medium">
+          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 text-sm text-white/90 hover:text-white transition-colors font-medium">
             <Phone className="size-4" strokeWidth={1.5} />
             0333 8000 883
           </a>
@@ -45,7 +45,7 @@ export function Navbar() {
             <SheetContent className="bg-black/90 backdrop-blur-lg border-white/10" side="left">
               <div className="grid gap-y-2 overflow-y-auto px-4 pt-12 pb-5">
                 {links.map((link) => (
-                  <a key={link.href} className={buttonVariants({ variant: 'ghost', className: 'justify-start text-white' })} href={link.href}>
+                  <a key={link.href} className={buttonVariants({ variant: 'ghost', className: 'justify-start text-white min-h-11' })} href={link.href}>
                     {link.label}
                   </a>
                 ))}

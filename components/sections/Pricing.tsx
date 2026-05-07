@@ -79,7 +79,7 @@ const PricingSwitch = (props: { onSwitch: (value: string) => void; className?: s
           onClick={() => handleSwitch('0')}
           className={cn(
             'relative z-10 w-fit sm:h-12 cursor-pointer h-10 rounded-full sm:px-6 px-3 sm:py-2 py-1 font-medium transition-colors',
-            selected === '0' ? 'text-white' : 'text-white/40 hover:text-white',
+            selected === '0' ? 'text-white' : 'text-white/60 hover:text-white',
           )}
         >
           {selected === '0' && (
@@ -96,7 +96,7 @@ const PricingSwitch = (props: { onSwitch: (value: string) => void; className?: s
           onClick={() => handleSwitch('1')}
           className={cn(
             'relative z-10 w-fit cursor-pointer sm:h-12 h-10 flex-shrink-0 rounded-full sm:px-6 px-3 sm:py-2 py-1 font-medium transition-colors',
-            selected === '1' ? 'text-white' : 'text-white/40 hover:text-white',
+            selected === '1' ? 'text-white' : 'text-white/60 hover:text-white',
           )}
         >
           {selected === '1' && (
@@ -225,19 +225,19 @@ export default function Pricing() {
                             className="text-4xl font-black text-white"
                           />
                         </span>
-                        <span className="text-white/40 text-sm ml-1">
+                        <span className="text-white/60 text-sm ml-1">
                           {isYearly ? 'per licence / mo, billed annually' : 'per licence / mo'}
                         </span>
                       </div>
                     )}
-                    <p className="text-white/30 text-xs mt-2">{plan.threshold}</p>
+                    <p className="text-white/60 text-xs mt-2">{plan.threshold}</p>
                   </div>
 
                   <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
                   <p className="text-sm text-white/50 mb-6 leading-relaxed">{plan.description}</p>
 
                   <div className="space-y-3 pt-4 border-t border-white/10">
-                    <h4 className="font-bold text-xs uppercase tracking-widest text-white/30 mb-3">
+                    <h4 className="font-bold text-xs uppercase tracking-widest text-white/60 mb-3">
                       {plan.featuresHeader}
                     </h4>
                     <ul className="space-y-2">
@@ -271,7 +271,7 @@ export default function Pricing() {
           ))}
         </TimelineContent>
 
-        <p className="text-center text-white/30 text-sm mt-8">
+        <p className="text-center text-white/60 text-sm mt-8">
           All plans include a 3-day free trial. No credit card required.
         </p>
 
