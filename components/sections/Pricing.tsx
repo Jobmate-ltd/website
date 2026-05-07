@@ -1,7 +1,6 @@
 'use client'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { TimelineContent } from '@/components/ui/timeline-animation'
-import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
 import { cn } from '@/lib/utils'
 import NumberFlow from '@number-flow/react'
 import { CheckCheck } from 'lucide-react'
@@ -149,16 +148,7 @@ export default function Pricing() {
           <div className="text-left mb-6">
             <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Pricing</p>
             <h2 className="text-4xl md:text-5xl font-black leading-tight text-white mb-4">
-              <VerticalCutReveal
-                splitBy="words"
-                staggerDuration={0.15}
-                staggerFrom="first"
-                reverse={true}
-                containerClassName="justify-start flex-wrap"
-                transition={{ type: 'spring', stiffness: 250, damping: 40, delay: 0 }}
-              >
-                Simple, per-licence pricing
-              </VerticalCutReveal>
+              Simple, transparent pricing — one price per licence
             </h2>
             <TimelineContent
               as="p"
@@ -167,7 +157,7 @@ export default function Pricing() {
               customVariants={revealVariants}
               className="text-white/50 text-sm max-w-xs"
             >
-              One product. Every feature. Price scales with your team size.
+              No feature tiers. No hidden extras. Every team gets the full platform — incident reporting, analytics, offline mode, audit trail, and HSSE compliance tools included.
             </TimelineContent>
           </div>
 

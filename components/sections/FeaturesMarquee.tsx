@@ -51,15 +51,15 @@ export default function FeaturesMarquee() {
           Everything your team needs.<br />Nothing they don&apos;t.
         </h2>
         <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
-          The fastest, simplest way to capture, manage, and learn from workplace incidents — built for real environments, not just offices.
+          Everything your team needs to go from incident to insight — whether they&apos;re on a depot floor, up a ladder, or in a cab with no signal.
         </p>
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-4">
-        <Marquee pauseOnHover className="[--duration:25s]">
+        <Marquee pauseOnHover repeat={2} className="[--duration:25s]">
           {firstRow.map((f) => <FeatureCard key={f.title} {...f} />)}
         </Marquee>
-        <Marquee reverse pauseOnHover className="[--duration:25s]">
+        <Marquee reverse pauseOnHover repeat={2} className="[--duration:25s]">
           {secondRow.map((f) => <FeatureCard key={f.title} {...f} />)}
         </Marquee>
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#0a0a0a]" />

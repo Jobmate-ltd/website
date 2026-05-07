@@ -3,6 +3,13 @@ import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
 
+const heroStats = [
+  { stat: '3×', label: 'Faster Reporting' },
+  { stat: '<60s', label: 'Per Report' },
+  { stat: 'Zero', label: 'Paperwork' },
+  { stat: '✓', label: 'Works Offline' },
+]
+
 export default function Hero() {
   return (
     <section
@@ -55,7 +62,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-white/50 text-lg leading-relaxed mb-10 max-w-lg"
             >
-              jobsafe helps teams capture incidents in seconds, improve compliance, and build a stronger safety culture — from the field to the boardroom.
+              The mobile incident reporting app built for real-world risk — jobsafe brings HSSE reporting to construction, field service, and transport environments where paper-based solutions aren&apos;t good enough.
             </motion.p>
 
             <motion.div
@@ -72,9 +79,10 @@ export default function Hero() {
               </a>
               <a
                 href="#how-it-works"
-                className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+                className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
               >
-                SEE HOW IT WORKS
+                <span className="relative z-10">SEE HOW IT WORKS</span>
+                <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={60} borderWidth={2} />
               </a>
             </motion.div>
 
@@ -84,12 +92,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap items-center justify-start gap-x-10 gap-y-6"
             >
-              {[
-                { stat: '3×', label: 'Faster Reporting' },
-                { stat: '98%', label: 'Compliance Rate' },
-                { stat: '60%', label: 'Fewer Repeat Incidents' },
-                { stat: 'Zero', label: 'Paperwork' },
-              ].map(({ stat, label }) => (
+              {heroStats.map(({ stat, label }) => (
                 <div key={label} className="text-left">
                   <div className="text-2xl font-black text-white">{stat}</div>
                   <div className="text-xs text-white/60 uppercase tracking-widest mt-1">{label}</div>

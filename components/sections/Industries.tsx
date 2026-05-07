@@ -65,7 +65,7 @@ export default function Industries() {
           Built for industries where<br />safety is non-negotiable
         </h2>
         <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm">
-          From construction sites to field service vehicles, jobsafe is designed to work in the places where incidents actually happen.
+          From construction site safety to logistics depot incident reporting, jobsafe is built for environments where a slow or paper-based process isn&apos;t good enough.
         </p>
       </div>
 
