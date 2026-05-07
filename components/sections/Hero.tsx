@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0a0a0a]"
+      className="relative min-h-screen flex flex-col justify-start overflow-hidden bg-[#0a0a0a]"
     >
       {/* Grid background */}
       <div
@@ -31,7 +31,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 w-full">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-32 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}
@@ -46,7 +46,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5342a] opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e5342a]" />
               </span>
-              Available from £2.25 per licence
+              Available from £3 per licence
             </motion.div>
 
             <motion.h1
