@@ -143,7 +143,7 @@ export default function AnimatedForm() {
                 <span className="w-2 h-2 rounded-full bg-white/20" />
                 <span className="w-2 h-2 rounded-full bg-white/20" />
                 <span className="w-2 h-2 rounded-full bg-white/20" />
-                <span className="ml-2 text-xs text-white/30 font-medium">New Report</span>
+                <span className="ml-2 text-xs text-white/60 font-medium">New Report</span>
               </div>
 
               {/* Body — form and success share this space */}
@@ -162,11 +162,11 @@ export default function AnimatedForm() {
                     >
                       {/* Incident type */}
                       <div>
-                        <label className="text-xs text-white/40 mb-1.5 block">Incident Type</label>
+                        <label className="text-xs text-white/60 mb-1.5 block">Incident Type</label>
                         <div className={`rounded-lg border px-3 py-2.5 text-sm transition-all duration-500 ${
                           showDropdown
                             ? 'border-[#e5342a]/40 bg-[#e5342a]/5 text-white'
-                            : 'border-white/10 bg-white/5 text-white/25'
+                            : 'border-white/10 bg-white/5 text-white/60'
                         }`}>
                           {showDropdown ? 'Near Miss' : 'Select type…'}
                         </div>
@@ -174,7 +174,7 @@ export default function AnimatedForm() {
 
                       {/* Description */}
                       <div>
-                        <label className="text-xs text-white/40 mb-1.5 block">Description</label>
+                        <label className="text-xs text-white/60 mb-1.5 block">Description</label>
                         <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white min-h-[80px] leading-relaxed">
                           {typedText}
                           {phase === 'typing' && (
@@ -192,7 +192,7 @@ export default function AnimatedForm() {
                         {['Photo', 'Voice', 'Video'].map((label) => (
                           <div
                             key={label}
-                            className="flex-1 rounded-lg border border-white/10 bg-white/5 py-2 text-center text-xs text-white/40"
+                            className="flex-1 rounded-lg border border-white/10 bg-white/5 py-2 text-center text-xs text-white/60"
                           >
                             {label}
                           </div>
@@ -266,7 +266,7 @@ export default function AnimatedForm() {
                             className="text-center"
                           >
                             <p className="text-white font-semibold text-sm">Report Submitted Successfully</p>
-                            <p className="text-white/40 text-xs mt-1">Supervisors have been notified</p>
+                            <p className="text-white/60 text-xs mt-1">Supervisors have been notified</p>
                           </motion.div>
                         )}
                       </AnimatePresence>

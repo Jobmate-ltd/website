@@ -162,7 +162,7 @@ export default function HowItWorks() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#e5342a]/60" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/60" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]/60" />
-              <span className="ml-2 text-xs text-white/30">JobSafe — Live Dashboard</span>
+              <span className="ml-2 text-xs text-white/60">JobSafe — Live Dashboard</span>
             </div>
 
             <div className="p-5 flex flex-col gap-4">
@@ -175,7 +175,7 @@ export default function HowItWorks() {
                 ].map(({ count, label, color, bg }) => (
                   <div key={label} className={`${bg} rounded-lg p-3 text-center`}>
                     <div className={`text-xl font-black ${color}`}>{count}</div>
-                    <div className="text-xs text-white/40 mt-0.5">{label}</div>
+                    <div className="text-xs text-white/60 mt-0.5">{label}</div>
                   </div>
                 ))}
               </div>
@@ -184,13 +184,13 @@ export default function HowItWorks() {
               {reports.map(({ id, time, title, location, assigned, status, statusColor, progress, barColor }) => (
                 <div key={id} className="rounded-xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/30">{id} · {time}</span>
+                    <span className="text-xs text-white/60">{id} · {time}</span>
                     <span className={`text-xs font-semibold border rounded-full px-2 py-0.5 ${statusColor}`}>
                       {status}
                     </span>
                   </div>
                   <p className="text-sm font-semibold text-white leading-snug">{title}</p>
-                  <div className="flex items-center justify-between text-xs text-white/40">
+                  <div className="flex items-center justify-between text-xs text-white/60">
                     <span>{location}</span>
                     <span>{assigned}</span>
                   </div>
