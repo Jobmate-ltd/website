@@ -9,7 +9,7 @@ export default function GetStarted() {
   }
 
   return (
-    <section id="get-started" className="relative py-32 bg-[#0a0a0a] overflow-hidden" style={gridStyle}>
+    <section id="get-started" className="relative py-16 md:py-24 bg-[#0a0a0a] overflow-hidden" style={gridStyle}>
       {/* Red glow — bottom-left */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 w-[600px] h-[600px]"

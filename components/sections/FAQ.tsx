@@ -33,7 +33,7 @@ export default function FAQ() {
   const [openItem, setOpenItem] = useState<string>('')
 
   return (
-    <section id="faq" className="py-24 bg-[#0a0a0a]">
+    <section id="faq" className="py-12 md:py-20 bg-[#0a0a0a]">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-16 lg:grid-cols-[1fr_auto]">
 

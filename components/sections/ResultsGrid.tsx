@@ -38,7 +38,7 @@ const results = [
 
 export default function ResultsGrid() {
   return (
-    <section id="why-jobsafe" className="py-24 bg-[#0a0a0a]">
+    <section id="why-jobsafe" className="py-12 md:py-20 bg-[#0a0a0a]">
       <div className="text-center mb-16 px-4">
         <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">
           Why Teams Choose JobSafe

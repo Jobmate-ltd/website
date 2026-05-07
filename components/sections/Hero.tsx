@@ -31,7 +31,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-32 w-full">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-16 md:pb-20 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}

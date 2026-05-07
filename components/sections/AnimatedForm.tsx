@@ -117,7 +117,7 @@ export default function AnimatedForm() {
   const isSubmitting  = phase === 'submitting'
 
   return (
-    <section className="py-28 bg-[#0a0a0a]">
+    <section className="py-12 md:py-20 bg-[#0a0a0a]">
       <div className="max-w-5xl mx-auto px-6">
 
         {/* Section header */}

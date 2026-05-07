@@ -68,7 +68,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden bg-[#0a0a0a] py-28"
+      className="relative overflow-hidden bg-[#0a0a0a] py-12 md:py-20"
     >
       {/* Grid background */}
       <div
