@@ -21,7 +21,7 @@ const col1: Testimonial[] = [
     name: 'Sarah Okafor',
     role: 'Health & Safety Lead · Crestline Energy',
     image: 'https://avatar.vercel.sh/sarah',
-    text: "Audit prep used to take days. With JobSafe everything is already documented and exportable — it's transformed how we work.",
+    text: "Audit prep used to take days. With jobsafe everything is already documented and exportable — it's transformed how we work.",
   },
   {
     name: 'Tom Bradshaw',
@@ -48,7 +48,7 @@ const col2: Testimonial[] = [
     name: 'Claire Hennessy',
     role: 'Safety Co-ordinator · Vantage Facilities',
     image: 'https://avatar.vercel.sh/claire',
-    text: "JobSafe gave us visibility across all our sites in one place. We couldn't go back to spreadsheets now.",
+    text: "jobsafe gave us visibility across all our sites in one place. We couldn't go back to spreadsheets now.",
   },
 ]
 

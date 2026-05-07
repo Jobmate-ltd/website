@@ -67,7 +67,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-white/50 text-lg leading-relaxed mb-10 max-w-lg"
             >
-              JobSafe helps teams capture incidents in seconds, improve compliance, and build a stronger safety culture — from the field to the boardroom.
+              jobsafe helps teams capture incidents in seconds, improve compliance, and build a stronger safety culture — from the field to the boardroom.
             </motion.p>
 
             <motion.div

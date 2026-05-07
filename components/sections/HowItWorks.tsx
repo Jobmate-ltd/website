@@ -124,7 +124,7 @@ export default function HowItWorks() {
               transition={{ duration: 0.5, delay: 0.14 }}
               className="text-white/50 text-sm leading-relaxed mb-10"
             >
-              JobSafe guides your team through a proven process — from the moment something happens to the changes that stop it happening again.
+              jobsafe guides your team through a proven process — from the moment something happens to the changes that stop it happening again.
             </motion.p>
 
             <div className="flex flex-col divide-y divide-white/10">
@@ -162,7 +162,7 @@ export default function HowItWorks() {
               <span className="w-2.5 h-2.5 rounded-full bg-[#e5342a]/60" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/60" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E]/60" />
-              <span className="ml-2 text-xs text-white/60">JobSafe — Live Dashboard</span>
+              <span className="ml-2 text-xs text-white/60">jobsafe — Live Dashboard</span>
             </div>
 
             <div className="p-5 flex flex-col gap-4">

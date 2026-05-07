@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'JobSafe privacy policy — how we collect, use and protect your data in accordance with GDPR.',
+  description: 'jobsafe privacy policy — how we collect, use and protect your data in accordance with GDPR.',
 }
 
 export default function PrivacyPolicy() {
   return (
     <main className="bg-[#0a0a0a] min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
-        <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to JobSafe</a>
+        <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to jobsafe</a>
         <h1 className="text-4xl font-black text-white mb-4">Privacy Policy</h1>
         <p className="text-white/60 text-sm mb-16">Last updated: January 2024</p>
         <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed space-y-8">
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
 
           <article>
             <h2 className="text-white font-bold text-lg mb-3">6. Backup &amp; Data Storage</h2>
-            <p className="text-white/60 leading-relaxed">All JobSafe data is stored in UK-based AWS data centres. For administrative reasons, certain customer data may be passed to and stored securely with third-party service providers. This is done to backup and preserve your data where it is needed to continue offering a service to you.</p>
+            <p className="text-white/60 leading-relaxed">All jobsafe data is stored in UK-based AWS data centres. For administrative reasons, certain customer data may be passed to and stored securely with third-party service providers. This is done to backup and preserve your data where it is needed to continue offering a service to you.</p>
           </article>
 
           <article>
@@ -71,12 +71,12 @@ export default function PrivacyPolicy() {
 
           <article>
             <h2 className="text-white font-bold text-lg mb-3">12. Product Updates</h2>
-            <p className="text-white/60 leading-relaxed">We may send emails to existing customers or prospective customers who have enquired or registered with us, regarding products or services directly provided by JobSafe.</p>
+            <p className="text-white/60 leading-relaxed">We may send emails to existing customers or prospective customers who have enquired or registered with us, regarding products or services directly provided by jobsafe.</p>
           </article>
 
           <article>
             <h2 className="text-white font-bold text-lg mb-3">13. Email Content</h2>
-            <p className="text-white/60 leading-relaxed">All emails sent by us will be clearly marked as originating from JobSafe. All such emails will include clear instructions on how to unsubscribe, either via an unsubscribe link or a valid reply-to address with unsubscribe as the subject heading.</p>
+            <p className="text-white/60 leading-relaxed">All emails sent by us will be clearly marked as originating from jobsafe. All such emails will include clear instructions on how to unsubscribe, either via an unsubscribe link or a valid reply-to address with unsubscribe as the subject heading.</p>
           </article>
 
           <article>

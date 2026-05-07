@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -49,7 +49,7 @@ export default function Footer() {
           <div className="md:col-span-2 flex flex-col gap-6 items-start">
             <Image
               src="/images/jobsafe_logo-removebg-preview.png"
-              alt="JobSafe — Workplace Incident Reporting Software"
+              alt="jobsafe — Workplace Incident Reporting Software"
               width={160}
               height={52}
               className="h-12 w-auto"
@@ -63,6 +63,13 @@ export default function Footer() {
             >
               <Phone className="size-4" strokeWidth={1.5} />
               0333 8000 883
+            </a>
+            <a
+              href="mailto:sales@jobsafe.cloud"
+              className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
+            >
+              <Mail className="size-4" strokeWidth={1.5} />
+              sales@jobsafe.cloud
             </a>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
@@ -101,7 +108,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-5xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/60 text-xs">
-            © JobSafe {year}. All rights reserved.
+            © jobsafe {year}. All rights reserved.
           </p>
           <div className="flex items-center gap-2 sm:gap-4">
             <a href="/privacy-policy" className="inline-flex items-center min-h-11 px-2 text-white/60 hover:text-white text-xs transition-colors">

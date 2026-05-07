@@ -40,7 +40,7 @@ const features = [
     icon: Lock,
     title: 'Audit trail',
     description:
-      'Every view, edit, comment, and status change is logged immutably. JobSafe creates a complete chain of evidence from first report to final closure.',
+      'Every view, edit, comment, and status change is logged immutably. jobsafe creates a complete chain of evidence from first report to final closure.',
   },
 ]
 

@@ -46,7 +46,7 @@ export default function FeaturesMarquee() {
   return (
     <section id="features" className="py-12 md:py-20 bg-[#0a0a0a]">
       <div className="text-center mb-16 px-4">
-        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Meet JobSafe</p>
+        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Meet jobsafe</p>
         <h2 className="text-4xl md:text-5xl font-black text-white">
           Everything your team needs.<br />Nothing they don&apos;t.
         </h2>

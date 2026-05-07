@@ -22,7 +22,7 @@ const baseFeatures = [
 const plans = [
   {
     name: 'Starter',
-    description: 'For teams of up to 500 users. Full access to every JobSafe feature from day one.',
+    description: 'For teams of up to 500 users. Full access to every jobsafe feature from day one.',
     price: 3.00,
     yearlyPrice: 2.70,
     isCustom: false,

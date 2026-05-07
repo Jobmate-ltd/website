@@ -10,8 +10,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'JobSafe — Workplace Incident Reporting Software',
-    template: '%s | JobSafe',
+    default: 'jobsafe — Workplace Incident Reporting Software',
+    template: '%s | jobsafe',
   },
   description: 'Incident reporting for field teams & transport operators. HSSE compliant, offline-capable, ISO 45001 aligned. From £3/licence.',
   metadataBase: new URL('https://www.jobsafe.cloud'),
@@ -47,16 +47,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'JobSafe — Workplace Incident Reporting Software',
+    title: 'jobsafe — Workplace Incident Reporting Software',
     description: 'Record. Resolve. Prevent. The fastest way to capture and manage workplace incidents. HSSE compliant, offline-capable, from £3 per licence.',
     url: 'https://www.jobsafe.cloud',
-    siteName: 'JobSafe',
+    siteName: 'jobsafe',
     images: [
       {
         url: '/images/og-image.png',
         width: 1203,
         height: 633,
-        alt: 'JobSafe — Workplace Incident Reporting Software',
+        alt: 'jobsafe — Workplace Incident Reporting Software',
       },
     ],
     locale: 'en_GB',
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@JobSafeCloud',
-    title: 'JobSafe — Workplace Incident Reporting Software',
+    site: '@jobsafecloud',
+    title: 'jobsafe — Workplace Incident Reporting Software',
     description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £3 per licence.',
     images: ['/images/og-image.png'],
   },
@@ -88,7 +88,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'SoftwareApplication',
-              name: 'JobSafe',
+              name: 'jobsafe',
               applicationCategory: 'BusinessApplication',
               operatingSystem: 'iOS, Android, Web',
               description: 'Workplace incident reporting software for field service and industrial teams. HSSE compliant, offline-capable, ISO 45001 aligned.',

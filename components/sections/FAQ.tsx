@@ -4,16 +4,16 @@ import * as AccordionPrimitive from '@radix-ui/react-accordion'
 
 const faqs = [
   {
-    q: 'Does JobSafe work without internet?',
-    a: "Yes. The JobSafe mobile app stores reports locally when there's no signal and automatically syncs to the cloud as soon as connectivity is restored. Your team can capture incidents anywhere — on a building site, underground, or in a remote field location — without losing a single record.",
+    q: 'Does jobsafe work without internet?',
+    a: "Yes. The jobsafe mobile app stores reports locally when there's no signal and automatically syncs to the cloud as soon as connectivity is restored. Your team can capture incidents anywhere — on a building site, underground, or in a remote field location — without losing a single record.",
   },
   {
     q: 'How long does it take to set up?',
     a: "Most teams are live within 30 minutes. There's no installation, no hardware, and no IT involvement required. You create an account, invite your team members by email, and you're ready to start reporting. We provide onboarding guides and video walkthroughs to get your team confident from day one.",
   },
   {
-    q: 'Is JobSafe HSSE compliant?',
-    a: 'Yes. JobSafe is designed to support Health, Safety, Security, and Environment (HSSE) reporting requirements. Workflows align with ISO 45001 standards and the platform generates audit-ready records that satisfy both internal governance and external regulatory review. Every report is timestamped, immutable, and exportable.',
+    q: 'Is jobsafe HSSE compliant?',
+    a: 'Yes. jobsafe is designed to support Health, Safety, Security, and Environment (HSSE) reporting requirements. Workflows align with ISO 45001 standards and the platform generates audit-ready records that satisfy both internal governance and external regulatory review. Every report is timestamped, immutable, and exportable.',
   },
   {
     q: 'Can I add photos and videos to a report?',
@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: 'Is my data stored securely in the UK?',
-    a: 'Yes. All JobSafe data is stored in UK-based AWS data centres and is never transferred outside the UK. We are fully GDPR compliant, use AES-256 encryption at rest and TLS in transit, and maintain a formal data processing agreement available on request.',
+    a: 'Yes. All jobsafe data is stored in UK-based AWS data centres and is never transferred outside the UK. We are fully GDPR compliant, use AES-256 encryption at rest and TLS in transit, and maintain a formal data processing agreement available on request.',
   },
 ]
 
@@ -44,7 +44,7 @@ export default function FAQ() {
               Frequently<br className="hidden lg:block" /> Asked<br className="hidden lg:block" /> Questions
             </h2>
             <p className="text-white/50 text-sm mt-4 max-w-xs mx-auto lg:mx-0">
-              Everything you need to know about JobSafe.
+              Everything you need to know about jobsafe.
             </p>
           </div>
 
