@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 
 const faqs = [
@@ -31,14 +31,24 @@ const faqs = [
 
 export default function FAQ() {
   const [openItem, setOpenItem] = useState<string>('')
+  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+
+  const handleValueChange = (val: string) => {
+    setOpenItem(val)
+    if (val) {
+      requestAnimationFrame(() => {
+        triggerRefs.current[val]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+  }
 
   return (
     <section id="faq" className="py-12 md:py-14 bg-[#0a0a0a]">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="grid gap-16 lg:grid-cols-[1fr_auto]">
+        <div className="grid gap-16 lg:grid-cols-[1fr_minmax(0,32rem)]">
 
           {/* Left — heading */}
-          <div className="lg:sticky lg:top-32 lg:self-start text-center lg:text-left">
+          <div className="lg:sticky lg:top-24 lg:self-start text-center lg:text-left">
             <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">FAQ</p>
             <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
               Frequently<br className="hidden lg:block" /> Asked<br className="hidden lg:block" /> Questions
@@ -49,17 +59,20 @@ export default function FAQ() {
           </div>
 
           {/* Right — accordion */}
-          <div className="sm:max-w-lg w-full lg:mx-0">
+          <div className="w-full">
             <AccordionPrimitive.Root
               type="single"
               collapsible
               value={openItem}
-              onValueChange={setOpenItem}
+              onValueChange={handleValueChange}
               className="divide-y divide-white/10"
             >
               {faqs.map((faq, i) => (
-                <AccordionPrimitive.Item key={i} value={`item-${i}`}>
-                  <AccordionPrimitive.Trigger className="w-full flex items-center justify-between gap-4 py-5 text-left">
+                <AccordionPrimitive.Item key={i} value={`item-${i}`} className="scroll-mt-24">
+                  <AccordionPrimitive.Trigger
+                    ref={(el) => { triggerRefs.current[`item-${i}`] = el }}
+                    className="w-full flex items-center justify-between gap-4 py-5 text-left"
+                  >
                     <div className="flex items-start gap-3">
                       <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#e5342a]/10 border border-[#e5342a]/20 text-[#e5342a] text-xs font-bold">
                         Q
