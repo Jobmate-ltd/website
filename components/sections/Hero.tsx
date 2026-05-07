@@ -9,18 +9,6 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col justify-start overflow-hidden bg-[#0a0a0a]"
     >
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-        }}
-      />
-
       {/* Red glow — top right */}
       <div
         className="absolute top-0 right-0 pointer-events-none"
@@ -31,7 +19,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-16 md:pb-20 w-full">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-16 md:pb-14 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}

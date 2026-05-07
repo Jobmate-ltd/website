@@ -142,7 +142,7 @@ export default function Pricing() {
   const togglePricingPeriod = (value: string) => setIsYearly(Number.parseInt(value) === 1)
 
   return (
-    <section id="pricing" className="py-12 md:py-20 bg-[#0a0a0a]">
+    <section id="pricing" className="py-12 md:py-14 bg-[#0a0a0a]">
       <div className="px-4 max-w-5xl mx-auto relative" ref={pricingRef}>
 
         <article className="flex sm:flex-row flex-col sm:pb-0 pb-4 sm:items-center items-start justify-between mb-12">
