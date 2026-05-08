@@ -1,9 +1,7 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { ListChecks, WifiOff, Camera, MapPin, Bell, Lock } from 'lucide-react'
-
-const TYPED_TEXT = 'Forklift came within 2m of pedestrian crossing at Bay 3…'
 
 const features = [
   {
@@ -44,83 +42,11 @@ const features = [
   },
 ]
 
-type Phase = 'blank' | 'dropdown' | 'typing' | 'location' | 'submitting'
-
 export default function AnimatedForm() {
-  const [phase, setPhase] = useState<Phase>('blank')
-  const [typedText, setTypedText] = useState('')
-  const [showForm, setShowForm] = useState(true)
-  const [showSuccess, setShowSuccess] = useState(false)
-  const [showSuccessText, setShowSuccessText] = useState(false)
-
-  useEffect(() => {
-    const timeouts: ReturnType<typeof setTimeout>[] = []
-    let typingInterval: ReturnType<typeof setInterval> | null = null
-
-    const runLoop = () => {
-      // 0.0s — reset to blank
-      setPhase('blank')
-      setTypedText('')
-      setShowForm(true)
-      setShowSuccess(false)
-      setShowSuccessText(false)
-
-      // 0.5s — dropdown selects "Near Miss"
-      timeouts.push(setTimeout(() => setPhase('dropdown'), 500))
-
-      // 1.2s — start typing description
-      timeouts.push(setTimeout(() => {
-        setPhase('typing')
-        let i = 0
-        typingInterval = setInterval(() => {
-          i++
-          setTypedText(TYPED_TEXT.slice(0, i))
-          if (i >= TYPED_TEXT.length && typingInterval) {
-            clearInterval(typingInterval)
-            typingInterval = null
-          }
-        }, 50) // 57 chars × 50ms ≈ 2.85s, finishes ~4.05s
-      }, 1200))
-
-      // 3.0s — location tag fades in
-      timeouts.push(setTimeout(() => setPhase('location'), 3000))
-
-      // 3.8s — submit button pulses
-      timeouts.push(setTimeout(() => setPhase('submitting'), 3800))
-
-      // 4.3s — form fades out
-      timeouts.push(setTimeout(() => setShowForm(false), 4300))
-
-      // 4.5s — success screen + checkmark draws
-      timeouts.push(setTimeout(() => setShowSuccess(true), 4500))
-
-      // 5.0s — "Report Submitted Successfully" fades up
-      timeouts.push(setTimeout(() => setShowSuccessText(true), 5000))
-
-      // 6.2s — loop restarts
-      timeouts.push(setTimeout(() => {
-        if (typingInterval) { clearInterval(typingInterval); typingInterval = null }
-        runLoop()
-      }, 6200))
-    }
-
-    runLoop()
-
-    return () => {
-      timeouts.forEach(clearTimeout)
-      if (typingInterval) clearInterval(typingInterval)
-    }
-  }, [])
-
-  const showDropdown = ['dropdown', 'typing', 'location', 'submitting'].includes(phase)
-  const showLocation  = ['location', 'submitting'].includes(phase)
-  const isSubmitting  = phase === 'submitting'
-
   return (
     <section className="py-12 md:py-14 bg-[#0a0a0a]">
       <div className="max-w-5xl mx-auto px-6">
 
-        {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">In Depth</p>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
@@ -131,154 +57,36 @@ export default function AnimatedForm() {
           </p>
         </div>
 
-        {/* Two columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-          {/* Left — animated mockup */}
-          <div className="flex items-stretch">
-            <div className="w-full rounded-2xl border border-white/10 bg-[#111] overflow-hidden flex flex-col">
-
-              {/* Chrome bar */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5 shrink-0">
-                <span className="w-2 h-2 rounded-full bg-white/20" />
-                <span className="w-2 h-2 rounded-full bg-white/20" />
-                <span className="w-2 h-2 rounded-full bg-white/20" />
-                <span className="ml-2 text-xs text-white/60 font-medium">New Report</span>
-              </div>
-
-              {/* Body — form and success share this space */}
-              <div className="relative flex-1 min-h-[420px]">
-
-                {/* Form */}
-                <AnimatePresence>
-                  {showForm && (
-                    <motion.div
-                      key="form"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 p-5 flex flex-col gap-4"
-                    >
-                      {/* Incident type */}
-                      <div>
-                        <label className="text-xs text-white/60 mb-1.5 block">Incident Type</label>
-                        <div className={`rounded-lg border px-3 py-2.5 text-sm transition-all duration-500 ${
-                          showDropdown
-                            ? 'border-[#e5342a]/40 bg-[#e5342a]/5 text-white'
-                            : 'border-white/10 bg-white/5 text-white/60'
-                        }`}>
-                          {showDropdown ? 'Near Miss' : 'Select type…'}
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <div>
-                        <label className="text-xs text-white/60 mb-1.5 block">Description</label>
-                        <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white min-h-[80px] leading-relaxed">
-                          {typedText}
-                          {phase === 'typing' && (
-                            <motion.span
-                              animate={{ opacity: [1, 0] }}
-                              transition={{ duration: 0.5, repeat: Infinity }}
-                              className="inline-block w-0.5 h-4 bg-[#e5342a] ml-0.5 align-middle"
-                            />
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Media buttons */}
-                      <div className="flex gap-2">
-                        {['Photo', 'Voice', 'Video'].map((label) => (
-                          <div
-                            key={label}
-                            className="flex-1 rounded-lg border border-white/10 bg-white/5 py-2 text-center text-xs text-white/60"
-                          >
-                            {label}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* GPS location tag */}
-                      <AnimatePresence>
-                        {showLocation && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-xs text-white/60"
-                          >
-                            <MapPin className="size-3.5 text-[#e5342a] shrink-0" strokeWidth={1.5} />
-                            Warehouse Bay 3 · 09:14 · Today
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Submit button */}
-                      <motion.div
-                        animate={isSubmitting ? { scale: [1, 0.97, 1] } : { scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                        className={`rounded-lg py-3 text-center text-sm font-bold text-white cursor-pointer transition-colors ${
-                          isSubmitting ? 'bg-[#c42d24]' : 'bg-[#e5342a]'
-                        }`}
-                      >
-                        Submit Report →
-                      </motion.div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Success screen */}
-                <AnimatePresence>
-                  {showSuccess && (
-                    <motion.div
-                      key="success"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center gap-5 p-8"
-                    >
-                      {/* Checkmark circle */}
-                      <div className="w-16 h-16 rounded-full border-2 border-[#e5342a]/30 flex items-center justify-center">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                          <motion.path
-                            d="M5 13l4 4L19 7"
-                            stroke="#e5342a"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: 0.5, ease: 'easeInOut' }}
-                          />
-                        </svg>
-                      </div>
-
-                      {/* Success text */}
-                      <AnimatePresence>
-                        {showSuccessText && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="text-center"
-                          >
-                            <p className="text-white font-semibold text-sm">Report Submitted Successfully</p>
-                            <p className="text-white/60 text-xs mt-1">Supervisors have been notified</p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-              </div>
-            </div>
+          {/* Left — real employee app screenshot */}
+          <div className="flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px]"
+            >
+              <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,#e5342a,transparent_70%)] scale-110" />
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative drop-shadow-[0_20px_50px_rgba(229,52,42,0.25)]"
+              >
+                <Image
+                  src="/images/screens/employee-app.png"
+                  alt="jobsafe employee app — incident capture screen showing HSSE, Incident, Other, and Near Miss report tiles"
+                  width={634}
+                  height={1120}
+                  className="w-full h-auto"
+                  priority={false}
+                />
+              </motion.div>
+            </motion.div>
           </div>
 
-          {/* Right — static feature list */}
+          {/* Right — feature list */}
           <div className="flex flex-col divide-y divide-white/10">
             {features.map(({ icon: Icon, title, description }) => (
               <div key={title} className="flex items-start gap-4 py-6 first:pt-0 last:pb-0">
