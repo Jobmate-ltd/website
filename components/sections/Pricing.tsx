@@ -73,18 +73,18 @@ const PricingSwitch = (props: { onSwitch: (value: string) => void; className?: s
 
   return (
     <div className={cn('flex justify-center', props.className)}>
-      <div className="relative z-10 mx-auto flex w-fit rounded-full bg-white/5 border border-white/10 p-1">
+      <div className="relative z-10 mx-auto grid grid-cols-2 rounded-full bg-white/5 border border-white/10 p-1">
         <button
           onClick={() => handleSwitch('0')}
           className={cn(
-            'relative z-10 w-fit sm:h-12 cursor-pointer h-10 rounded-full sm:px-6 px-3 sm:py-2 py-1 font-medium transition-colors',
+            'relative z-10 sm:h-12 h-10 cursor-pointer rounded-full sm:px-6 px-4 flex items-center justify-center font-medium transition-colors',
             selected === '0' ? 'text-white' : 'text-white/60 hover:text-white',
           )}
         >
           {selected === '0' && (
             <motion.span
               layoutId="switch"
-              className="absolute top-0 left-0 sm:h-12 h-10 w-full rounded-full bg-white/10 border border-white/20"
+              className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             />
           )}
@@ -94,14 +94,14 @@ const PricingSwitch = (props: { onSwitch: (value: string) => void; className?: s
         <button
           onClick={() => handleSwitch('1')}
           className={cn(
-            'relative z-10 w-fit cursor-pointer sm:h-12 h-10 flex-shrink-0 rounded-full sm:px-6 px-3 sm:py-2 py-1 font-medium transition-colors',
+            'relative z-10 sm:h-12 h-10 cursor-pointer rounded-full sm:px-6 px-4 flex items-center justify-center font-medium transition-colors',
             selected === '1' ? 'text-white' : 'text-white/60 hover:text-white',
           )}
         >
           {selected === '1' && (
             <motion.span
               layoutId="switch"
-              className="absolute top-0 left-0 sm:h-12 h-10 w-full rounded-full bg-white/10 border border-white/20"
+              className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             />
           )}
