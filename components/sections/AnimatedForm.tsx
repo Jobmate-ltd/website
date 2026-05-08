@@ -77,8 +77,8 @@ export default function AnimatedForm() {
                 <Image
                   src="/images/screens/employee-app.png"
                   alt="jobsafe employee app — incident capture screen showing HSSE, Incident, Other, and Near Miss report tiles"
-                  width={634}
-                  height={1120}
+                  width={927}
+                  height={1665}
                   className="w-full h-auto"
                   priority={false}
                 />

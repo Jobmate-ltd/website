@@ -120,8 +120,8 @@ export default function HowItWorks() {
                 <Image
                   src="/images/screens/admin-dashboard.png"
                   alt="jobsafe admin dashboard — live incident feed, weekly stats, and reports-by-category breakdown"
-                  width={636}
-                  height={1120}
+                  width={927}
+                  height={1674}
                   className="w-full h-auto"
                   priority={false}
                 />
