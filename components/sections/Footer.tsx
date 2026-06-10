@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Download, Mail, Phone } from 'lucide-react'
+import { Download, ExternalLink, Mail, Phone } from 'lucide-react'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -26,11 +26,12 @@ const LinkedInIcon = ({ size = 24, strokeWidth = 1.5, className }: SvgProps) => 
 )
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Features', href: '/#features' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Industries', href: '/#industries' },
+  { label: 'Pricing', href: '/#pricing' },
+  { label: 'Insights', href: '/insights' },
+  { label: 'FAQ', href: '/#faq' },
 ]
 
 const socialLinks = [
@@ -80,6 +81,15 @@ export default function Footer() {
             >
               <Download className="size-4" strokeWidth={1.5} />
               Download brochure (PDF)
+            </a>
+            <a
+              href="https://jobmate.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
+            >
+              <ExternalLink className="size-4" strokeWidth={1.5} />
+              Part of the Jobmate platform
             </a>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
