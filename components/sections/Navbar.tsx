@@ -9,12 +9,13 @@ import Image from 'next/image'
 export function Navbar() {
   const [open, setOpen] = React.useState(false)
   const links = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Features', href: '#features' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Industries', href: '#industries' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Home', href: '/#hero' },
+    { label: 'Features', href: '/#features' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Industries', href: '/#industries' },
+    { label: 'Pricing', href: '/#pricing' },
+    { label: 'Insights', href: '/insights' },
+    { label: 'FAQ', href: '/#faq' },
   ]
   return (
     <header className={cn(
