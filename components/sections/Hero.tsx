@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
+import { SIGNUP_TRIAL_URL } from '@/lib/links'
 
 const heroStats = [
   { stat: '3×', label: 'Faster Reporting' },
@@ -72,10 +73,10 @@ export default function Hero() {
               className="flex flex-wrap items-center justify-start gap-4 mb-16"
             >
               <a
-                href="tel:03338000883"
+                href={SIGNUP_TRIAL_URL}
                 className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
               >
-                Call 0333 8000 883
+                Sign up now
               </a>
               <a
                 href="#how-it-works"
