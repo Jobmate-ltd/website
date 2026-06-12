@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import { SIGNUP_TRIAL_URL } from '@/lib/links'
 
 export default function GetStarted() {
   return (
@@ -52,10 +53,10 @@ export default function GetStarted() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
-            href="tel:03338000883"
+            href={SIGNUP_TRIAL_URL}
             className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#e5342a] hover:bg-[#c42d24] text-white font-semibold text-sm tracking-wide transition-colors"
           >
-            Call 0333 8000 883
+            Sign up now
           </a>
           <a
             href="tel:03338000883"

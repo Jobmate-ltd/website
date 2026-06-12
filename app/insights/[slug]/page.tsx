@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Clock, ChevronRight } from 'lucide-react'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import PostBody from '@/components/insights/PostBody'
+import { SIGNUP_TRIAL_URL } from '@/lib/links'
 import {
   getAllPosts,
   getPostBySlug,
@@ -208,10 +209,10 @@ export default async function InsightPostPage({
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
-                href="tel:03338000883"
+                href={SIGNUP_TRIAL_URL}
                 className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-7 py-3.5 rounded-md transition-colors"
               >
-                Call 0333 8000 883
+                Sign up now
               </a>
               <Link
                 href="/#how-it-works"

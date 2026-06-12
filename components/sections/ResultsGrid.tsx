@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { FeatureCard } from '@/components/blocks/grid-feature-cards'
+import { SIGNUP_TRIAL_URL } from '@/lib/links'
 import { Zap, Search, ShieldCheck, ClipboardList, TrendingDown, HardHat } from 'lucide-react'
 
 const results = [
@@ -78,10 +79,10 @@ export default function ResultsGrid() {
 
       <div className="flex justify-center mt-12">
         <a
-          href="tel:03338000883"
+          href={SIGNUP_TRIAL_URL}
           className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
         >
-          Call 0333 8000 883
+          Sign up now
         </a>
       </div>
     </section>

@@ -2,6 +2,7 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { TimelineContent } from '@/components/ui/timeline-animation'
 import { cn } from '@/lib/utils'
+import { SIGNUP_TRIAL_URL } from '@/lib/links'
 import NumberFlow from '@number-flow/react'
 import { CheckCheck } from 'lucide-react'
 import { motion } from 'motion/react'
@@ -26,7 +27,8 @@ const plans = [
     yearlyPrice: 2.70,
     isCustom: false,
     threshold: 'Up to 500 licences',
-    buttonText: 'Call to Get Started',
+    buttonText: 'Sign up now',
+    buttonHref: SIGNUP_TRIAL_URL,
     popular: false,
     featuresHeader: 'Everything included:',
     features: baseFeatures,
@@ -38,7 +40,8 @@ const plans = [
     yearlyPrice: 2.25,
     isCustom: false,
     threshold: '500–1,000 licences',
-    buttonText: 'Call to Get Started',
+    buttonText: 'Sign up now',
+    buttonHref: SIGNUP_TRIAL_URL,
     popular: true,
     featuresHeader: 'Everything included:',
     features: baseFeatures,
@@ -51,6 +54,7 @@ const plans = [
     isCustom: true,
     threshold: '1,000+ licences',
     buttonText: 'Call Us',
+    buttonHref: 'tel:03338000883',
     popular: false,
     featuresHeader: 'Everything included, plus:',
     features: [
@@ -244,7 +248,7 @@ export default function Pricing() {
 
                 <CardFooter>
                   <a
-                    href="tel:03338000883"
+                    href={plan.buttonHref}
                     className={cn(
                       'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition-colors',
                       plan.popular
