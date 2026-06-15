@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { MenuIcon, Phone } from 'lucide-react'
-import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SIGNUP_TRIAL_URL, LOGIN_URL } from '@/lib/links'
@@ -47,7 +47,7 @@ export function Navbar() {
             <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="lg:hidden border-white/10">
               <MenuIcon className="size-4" />
             </Button>
-            <SheetContent className="bg-black/90 backdrop-blur-lg border-white/10" side="left">
+            <SheetContent className="flex flex-col bg-black/90 backdrop-blur-lg border-white/10" side="left">
               <div className="grid gap-y-2 overflow-y-auto px-4 pt-12 pb-5">
                 {links.map((link) => (
                   <a key={link.href} className={buttonVariants({ variant: 'ghost', className: 'justify-start text-white min-h-11' })} href={link.href}>
@@ -55,18 +55,18 @@ export function Navbar() {
                   </a>
                 ))}
               </div>
-              <SheetFooter>
-                <a href={LOGIN_URL} className="w-full text-center bg-white hover:bg-white/90 text-[#e5342a] font-bold text-sm px-6 py-3 rounded-md transition-all duration-200 animate-login-pulse motion-reduce:animate-none">
+              <div className="mt-auto flex flex-col gap-3 px-4 pb-8 pt-4">
+                <a href={LOGIN_URL} className="w-full text-center whitespace-nowrap bg-white hover:bg-white/90 text-[#e5342a] font-bold text-sm px-8 py-4 rounded-md transition-all duration-200 animate-login-pulse motion-reduce:animate-none">
                   Log in
                 </a>
-                <a href={SIGNUP_TRIAL_URL} className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-colors">
+                <a href={SIGNUP_TRIAL_URL} className="w-full text-center whitespace-nowrap bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors">
                   Sign up now
                 </a>
-                <a href="tel:03338000883" className="flex items-center justify-center gap-2 w-full text-sm text-white/90 hover:text-white transition-colors font-medium py-2">
+                <a href="tel:03338000883" className="flex items-center justify-center gap-2 w-full text-sm text-white/90 hover:text-white transition-colors font-medium pt-2">
                   <Phone className="size-4" strokeWidth={1.5} />
                   0333 8000 883
                 </a>
-              </SheetFooter>
+              </div>
             </SheetContent>
           </Sheet>
         </div>
