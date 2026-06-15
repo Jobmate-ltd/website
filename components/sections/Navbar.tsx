@@ -4,7 +4,7 @@ import { MenuIcon, Phone } from 'lucide-react'
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import { SIGNUP_TRIAL_URL, LOGIN_URL } from '@/lib/links'
 import Image from 'next/image'
 
 export function Navbar() {
@@ -38,6 +38,9 @@ export function Navbar() {
             <Phone className="size-4" strokeWidth={1.5} />
             0333 8000 883
           </a>
+          <a href={LOGIN_URL} className="hidden lg:inline-flex items-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 animate-login-pulse motion-reduce:animate-none motion-reduce:hover:scale-100">
+            Log in
+          </a>
           <a href={SIGNUP_TRIAL_URL} className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-colors">
             Sign up now
           </a>
@@ -54,6 +57,9 @@ export function Navbar() {
                 ))}
               </div>
               <SheetFooter>
+                <a href={LOGIN_URL} className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-all duration-200 animate-login-pulse motion-reduce:animate-none">
+                  Log in
+                </a>
                 <a href={SIGNUP_TRIAL_URL} className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-colors">
                   Sign up now
                 </a>
