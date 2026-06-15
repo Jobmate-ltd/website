@@ -16,7 +16,6 @@ export function Navbar() {
     { label: 'Industries', href: '/#industries' },
     { label: 'Pricing', href: '/#pricing' },
     { label: 'Insights', href: '/insights' },
-    { label: 'FAQ', href: '/#faq' },
   ]
   return (
     <header className={cn(
@@ -34,14 +33,14 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 text-sm text-white/90 hover:text-white transition-colors font-medium">
+          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 whitespace-nowrap text-sm text-white/90 hover:text-white transition-colors font-medium">
             <Phone className="size-4" strokeWidth={1.5} />
             0333 8000 883
           </a>
-          <a href={LOGIN_URL} className="hidden lg:inline-flex items-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 animate-login-pulse motion-reduce:animate-none motion-reduce:hover:scale-100">
+          <a href={LOGIN_URL} className="hidden lg:inline-flex items-center whitespace-nowrap bg-white hover:bg-white/90 text-[#e5342a] font-bold text-sm px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 animate-login-pulse motion-reduce:animate-none motion-reduce:hover:scale-100">
             Log in
           </a>
-          <a href={SIGNUP_TRIAL_URL} className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-colors">
+          <a href={SIGNUP_TRIAL_URL} className="whitespace-nowrap bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-4 py-2 rounded-md transition-colors">
             Sign up now
           </a>
           <Sheet open={open} onOpenChange={setOpen}>
@@ -57,7 +56,7 @@ export function Navbar() {
                 ))}
               </div>
               <SheetFooter>
-                <a href={LOGIN_URL} className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-all duration-200 animate-login-pulse motion-reduce:animate-none">
+                <a href={LOGIN_URL} className="w-full text-center bg-white hover:bg-white/90 text-[#e5342a] font-bold text-sm px-6 py-3 rounded-md transition-all duration-200 animate-login-pulse motion-reduce:animate-none">
                   Log in
                 </a>
                 <a href={SIGNUP_TRIAL_URL} className="w-full text-center bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-6 py-3 rounded-md transition-colors">
