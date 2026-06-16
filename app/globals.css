@@ -7,6 +7,23 @@ html {
   background-color: #0a0a0a;
 }
 
+/* Honour prefers-reduced-motion across the whole site: neutralise CSS-driven
+   animation, transition and smooth-scroll. framer-motion is handled separately
+   via <MotionProvider reducedMotion="user">. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   background-color: #0a0a0a;
   color: #ffffff;
