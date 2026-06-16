@@ -15,7 +15,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-start overflow-hidden bg-[#0a0a0a]"
+      className="relative min-h-screen flex flex-col justify-start overflow-hidden bg-black"
     >
       {/* Red glow — top right */}
       <div
@@ -31,7 +31,7 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full lg:w-[60%]">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -103,6 +103,29 @@ export default function Hero() {
               ))}
             </motion.div>
           </div>
+
+          {/* Right — product shot (hand holding a phone on a solid black bg,
+              which blends into the near-black hero) */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-full lg:w-[40%] flex justify-center lg:pl-8"
+          >
+            <picture>
+              <source srcSet="/images/jobsafe-hero.webp" type="image/webp" />
+              <img
+                src="/images/jobsafe-hero.jpg"
+                alt="The JobSafe app open on a smartphone showing the HSSE reporting dashboard"
+                width={1175}
+                height={1316}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="max-w-full max-h-[60vh] lg:max-h-[600px] object-contain mx-auto"
+              />
+            </picture>
+          </motion.div>
 
         </div>
       </div>
