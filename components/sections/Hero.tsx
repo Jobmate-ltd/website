@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Play } from 'lucide-react'
 import { BorderBeam } from '@/components/ui/border-beam'
+import { HowItWorksVideo } from '@/components/hero/how-it-works-video'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
 
 const heroStats = [
@@ -31,7 +31,7 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}
-          <div className="flex flex-col w-full lg:w-[60%]">
+          <div className="flex flex-col w-full">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -78,13 +78,15 @@ export default function Hero() {
               >
                 Sign up now
               </a>
-              <a
-                href="#how-it-works"
-                className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
-              >
-                <span className="relative z-10">SEE HOW IT WORKS</span>
-                <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={60} borderWidth={2} />
-              </a>
+              <HowItWorksVideo>
+                <button
+                  type="button"
+                  className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+                >
+                  <span className="relative z-10">SEE HOW IT WORKS</span>
+                  <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={60} borderWidth={2} />
+                </button>
+              </HowItWorksVideo>
             </motion.div>
 
             <motion.div
@@ -101,20 +103,6 @@ export default function Hero() {
               ))}
             </motion.div>
           </div>
-
-          {/* Right — video placeholder (desktop only) */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="hidden lg:flex lg:w-[40%] justify-center pl-8"
-          >
-            <div className="relative overflow-hidden w-full aspect-[9/16] max-h-[480px] mx-auto rounded-2xl bg-[#111] border border-white/10 flex flex-col items-center justify-center gap-4">
-              <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={80} borderWidth={2} />
-              <Play className="text-[#e5342a] opacity-60 size-12" strokeWidth={1.5} />
-              <p className="text-white/60 text-xs mt-3">Product walkthrough coming soon</p>
-            </div>
-          </motion.div>
 
         </div>
       </div>
