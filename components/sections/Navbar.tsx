@@ -19,7 +19,7 @@ export function Navbar() {
   ]
   return (
     <header className={cn(
-      'sticky top-5 z-50',
+      'sticky top-12 z-50',
       'mx-auto w-full max-w-5xl rounded-lg border border-white/10 shadow',
       'bg-black/40 backdrop-blur-lg supports-[backdrop-filter]:bg-black/40',
     )}>

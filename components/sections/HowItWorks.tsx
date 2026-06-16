@@ -13,13 +13,13 @@ const steps = [
     number: '02',
     title: 'Review',
     description:
-      'Supervisors receive instant alerts, verify the details, and assign corrective actions to the right people.',
+      'Supervisors receive instant alerts, verify the details, and forward the information to the relevant department.',
   },
   {
     number: '03',
     title: 'Resolve',
     description:
-      'Track every corrective action through to completion with automated reminders and escalation paths.',
+      'Track every reported issue through to resolution with automated reminders and status updates.',
   },
   {
     number: '04',
@@ -102,29 +102,52 @@ export default function HowItWorks() {
             </div>
           </div>
 
-          {/* Right — real admin dashboard screenshot */}
+          {/* Right — new admin dashboard screenshot in a CSS phone frame */}
           <div className="flex justify-center lg:sticky lg:top-24">
             <motion.div
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.7, ease: 'easeOut' }}
-              className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px]"
+              className="relative w-full max-w-[270px] sm:max-w-[290px]"
             >
+              {/* Soft red glow behind the device */}
               <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,#e5342a,transparent_70%)] scale-110" />
+
+              {/* Slow float — disabled under prefers-reduced-motion via MotionProvider */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="relative drop-shadow-[0_20px_50px_rgba(229,52,42,0.25)]"
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative"
               >
-                <Image
-                  src="/images/screens/admin-dashboard.png"
-                  alt="jobsafe admin dashboard — live incident feed, weekly stats, and reports-by-category breakdown"
-                  width={927}
-                  height={1674}
-                  className="w-full h-auto"
-                  priority={false}
-                />
+                {/* Phone frame (CSS only) */}
+                <div className="relative rounded-[2.75rem] bg-gradient-to-b from-[#2b2b2e] to-[#161618] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7),0_18px_50px_-12px_rgba(229,52,42,0.22)] ring-1 ring-white/10">
+                  {/* Side buttons */}
+                  <span className="absolute -left-[2px] top-[20%] h-7 w-[3px] rounded-l-sm bg-[#0c0c0d]" />
+                  <span className="absolute -left-[2px] top-[31%] h-12 w-[3px] rounded-l-sm bg-[#0c0c0d]" />
+                  <span className="absolute -right-[2px] top-[26%] h-16 w-[3px] rounded-r-sm bg-[#0c0c0d]" />
+
+                  {/* Screen */}
+                  <div className="relative overflow-hidden rounded-[2.1rem] bg-black">
+                    {/* Top bezel + dynamic island */}
+                    <div className="relative flex h-7 items-center justify-center bg-black">
+                      <div className="flex h-[18px] w-[34%] items-center justify-center gap-2 rounded-full bg-[#050505] ring-1 ring-white/10">
+                        <span className="h-1 w-1 rounded-full bg-zinc-600" />
+                        <span className="h-1 w-3 rounded-full bg-zinc-800" />
+                      </div>
+                    </div>
+
+                    <Image
+                      src="/images/screens/jobsafe-admin-dashboard.png"
+                      alt="jobsafe admin dashboard — reports by category, weekly site breakdown, and the depot incident summary"
+                      width={379}
+                      height={842}
+                      sizes="(min-width: 640px) 290px, 270px"
+                      className="block h-auto w-full"
+                      priority={false}
+                    />
+                  </div>
+                </div>
               </motion.div>
             </motion.div>
           </div>

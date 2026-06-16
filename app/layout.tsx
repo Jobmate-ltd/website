@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
+import MotionProvider from '@/components/MotionProvider'
+import LaunchTicker from '@/components/sections/LaunchTicker'
 import './globals.css'
 
 const inter = Inter({
@@ -123,7 +125,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} min-h-full flex flex-col`}>
-        {children}
+        <LaunchTicker />
+        <MotionProvider>{children}</MotionProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KB69331C7J"
           strategy="afterInteractive"

@@ -24,8 +24,8 @@ const faqs = [
     a: 'Named supervisors receive an instant push notification and email alert the moment a report is submitted. Notification rules are configurable based on incident type, severity, or location. Escalation paths ensure the right people are always informed — even if a supervisor is unavailable, the next person in the chain is automatically notified.',
   },
   {
-    q: 'Is my data stored securely in the UK?',
-    a: 'Yes. All jobsafe data is stored in UK-based AWS data centres and is never transferred outside the UK. We are fully GDPR compliant, use AES-256 encryption at rest and TLS in transit, and maintain a formal data processing agreement available on request.',
+    q: 'Where is my data hosted?',
+    a: 'jobsafe runs on Amazon Web Services (AWS). Your data is encrypted at rest (AES-256) and in transit (TLS), backed up automatically, and handled in line with GDPR. A formal data processing agreement is available on request.',
   },
 ]
 

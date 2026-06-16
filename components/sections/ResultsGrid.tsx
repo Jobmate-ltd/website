@@ -18,7 +18,7 @@ const results = [
   {
     icon: ShieldCheck,
     title: 'Improved compliance',
-    description: 'Audit-ready records, HSSE-aligned workflows, and automatic documentation that keeps regulators satisfied.',
+    description: 'Audit-ready records and workflows built around ISO 45001 — the international standard for occupational health & safety management — so your reporting supports audit and certification.',
   },
   {
     icon: ClipboardList,
@@ -51,7 +51,10 @@ export default function ResultsGrid() {
 
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3">
         {results.map((result) => (
-          <div key={result.title} className="relative">
+          <div
+            key={result.title}
+            className="relative motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-1"
+          >
             {/* Static card content — never animates */}
             <FeatureCard
               feature={{
@@ -80,7 +83,7 @@ export default function ResultsGrid() {
       <div className="flex justify-center mt-12">
         <a
           href={SIGNUP_TRIAL_URL}
-          className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+          className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors motion-safe:transition-all motion-safe:hover:-translate-y-0.5"
         >
           Sign up now
         </a>

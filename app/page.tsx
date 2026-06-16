@@ -7,7 +7,6 @@ import AnimatedForm from '@/components/sections/AnimatedForm'
 import ResultsGrid from '@/components/sections/ResultsGrid'
 import Industries from '@/components/sections/Industries'
 import Pricing from '@/components/sections/Pricing'
-import Testimonials from '@/components/sections/Testimonials'
 import FAQ from '@/components/sections/FAQ'
 import GetStarted from '@/components/sections/GetStarted'
 import Footer from '@/components/sections/Footer'
@@ -24,7 +23,6 @@ export default function Page() {
       <AnimatedForm />
       <ResultsGrid />
       <Pricing />
-      <Testimonials />
       <FAQ />
       <GetStarted />
       <Footer />
