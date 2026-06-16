@@ -95,4 +95,22 @@ input[type='range']::-moz-range-thumb {
     box-shadow: 0 0 14px 1px rgba(229, 52, 42, 0.55);
     }
   }
+  --animate-modal-fade-in: modal-fade-in 500ms ease-out;
+  --animate-modal-fade-out: modal-fade-out 500ms ease-in;
+  @keyframes modal-fade-in {
+  0% {
+    opacity: 0;
+    }
+  100% {
+    opacity: 1;
+    }
+  }
+  @keyframes modal-fade-out {
+  0% {
+    opacity: 1;
+    }
+  100% {
+    opacity: 0;
+    }
+  }
 }
