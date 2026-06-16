@@ -75,6 +75,13 @@ export default function Footer() {
               sales@jobsafe.cloud
             </a>
             <a
+              href="mailto:support@jobsafe.cloud"
+              className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
+            >
+              <Mail className="size-4" strokeWidth={1.5} />
+              support@jobsafe.cloud
+            </a>
+            <a
               href="/jobsafe-brochure.pdf"
               download
               className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"
