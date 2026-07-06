@@ -123,6 +123,23 @@ export default function RootLayout({
             }),
           }}
         />
+        {/*
+          SearchAtlas OTTO dynamic-optimization pixel. Rendered verbatim in <head>
+          via the root layout so it loads on every route and persists across
+          client-side navigation. Spread with a cast because `nowprocket` and
+          `nitro-exclude` are non-standard attributes React's JSX types reject; the
+          uuid, src and other attribute values are unchanged.
+        */}
+        <script
+          {...({
+            nowprocket: '',
+            'nitro-exclude': '',
+            type: 'text/javascript',
+            id: 'sa-dynamic-optimization',
+            'data-uuid': '09a87fea-bb62-4d82-a03e-d09e7a4ad5b2',
+            src: 'data:text/javascript;base64,dmFyIHNjcmlwdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInNjcmlwdCIpO3NjcmlwdC5zZXRBdHRyaWJ1dGUoIm5vd3Byb2NrZXQiLCAiIik7c2NyaXB0LnNldEF0dHJpYnV0ZSgibml0cm8tZXhjbHVkZSIsICIiKTtzY3JpcHQuc3JjID0gImh0dHBzOi8vZGFzaGJvYXJkLnNlYXJjaGF0bGFzLmNvbS9zY3JpcHRzL2R5bmFtaWNfb3B0aW1pemF0aW9uLmpzIjtzY3JpcHQuZGF0YXNldC51dWlkID0gIjA5YTg3ZmVhLWJiNjItNGQ4Mi1hMDNlLWQwOWU3YTRhZDViMiI7c2NyaXB0LmlkID0gInNhLWR5bmFtaWMtb3B0aW1pemF0aW9uLWxvYWRlciI7ZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzY3JpcHQpOw==',
+          } as unknown as React.ScriptHTMLAttributes<HTMLScriptElement>)}
+        />
       </head>
       <body className={`${inter.variable} min-h-full flex flex-col`}>
         <LaunchTicker />
