@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Play } from 'lucide-react'
+import { PiPlayFill as Play } from 'react-icons/pi'
 import { cn } from '@/lib/utils'
 import {
    VideoModal,
@@ -65,7 +65,7 @@ export function HowItWorksVideo({ children }: { children: React.ReactNode }) {
 
                {/* Play button — fades out once playing */}
                <VideoPlayButton>
-                  <span className="grid size-16 place-items-center rounded-full bg-[#e5342a] text-white shadow-lg transition group-hover:scale-105">
+                  <span className="grid size-16 place-items-center rounded-full bg-brand text-white shadow-lg transition group-hover:scale-105">
                      <Play className="size-7 translate-x-0.5 fill-current" />
                   </span>
                </VideoPlayButton>

@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'
 import { Marquee } from '@/components/ui/marquee'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
-import { Zap, WifiOff, Camera, MapPin, Bell, ShieldCheck, BarChart2, ClipboardCheck } from 'lucide-react'
+import { PiLightning as Zap, PiWifiSlash as WifiOff, PiCamera as Camera, PiMapPin as MapPin, PiBell as Bell, PiShieldCheck as ShieldCheck, PiChartBar as BarChart2, PiClipboardText as ClipboardCheck } from 'react-icons/pi'
 
 const features = [
   { icon: Zap,            title: 'One-tap capture',      description: "Log an incident before you've left the scene" },
@@ -34,7 +34,7 @@ const FeatureCard = ({
     )}
   >
     <div className="flex flex-col gap-3">
-      <Icon className="size-5 text-[#e5342a]" strokeWidth={1.5} />
+      <Icon className="size-5 text-brand" strokeWidth={1.5} />
       <div>
         <p className="text-sm font-semibold text-white">{title}</p>
         <p className="text-xs text-white/50 mt-1 leading-relaxed">{description}</p>
@@ -45,10 +45,10 @@ const FeatureCard = ({
 
 export default function FeaturesMarquee() {
   return (
-    <section id="features" className="py-12 md:py-14 bg-[#0a0a0a]">
+    <section id="features" className="py-12 md:py-14 bg-surface-0">
       <div className="text-center mb-16 px-4">
-        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Meet jobsafe</p>
-        <h2 className="text-4xl md:text-5xl font-black text-white">
+        <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">Meet jobsafe</p>
+        <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white">
           Everything your team needs.<br />Nothing they don&apos;t.
         </h2>
         <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
@@ -63,14 +63,14 @@ export default function FeaturesMarquee() {
         <Marquee reverse pauseOnHover repeat={2} className="[--duration:25s]">
           {secondRow.map((f) => <FeatureCard key={f.title} {...f} />)}
         </Marquee>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#0a0a0a]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-[#0a0a0a]" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-surface-0" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-surface-0" />
       </div>
 
       <div className="flex justify-center mt-12">
         <a
           href={SIGNUP_TRIAL_URL}
-          className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+          className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
         >
           Sign up now
         </a>

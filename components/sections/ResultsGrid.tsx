@@ -1,8 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
-import { FeatureCard } from '@/components/blocks/grid-feature-cards'
+import AmbientGlow from '@/components/AmbientGlow'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
-import { Zap, Search, ShieldCheck, ClipboardList, TrendingDown, HardHat } from 'lucide-react'
+import { PiLightning as Zap, PiMagnifyingGlass as Search, PiShieldCheck as ShieldCheck, PiClipboardText as ClipboardList, PiTrendDown as TrendingDown, PiHardHat as HardHat } from 'react-icons/pi'
 
 const results = [
   {
@@ -39,54 +39,51 @@ const results = [
 
 export default function ResultsGrid() {
   return (
-    <section id="why-jobsafe" className="py-12 md:py-14 bg-[#0a0a0a]">
-      <div className="text-center mb-16 px-4">
-        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">
-          Why Teams Choose jobsafe
-        </p>
-        <h2 className="text-4xl md:text-5xl font-black text-white">
-          Results you&apos;ll see from day one
-        </h2>
-      </div>
+    <section id="why-jobsafe" className="relative overflow-hidden bg-surface-0 py-12 md:py-14">
+      <AmbientGlow position="top" intensity={0.08} className="h-[460px]" />
 
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3">
-        {results.map((result) => (
-          <div
-            key={result.title}
-            className="relative motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-1"
-          >
-            {/* Static card content — never animates */}
-            <FeatureCard
-              feature={{
-                title: result.title,
-                description: result.description,
-                icon: (props) => (
-                  <result.icon
-                    {...props}
-                    className="size-6 text-[#e5342a]"
-                    strokeWidth={1}
-                  />
-                ),
-              }}
-              className="bg-transparent h-full [&_h3]:text-white [&_p]:text-white/50"
-            />
-            {/* Pulsing border overlay — only this animates */}
-            <motion.div
-              className="pointer-events-none absolute inset-0 rounded-xl border border-[#e5342a]/20"
-              animate={{ opacity: [0.3, 0.8, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            />
+      <div className="relative z-10">
+        <div className="mb-14 px-4 text-center">
+          <p className="mb-4 text-xs font-bold uppercase tracking-widest text-brand">
+            Why teams choose jobsafe
+          </p>
+          <h2 className="text-4xl font-black text-white text-balance md:text-5xl">
+            Results you&apos;ll see from day one
+          </h2>
+        </div>
+
+        {/* Bento panel: the 1px background bleeds through gap-px to draw the grid
+            lines, so the six cells read as one connected surface at any column
+            count instead of three floating columns. */}
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+            {results.map((result, i) => (
+              <motion.div
+                key={result.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
+                className="group relative bg-surface-0 p-7 transition-colors duration-200 hover:bg-white/[0.03]"
+              >
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand/15 bg-brand/10 transition-colors duration-200 group-hover:border-brand/40">
+                  <result.icon className="size-5 text-brand" aria-hidden />
+                </div>
+                <h3 className="mt-6 text-base font-bold text-white">{result.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/50 text-pretty">{result.description}</p>
+              </motion.div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="flex justify-center mt-12">
-        <a
-          href={SIGNUP_TRIAL_URL}
-          className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors motion-safe:transition-all motion-safe:hover:-translate-y-0.5"
-        >
-          Sign up now
-        </a>
+        <div className="mt-12 flex justify-center">
+          <a
+            href={SIGNUP_TRIAL_URL}
+            className="rounded-md bg-brand px-8 py-4 text-sm font-bold text-white transition active:scale-[0.97] hover:bg-brand-hover motion-safe:transition-all motion-safe:hover:-translate-y-0.5"
+          >
+            Sign up now
+          </a>
+        </div>
       </div>
     </section>
   )

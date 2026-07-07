@@ -28,7 +28,7 @@ export default function TheProblem() {
   return (
     <section
       id="the-problem"
-      className="relative overflow-hidden bg-[#0a0a0a] py-12 md:py-14"
+      className="relative overflow-hidden bg-surface-0 py-12 md:py-14"
     >
       {/* Red glow — bottom left */}
       <div
@@ -36,7 +36,7 @@ export default function TheProblem() {
         style={{
           width: '500px',
           height: '500px',
-          background: 'radial-gradient(circle at bottom left, rgba(229,52,42,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at bottom left, rgb(var(--brand-rgb) / 0.12) 0%, transparent 70%)',
         }}
       />
 
@@ -51,10 +51,10 @@ export default function TheProblem() {
             transition={{ duration: 0.6 }}
             className="lg:sticky lg:top-32"
           >
-            <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-5">
+            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
               The Problem
             </p>
-            <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight">
               Safety is too important for broken systems
             </h2>
           </motion.div>
@@ -72,8 +72,8 @@ export default function TheProblem() {
               >
                 {/* Red left accent + number */}
                 <div className="flex items-center gap-3 shrink-0 pt-0.5">
-                  <div className="w-0.5 h-10 bg-[#e5342a] rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
-                  <span className="text-xs font-bold text-[#e5342a] tabular-nums">{number}</span>
+                  <div className="w-0.5 h-10 bg-brand rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <span className="text-xs font-bold text-brand tabular-nums">{number}</span>
                 </div>
                 <p className="text-white/70 group-hover:text-white text-base leading-relaxed transition-colors">
                   {text}

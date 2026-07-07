@@ -2,6 +2,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Single source of truth for the brand accent and dark surface scale. These
+   emit as CSS custom properties on :root and back the `brand` / `surface-*`
+   utilities (bg-brand, text-brand, border-brand/20, bg-surface-1, …), so the
+   brand colour is a one-line change rather than 80+ hardcoded hexes. */
+@theme {
+  --color-brand: #e5342a;
+  --color-brand-hover: #c42d24;
+  --color-brand-deep: #7f1010;
+  /* Space-separated RGB channels of --color-brand, for translucent glows/shadows
+     via rgb(var(--brand-rgb) / <alpha>). Keep in sync with --color-brand. */
+  --brand-rgb: 229 52 42;
+
+  --color-surface-0: #0a0a0a;
+  --color-surface-1: #111111;
+  --color-surface-2: #1a1a1a;
+
+  /* Brand-tinted keyboard focus ring (shadcn's --color-ring was never defined) */
+  --color-ring: #e5342a;
+}
+
 html {
   scroll-behavior: smooth;
   background-color: #0a0a0a;
@@ -27,6 +48,17 @@ html {
 body {
   background-color: #0a0a0a;
   color: #ffffff;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Site-wide keyboard focus ring. :where() keeps specificity at 0 so any
+   component can still opt out or restyle. Brand-tinted, offset so it reads
+   against the dark surfaces. Only shows for keyboard users (:focus-visible). */
+@layer base {
+  :where(a, button, [role="button"], summary):focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -50,6 +82,10 @@ input[type='range']::-moz-range-thumb {
 }
 
 @theme inline {
+  /* Wire the next/font Geist variable into Tailwind's font-sans token so the
+     `font-sans` utility and the base font-family both resolve to Geist. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   @keyframes marquee {
@@ -89,10 +125,10 @@ input[type='range']::-moz-range-thumb {
   --animate-login-pulse: login-pulse 2.8s ease-in-out infinite;
   @keyframes login-pulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(229, 52, 42, 0);
+    box-shadow: 0 0 0 0 rgb(var(--brand-rgb) / 0);
     }
   50% {
-    box-shadow: 0 0 14px 1px rgba(229, 52, 42, 0.55);
+    box-shadow: 0 0 14px 1px rgb(var(--brand-rgb) / 0.55);
     }
   }
   --animate-modal-fade-in: modal-fade-in 500ms ease-out;

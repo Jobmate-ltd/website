@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { HardHat, Building2, Factory, Zap, Truck, Briefcase } from 'lucide-react'
+import { PiHardHat as HardHat, PiBuildings as Building2, PiFactory as Factory, PiLightning as Zap, PiTruck as Truck, PiBriefcase as Briefcase } from 'react-icons/pi'
 
 const options = [
   {
@@ -58,10 +58,10 @@ export default function Industries() {
   }, [])
 
   return (
-    <section id="industries" className="py-12 md:py-14 bg-[#0a0a0a]">
+    <section id="industries" className="py-12 md:py-14 bg-surface-0">
       <div className="text-center mb-16 px-4">
-        <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Industries</p>
-        <h2 className="text-4xl md:text-5xl font-black text-white">
+        <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">Industries</p>
+        <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white">
           Built for industries where<br />safety is non-negotiable
         </h2>
         <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm">
@@ -89,7 +89,7 @@ export default function Industries() {
                   backgroundColor: '#1a1a1a',
                   borderWidth: '2px',
                   borderStyle: 'solid',
-                  borderColor: isActive ? '#e5342a' : 'rgba(255,255,255,0.1)',
+                  borderColor: isActive ? 'var(--color-brand)' : 'rgba(255,255,255,0.1)',
                   opacity: isVisible ? 1 : 0,
                   transform: isVisible ? 'translateX(0)' : 'translateX(-60px)',
                   boxShadow: isActive

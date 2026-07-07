@@ -45,14 +45,14 @@ export default function FAQ() {
   }
 
   return (
-    <section id="faq" className="py-12 md:py-14 bg-[#0a0a0a]">
+    <section id="faq" className="py-12 md:py-14 bg-surface-0">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-16 lg:grid-cols-[1fr_32rem]">
 
           {/* Left — heading */}
           <div className="lg:sticky lg:top-24 lg:self-start text-center lg:text-left">
-            <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">FAQ</p>
-            <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
+            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">FAQ</p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-balance text-white leading-tight">
               Frequently<br className="hidden lg:block" /> Asked<br className="hidden lg:block" /> Questions
             </h2>
             <p className="text-white/50 text-sm mt-4 max-w-xs mx-auto lg:mx-0">
@@ -78,14 +78,14 @@ export default function FAQ() {
                 >
                   <AccordionPrimitive.Trigger className="w-full flex items-center justify-between gap-4 py-5 text-left">
                     <div className="flex items-start gap-3">
-                      <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#e5342a]/10 border border-[#e5342a]/20 text-[#e5342a] text-xs font-bold">
+                      <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs font-bold">
                         Q
                       </span>
                       <span className="font-semibold text-white text-sm md:text-base leading-snug">
                         {faq.q}
                       </span>
                     </div>
-                    <span className="shrink-0 text-[#e5342a] text-xl font-light leading-none select-none">
+                    <span className="shrink-0 text-brand text-xl font-light leading-none select-none">
                       {openItem === `item-${i}` ? '−' : '+'}
                     </span>
                   </AccordionPrimitive.Trigger>

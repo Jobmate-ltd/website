@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Geist } from 'next/font/google'
 import Script from 'next/script'
 import MotionProvider from '@/components/MotionProvider'
 import LaunchTicker from '@/components/sections/LaunchTicker'
 import ChatWidget from '@/components/ChatWidget'
+import GrainOverlay from '@/components/GrainOverlay'
 import './globals.css'
 
-const inter = Inter({
+const geist = Geist({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-geist',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -83,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB" className={`${inter.variable} h-full antialiased`}>
+    <html lang="en-GB" className={`${geist.variable} h-full antialiased`}>
       <head>
         <script
           type="application/ld+json"
@@ -142,8 +144,9 @@ export default function RootLayout({
           } as unknown as React.ScriptHTMLAttributes<HTMLScriptElement>)}
         />
       </head>
-      <body className={`${inter.variable} min-h-full flex flex-col`}>
+      <body className={`${geist.variable} min-h-full flex flex-col`}>
         <LaunchTicker />
+        <GrainOverlay />
         <MotionProvider>{children}</MotionProvider>
         <ChatWidget />
         <Script

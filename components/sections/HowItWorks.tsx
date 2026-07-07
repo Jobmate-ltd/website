@@ -33,7 +33,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden bg-[#0a0a0a] py-12 md:py-14"
+      className="relative overflow-hidden bg-surface-0 py-12 md:py-14"
     >
       {/* Red glow — top right */}
       <div
@@ -41,7 +41,7 @@ export default function HowItWorks() {
         style={{
           width: '500px',
           height: '500px',
-          background: 'radial-gradient(circle at top right, rgba(229,52,42,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.12) 0%, transparent 70%)',
         }}
       />
 
@@ -55,7 +55,7 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-5"
+              className="text-xs font-bold tracking-widest text-brand uppercase mb-5"
             >
               How It Works
             </motion.p>
@@ -65,7 +65,7 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className="text-4xl md:text-5xl font-black text-white leading-tight mb-5"
+              className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight mb-5"
             >
               Four steps from incident to insight
             </motion.h2>
@@ -90,7 +90,7 @@ export default function HowItWorks() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
                 >
-                  <span className="text-xs font-bold text-[#e5342a] tabular-nums shrink-0 pt-0.5 w-6">
+                  <span className="text-xs font-bold text-brand tabular-nums shrink-0 pt-0.5 w-6">
                     {number}
                   </span>
                   <div>
@@ -112,7 +112,7 @@ export default function HowItWorks() {
               className="relative w-full max-w-[270px] sm:max-w-[290px]"
             >
               {/* Soft red glow behind the device */}
-              <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,#e5342a,transparent_70%)] scale-110" />
+              <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,var(--color-brand),transparent_70%)] scale-110" />
 
               {/* Slow float — disabled under prefers-reduced-motion via MotionProvider */}
               <motion.div
@@ -121,7 +121,7 @@ export default function HowItWorks() {
                 className="relative"
               >
                 {/* Phone frame (CSS only) */}
-                <div className="relative rounded-[2.75rem] bg-gradient-to-b from-[#2b2b2e] to-[#161618] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7),0_18px_50px_-12px_rgba(229,52,42,0.22)] ring-1 ring-white/10">
+                <div className="relative rounded-[2.75rem] bg-gradient-to-b from-[#2b2b2e] to-[#161618] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7),0_18px_50px_-12px_rgb(var(--brand-rgb)_/_0.22)] ring-1 ring-white/10">
                   {/* Side buttons */}
                   <span className="absolute -left-[2px] top-[20%] h-7 w-[3px] rounded-l-sm bg-[#0c0c0d]" />
                   <span className="absolute -left-[2px] top-[31%] h-12 w-[3px] rounded-l-sm bg-[#0c0c0d]" />

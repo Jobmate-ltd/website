@@ -54,7 +54,7 @@ export default function LaunchTicker() {
   )
 
   return (
-    <div className="sticky top-0 z-[60] w-full overflow-hidden bg-[#e5342a] text-white text-xs sm:text-[13px] font-medium tracking-wide shadow-[0_1px_0_rgba(0,0,0,0.15)]">
+    <div className="sticky top-0 z-[60] w-full overflow-hidden bg-brand text-white text-xs sm:text-[13px] font-medium tracking-wide shadow-[0_1px_0_rgba(0,0,0,0.15)]">
       <div className="relative h-9">
         {/* Scrolling marquee — decorative; hidden when the user prefers reduced motion */}
         <div aria-hidden="true" className="h-full motion-reduce:hidden">

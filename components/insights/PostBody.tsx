@@ -32,7 +32,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
         <a
           key={`${keyPrefix}-a${i}`}
           href={href}
-          className="text-[#e5342a] underline underline-offset-2 decoration-[#e5342a]/40 hover:decoration-[#e5342a] hover:text-white transition-colors"
+          className="text-brand underline underline-offset-2 decoration-brand/40 hover:decoration-brand hover:text-white transition-colors"
           {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {label}
@@ -92,7 +92,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
             <li key={`${key}-li${i}`} className="flex items-start gap-3">
               <span
                 aria-hidden
-                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e5342a]"
+                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
               />
               <span className="text-white/70 leading-relaxed text-[15px] md:text-base">
                 {renderInline(item, `${key}-li${i}`)}
@@ -109,7 +109,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
             <li key={`${key}-li${i}`} className="flex items-start gap-4">
               <span
                 aria-hidden
-                className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e5342a]/40 text-xs font-bold tabular-nums text-[#e5342a]"
+                className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-brand/40 text-xs font-bold tabular-nums text-brand"
               >
                 {i + 1}
               </span>
@@ -123,7 +123,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
 
     case 'quote':
       return (
-        <blockquote className="my-8 border-l-2 border-[#e5342a] pl-5">
+        <blockquote className="my-8 border-l-2 border-brand pl-5">
           <p className="text-white/90 text-lg md:text-xl leading-relaxed font-medium">
             {renderInline(block.text, key)}
           </p>
@@ -139,7 +139,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
       return (
         <div className="my-8 rounded-xl border border-white/10 bg-white/5 p-6">
           {block.title && (
-            <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-3">
+            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-3">
               {block.title}
             </p>
           )}
@@ -153,7 +153,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
       return (
         <div className="my-9 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-4">
           {block.items.map((stat, i) => (
-            <div key={`${key}-s${i}`} className="bg-[#0a0a0a] p-5">
+            <div key={`${key}-s${i}`} className="bg-surface-0 p-5">
               <div className="text-2xl md:text-3xl font-black text-white">
                 {stat.value}
               </div>

@@ -13,7 +13,7 @@ import Footer from '@/components/sections/Footer'
 
 export default function Page() {
   return (
-    <main className="bg-[#0a0a0a] min-h-screen">
+    <main className="bg-surface-0 min-h-screen">
       <Navbar />
       <Hero />
       <ComplianceNote />

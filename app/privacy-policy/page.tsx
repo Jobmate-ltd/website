@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main className="bg-[#0a0a0a] min-h-screen py-24 px-6">
+    <main className="bg-surface-0 min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
-        <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to jobsafe</a>
+        <a href="/" className="text-brand text-sm hover:underline mb-12 block">← Back to jobsafe</a>
         <h1 className="text-4xl font-black text-white mb-4">Privacy Policy</h1>
         <p className="text-white/60 text-sm mb-16">Last updated: January 2024</p>
         <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed space-y-8">
@@ -86,7 +86,7 @@ export default function PrivacyPolicy() {
 
           <article>
             <h2 className="text-white font-bold text-lg mb-3">15. Contact Us</h2>
-            <p className="text-white/60 leading-relaxed">If you have any questions relating to this Privacy Policy, please email us at <a href="mailto:support@jobsafe.cloud" className="text-[#e5342a] hover:underline">support@jobsafe.cloud</a>.</p>
+            <p className="text-white/60 leading-relaxed">If you have any questions relating to this Privacy Policy, please email us at <a href="mailto:support@jobsafe.cloud" className="text-brand hover:underline">support@jobsafe.cloud</a>.</p>
           </article>
 
         </div>
