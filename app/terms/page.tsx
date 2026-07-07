@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function Terms() {
   return (
-    <main className="bg-[#0a0a0a] min-h-screen py-24 px-6">
+    <main className="bg-surface-0 min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
-        <a href="/" className="text-[#e5342a] text-sm hover:underline mb-12 block">← Back to jobsafe</a>
+        <a href="/" className="text-brand text-sm hover:underline mb-12 block">← Back to jobsafe</a>
         <h1 className="text-4xl font-black text-white mb-4">Terms &amp; Conditions</h1>
         <p className="text-white/60 text-sm mb-16">Last updated: January 2024</p>
         <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed space-y-8">
@@ -68,7 +68,7 @@ export default function Terms() {
 
           <article>
             <h2 className="text-white font-bold text-lg mb-3">S5. Termination of the Agreement</h2>
-            <p className="text-white/60 leading-relaxed">(a) Monthly subscriptions can be cancelled through the subscription portal. Data will be deleted after 6 months under GDPR regulations. (b) Contracted access (3–5 years) requires 6 months&apos; written notice before the contracted term ends. Data will be held for 12 months before deletion. (c) Early termination: the full contractual fee is payable for the remaining term. (d) Company dissolved: contact <a href="mailto:support@jobsafe.cloud" className="text-[#e5342a] hover:underline">support@jobsafe.cloud</a>.</p>
+            <p className="text-white/60 leading-relaxed">(a) Monthly subscriptions can be cancelled through the subscription portal. Data will be deleted after 6 months under GDPR regulations. (b) Contracted access (3–5 years) requires 6 months&apos; written notice before the contracted term ends. Data will be held for 12 months before deletion. (c) Early termination: the full contractual fee is payable for the remaining term. (d) Company dissolved: contact <a href="mailto:support@jobsafe.cloud" className="text-brand hover:underline">support@jobsafe.cloud</a>.</p>
           </article>
 
           <article>

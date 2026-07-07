@@ -145,7 +145,7 @@ function ActionLink({ action, onNavigate }: { action: QuickAction; onNavigate: (
       href={action.href}
       onClick={onNavigate}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="inline-flex items-center rounded-full border border-[#e5342a]/40 bg-[#e5342a]/10 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e5342a]/20"
+      className="inline-flex items-center rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-brand/20"
     >
       {action.label}
     </a>
@@ -205,12 +205,12 @@ export default function ChatWidget() {
         <div
           role="dialog"
           aria-label="jobsafe assistant"
-          className="flex h-[70vh] max-h-[560px] w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] sm:w-[380px]"
+          className="flex h-[70vh] max-h-[560px] w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-1 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] sm:w-[380px]"
         >
           {/* Header */}
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#0a0a0a] px-4 py-3">
+          <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-0 px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e5342a] text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white">
                 <ChatIcon />
               </span>
               <div className="leading-tight">
@@ -235,7 +235,7 @@ export default function ChatWidget() {
                 <div
                   className={
                     m.role === 'user'
-                      ? 'max-w-[85%] rounded-2xl rounded-br-sm bg-[#e5342a] px-3.5 py-2.5 text-sm text-white'
+                      ? 'max-w-[85%] rounded-2xl rounded-br-sm bg-brand px-3.5 py-2.5 text-sm text-white'
                       : 'max-w-[90%] rounded-2xl rounded-bl-sm bg-white/5 px-3.5 py-2.5 text-sm text-white/85'
                   }
                 >
@@ -274,7 +274,7 @@ export default function ChatWidget() {
               e.preventDefault()
               send(input)
             }}
-            className="flex items-center gap-2 border-t border-white/10 bg-[#0a0a0a] px-3 py-3"
+            className="flex items-center gap-2 border-t border-white/10 bg-surface-0 px-3 py-3"
           >
             <input
               ref={inputRef}
@@ -282,13 +282,13 @@ export default function ChatWidget() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
               aria-label="Type your question"
-              className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-[#e5342a]/50 focus:outline-none"
+              className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-brand/50 focus:outline-none"
             />
             <button
               type="submit"
               aria-label="Send message"
               disabled={!input.trim()}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e5342a] text-white transition-colors hover:bg-[#c42d24] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white transition active:scale-[0.97] hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-40"
             >
               <SendIcon />
             </button>
@@ -303,7 +303,7 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label={open ? 'Close chat' : 'Open chat — ask a question'}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e5342a] text-white shadow-[0_8px_30px_rgba(229,52,42,0.35)] transition-colors hover:bg-[#c42d24] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white shadow-[0_8px_30px_rgb(var(--brand-rgb)_/_0.35)] transition active:scale-[0.97] hover:bg-brand-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
       >
         {open ? <CloseIcon /> : <ChatIcon />}
       </button>

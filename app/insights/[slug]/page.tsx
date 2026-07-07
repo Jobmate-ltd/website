@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Clock, ChevronRight } from 'lucide-react'
+import { PiArrowLeft as ArrowLeft, PiArrowRight as ArrowRight, PiClock as Clock, PiCaretRight as ChevronRight } from 'react-icons/pi'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import PostBody from '@/components/insights/PostBody'
@@ -101,7 +101,7 @@ export default async function InsightPostPage({
   }
 
   return (
-    <main className="bg-[#0a0a0a] min-h-screen">
+    <main className="bg-surface-0 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -117,7 +117,7 @@ export default async function InsightPostPage({
               width: '600px',
               height: '600px',
               background:
-                'radial-gradient(circle at top right, rgba(229,52,42,0.14) 0%, transparent 70%)',
+                'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.14) 0%, transparent 70%)',
             }}
           />
           <div className="relative z-10 max-w-3xl mx-auto px-6 pt-16 pb-10 md:pt-20">
@@ -135,10 +135,10 @@ export default async function InsightPostPage({
               </Link>
             </nav>
 
-            <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-5">
+            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
               {post.category}
             </p>
-            <h1 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-6">
+            <h1 className="text-3xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight tracking-tight mb-6">
               {post.title}
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/50">
@@ -174,9 +174,9 @@ export default async function InsightPostPage({
                       href={source.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white/60 hover:text-[#e5342a] transition-colors inline-flex items-start gap-2"
+                      className="text-sm text-white/60 hover:text-brand transition-colors inline-flex items-start gap-2"
                     >
-                      <ArrowRight className="size-3.5 mt-0.5 shrink-0 text-[#e5342a]" strokeWidth={2} />
+                      <ArrowRight className="size-3.5 mt-0.5 shrink-0 text-brand" strokeWidth={2} />
                       {source.label}
                     </a>
                   </li>
@@ -196,7 +196,7 @@ export default async function InsightPostPage({
               width: '320px',
               height: '320px',
               background:
-                'radial-gradient(circle, rgba(229,52,42,0.16) 0%, transparent 70%)',
+                'radial-gradient(circle, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
             }}
           />
           <div className="relative z-10">
@@ -210,13 +210,13 @@ export default async function InsightPostPage({
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href={SIGNUP_TRIAL_URL}
-                className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-7 py-3.5 rounded-md transition-colors"
+                className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-7 py-3.5 rounded-md transition active:scale-[0.97]"
               >
                 Sign up now
               </a>
               <Link
                 href="/#how-it-works"
-                className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-7 py-3.5 rounded-md transition-colors"
+                className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-7 py-3.5 rounded-md transition active:scale-[0.97]"
               >
                 See how it works
               </Link>
@@ -228,7 +228,7 @@ export default async function InsightPostPage({
       {/* Related posts */}
       {related.length > 0 && (
         <section className="max-w-3xl mx-auto px-6 pb-24">
-          <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-6">
+          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-6">
             Keep reading
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -236,15 +236,15 @@ export default async function InsightPostPage({
               <Link
                 key={rel.slug}
                 href={`/insights/${rel.slug}`}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-[#e5342a]/50 hover:bg-white/[0.05]"
+                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-brand/50 hover:bg-white/[0.05]"
               >
-                <span className="text-[11px] font-bold tracking-widest text-[#e5342a] uppercase mb-3">
+                <span className="text-[11px] font-bold tracking-widest text-brand uppercase mb-3">
                   {rel.category}
                 </span>
                 <h3 className="text-base font-bold text-white leading-snug mb-4 grow">
                   {rel.title}
                 </h3>
-                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#e5342a]">
+                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-brand">
                   Read article
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
                 </span>

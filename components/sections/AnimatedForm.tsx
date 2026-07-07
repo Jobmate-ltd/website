@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ListChecks, WifiOff, Camera, MapPin, Bell, Lock } from 'lucide-react'
+import { PiListChecks as ListChecks, PiWifiSlash as WifiOff, PiCamera as Camera, PiMapPin as MapPin, PiBell as Bell, PiLock as Lock } from 'react-icons/pi'
 
 const features = [
   {
@@ -44,12 +44,12 @@ const features = [
 
 export default function AnimatedForm() {
   return (
-    <section className="py-12 md:py-14 bg-[#0a0a0a]">
+    <section className="py-12 md:py-14 bg-surface-0">
       <div className="max-w-5xl mx-auto px-6">
 
         <div className="text-center mb-16">
-          <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">In Depth</p>
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">In Depth</p>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white mb-4">
             All Incidents Under One App
           </h2>
           <p className="text-white/50 max-w-xl mx-auto text-sm leading-relaxed">
@@ -68,11 +68,11 @@ export default function AnimatedForm() {
               transition={{ duration: 0.7, ease: 'easeOut' }}
               className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px]"
             >
-              <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,#e5342a,transparent_70%)] scale-110" />
+              <div className="absolute inset-0 -z-10 blur-3xl opacity-40 bg-[radial-gradient(circle,var(--color-brand),transparent_70%)] scale-110" />
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative drop-shadow-[0_20px_50px_rgba(229,52,42,0.25)]"
+                className="relative drop-shadow-[0_20px_50px_rgb(var(--brand-rgb)_/_0.25)]"
               >
                 <Image
                   src="/images/screens/employee-app.png"
@@ -91,7 +91,7 @@ export default function AnimatedForm() {
             {features.map(({ icon: Icon, title, description }) => (
               <div key={title} className="flex items-start gap-4 py-6 first:pt-0 last:pb-0">
                 <div className="shrink-0 mt-0.5">
-                  <Icon className="size-4 text-[#e5342a]" strokeWidth={1.5} />
+                  <Icon className="size-4 text-brand" strokeWidth={1.5} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-white mb-1">{title}</p>

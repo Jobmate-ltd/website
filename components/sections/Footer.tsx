@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Download, ExternalLink, Mail, Phone } from 'lucide-react'
+import { PiDownloadSimple as Download, PiArrowSquareOut as ExternalLink, PiEnvelopeSimple as Mail, PiPhone as Phone } from 'react-icons/pi'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -44,7 +44,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/10">
+    <footer className="bg-surface-0 border-t border-white/10">
       <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
@@ -141,7 +141,7 @@ export default function Footer() {
               alt="JobSafe"
               width={56}
               height={56}
-              className="h-14 w-14 mix-blend-screen transition duration-200 motion-safe:group-hover:scale-[1.03] motion-safe:group-hover:drop-shadow-[0_0_10px_rgba(229,52,42,0.55)]"
+              className="h-14 w-14 mix-blend-screen transition duration-200 motion-safe:group-hover:scale-[1.03] motion-safe:group-hover:drop-shadow-[0_0_10px_rgb(var(--brand-rgb)_/_0.55)]"
             />
           </span>
         </div>

@@ -23,7 +23,7 @@ export default function Hero() {
         style={{
           width: '600px',
           height: '600px',
-          background: 'radial-gradient(circle at top right, rgba(229,52,42,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.18) 0%, transparent 70%)',
         }}
       />
 
@@ -39,8 +39,8 @@ export default function Hero() {
               className="inline-flex items-center gap-2 border border-white/10 bg-white/5 rounded-full px-4 py-2 text-xs text-white/70 mb-10 w-fit"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5342a] opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e5342a]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
               </span>
               Available from £2.75 per licence
             </motion.div>
@@ -53,7 +53,7 @@ export default function Hero() {
               style={{ fontSize: 'clamp(3.5rem, 7vw, 7rem)' }}
             >
               Record.<br />
-              <em className="not-italic text-[#e5342a]">Resolve.</em><br />
+              <em className="not-italic text-brand">Resolve.</em><br />
               Prevent.
             </motion.h1>
 
@@ -74,17 +74,17 @@ export default function Hero() {
             >
               <a
                 href={SIGNUP_TRIAL_URL}
-                className="bg-[#e5342a] hover:bg-[#c42d24] text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+                className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
               >
                 Sign up now
               </a>
               <HowItWorksVideo>
                 <button
                   type="button"
-                  className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition-colors"
+                  className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
                 >
                   <span className="relative z-10">SEE HOW IT WORKS</span>
-                  <BorderBeam colorFrom="#e5342a" colorTo="#7f1010" duration={4} size={60} borderWidth={2} />
+                  <BorderBeam colorFrom="var(--color-brand)" colorTo="var(--color-brand-deep)" duration={4} size={60} borderWidth={2} />
                 </button>
               </HowItWorksVideo>
             </motion.div>

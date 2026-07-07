@@ -3,8 +3,9 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { TimelineContent } from '@/components/ui/timeline-animation'
 import { cn } from '@/lib/utils'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import AmbientGlow from '@/components/AmbientGlow'
 import NumberFlow from '@number-flow/react'
-import { CheckCheck } from 'lucide-react'
+import { PiChecks as CheckCheck } from 'react-icons/pi'
 import { motion } from 'motion/react'
 import React, { useRef, useState } from 'react'
 
@@ -111,7 +112,7 @@ const PricingSwitch = (props: { onSwitch: (value: string) => void; className?: s
           )}
           <span className="relative flex items-center gap-2">
             Annual
-            <span className="rounded-full bg-[#e5342a]/20 border border-[#e5342a]/30 px-2 py-0.5 text-xs font-bold text-[#e5342a]">
+            <span className="rounded-full bg-brand/20 border border-brand/30 px-2 py-0.5 text-xs font-bold text-brand">
               Save 10%
             </span>
           </span>
@@ -145,13 +146,14 @@ export default function Pricing() {
   const togglePricingPeriod = (value: string) => setIsYearly(Number.parseInt(value) === 1)
 
   return (
-    <section id="pricing" className="py-12 md:py-14 bg-[#0a0a0a]">
-      <div className="px-4 max-w-5xl mx-auto relative" ref={pricingRef}>
+    <section id="pricing" className="relative overflow-hidden bg-surface-0 py-12 md:py-14">
+      <AmbientGlow position="bottom right" intensity={0.07} className="h-[520px]" />
+      <div className="px-4 max-w-5xl mx-auto relative z-10" ref={pricingRef}>
 
         <article className="flex sm:flex-row flex-col sm:pb-0 pb-4 sm:items-center items-start justify-between mb-12">
           <div className="text-left mb-6">
-            <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-4">Pricing</p>
-            <h2 className="text-4xl md:text-5xl font-black leading-tight text-white mb-4">
+            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">Pricing</p>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance leading-tight text-white mb-4">
               Simple, transparent pricing — one price per licence
             </h2>
             <TimelineContent
@@ -194,20 +196,20 @@ export default function Pricing() {
                 className={cn(
                   'relative flex flex-col justify-between h-full',
                   plan.popular
-                    ? 'bg-[#111] border-[#e5342a] shadow-[0_0_40px_rgba(229,52,42,0.15)]'
+                    ? 'bg-surface-1 border-brand shadow-[0_0_40px_rgb(var(--brand-rgb)_/_0.15)]'
                     : 'bg-transparent border-white/10'
                 )}
               >
                 <CardContent className="pt-6">
                   {plan.popular && (
                     <div className="mb-4">
-                      <span className="bg-[#e5342a] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                      <span className="bg-brand text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                         Most Popular
                       </span>
                     </div>
                   )}
 
-                  <div className="pb-4">
+                  <div className="pb-4 min-h-[3.5rem]">
                     {plan.isCustom ? (
                       <span className="text-4xl font-black text-white">Contact us</span>
                     ) : (
@@ -227,7 +229,7 @@ export default function Pricing() {
                   </div>
 
                   <h3 className="text-2xl font-black text-white mb-2">{plan.threshold}</h3>
-                  <p className="text-sm text-white/50 mb-6 leading-relaxed">{plan.description}</p>
+                  <p className="text-sm text-white/50 mb-6 leading-relaxed min-h-[3.75rem] text-pretty">{plan.description}</p>
 
                   <div className="space-y-3 pt-4 border-t border-white/10">
                     <h4 className="font-bold text-xs uppercase tracking-widest text-white/60 mb-3">
@@ -236,8 +238,8 @@ export default function Pricing() {
                     <ul className="space-y-2">
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start gap-3">
-                          <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#e5342a]/10 border border-[#e5342a]/20 flex items-center justify-center">
-                            <CheckCheck className="w-3 h-3 text-[#e5342a]" />
+                          <span className="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center">
+                            <CheckCheck className="w-3 h-3 text-brand" />
                           </span>
                           <span className="text-sm text-white/60">{feature}</span>
                         </li>
@@ -250,9 +252,9 @@ export default function Pricing() {
                   <a
                     href={plan.buttonHref}
                     className={cn(
-                      'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition-colors',
+                      'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition active:scale-[0.97]',
                       plan.popular
-                        ? 'bg-[#e5342a] hover:bg-[#c42d24] text-white'
+                        ? 'bg-brand hover:bg-brand-hover text-white'
                         : 'border border-white/20 hover:border-white/40 text-white'
                     )}
                   >

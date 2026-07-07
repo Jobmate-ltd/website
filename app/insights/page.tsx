@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Clock } from 'lucide-react'
+import { PiArrowRight as ArrowRight, PiClock as Clock } from 'react-icons/pi'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import { getAllPosts, formatDate, SITE_URL } from '@/lib/insights'
@@ -58,7 +58,7 @@ export default function InsightsIndex() {
   }
 
   return (
-    <main className="bg-[#0a0a0a] min-h-screen">
+    <main className="bg-surface-0 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -74,11 +74,11 @@ export default function InsightsIndex() {
             width: '600px',
             height: '600px',
             background:
-              'radial-gradient(circle at top right, rgba(229,52,42,0.16) 0%, transparent 70%)',
+              'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
           }}
         />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16">
-          <p className="text-xs font-bold tracking-widest text-[#e5342a] uppercase mb-5">
+          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
             Insights
           </p>
           <h1
@@ -86,7 +86,7 @@ export default function InsightsIndex() {
             style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)' }}
           >
             Safety insights<br />
-            <span className="text-[#e5342a]">from the field</span>
+            <span className="text-brand">from the field</span>
           </h1>
           <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
             Practical, no-nonsense guidance on incident reporting, HSSE compliance
@@ -103,10 +103,10 @@ export default function InsightsIndex() {
             <Link
               key={post.slug}
               href={`/insights/${post.slug}`}
-              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-[#e5342a]/50 hover:bg-white/[0.05]"
+              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-brand/50 hover:bg-white/[0.05]"
             >
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-[11px] font-bold tracking-widest text-[#e5342a] uppercase">
+                <span className="text-[11px] font-bold tracking-widest text-brand uppercase">
                   {post.category}
                 </span>
               </div>
@@ -129,7 +129,7 @@ export default function InsightsIndex() {
                 </span>
               </div>
 
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#e5342a]">
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand">
                 Read article
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
               </span>
