@@ -36,8 +36,8 @@ const plans = [
   {
     name: 'Professional',
     description: 'For teams of 500–1,000 users. Same full feature set at a better per-licence rate.',
-    price: 2.50,
-    yearlyPrice: 2.25,
+    price: 2.75,
+    yearlyPrice: 2.50,
     isCustom: false,
     threshold: '500–1,000 licences',
     buttonText: 'Sign up now',
@@ -48,13 +48,13 @@ const plans = [
   },
   {
     name: 'Enterprise',
-    description: 'For organisations with 1,000+ users. Custom pricing, dedicated support, and SLA guarantees.',
+    description: 'For organisations with 1,000+ users. Dedicated support, SLA guarantees, and a tailored rollout for your organisation.',
     price: 0,
     yearlyPrice: 0,
     isCustom: true,
     threshold: '1,000+ licences',
-    buttonText: 'Call Us',
-    buttonHref: 'tel:03338000883',
+    buttonText: 'Contact us',
+    buttonHref: 'mailto:sales@jobsafe.cloud',
     popular: false,
     featuresHeader: 'Everything included, plus:',
     features: [
@@ -209,7 +209,7 @@ export default function Pricing() {
 
                   <div className="pb-4">
                     {plan.isCustom ? (
-                      <span className="text-4xl font-black text-white">Custom</span>
+                      <span className="text-4xl font-black text-white">Contact us</span>
                     ) : (
                       <div className="flex items-baseline gap-1 flex-wrap">
                         <span className="text-4xl font-black text-white">

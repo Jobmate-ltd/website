@@ -42,7 +42,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e5342a] opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e5342a]" />
               </span>
-              Available from £3 per licence
+              Available from £2.75 per licence
             </motion.div>
 
             <motion.h1

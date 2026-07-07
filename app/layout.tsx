@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: 'jobsafe — Workplace Incident Reporting Software',
     template: '%s | jobsafe',
   },
-  description: 'Incident reporting for field teams & transport operators. HSSE compliant, offline-capable, ISO 45001 aligned. From £3/licence.',
+  description: 'Incident reporting for field teams & transport operators. HSSE compliant, offline-capable, ISO 45001 aligned. From £2.75/licence.',
   metadataBase: new URL('https://www.jobsafe.cloud'),
   keywords: [
     'incident reporting software UK',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'jobsafe — Workplace Incident Reporting Software',
-    description: 'Record. Resolve. Prevent. The fastest way to capture and manage workplace incidents. HSSE compliant, offline-capable, from £3 per licence.',
+    description: 'Record. Resolve. Prevent. The fastest way to capture and manage workplace incidents. HSSE compliant, offline-capable, from £2.75 per licence.',
     url: 'https://www.jobsafe.cloud',
     siteName: 'jobsafe',
     images: [
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@jobsafecloud',
     title: 'jobsafe — Workplace Incident Reporting Software',
-    description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £3 per licence.',
+    description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £2.75 per licence.',
     images: ['/images/og-image.png'],
   },
   alternates: {
@@ -97,11 +97,11 @@ export default function RootLayout({
               url: 'https://www.jobsafe.cloud',
               offers: {
                 '@type': 'Offer',
-                price: '3.00',
+                price: '2.75',
                 priceCurrency: 'GBP',
                 priceSpecification: {
                   '@type': 'UnitPriceSpecification',
-                  price: '3.00',
+                  price: '2.75',
                   priceCurrency: 'GBP',
                   unitText: 'per licence per month',
                 },
