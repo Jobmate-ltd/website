@@ -150,7 +150,7 @@ export default function RootLayout({
         <MotionProvider>{children}</MotionProvider>
         <ChatWidget />
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-KB69331C7J"
+          src="https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL"
           strategy="afterInteractive"
         />
         <Script id="ga4-init" strategy="afterInteractive">
@@ -158,7 +158,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-KB69331C7J');
+            gtag('config', 'G-72H4Q5HDVL');
           `}
         </Script>
       </body>
