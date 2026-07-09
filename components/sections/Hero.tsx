@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { HowItWorksVideo } from '@/components/hero/how-it-works-video'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
@@ -12,6 +12,8 @@ const heroStats = [
 ]
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section
       id="hero"
@@ -104,27 +106,31 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right — product shot (hand holding a phone on a solid black bg,
-              which blends into the near-black hero) */}
+          {/* Right — product shot: duo iPhone 17 Pro mockup (JobSafe report menu +
+              analytics dashboard) on a transparent bg, sitting on the black hero.
+              Outer motion = entrance on load; inner motion = continuous float. */}
           <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="w-full lg:w-[40%] flex justify-center lg:pl-8"
           >
-            <picture>
-              <source srcSet="/images/jobsafe-hero.webp" type="image/webp" />
+            <motion.div
+              animate={shouldReduceMotion ? undefined : { y: [0, -14, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-full flex justify-center will-change-transform"
+            >
               <img
-                src="/images/jobsafe-hero.jpg"
-                alt="The JobSafe app open on a smartphone showing the HSSE reporting dashboard"
-                width={1175}
-                height={1316}
+                src="/images/jobsafe-hero-duo.png"
+                alt="Two smartphones showing the JobSafe app — the HSSE and incident report menu, and the analytics dashboard with reports by category, site breakdown and 12-week trend"
+                width={793}
+                height={773}
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
-                className="max-w-full max-h-[60vh] lg:max-h-[600px] object-contain mx-auto"
+                className="max-w-full max-h-[60vh] lg:max-h-[560px] object-contain mx-auto drop-shadow-2xl"
               />
-            </picture>
+            </motion.div>
           </motion.div>
 
         </div>
