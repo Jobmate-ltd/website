@@ -29,11 +29,11 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-16 md:pb-14 w-full">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-12 pb-16 md:pb-14 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12">
 
           {/* Left — text content */}
-          <div className="flex flex-col w-full lg:w-[60%]">
+          <div className="flex flex-col w-full lg:w-[52%]">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -113,7 +113,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full lg:w-[40%] flex justify-center lg:pl-8"
+            className="w-full lg:w-[48%] flex justify-center"
           >
             <motion.div
               animate={shouldReduceMotion ? undefined : { y: [0, -14, 0] }}
@@ -128,7 +128,13 @@ export default function Hero() {
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
-                className="max-w-full max-h-[60vh] lg:max-h-[560px] object-contain mx-auto drop-shadow-2xl"
+                className="max-w-full max-h-[65vh] lg:max-h-[720px] object-contain mx-auto"
+                /* Device-level glow: drop-shadow reads the PNG's alpha channel,
+                   so the red halo traces the phone silhouettes (not a box). */
+                style={{
+                  filter:
+                    'drop-shadow(0 0 18px rgb(var(--brand-rgb) / 0.55)) drop-shadow(0 0 48px rgb(var(--brand-rgb) / 0.32)) drop-shadow(0 14px 30px rgb(0 0 0 / 0.55))',
+                }}
               />
             </motion.div>
           </motion.div>
