@@ -11,13 +11,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import { EMAIL_SALES as SALES_EMAIL_ADDRESS, ENTRY_PRICE_LABEL, PHONE_DISPLAY, TRIAL, VOLUME_PRICE_LABEL } from '@/lib/brand'
 
 type QuickAction = { label: string; href: string }
 type Message = { id: number; role: 'bot' | 'user'; text: string; actions?: QuickAction[] }
 
-const PHONE_LABEL = '0333 8000 883'
+const PHONE_LABEL = PHONE_DISPLAY
 const PHONE_HREF = 'tel:03338000883'
-const SALES_HREF = 'mailto:sales@jobsafe.cloud'
+const SALES_HREF = `mailto:${SALES_EMAIL_ADDRESS}`
 
 const START_TRIAL: QuickAction = { label: 'Start free trial', href: SIGNUP_TRIAL_URL }
 const CALL_US: QuickAction = { label: `Call ${PHONE_LABEL}`, href: PHONE_HREF }
@@ -26,19 +27,19 @@ const SEE_PRICING: QuickAction = { label: 'See pricing', href: '/#pricing' }
 
 type KbEntry = { keywords: string[]; answer: string; actions?: QuickAction[] }
 
-// Answers are curated from real site facts. Keep prices in step with the
-// Pricing section (currently "from £2.75 per licence / month").
+// Answers are curated from real site facts. Prices come from `lib/brand.ts`,
+// which is the single source of truth — never hard-code a figure here.
 const KNOWLEDGE_BASE: KbEntry[] = [
   {
     keywords: ['price', 'pricing', 'cost', 'how much', 'licence', 'license', 'per user', 'plan', 'plans', 'expensive', 'fee', 'quote'],
     answer:
-      'Plans start at £2.75 per licence per month. Starter (up to 500 users) is £3.00, Professional (500–1,000) is £2.75, and Enterprise (1,000+) is bespoke — just get in touch. Every plan includes the full platform.',
+      `Licences are ${ENTRY_PRICE_LABEL} per licence per month for teams up to 500 users, ${VOLUME_PRICE_LABEL} for 500–1,000, and bespoke above that — just get in touch. Every plan includes the full platform.`,
     actions: [SEE_PRICING, START_TRIAL],
   },
   {
     keywords: ['trial', 'free', 'try', 'demo', 'test', 'evaluate', 'card'],
     answer:
-      'Every plan comes with a 3-day free trial, and no credit card is required. You can start straight away, or book a quick demo with our team.',
+      `Every plan comes with a ${TRIAL.days}-day free trial${TRIAL.cardRequired ? '' : ', and no credit card is required'}. You can start straight away, or book a quick demo with our team.`,
     actions: [START_TRIAL, CALL_US],
   },
   {

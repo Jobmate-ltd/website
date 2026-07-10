@@ -35,11 +35,11 @@ export function HowItWorksVideo({ children }: { children: React.ReactNode }) {
          <VideoModalContent>
             {/* Required by Radix for accessibility; visually hidden */}
             <VideoModalTitle className="sr-only">
-               JobSafe — how it works
+               jobsafe — how it works
             </VideoModalTitle>
             <VideoModalDescription className="sr-only">
                A short walkthrough of capturing, reviewing, forwarding and
-               analysing incidents in JobSafe.
+               analysing incidents in jobsafe.
             </VideoModalDescription>
 
             <div
@@ -75,7 +75,7 @@ export function HowItWorksVideo({ children }: { children: React.ReactNode }) {
                   <iframe
                      className="absolute inset-0 z-30 size-full"
                      src={`https://www.youtube.com/embed/${YOUTUBE_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-                     title="JobSafe — how it works"
+                     title="jobsafe — how it works"
                      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                      allowFullScreen
                   />

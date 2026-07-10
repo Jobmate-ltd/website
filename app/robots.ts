@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/brand'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,9 +7,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
+        // Nothing under /api/ is a document. Keep it out of the crawl budget
+        // and out of the index (§5.3).
+        disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://www.jobsafe.cloud/sitemap.xml',
-    host: 'https://www.jobsafe.cloud',
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   }
 }

@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { TimelineContent } from '@/components/ui/timeline-animation'
 import { cn } from '@/lib/utils'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import { PRICING_TIERS, TRIAL } from '@/lib/brand'
 import AmbientGlow from '@/components/AmbientGlow'
 import NumberFlow from '@number-flow/react'
 import { PiChecks as CheckCheck } from 'react-icons/pi'
@@ -24,7 +25,7 @@ const plans = [
   {
     name: 'Starter',
     description: 'For teams of up to 500 users. Full access to every jobsafe feature from day one.',
-    price: 3.00,
+    price: PRICING_TIERS[0].price as number,
     yearlyPrice: 2.70,
     isCustom: false,
     threshold: 'Up to 500 licences',
@@ -37,7 +38,7 @@ const plans = [
   {
     name: 'Professional',
     description: 'For teams of 500–1,000 users. Same full feature set at a better per-licence rate.',
-    price: 2.75,
+    price: PRICING_TIERS[1].price as number,
     yearlyPrice: 2.50,
     isCustom: false,
     threshold: '500–1,000 licences',
@@ -267,7 +268,7 @@ export default function Pricing() {
         </TimelineContent>
 
         <p className="text-center text-white/60 text-sm mt-8">
-          All plans include a 3-day free trial. No credit card required.
+          {TRIAL.label}
         </p>
 
       </div>
