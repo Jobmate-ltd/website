@@ -106,7 +106,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right — product shot: duo iPhone 17 Pro mockup (JobSafe report menu +
+          {/* Right — product shot: duo iPhone 17 Pro mockup (jobsafe report menu +
               analytics dashboard) on a transparent bg, sitting on the black hero.
               Outer motion = entrance on load; inner motion = continuous float. */}
           <motion.div
@@ -122,7 +122,7 @@ export default function Hero() {
             >
               <img
                 src="/images/jobsafe-hero-duo.png"
-                alt="Two smartphones showing the JobSafe app — the HSSE and incident report menu, and the analytics dashboard with reports by category, site breakdown and 12-week trend"
+                alt="Two smartphones showing the jobsafe app — the HSSE and incident report menu, and the analytics dashboard with reports by category, site breakdown and 12-week trend"
                 width={793}
                 height={773}
                 loading="eager"
