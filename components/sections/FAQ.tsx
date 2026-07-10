@@ -1,8 +1,9 @@
 'use client'
+import { faqPageSchema, graph, jsonLd } from '@/lib/schema'
 import { useState } from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 
-const faqs = [
+export const faqs = [
   {
     q: 'Does jobsafe work without internet?',
     a: "Yes. The jobsafe mobile app stores reports locally when there's no signal and automatically syncs to the cloud as soon as connectivity is restored. Your team can capture incidents anywhere — on a building site, underground, or in a remote field location — without losing a single record.",
@@ -46,6 +47,14 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="py-12 md:py-14 bg-surface-0">
+      {/* Built from the same `faqs` array rendered below, so the structured data
+          and the visible text are the same text by construction. Valid only
+          because <Accordion.Content forceMount> puts the answers in the
+          server-rendered HTML. Do not remove one without the other. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(graph(faqPageSchema(faqs))) }}
+      />
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-16 lg:grid-cols-[1fr_32rem]">
 
@@ -89,7 +98,10 @@ export default function FAQ() {
                       {openItem === `item-${i}` ? '−' : '+'}
                     </span>
                   </AccordionPrimitive.Trigger>
-                  <AccordionPrimitive.Content className="overflow-hidden text-sm data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                  <AccordionPrimitive.Content
+                    forceMount
+                    className="overflow-hidden text-sm data-[state=closed]:h-0 data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up"
+                  >
                     <p className="text-white/50 leading-relaxed pb-5 pl-9">
                       {faq.a}
                     </p>

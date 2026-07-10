@@ -43,7 +43,7 @@ export interface InsightPost {
   related: string[]
 }
 
-export const SITE_URL = 'https://www.jobsafe.cloud'
+export { SITE_URL } from './brand'
 
 const posts: InsightPost[] = [
   {

@@ -34,7 +34,6 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
-    keywords: post.keywords,
     alternates: { canonical: url },
     openGraph: {
       title: post.title,
@@ -74,6 +73,10 @@ export default async function InsightPostPage({
         datePublished: post.date,
         dateModified: post.date,
         articleSection: post.category,
+        // seo-audit-ignore: meta-keywords — this is schema.org BlogPosting
+        // `keywords` in JSON-LD, not a <meta name="keywords"> tag. The
+        // Metadata-export keywords (which Next does render as that tag) have
+        // been removed from generateMetadata above.
         keywords: post.keywords.join(', '),
         url,
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },

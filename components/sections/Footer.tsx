@@ -31,6 +31,7 @@ const navLinks = [
   { label: 'Industries', href: '/#industries' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Insights', href: '/insights' },
+  { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/#faq' },
 ]
 
@@ -138,7 +139,7 @@ export default function Footer() {
           <span className="group inline-flex">
             <Image
               src="/images/jobsafe-js-mark.png"
-              alt="JobSafe"
+              alt="jobsafe"
               width={56}
               height={56}
               className="h-14 w-14 mix-blend-screen transition duration-200 motion-safe:group-hover:scale-[1.03] motion-safe:group-hover:drop-shadow-[0_0_10px_rgb(var(--brand-rgb)_/_0.55)]"

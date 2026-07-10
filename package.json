@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run seo:audit && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "test": "node --test \"test/*.test.mjs\""
   },
   "dependencies": {
     "@number-flow/react": "^0.6.0",

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { HowItWorksVideo } from '@/components/hero/how-it-works-video'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import { ENTRY_PRICE_LABEL } from '@/lib/brand'
 
 const heroStats = [
   { stat: '3×', label: 'Faster Reporting' },
@@ -44,7 +45,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
               </span>
-              Available from £2.75 per licence
+              Available from {ENTRY_PRICE_LABEL} per licence
             </motion.div>
 
             <motion.h1

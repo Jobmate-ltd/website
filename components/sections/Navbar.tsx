@@ -16,6 +16,7 @@ export function Navbar() {
     { label: 'Industries', href: '/#industries' },
     { label: 'Pricing', href: '/#pricing' },
     { label: 'Insights', href: '/insights' },
+    { label: 'About', href: '/about' },
   ]
   return (
     <header className={cn(

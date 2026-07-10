@@ -5,6 +5,16 @@ import MotionProvider from '@/components/MotionProvider'
 import LaunchTicker from '@/components/sections/LaunchTicker'
 import ChatWidget from '@/components/ChatWidget'
 import GrainOverlay from '@/components/GrainOverlay'
+import {
+  CANONICAL_HOME,
+  ENTRY_PRICE_LABEL,
+  LEGAL_NAME,
+  OG_IMAGE,
+  PARENT_ORG_URL,
+  SITE_URL,
+  TWITTER_HANDLE,
+} from '@/lib/brand'
+import { graph, jsonLd, organizationSchema, websiteSchema } from '@/lib/schema'
 import './globals.css'
 
 const geist = Geist({
@@ -13,33 +23,28 @@ const geist = Geist({
   display: 'swap',
 })
 
+/**
+ * Site-wide description. 140–158 characters, quotes the ENTRY price (§5.1),
+ * ends on a concrete verb. Enforced by `npm run seo:audit`.
+ */
+const SITE_DESCRIPTION =
+  `Incident reporting for UK construction, field and transport teams. HSSE compliant, offline-capable and ISO 45001 aligned. From ${ENTRY_PRICE_LABEL} per licence. Start free.`
+
 export const metadata: Metadata = {
   title: {
     default: 'jobsafe — Workplace Incident Reporting Software',
     template: '%s | jobsafe',
   },
-  description: 'Incident reporting for field teams & transport operators. HSSE compliant, offline-capable, ISO 45001 aligned. From £2.75/licence.',
-  metadataBase: new URL('https://www.jobsafe.cloud'),
-  keywords: [
-    'incident reporting software UK',
-    'HSSE reporting software',
-    'workplace incident reporting app',
-    'near miss reporting software',
-    'field service safety software',
-    'health and safety reporting app UK',
-    'ISO 45001 software',
-    'safety management software UK',
-    'digital incident reporting',
-    'lone worker safety app',
-    'construction safety software',
-    'facilities management safety',
-    'RIDDOR reporting software',
-    'HSE compliance software',
-    'safety incident tracker',
-  ],
-  authors: [{ name: 'Jobmate Ltd', url: 'https://jobmate.cloud' }],
-  creator: 'Jobmate Ltd',
-  publisher: 'Jobmate Ltd',
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+
+  // NO `keywords`. Next.js renders it as <meta name="keywords">, which Google
+  // has ignored since 2009 and which signals a thin strategy to any human
+  // auditor. Removed sitewide (§5.1, defect T8).
+
+  authors: [{ name: LEGAL_NAME, url: PARENT_ORG_URL }],
+  creator: LEGAL_NAME,
+  publisher: LEGAL_NAME,
   robots: {
     index: true,
     follow: true,
@@ -53,15 +58,15 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'jobsafe — Workplace Incident Reporting Software',
-    description: 'Record. Resolve. Prevent. The fastest way to capture and manage workplace incidents. HSSE compliant, offline-capable, from £2.75 per licence.',
-    url: 'https://www.jobsafe.cloud',
+    description: `Record. Resolve. Prevent. The fastest way to capture and manage workplace incidents. HSSE compliant, offline-capable, from ${ENTRY_PRICE_LABEL} per licence.`,
+    url: CANONICAL_HOME,
     siteName: 'jobsafe',
     images: [
       {
-        url: '/images/og-image.png',
-        width: 1203,
-        height: 633,
-        alt: 'jobsafe — Workplace Incident Reporting Software',
+        url: OG_IMAGE.path,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+        alt: OG_IMAGE.alt,
       },
     ],
     locale: 'en_GB',
@@ -69,15 +74,25 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@jobsafecloud',
+    site: TWITTER_HANDLE,
     title: 'jobsafe — Workplace Incident Reporting Software',
-    description: 'Record. Resolve. Prevent. HSSE compliant incident reporting from £2.75 per licence.',
-    images: ['/images/og-image.png'],
+    description: `Record. Resolve. Prevent. HSSE compliant incident reporting from ${ENTRY_PRICE_LABEL} per licence.`,
+    images: [OG_IMAGE.path],
   },
   alternates: {
-    canonical: 'https://www.jobsafe.cloud',
+    // Trailing slash: self-referential and exact against what is served and
+    // against the GSC property `https://www.jobsafe.cloud/` (defect T6).
+    canonical: CANONICAL_HOME,
   },
 }
+
+/**
+ * Organization + WebSite are emitted from the root layout so they are present
+ * on every route and every node in the graph can reference them by @id.
+ * SoftwareApplication and FAQPage are emitted per-page, by the page that owns
+ * the corresponding visible content.
+ */
+const siteGraph = jsonLd(graph(organizationSchema(), websiteSchema()))
 
 export default function RootLayout({
   children,
@@ -89,42 +104,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              name: 'jobsafe',
-              applicationCategory: 'BusinessApplication',
-              operatingSystem: 'iOS, Android, Web',
-              description: 'Workplace incident reporting software for field service and industrial teams. HSSE compliant, offline-capable, ISO 45001 aligned.',
-              url: 'https://www.jobsafe.cloud',
-              offers: {
-                '@type': 'Offer',
-                price: '2.75',
-                priceCurrency: 'GBP',
-                priceSpecification: {
-                  '@type': 'UnitPriceSpecification',
-                  price: '2.75',
-                  priceCurrency: 'GBP',
-                  unitText: 'per licence per month',
-                },
-              },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                reviewCount: '47',
-              },
-              publisher: {
-                '@type': 'Organization',
-                name: 'Jobmate Ltd',
-                url: 'https://jobmate.cloud',
-                logo: {
-                  '@type': 'ImageObject',
-                  url: 'https://www.jobsafe.cloud/images/jobsafe_logo-removebg-preview.png',
-                },
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: siteGraph }}
         />
         {/*
           SearchAtlas OTTO dynamic-optimization pixel. Rendered verbatim in <head>
