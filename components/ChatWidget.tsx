@@ -24,6 +24,7 @@ const START_TRIAL: QuickAction = { label: 'Start free trial', href: SIGNUP_TRIAL
 const CALL_US: QuickAction = { label: `Call ${PHONE_LABEL}`, href: PHONE_HREF }
 const EMAIL_SALES: QuickAction = { label: 'Email sales', href: SALES_HREF }
 const SEE_PRICING: QuickAction = { label: 'See pricing', href: '/#pricing' }
+const VISIT_ACADEMY: QuickAction = { label: 'Visit the academy', href: '/academy' }
 
 type KbEntry = { keywords: string[]; answer: string; actions?: QuickAction[] }
 
@@ -41,6 +42,40 @@ const KNOWLEDGE_BASE: KbEntry[] = [
     answer:
       `Every plan comes with a ${TRIAL.days}-day free trial${TRIAL.cardRequired ? '' : ', and no credit card is required'}. You can start straight away, or book a quick demo with our team.`,
     actions: [START_TRIAL, CALL_US],
+  },
+  // "How do I…" entries. The specific ones sit here, ABOVE the broader
+  // feature/support entries, so a concrete question gets the concrete lesson.
+  // The generic learning catch-all lives at the END of the list, after
+  // support/getting-started, so "How do I get support?" still reaches a human.
+  {
+    keywords: ['incident report', 'report an incident', 'log an incident', 'record an incident', 'create a report', 'new report', 'submit a report'],
+    answer:
+      'Creating an incident report takes seconds: open the app, follow the guided prompts, attach photos, and the location is tagged automatically. There is a short lesson showing it done in the jobsafe academy.',
+    actions: [VISIT_ACADEMY, START_TRIAL],
+  },
+  {
+    keywords: ['hsse report', 'near miss', 'near-miss', 'hazard', 'observation', 'environmental concern'],
+    answer:
+      'Near misses and hazards are raised as HSSE reports: pick the report type, add a photo and a short description, and the right people are notified straight away. The academy has a lesson on it.',
+    actions: [VISIT_ACADEMY, START_TRIAL],
+  },
+  {
+    keywords: ['resolve', 'close a report', 'closing a report', 'assign', 'follow up on a report'],
+    answer:
+      'Supervisors review each report, forward it to the relevant department, and close it with resolution notes. The full history stays on the report. The academy walks through the whole flow.',
+    actions: [VISIT_ACADEMY],
+  },
+  {
+    keywords: ['dashboard', 'analytics', 'trends', 'admin'],
+    answer:
+      'The admin dashboard turns individual reports into a picture of what is happening across your sites: reports by category, weekly site breakdowns, and trends you can act on early. Take the tour in the academy.',
+    actions: [VISIT_ACADEMY, START_TRIAL],
+  },
+  {
+    keywords: ['mobile', 'android', 'ios', 'iphone', 'app store', 'play store', 'tablet', 'download the app'],
+    answer:
+      'jobsafe is available for iOS and Android. Your team reports from their phones, even with no signal, and everything syncs automatically when they are back online.',
+    actions: [START_TRIAL],
   },
   {
     keywords: ['feature', 'features', 'what is', 'what does', 'capabilities', 'include', 'included', 'offer', 'do you'],
@@ -87,23 +122,33 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   {
     keywords: ['start', 'sign up', 'signup', 'get started', 'begin', 'register', 'onboard', 'set up'],
     answer:
-      'Getting started is quick — start your free trial (no card required) and you can be reporting in minutes. Prefer a walkthrough? Give us a call.',
+      'Getting started is quick: start your free trial (no card required) and you can be reporting in minutes. Prefer a walkthrough? Give us a call.',
     actions: [START_TRIAL, CALL_US],
+  },
+  // Generic learning catch-all. Deliberately LAST: any "how do I…" question
+  // the entries above have not already answered lands here and is sent to the
+  // academy rather than the dead-end fallback.
+  {
+    keywords: ['how do i', 'how to', 'how does it work', 'tutorial', 'guide', 'learn', 'training', 'walkthrough', 'show me', 'video', 'lesson', 'academy'],
+    answer:
+      'The quickest way to learn jobsafe is the academy: short video lessons showing how to create incident and HSSE reports, resolve them, and read the admin dashboard. Each one takes seconds to watch.',
+    actions: [VISIT_ACADEMY, START_TRIAL],
   },
 ]
 
-const FALLBACK_ACTIONS: QuickAction[] = [CALL_US, EMAIL_SALES, START_TRIAL]
+const FALLBACK_ACTIONS: QuickAction[] = [VISIT_ACADEMY, CALL_US, EMAIL_SALES]
 
 const SUGGESTIONS = [
   'How much does it cost?',
   'Is there a free trial?',
+  'How do I create a report?',
   'Does it work offline?',
   'What features are included?',
   'How do I get support?',
 ]
 
 const GREETING =
-  "Hi 👋 I'm the jobsafe assistant. Ask me about pricing, features, offline mode, compliance, or getting started — or pick a question below."
+  "Hi 👋 I'm the jobsafe assistant. Ask me about pricing, features, compliance, or how to do something in the app. Or pick a question below."
 
 function findAnswer(query: string): { text: string; actions: QuickAction[] } {
   const q = query.toLowerCase()
@@ -114,7 +159,7 @@ function findAnswer(query: string): { text: string; actions: QuickAction[] } {
   }
   return {
     text:
-      "I'm not certain about that one — but a human can help. Give us a call, email sales@jobsafe.cloud, or start a free trial to explore jobsafe yourself.",
+      "I'm not certain about that one, but a human can help. Give us a call or email sales@jobsafe.cloud. And if you're wondering how to do something in the app, the academy's short lessons probably cover it.",
     actions: FALLBACK_ACTIONS,
   }
 }

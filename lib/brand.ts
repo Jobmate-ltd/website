@@ -103,14 +103,15 @@ export const VOLUME_PRICE_LABEL = formatPrice(PRICING_TIERS[1].price as number)
 // is not a promotion, it is a contradiction, and it reads as bait.
 
 export const TRIAL = {
-  days: 3,
+  /** 14 days, confirmed 14/07/2026 (previously 3). */
+  days: 14,
   /**
    * Verify against the Chargebee signup configuration before changing.
    * As of 09/07/2026 the site claims no card is required. Chargebee appears to
    * require one. THIS IS UNRESOLVED — see docs/SEO-P0.md, item P0-2.
    */
   cardRequired: false,
-  label: '3-day free trial. No credit card required.',
+  label: '14-day free trial. No credit card required.',
 } as const
 
 /**
@@ -125,7 +126,7 @@ export const TRIAL = {
  * outright rather than made accurate. Do not reinstate it.
  *
  * If the "6 months free" offer is real, set `enabled: true` and REMOVE the
- * 3-day trial line from the pricing section. Never run both.
+ * free-trial line from the pricing section. Never run both.
  */
 export const LAUNCH_OFFER = {
   enabled: false,
