@@ -16,6 +16,7 @@ export function Navbar() {
     { label: 'Industries', href: '/#industries' },
     { label: 'Pricing', href: '/#pricing' },
     { label: 'Insights', href: '/insights' },
+    { label: 'Academy', href: '/academy' },
     { label: 'About', href: '/about' },
   ]
   return (
@@ -35,7 +36,9 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <a href="tel:03338000883" className="hidden lg:flex items-center gap-2 whitespace-nowrap text-sm text-white/90 hover:text-white transition-colors font-medium">
+          {/* Phone moves to xl: with eight nav links the row overflows a 1024px
+              viewport; the number stays in the mobile sheet and the footer. */}
+          <a href="tel:03338000883" className="hidden xl:flex items-center gap-2 whitespace-nowrap text-sm text-white/90 hover:text-white transition-colors font-medium">
             <Phone className="size-4" strokeWidth={1.5} />
             0333 8000 883
           </a>

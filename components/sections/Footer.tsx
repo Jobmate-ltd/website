@@ -31,6 +31,7 @@ const navLinks = [
   { label: 'Industries', href: '/#industries' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Insights', href: '/insights' },
+  { label: 'Academy', href: '/academy' },
   { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/#faq' },
 ]
