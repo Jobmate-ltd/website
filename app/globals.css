@@ -131,6 +131,20 @@ input[type='range']::-moz-range-thumb {
     box-shadow: 0 0 14px 1px rgb(var(--brand-rgb) / 0.55);
     }
   }
+  /* Mobile-menu items: staggered rise via per-item animation-delay. `both`
+     holds opacity 0 through the delay; if animations are unavailable the
+     property is ignored and items simply render visible. */
+  --animate-menu-item: menu-item-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  @keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    }
+  to {
+    opacity: 1;
+    transform: none;
+    }
+  }
   --animate-modal-fade-in: modal-fade-in 500ms ease-out;
   --animate-modal-fade-out: modal-fade-out 500ms ease-in;
   @keyframes modal-fade-in {

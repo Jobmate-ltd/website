@@ -20,7 +20,7 @@ jobsafe allows workers to capture safety incidents, near misses, hazards, and HS
 - Starter: £3.00 per licence/mo — up to 500 licences
 - Professional: £2.50 per licence/mo — 500 to 1,000 licences
 - Enterprise: Custom pricing — 1,000+ licences
-- All plans include a 3-day free trial
+- All plans include a 14-day free trial
 - Annual billing saves 10%
 
 ## Industries served
