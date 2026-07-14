@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 /**
- * The gate: full name, work email, company. Nothing else.
- * Every extra field costs conversion, so we only ask for what sales actually uses.
+ * The gate: full name, work email, company, phone. The phone is required
+ * because sales calls every lead back, so a lead without a number is a lead
+ * they cannot work.
  */
 export const leadSchema = z.object({
   fullName: z
@@ -23,6 +24,17 @@ export const leadSchema = z.object({
     .trim()
     .min(2, "Please enter your company name")
     .max(120, "That company name is too long"),
+  // Required: sales dials every lead. Permissive on format (UK mobile, landline
+  // or international, with spaces/+/-/() all fine) but must carry 7–15 real digits.
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Please enter a phone number")
+    .max(32, "That phone number is too long")
+    .refine((v) => {
+      const digits = v.replace(/\D/g, "");
+      return digits.length >= 7 && digits.length <= 15;
+    }, "Please enter a valid phone number"),
   // Unchecked consent is allowed: the toolkit is not gated on marketing consent,
   // it only decides whether they go on the nurture list (GDPR: separate purposes).
   marketingConsent: z.boolean().optional().default(false),

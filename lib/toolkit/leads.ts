@@ -78,15 +78,15 @@ async function appendToFile(lead: StoredLead): Promise<DeliveryReport["file"]> {
   }
 }
 
-/** 3. Tell sales, immediately, via Resend. */
+/** 3. Tell sales, immediately, by email (SendGrid or Resend — whichever is set). */
 async function notifySales(lead: StoredLead): Promise<DeliveryReport["notification"]> {
-  const key = process.env.RESEND_API_KEY;
   const to = process.env.LEADS_NOTIFY_EMAIL;
   const from = process.env.TOOLKIT_FROM_EMAIL;
-  if (!key || !to || !from) return "skipped";
+  if (!emailConfigured() || !to || !from) return "skipped";
 
   const rows: Array<[string, string]> = [
     ["Name", lead.fullName],
+    ["Phone", lead.phone],
     ["Email", lead.email],
     ["Company", lead.company],
     ["Work email", lead.workEmail ? "yes" : "no (free-mail domain)"],
@@ -97,7 +97,7 @@ async function notifySales(lead: StoredLead): Promise<DeliveryReport["notificati
     ["Downloaded at", lead.createdAt],
   ];
 
-  const sent = await send(key, {
+  const sent = await sendEmail({
     from,
     to: [to],
     subject: `Toolkit download: ${lead.fullName} (${lead.company})`,
@@ -117,13 +117,12 @@ ${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#6E6E6E">${k
  */
 async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welcomeEmail"]> {
   if (process.env.TOOLKIT_SEND_WELCOME_EMAIL !== "true") return "skipped";
-  const key = process.env.RESEND_API_KEY;
   const from = process.env.TOOLKIT_FROM_EMAIL;
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jobsafe.cloud";
-  if (!key || !from) return "skipped";
+  if (!emailConfigured() || !from) return "skipped";
 
   const firstName = lead.fullName.split(" ")[0];
-  const sent = await send(key, {
+  const sent = await sendEmail({
     from,
     to: [lead.email],
     subject: "Your Site Incident & Near-Miss Reporting Toolkit",
@@ -141,7 +140,7 @@ async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welco
   return sent ? "ok" : "failed";
 }
 
-interface ResendEmail {
+interface OutboundEmail {
   from: string;
   to: string[];
   subject: string;
@@ -149,8 +148,55 @@ interface ResendEmail {
   html?: string;
 }
 
+/** True when any email provider is configured. */
+function emailConfigured(): boolean {
+  return Boolean(process.env.SENDGRID_API_KEY || process.env.RESEND_API_KEY);
+}
+
+/**
+ * Send one email through whichever provider is configured. SendGrid is tried
+ * first because its single-sender verification needs no DNS at all (verify one
+ * address by clicking a link); Resend is the fallback. Never throws — a failed
+ * alert must never cost the download.
+ */
+async function sendEmail(email: OutboundEmail): Promise<boolean> {
+  const sendgridKey = process.env.SENDGRID_API_KEY;
+  if (sendgridKey) return sendViaSendGrid(sendgridKey, email);
+  const resendKey = process.env.RESEND_API_KEY;
+  if (resendKey) return sendViaResend(resendKey, email);
+  return false;
+}
+
+/** SendGrid v3 REST API. Verify a single sender (no DNS) and send from it. */
+async function sendViaSendGrid(apiKey: string, email: OutboundEmail): Promise<boolean> {
+  try {
+    const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: email.to.map((address) => ({ email: address })) }],
+        from: { email: email.from },
+        subject: email.subject,
+        // SendGrid requires plain text before html.
+        content: [
+          { type: "text/plain", value: email.text },
+          ...(email.html ? [{ type: "text/html", value: email.html }] : []),
+        ],
+      }),
+    });
+    if (!res.ok) console.error("[toolkit] sendgrid failed", res.status, await res.text());
+    return res.ok; // 202 Accepted on success
+  } catch (err) {
+    console.error("[toolkit] sendgrid threw", err);
+    return false;
+  }
+}
+
 /** Resend's REST API directly, so there is no SDK dependency in the bundle. */
-async function send(apiKey: string, email: ResendEmail): Promise<boolean> {
+async function sendViaResend(apiKey: string, email: OutboundEmail): Promise<boolean> {
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -187,6 +233,7 @@ export function toStoredLead(
     fullName: lead.fullName,
     email: lead.email,
     company: lead.company,
+    phone: lead.phone,
     marketingConsent: lead.marketingConsent,
     workEmail: isWorkEmail(lead.email),
     utm: lead.utm,

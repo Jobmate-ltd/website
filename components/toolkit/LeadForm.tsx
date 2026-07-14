@@ -4,7 +4,7 @@ import { useId, useRef, useState } from "react";
 import { Loader2, AlertCircle } from "lucide-react";
 import { SuccessPanel } from "./SuccessPanel";
 
-type FieldErrors = Partial<Record<"fullName" | "email" | "company", string>>;
+type FieldErrors = Partial<Record<"fullName" | "email" | "company" | "phone", string>>;
 
 interface Success {
   downloadUrl: string;
@@ -44,6 +44,7 @@ export function LeadForm() {
       fullName: String(data.get("fullName") ?? ""),
       email: String(data.get("email") ?? ""),
       company: String(data.get("company") ?? ""),
+      phone: String(data.get("phone") ?? ""),
       marketingConsent: data.get("marketingConsent") === "on",
       companyWebsite: String(data.get("companyWebsite") ?? ""), // honeypot
       utm: readUtm(),
@@ -114,6 +115,15 @@ export function LeadForm() {
           autoComplete="organization"
           placeholder="Whitfield Groundworks"
           error={fieldErrors.company}
+        />
+        <Field
+          id={`${uid}-phone`}
+          name="phone"
+          type="tel"
+          label="Phone number"
+          autoComplete="tel"
+          placeholder="07700 900123"
+          error={fieldErrors.phone}
         />
 
         {/* Honeypot. Hidden from people, irresistible to bots. */}
