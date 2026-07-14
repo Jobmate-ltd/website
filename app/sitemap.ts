@@ -28,6 +28,7 @@ interface Route {
 /** Static marketing routes. Extend as the architecture in §4 lands. */
 const ROUTES: readonly Route[] = [
   { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/academy', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/insights', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/privacy-policy', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/terms', changeFrequency: 'yearly', priority: 0.2 },
