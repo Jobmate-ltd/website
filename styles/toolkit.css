@@ -1,0 +1,60 @@
+/* Scoped to the toolkit landing page. Nothing here leaks into the rest of the site. */
+
+.tk {
+  --tk-crimson: #e63946;
+  --tk-ink: #1a1a1a;
+  --tk-ink-raised: #232323;
+  --tk-ink-line: #383838;
+  --tk-paper: #f7f5f2;
+  --tk-amber: #ffc300;
+  --tk-muted: #a8a29d;
+}
+
+/* The hazard tape from the carousels. One motif, used three times, never more. */
+.tk-hazard {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--tk-amber) 0 10px,
+    var(--tk-ink) 10px 20px
+  );
+}
+
+/* Entry motion: content settles once, on load. It signals hierarchy (headline,
+   then subtext, then form), and it never loops. */
+@media (prefers-reduced-motion: no-preference) {
+  .tk-rise {
+    animation: tk-rise 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--tk-i, 0) * 70ms);
+  }
+  .tk-swap {
+    animation: tk-swap 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes tk-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tk-swap {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Focus is crimson everywhere, and always visible. */
+.tk :where(input, button, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--tk-crimson);
+  outline-offset: 2px;
+}
