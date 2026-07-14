@@ -87,6 +87,7 @@ async function notifySales(lead: StoredLead): Promise<DeliveryReport["notificati
 
   const rows: Array<[string, string]> = [
     ["Name", lead.fullName],
+    ["Phone", lead.phone],
     ["Email", lead.email],
     ["Company", lead.company],
     ["Work email", lead.workEmail ? "yes" : "no (free-mail domain)"],
@@ -187,6 +188,7 @@ export function toStoredLead(
     fullName: lead.fullName,
     email: lead.email,
     company: lead.company,
+    phone: lead.phone,
     marketingConsent: lead.marketingConsent,
     workEmail: isWorkEmail(lead.email),
     utm: lead.utm,
