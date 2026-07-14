@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { PiDownloadSimple as Download, PiArrowSquareOut as ExternalLink, PiEnvelopeSimple as Mail, PiPhone as Phone } from 'react-icons/pi'
+import NewsletterSignup from '@/components/sections/NewsletterSignup'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -48,6 +49,24 @@ export default function Footer() {
   return (
     <footer className="bg-surface-0 border-t border-white/10">
       <div className="mx-auto max-w-5xl px-6 py-16">
+
+        {/* Newsletter band */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center border-b border-white/10 pb-12 mb-12">
+          <div>
+            <p className="text-xs font-bold tracking-widest text-white/60 uppercase mb-3">
+              The weekly brief
+            </p>
+            <p className="text-2xl font-black tracking-tight text-white leading-tight mb-2">
+              Safer sites, one email a week
+            </p>
+            <p className="text-white/50 text-sm leading-relaxed max-w-sm">
+              Practical incident-reporting guidance, new academy lessons and
+              product updates. Written for the people running the sites.
+            </p>
+          </div>
+          <NewsletterSignup />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           {/* Brand column */}
