@@ -54,14 +54,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-center border-b border-white/10 pb-12 mb-12">
           <div>
             <p className="text-xs font-bold tracking-widest text-white/60 uppercase mb-3">
-              The weekly brief
+              The weekly briefing
             </p>
             <p className="text-2xl font-black tracking-tight text-white leading-tight mb-2">
-              Safer sites, one email a week
+              Beyond Compliance
             </p>
             <p className="text-white/50 text-sm leading-relaxed max-w-sm">
-              Practical incident-reporting guidance, new academy lessons and
-              product updates. Written for the people running the sites.
+              This week in HSE: the rulings, the compliance deadlines and the
+              numbers behind them. Written for the people running the sites.
             </p>
           </div>
           <NewsletterSignup />
