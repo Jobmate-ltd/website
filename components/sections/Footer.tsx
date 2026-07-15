@@ -152,20 +152,6 @@ export default function Footer() {
           </div>
 
         </div>
-
-        {/* JS brand mark — centred. mix-blend-screen drops the asset's solid
-            black background so only the roundel composites onto the footer. */}
-        <div className="mt-14 flex justify-center">
-          <span className="group inline-flex">
-            <Image
-              src="/images/jobsafe-js-mark.png"
-              alt="jobsafe"
-              width={56}
-              height={56}
-              className="h-14 w-14 mix-blend-screen transition duration-200 motion-safe:group-hover:scale-[1.03] motion-safe:group-hover:drop-shadow-[0_0_10px_rgb(var(--brand-rgb)_/_0.55)]"
-            />
-          </span>
-        </div>
       </div>
 
       {/* Bottom bar */}
