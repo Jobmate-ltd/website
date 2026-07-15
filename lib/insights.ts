@@ -230,7 +230,7 @@ const posts: InsightPost[] = [
       { label: 'HSE — What records must I keep?', href: 'https://www.hse.gov.uk/riddor/what-must-i-keep.htm' },
       { label: 'HSE — Workplace health & safety statistics (GB 2024/25)', href: 'https://www.hse.gov.uk/statistics/overview.htm' },
     ],
-    related: ['near-miss-reporting-safety-culture', 'lone-worker-safety-guide'],
+    related: ['riddor-changes-2026-consultation', 'accident-book-requirements-uk'],
   },
 
   {
@@ -493,6 +493,300 @@ const posts: InsightPost[] = [
       { label: 'BSI — BS 8484 lone worker services standard', href: 'https://standardsdevelopment.bsigroup.com/projects/9020-04879' },
     ],
     related: ['riddor-reporting-explained', 'near-miss-reporting-safety-culture'],
+  },
+
+  {
+    slug: 'accident-book-requirements-uk',
+    title: "The Accident Book: What UK Law Actually Requires — and What It Doesn't",
+    description:
+      'Who must keep an accident book, what goes in an entry, how long to keep records, the GDPR rules, and whether an electronic accident book is legal in the UK.',
+    excerpt:
+      "Most workplaces have an accident book. Far fewer could say which law requires it, what belongs in an entry, or how long records must be kept. Here are the actual rules — including the one that says it doesn't have to be a book at all.",
+    category: 'Compliance',
+    keywords: [
+      'accident book requirements',
+      'is an accident book a legal requirement',
+      'BI 510 accident book',
+      'how long to keep accident book records',
+      'electronic accident book',
+      'accident book GDPR',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 7,
+    content: [
+      {
+        type: 'p',
+        text: `The accident book is one of the most familiar objects in British working life — a dog-eared pad in a drawer in the site office, half-filled in, rarely read. It is also one of the most misunderstood. The duty to keep it does not come from health and safety law at all, the rules about who needs one are more specific than most people think, and the regulation behind it explicitly allows something better than paper. This guide sets out what the law actually requires.`,
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '10+', label: 'employees at premises where an accident book is required' },
+          { value: '3 years', label: 'minimum retention, from the date of the entry' },
+          { value: '1979', label: 'the regulations the duty comes from' },
+          { value: '2018', label: 'current BI 510 edition, revised for GDPR' },
+        ],
+      },
+      { type: 'h2', text: 'Is an accident book a legal requirement?' },
+      {
+        type: 'p',
+        text: `Yes — for most employers of any size, though the duty comes from an unexpected place. It is not RIDDOR, and it is not the Health and Safety at Work Act. The accident book is required by **regulation 25 of the Social Security (Claims and Payments) Regulations 1979** — benefits law, not safety law. Its original purpose was to preserve the evidence an employee needs to claim industrial injuries benefit: an accident recorded at the time, in a form the Department for Work and Pensions will accept.`,
+      },
+      {
+        type: 'p',
+        text: `Regulation 25 applies to every owner or occupier of a **mine or quarry**, every employer at premises covered by the **Factories Act 1961**, and — the clause that catches nearly everyone else — every employer with **ten or more people normally employed at the same time on or about the same premises**.`,
+      },
+      {
+        type: 'callout',
+        title: 'Under ten employees?',
+        text: `The regulation 25 duty may not bite, but you are not off the hook: RIDDOR separately requires you to keep records of reportable injuries and over-three-day injuries whatever your headcount, and an accident record is the first thing an insurer, a solicitor or an HSE inspector will ask for. In practice, every employer should keep one.`,
+      },
+      { type: 'h2', text: "It doesn't have to be a book" },
+      {
+        type: 'p',
+        text: `The regulation's own wording is the part almost nobody quotes. Employers must keep readily accessible a means, **"whether in a book or books or by electronic means"**, by which employees can record the particulars of an accident. Electronic accident records are not a grey area or a workaround — they are named in the regulation itself. What matters is that the record is readily accessible to your workers, captures the required particulars, and is preserved.`,
+      },
+      { type: 'h2', text: 'What goes in an entry' },
+      {
+        type: 'p',
+        text: `The "appropriate particulars" an accident record must capture are:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**Who was hurt** — the injured person's full name, address and occupation.`,
+          `**What happened** — the date and time of the accident, where it happened, and the cause and nature of the injury.`,
+          `**Who made the entry** — the name, address and occupation of the person recording it, if it was not the injured person themselves.`,
+        ],
+      },
+      {
+        type: 'p',
+        text: `Note who is allowed to make the entry: the injured employee **or someone acting on their behalf**. A worker cannot be required to fill it in personally, and an entry made by a colleague or supervisor on their behalf is equally valid.`,
+      },
+      { type: 'h2', text: 'How long must accident records be kept?' },
+      {
+        type: 'p',
+        text: `**At least three years from the date the entry was made.** Not three years from the end of the year, and not three years from the accident — from the entry. In practice, keeping records for longer is often sensible: personal injury claims can be brought up to three years from the date of injury (longer in some circumstances), and patterns across years are exactly what a good safety review looks for.`,
+      },
+      { type: 'h2', text: 'The GDPR problem with the traditional book' },
+      {
+        type: 'p',
+        text: `An accident entry is personal data — a name, an address, and information about a person's health. A traditional accident book, where every previous entry is visible to whoever fills in the next one, sits badly with UK GDPR. This is why the current **BI 510 (2018 edition)** was redesigned with perforated, tear-out pages: the entry is completed, removed and stored confidentially, leaving no personal data in the book itself.`,
+      },
+      {
+        type: 'p',
+        text: `If you are still using an older book where entries accumulate in full view, that is worth fixing this week, not this quarter. An electronic record with proper access controls solves the same problem more cleanly: each entry is visible only to the people who need it, and nothing is left in a drawer.`,
+      },
+      { type: 'h2', text: 'Accident book vs RIDDOR: recording is not reporting' },
+      {
+        type: 'p',
+        text: `The accident book and RIDDOR are separate duties that meet at the same incident. Every recordable accident goes in the book; only some of them must also be **reported** to the HSE. Deaths, specified injuries, over-seven-day incapacitation, certain occupational diseases and dangerous occurrences cross the reporting threshold — and the accident record is usually the evidence that starts the clock. If you are not confident where that threshold sits, read our [plain-English guide to RIDDOR reporting](/insights/riddor-reporting-explained) — and note that [RIDDOR itself is now changing](/insights/riddor-changes-2026-consultation).`,
+      },
+      { type: 'h2', text: 'Where paper falls down' },
+      {
+        type: 'p',
+        text: `The legal minimum is a book in a drawer. The practical problem is everything the minimum does not do: a paper entry cannot alert a supervisor, cannot attach the photo that shows the unguarded edge, cannot be found from head office at 6pm on a Friday, and cannot tell you that this is the third hand injury in the same workshop this quarter. For a field workforce it is worse — the book is in the office, and the accident is forty miles away.`,
+      },
+      {
+        type: 'p',
+        text: `That gap is what jobsafe closes. Workers [record an incident in seconds](/academy) from the phone in their pocket — photos, location and time captured automatically, online or off — supervisors are alerted instantly, every record is stored confidentially with a full audit trail, and the three-year retention takes care of itself. The regulation has allowed "electronic means" since before smartphones existed; the tools have finally caught up.`,
+      },
+      {
+        type: 'p',
+        text: `Want the fastest way to see it? Watch the [60-second lessons in the jobsafe academy](/academy), or call us on 0333 8000 883.`,
+      },
+    ],
+    sources: [
+      { label: 'Social Security (Claims and Payments) Regulations 1979, reg. 25', href: 'https://www.legislation.gov.uk/uksi/1979/628/regulation/25' },
+      { label: 'HSE — Accident book BI 510 (2018 edition)', href: 'https://www.hse.gov.uk/pubns/books/accident-book.htm' },
+      { label: 'HSE — RIDDOR: What records must I keep?', href: 'https://www.hse.gov.uk/riddor/what-must-i-keep.htm' },
+      { label: 'HSENI — Accident records', href: 'https://www.hseni.gov.uk/articles/accident-records' },
+    ],
+    related: ['riddor-reporting-explained', 'riddor-changes-2026-consultation'],
+  },
+
+  {
+    slug: 'riddor-changes-2026-consultation',
+    title: 'RIDDOR Is Changing: What the 2026 Reform Proposes — and How to Get Ahead of It',
+    description:
+      'The HSE has consulted on the biggest RIDDOR shake-up since 2013: reportable diseases up from 6 to 19, clearer definitions, revised dangerous occurrences. What to do now.',
+    excerpt:
+      'The HSE has just closed a consultation on the biggest overhaul of RIDDOR since 2013 — tripling the list of reportable diseases and rewriting definitions that have confused employers for a decade. Here is what is proposed, and what smart employers are doing before the rules land.',
+    category: 'Compliance',
+    keywords: [
+      'RIDDOR changes 2026',
+      'RIDDOR reform consultation',
+      'new RIDDOR reportable diseases',
+      'is silicosis reportable under RIDDOR',
+      'noise induced hearing loss RIDDOR',
+      'RIDDOR 2027',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 7,
+    content: [
+      {
+        type: 'p',
+        text: `RIDDOR has barely moved since 2013. That is about to change. On 7 April 2026 the Health and Safety Executive opened a public consultation on reforming the **Reporting of Injuries, Diseases and Dangerous Occurrences Regulations** — the first wholesale revisit in over a decade — and it closed on 30 June 2026. The headline proposal more than triples the list of reportable occupational diseases. If your teams work with dust, noise or fibrous materials, your reporting obligations are very likely about to grow.`,
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '6 → 19', label: 'proposed reportable occupational diseases' },
+          { value: '9', label: 'previously removed diseases set to return' },
+          { value: '4', label: 'conditions reportable for the first time' },
+          { value: '30 Jun 2026', label: 'consultation closed; response awaited' },
+        ],
+      },
+      { type: 'h2', text: 'Why the HSE is reopening RIDDOR' },
+      {
+        type: 'p',
+        text: `Two pressures have been building. The first is **occupational disease**: the 2013 reforms cut the reportable disease list hard, and the HSE has been criticised ever since for flying blind on long-latency conditions — most visibly the resurgence of **silicosis** linked to engineered-stone worktops, which prompted new enforcement measures on respirable silica dust in May 2026. The second is **clarity**: a decade of case law and inspector experience has shown which RIDDOR definitions employers consistently get wrong, and the consultation proposes rewriting the ambiguous ones.`,
+      },
+      { type: 'h2', text: 'What the consultation proposes' },
+      { type: 'h3', text: 'A much longer disease list' },
+      {
+        type: 'p',
+        text: `The list of reportable occupational diseases would grow from six conditions to **nineteen**. Nine diseases removed in 2013 return — including **asbestosis**, **pneumoconiosis** (which covers silicosis) and beryllium-related lung and skin disease. Four conditions become reportable for the first time, including **noise-induced hearing loss**, **bronchiolitis obliterans** and **occupational allergic rhinitis**.`,
+      },
+      { type: 'h3', text: 'More people able to diagnose' },
+      {
+        type: 'p',
+        text: `Today a disease only becomes reportable once a **GMC-registered doctor** has diagnosed it in writing. The HSE proposes widening this to other registered healthcare practitioners — which would remove a bottleneck, and mean diagnoses reach the reporting threshold sooner and more often.`,
+      },
+      { type: 'h3', text: 'Clearer definitions, revised dangerous occurrences' },
+      {
+        type: 'p',
+        text: `The consultation also proposes clarifying terminology that has proven ambiguous in practice, and revising the schedule of **dangerous occurrences** — the high-potential near misses that must be reported even when nobody is hurt — to better reflect modern workplace risk.`,
+      },
+      { type: 'h2', text: 'What this means for employers' },
+      {
+        type: 'ul',
+        items: [
+          `**More reports, from more trades.** Construction, stone and concrete work, foundries, manufacturing and any noisy environment should expect conditions they currently only record internally — if at all — to become legally reportable.`,
+          `**Health surveillance becomes reporting-critical.** If noise-induced hearing loss becomes reportable, audiometry results stop being a private occupational-health matter and start feeding a legal duty.`,
+          `**Exposure records matter more.** A disease report invites the obvious question: what was the exposure, when, and what did you do about it? Historic incident and near-miss records are the answer — if you have them.`,
+        ],
+      },
+      { type: 'h2', text: 'When would the rules change?' },
+      {
+        type: 'p',
+        text: `Nothing has changed yet. The consultation closed on 30 June 2026; the HSE is now analysing responses, and amended regulations are widely anticipated to follow — with commentators pointing to around 2027. Until then, [RIDDOR 2013 applies exactly as it stands](/insights/riddor-reporting-explained). But regulatory change of this shape rewards employers who move early, because disease reporting exposes the **history** of your record-keeping, not just its present.`,
+      },
+      {
+        type: 'callout',
+        title: 'Get ahead of it',
+        text: `The employers this reform will hurt are the ones whose exposure history lives in memory and filing cabinets. Start now: capture every incident, near miss and health concern digitally, with dates, locations and photos attached, and the expanded list becomes an administrative update rather than a scramble.`,
+      },
+      {
+        type: 'p',
+        text: `That is the boring, decisive advantage of a system like jobsafe: every report your teams raise today — the dust complaint, the missing extraction, the noise concern — is timestamped, located and audit-ready years before anyone asks for it. [See how reports are raised in seconds](/academy), and make sure your [accident records meet the current rules](/insights/accident-book-requirements-uk) while you are at it.`,
+      },
+    ],
+    sources: [
+      { label: 'HSE Media Centre — consultation on workplace injury and illness reporting (07/04/2026)', href: 'https://press.hse.gov.uk/2026/04/07/hse-launches-consultation-on-workplace-injury-and-illness-reporting/' },
+      { label: 'HSE — RIDDOR overview', href: 'https://www.hse.gov.uk/riddor/' },
+      { label: 'DLA Piper — HSE consultation on RIDDOR reform', href: 'https://www.dlapiper.com/en-gb/insights/blogs/environment-health-safety-and-product-compliance/2026/hse-consultation-on-riddor-reform-what-you-need-to-know' },
+      { label: 'Clyde & Co — proposed reform and expansion of RIDDOR', href: 'https://www.clydeco.com/en/insights/2026/april/hse-proposals-expand-reportable-occupational' },
+      { label: 'British Safety Council — HSE proposes major overhaul to RIDDOR', href: 'https://www.britsafe.org/safety-management/2026/hse-proposes-major-overhaul-to-riddor-reporting-regulations' },
+    ],
+    related: ['riddor-reporting-explained', 'accident-book-requirements-uk'],
+  },
+
+  {
+    slug: 'toolbox-talks-that-work',
+    title: 'Toolbox Talks That Actually Work: A Practical Guide for UK Sites',
+    description:
+      'How long a toolbox talk should last, how often to run them, what to cover, the records inspectors expect to see, and how to stop site briefings going stale.',
+    excerpt:
+      'Every site runs toolbox talks. Most of them are ten minutes of being read at. Here is how to pick topics your crews actually need, keep talks short enough to stick, and keep the records that prove they happened.',
+    category: 'Safety Culture',
+    keywords: [
+      'toolbox talks',
+      'toolbox talk topics',
+      'how long should a toolbox talk last',
+      'toolbox talk frequency',
+      'are toolbox talks a legal requirement',
+      'toolbox talk records',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 8,
+    content: [
+      {
+        type: 'p',
+        text: `A toolbox talk is the smallest unit of safety management: a short, informal briefing, delivered where the work happens, on one specific risk the crew is about to face. Done well, it is the most effective few minutes on the programme. Done badly — a laminated script read aloud to people looking at their boots — it is a signature-collection exercise that teaches one lesson only: safety here is paperwork. The difference is not budget. It is topic selection, length, and whether anyone follows up.`,
+      },
+      { type: 'h2', text: 'Are toolbox talks a legal requirement?' },
+      {
+        type: 'p',
+        text: `Not by name — no regulation says "thou shalt hold toolbox talks". But the duties they discharge are very real. The **Health and Safety at Work etc. Act 1974** requires employers to provide the information, instruction and training needed to keep people safe. On construction sites, **CDM 2015** requires the principal contractor to ensure workers get a site induction and the ongoing information and training the work demands. Toolbox talks are the recognised, expected way of delivering that on a live site — and when an HSE inspector visits after an incident, evidence of relevant, recent briefings is among the first things they will ask to see.`,
+      },
+      { type: 'h2', text: 'How long, and how often?' },
+      {
+        type: 'p',
+        text: `**Ten to fifteen minutes, one topic.** Shorter is better than longer: a five-minute talk that lands one point beats a half-hour tour of everything. Cover more ground by running them more often, not for longer.`,
+      },
+      {
+        type: 'p',
+        text: `There is no legally fixed frequency, so let risk set the rhythm. Weekly is a sensible baseline for most sites; fast-moving or high-risk phases justify daily. Beyond the routine, four triggers should always prompt a talk:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**A new task or phase starts** — brief the specific risks before the first hour, not after the first week.`,
+          `**New people arrive** — an induction covers the site; a toolbox talk covers today.`,
+          `**Conditions change** — weather, a new subcontractor overhead, a changed traffic route.`,
+          `**Something just happened** — an incident or a near miss on your site, or on another site doing the same work, is the most compelling topic you will ever have.`,
+        ],
+      },
+      { type: 'h2', text: 'Picking topics people actually need' },
+      {
+        type: 'p',
+        text: `The stale rota — manual handling in January, ladders in February, round and round — is where toolbox talks go to die. The crews can predict the topic before the supervisor opens their mouth, which tells them the talk is about the calendar, not about them. Two better sources:`,
+      },
+      {
+        type: 'p',
+        text: `**Your own reports.** Your incident and [near-miss data](/insights/near-miss-reporting-safety-culture) is a ranked list of what is actually going wrong on your sites. Three reports about reversing plant in a month is next Monday's talk, with the photos from those reports on the screen. Nothing lands like "this happened here, last Tuesday".`,
+      },
+      {
+        type: 'p',
+        text: `**The work in front of you.** Brief what this crew does this week: work at height before the scaffold phase, silica dust before the chasing starts, buried services before the dig. The HSE publishes [free toolbox talk material](https://www.hse.gov.uk/construction/resources/toolboxtalks.htm) for the perennial construction risks — falls from height remain the biggest single killer of workers in Great Britain, accounting for roughly one death in four in the provisional 2025/26 figures — and it is a solid starting library to adapt to your site.`,
+      },
+      { type: 'h2', text: 'Delivering a talk that sticks' },
+      {
+        type: 'ul',
+        items: [
+          `**Hold it at the workface**, next to the risk you are describing, not in the canteen.`,
+          `**Talk, don't read.** The script is your prompt, not your performance. If you cannot say it without the sheet, you don't know it yet.`,
+          `**Make it two-way.** The people doing the task know where the real risk is. Ask what nearly went wrong last week, and be visibly pleased when someone answers.`,
+          `**End on one action.** "From today, nobody walks behind the telehandler while it's loading" survives the morning. Seven bullet points do not.`,
+          `**Close the loop.** If a talk surfaces a hazard, raise a report for it there and then, and act on it. A talk that changes nothing teaches that talking changes nothing.`,
+        ],
+      },
+      { type: 'h2', text: 'The records that prove it happened' },
+      {
+        type: 'p',
+        text: `For every talk, keep: the topic and a line on what was covered, the date, who delivered it, and who attended. This is the evidence chain that connects "we identified the risk" to "we briefed the people exposed to it" — the thing your principal contractor, your insurer and an inspector will each ask for, always after the fact, always in a hurry. A photographed sign-in sheet in a site WhatsApp is not a record system; a searchable, timestamped digital trail is.`,
+      },
+      {
+        type: 'callout',
+        title: 'The loop that makes talks self-improving',
+        text: `Reports pick the topics; talks prompt the reports. Crews who see last week's near miss become this week's briefing start reporting more, because reporting visibly changes what the site pays attention to. That loop — record, resolve, prevent — is the whole game.`,
+      },
+      {
+        type: 'p',
+        text: `jobsafe powers that loop from the phone in every worker's pocket: incidents and near misses [reported in seconds](/academy), and a live dashboard that shows each site's pattern — so Monday's talk writes itself from what actually happened, not from what the rota says. [Watch how the reports come in](/academy), or read [what RIDDOR requires](/insights/riddor-reporting-explained) when a briefing topic turns into a reportable incident.`,
+      },
+    ],
+    sources: [
+      { label: 'HSE — Construction toolbox talks (free resources)', href: 'https://www.hse.gov.uk/construction/resources/toolboxtalks.htm' },
+      { label: 'Construction (Design and Management) Regulations 2015', href: 'https://www.legislation.gov.uk/uksi/2015/51/contents' },
+      { label: 'Health and Safety at Work etc. Act 1974, s.2', href: 'https://www.legislation.gov.uk/ukpga/1974/37/section/2' },
+      { label: 'HSE — Fatal injury statistics', href: 'https://www.hse.gov.uk/statistics/fatals.htm' },
+    ],
+    related: ['near-miss-reporting-safety-culture', 'riddor-reporting-explained'],
   },
 ]
 
