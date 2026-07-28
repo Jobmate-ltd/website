@@ -47,6 +47,363 @@ export { SITE_URL } from './brand'
 
 const posts: InsightPost[] = [
   {
+    slug: 'rams-risk-assessments-method-statements',
+    title: 'RAMS Explained: Risk Assessments and Method Statements for UK Sites',
+    description:
+      'What a RAMS is, whether it is a legal requirement, the difference between a risk assessment and a method statement, what to include, and how to keep them live.',
+    excerpt:
+      "Ask ten site workers what RAMS stands for and you'll get ten answers. Here's what a risk assessment and method statement actually are, when the law requires them, and how to stop them becoming a document nobody reads.",
+    category: 'Compliance',
+    keywords: [
+      'what is a RAMS',
+      'risk assessment method statement',
+      'how to write a method statement',
+      'are RAMS a legal requirement',
+      'difference between risk assessment and method statement',
+      'RAMS construction',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 8,
+    content: [
+      {
+        type: 'p',
+        text: `On any UK construction site, "have you got the RAMS?" is one of the first questions a principal contractor will ask before your team sets foot on the job. Yet RAMS is one of the most misused acronyms in the industry — treated as a single form to be downloaded, signed and filed, rather than the two distinct safety documents it actually is. This guide sets out what a **risk assessment** and a **method statement** each do, when the law requires them, and how to keep them from going stale.`,
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '5+', label: 'employees before a risk assessment must be written down' },
+          { value: 'Reg 13', label: 'CDM 2015 duty to plan and manage construction work' },
+          { value: '2', label: 'separate documents inside every "RAMS"' },
+          { value: '1999', label: 'the regulations behind the risk-assessment duty' },
+        ],
+      },
+      { type: 'h2', text: 'What does RAMS stand for?' },
+      {
+        type: 'p',
+        text: `**RAMS** stands for **Risk Assessment and Method Statement** — two documents that almost always travel together, and are often bound into one. They answer two different questions about a task:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**The risk assessment** asks *what could go wrong, and how bad could it be?* It identifies the hazards, judges the risk, and sets the control measures that bring that risk down to an acceptable level.`,
+          `**The method statement** asks *so how do we do this safely, step by step?* It describes the safe system of work — the sequence, the equipment, the people, the controls — that puts the risk assessment into practice on the ground.`,
+        ],
+      },
+      {
+        type: 'p',
+        text: `Get the distinction and the whole thing makes sense: the risk assessment is the thinking, the method statement is the doing. One without the other is half a document.`,
+      },
+      { type: 'h2', text: 'Are RAMS a legal requirement?' },
+      {
+        type: 'p',
+        text: `"RAMS" as a single named document is an industry convention, not a phrase you'll find in a statute. But the two duties underneath it are firmly in law:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**Risk assessment** is required by **regulation 3 of the Management of Health and Safety at Work Regulations 1999**. Every employer must assess the risks to workers and anyone else affected by the work. If you employ **five or more people**, the significant findings must be **recorded**.`,
+          `**Method statements** are not named in law, but on construction work **regulation 13 of CDM 2015** requires contractors to plan, manage and monitor their work so it is carried out without risks to health and safety, so far as is reasonably practicable — and a written method statement is the recognised way to show you have done that for a high-risk task.`,
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'The practical reality',
+        text: `Whatever the letter of the law, no principal contractor will let a subcontractor start high-risk work without approved RAMS. For work at height, excavation, lifting, hot works or confined spaces, they are effectively mandatory — the ticket onto the site.`,
+      },
+      { type: 'h2', text: 'How to write a risk assessment: the five steps' },
+      {
+        type: 'p',
+        text: `The HSE's long-standing approach breaks a risk assessment into five plain steps:`,
+      },
+      {
+        type: 'ol',
+        items: [
+          `**Identify the hazards** — walk the task and the site, and be honest about what could cause harm: the edge, the dust, the moving plant, the buried service.`,
+          `**Decide who might be harmed and how** — your own crew, other trades, the public, lone workers, young or new workers.`,
+          `**Evaluate the risks and decide on controls** — follow the hierarchy: eliminate the hazard if you can, then reduce, isolate and control, with PPE as the last line, not the first.`,
+          `**Record your significant findings** — write down the hazards, who is at risk, and the controls. If you have five or more employees this is a legal duty, not an option.`,
+          `**Review and update** — a risk assessment is not a document you write once. Revisit it when the work changes, when something goes wrong, or when a near miss tells you a control isn't holding.`,
+        ],
+      },
+      { type: 'h2', text: 'What a good method statement contains' },
+      {
+        type: 'p',
+        text: `A method statement should let someone who wasn't in the planning meeting carry out the task safely. In practice that means:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**The task and its sequence** — a clear, step-by-step description of the work, in the order it happens.`,
+          `**Who does what** — roles, responsibilities, and the competence or training each step requires.`,
+          `**Plant, equipment and materials** — what is used, and the safety checks it needs before use.`,
+          `**The control measures from the risk assessment** — carried through into the actual method, not left behind on the other document.`,
+          `**Emergency arrangements** — what happens if it goes wrong: rescue, first aid, who to call.`,
+        ],
+      },
+      { type: 'h2', text: 'The RAMS problem nobody talks about' },
+      {
+        type: 'p',
+        text: `The failure mode of RAMS is not writing them — it is what happens after. A method statement approved in an office, printed, signed at induction and never looked at again is a document that protects a filing cabinet, not a worker. The site changes, a new hazard appears, an incident happens — and the RAMS says none of it.`,
+      },
+      {
+        type: 'p',
+        text: `The regulations are clear that a risk assessment must be **reviewed** when circumstances change or when there is reason to think it is no longer valid. The single strongest reason to think that is your own incident and [near-miss data](/insights/near-miss-reporting-safety-culture). If workers keep reporting near misses around a task your RAMS calls "low risk", the document is wrong and the reports are right. A [toolbox talk](/insights/toolbox-talks-that-work) is how you brief the RAMS to the crew; an incident report is how the crew tells you the RAMS needs updating.`,
+      },
+      {
+        type: 'callout',
+        title: 'Keep RAMS alive',
+        text: `Treat your RAMS as a living control, not a one-off admission ticket. Every incident and near miss your teams report is feedback on whether the controls are working — feed it straight back into the assessment, and the document starts protecting people instead of paperwork.`,
+      },
+      {
+        type: 'p',
+        text: `That feedback loop is exactly what jobsafe is built to power. Workers [capture incidents and near misses in seconds](/academy) from the phone in their pocket — with photos, location and time attached — and a live dashboard shows you where reports cluster, so you know which RAMS to revisit before the next job, not after the next injury. [See how reporting works](/academy), or call us on 0333 8000 883.`,
+      },
+    ],
+    sources: [
+      { label: 'Management of Health and Safety at Work Regulations 1999, reg. 3', href: 'https://www.legislation.gov.uk/uksi/1999/3242/regulation/3/made' },
+      { label: 'Construction (Design and Management) Regulations 2015, reg. 13', href: 'https://www.legislation.gov.uk/uksi/2015/51/regulation/13/made' },
+      { label: 'HSE — Risk assessment: Managing risks and risk assessment at work', href: 'https://www.hse.gov.uk/simple-health-safety/risk/index.htm' },
+      { label: 'HSE — Method statements (construction)', href: 'https://www.hse.gov.uk/construction/lwp/method-statements.htm' },
+    ],
+    related: ['toolbox-talks-that-work', 'how-to-investigate-a-workplace-accident'],
+  },
+
+  {
+    slug: 'how-to-investigate-a-workplace-accident',
+    title: 'How to Investigate a Workplace Accident: Finding the Root Cause, Not the Blame',
+    description:
+      'A practical guide to accident investigation the HSE way: the four steps of HSG245, immediate vs underlying vs root causes, the 5 Whys, and how to prevent a repeat.',
+    excerpt:
+      "An accident investigation that ends at \"the worker wasn't careful\" hasn't found the cause — it's found somewhere to stop looking. Here's how to investigate the HSE way, and actually prevent the next one.",
+    category: 'Safety Culture',
+    keywords: [
+      'accident investigation',
+      'how to investigate an accident at work',
+      'root cause analysis',
+      '5 whys',
+      'immediate underlying root cause',
+      'HSG245',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 8,
+    content: [
+      {
+        type: 'p',
+        text: `When something goes wrong at work, there is a strong pull toward the quickest explanation: the worker was careless, they rushed, they didn't follow the rules. It feels like an answer, and it closes the file. It is also almost never the real cause — and an investigation that stops there guarantees the same thing happens again to someone else. This guide sets out how to investigate a workplace accident properly, using the HSE's own framework.`,
+      },
+      {
+        type: 'p',
+        text: `The prize is not paperwork. It is the third word of **Record. Resolve. Prevent.** — turning an incident into the specific, lasting change that stops the next one.`,
+      },
+      { type: 'h2', text: 'Why investigate at all?' },
+      {
+        type: 'p',
+        text: `There are three reasons, and they reinforce each other:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**To prevent recurrence** — the only reason that actually matters. Every accident is a lesson already paid for; the investigation is how you collect it.`,
+          `**To meet your legal duties** — investigating helps you show you are managing risk, and it underpins accurate [RIDDOR reporting](/insights/riddor-reporting-explained) where the incident is reportable.`,
+          `**To protect the organisation** — a thorough, contemporaneous investigation is your evidence if a claim or prosecution follows months later.`,
+        ],
+      },
+      { type: 'h2', text: 'The four steps of an investigation' },
+      {
+        type: 'p',
+        text: `The HSE's guidance **HSG245, "Investigating accidents and incidents"**, sets out a four-step structure that scales from a near miss to a serious injury:`,
+      },
+      {
+        type: 'ol',
+        items: [
+          `**Gather the information** — collect the facts while they are fresh: the scene, photographs, positions, equipment, and accounts from those involved and any witnesses. Physical evidence and memories both decay fast, so this step is urgent.`,
+          `**Analyse the information** — work out what happened and why, separating the immediate cause from the deeper ones (see below). This is where most investigations either succeed or give up too early.`,
+          `**Identify risk control measures** — decide what needs to change so it cannot happen again, choosing controls high up the hierarchy rather than another sign or another briefing.`,
+          `**Action and implement** — turn those measures into a plan with owners and deadlines, then check they were actually done and that they worked.`,
+        ],
+      },
+      { type: 'h2', text: 'The three levels of cause' },
+      {
+        type: 'p',
+        text: `The heart of a good investigation is refusing to stop at the obvious. HSG245 asks you to find three layers of cause:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**Immediate cause** — the most obvious agent of harm. The guard was missing; the worker slipped; the load fell.`,
+          `**Underlying cause** — the less obvious condition that let the immediate cause exist. The guard was removed because it slowed the job and nobody replaced it; the floor was wet because a leak went unreported.`,
+          `**Root cause** — the failing in the management system from which the rest springs. There was no system to check guards were refitted; there was no easy way to report the leak, so nobody did.`,
+        ],
+      },
+      {
+        type: 'quote',
+        text: `The immediate cause tells you what happened. The root cause tells you why your organisation let it happen — and it is the only level at which a fix actually prevents a repeat.`,
+      },
+      { type: 'h2', text: 'The 5 Whys: a simple tool that works' },
+      {
+        type: 'p',
+        text: `You do not need complex methodology to reach a root cause. The **5 Whys** — asking "why?" of each answer until you run out of system failures to expose — is often enough:`,
+      },
+      {
+        type: 'ol',
+        items: [
+          `A worker cut their hand on a machine. **Why?** The guard wasn't in place.`,
+          `**Why?** It had been removed to clear a jam and not refitted.`,
+          `**Why?** Clearing jams by hand is quicker, and it's done several times a shift.`,
+          `**Why?** The machine jams often and nobody has reported it as a problem.`,
+          `**Why?** Reporting a recurring fault is a hassle, so people just work around it.`,
+        ],
+      },
+      {
+        type: 'p',
+        text: `"The worker was careless" would have stopped at the first line. Five questions later the real fix is obvious: make the machine jam less, and make reporting the fault easier than working around it. That is a root-cause fix; "be more careful" is not.`,
+      },
+      { type: 'h2', text: 'Investigate the system, not the person' },
+      {
+        type: 'p',
+        text: `The fastest way to kill your own investigations is to use them to assign blame. The moment workers believe that reporting an incident, or telling the truth about one, will get someone disciplined, the information dries up — and information is the entire raw material of prevention. A **just culture** distinguishes an honest mistake from genuine recklessness, and treats the first as a chance to learn. It is not softness; it is the only way to keep the [near misses and reports flowing](/insights/near-miss-reporting-safety-culture) that let you see risk before it becomes injury.`,
+      },
+      { type: 'h2', text: 'The investigation is only as good as the data' },
+      {
+        type: 'p',
+        text: `Step one — gather the information — is where most investigations are quietly lost. A report scribbled in a notebook hours later, with no photo of the scene, no exact time, no location, and a fading memory of who was where, cannot support a serious analysis. For a field workforce it is harder still: the incident happens miles from the office, and by the time anyone with a clipboard arrives, the scene is gone.`,
+      },
+      {
+        type: 'p',
+        text: `This is precisely the gap jobsafe closes. The person who was there [captures the incident in seconds](/academy), on the phone in their pocket — photos of the scene, automatic location and timestamp, an account while it is fresh — and it reaches a supervisor instantly. From there the built-in resolution flow carries the report from raised, to investigated, to closed, with actions assigned and a full audit trail, so the "action and implement" step doesn't quietly evaporate. [See how it works](/academy), and read [what RIDDOR requires](/insights/riddor-reporting-explained) when an investigated incident crosses the reporting threshold.`,
+      },
+    ],
+    sources: [
+      { label: 'HSE — HSG245: Investigating accidents and incidents', href: 'https://www.hse.gov.uk/pubns/priced/hsg245.pdf' },
+      { label: 'HSE — Investigating accidents and incidents (overview)', href: 'https://www.hse.gov.uk/managing/re-active-monitoring.htm' },
+      { label: 'HSE — Root causes and human factors', href: 'https://www.hse.gov.uk/humanfactors/topics/root-causes.htm' },
+      { label: 'HSE — RIDDOR: reporting requirements', href: 'https://www.hse.gov.uk/riddor/' },
+    ],
+    related: ['near-miss-reporting-safety-culture', 'accident-book-requirements-uk'],
+  },
+
+  {
+    slug: 'first-aid-at-work-requirements',
+    title: 'First Aid at Work: How Many First Aiders Do You Actually Need?',
+    description:
+      'A plain guide to UK first-aid law: the needs assessment, how many first aiders are required for low and higher-hazard workplaces, and what appointed persons, EFAW and FAW mean.',
+    excerpt:
+      'There is no magic number of first aiders — the law hands you a needs assessment instead. Here is how to work out what your workplace actually requires, without guessing.',
+    category: 'Compliance',
+    keywords: [
+      'first aid at work requirements',
+      'how many first aiders do I need',
+      'first aid needs assessment',
+      'first aider ratio',
+      'EFAW FAW appointed person',
+      'first aid regulations 1981',
+    ],
+    author: 'The jobsafe Team',
+    date: '2026-07-15',
+    readingTime: 7,
+    content: [
+      {
+        type: 'p',
+        text: `"How many first aiders do we need?" is one of the most common health-and-safety questions employers ask — and one of the few the law deliberately refuses to answer with a single number. Instead it hands you a duty: work it out for **your** workplace, based on **your** risks. This guide explains the legal requirement, how to carry out the needs assessment, and the numbers the HSE suggests as a starting point.`,
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '1981', label: 'the First-Aid Regulations that set the duty' },
+          { value: '1', label: 'first aider per 50 in higher-hazard workplaces (guide)' },
+          { value: '1', label: 'first aider per 100 in low-hazard workplaces (guide)' },
+          { value: '0', label: 'fixed legal minimum — the needs assessment decides' },
+        ],
+      },
+      { type: 'h2', text: 'What the law actually requires' },
+      {
+        type: 'p',
+        text: `The duty comes from the **Health and Safety (First-Aid) Regulations 1981**. Every employer must provide **adequate and appropriate** equipment, facilities and personnel so that employees who are injured or taken ill at work receive immediate attention. Note the two words doing the work: adequate and appropriate. The law does not set a ratio because a quiet office and a busy construction site plainly need different provision. What is "appropriate" is for you to determine — through a first-aid needs assessment.`,
+      },
+      { type: 'h2', text: 'The first-aid needs assessment' },
+      {
+        type: 'p',
+        text: `The needs assessment is the starting point for all first-aid provision, and it is where the real thinking happens. The HSE expects you to weigh:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**The nature of the work and its hazards** — an office and a workshop with dangerous machinery are not the same risk.`,
+          `**The size of the workforce** — more people, more provision.`,
+          `**Your accident and ill-health history** — what has actually happened here, and what nearly did.`,
+          `**The spread of the workforce** — multiple sites, remote locations, and work patterns like shifts and lone working.`,
+          `**Distance from emergency services**, and the needs of any travelling, remote or lone workers.`,
+        ],
+      },
+      { type: 'h2', text: 'The three types of first-aid personnel' },
+      {
+        type: 'p',
+        text: `The rules distinguish three roles, and the jargon matters when you write your provision down:`,
+      },
+      {
+        type: 'ul',
+        items: [
+          `**Appointed person** — takes charge of first-aid arrangements: looks after the equipment and calls the emergency services. An appointed person needs **no formal first-aid training**.`,
+          `**EFAW (Emergency First Aid at Work)** — a one-day trained first aider, able to give emergency first aid.`,
+          `**FAW (First Aid at Work)** — a three-day trained first aider, able to deal with a wider range of injuries and illnesses.`,
+        ],
+      },
+      { type: 'h2', text: 'The HSE’s suggested numbers' },
+      {
+        type: 'p',
+        text: `The HSE stresses these are a **guide**, not a legal ratio — your needs assessment can require more. But as a starting point:`,
+      },
+      { type: 'h3', text: 'Low-hazard workplaces (offices, shops, libraries)' },
+      {
+        type: 'ul',
+        items: [
+          `**Fewer than 25 employees** — at least one appointed person.`,
+          `**25 to 50 employees** — at least one first aider trained in EFAW.`,
+          `**More than 50 employees** — at least one FAW-trained first aider for every 100 employed (or part thereof).`,
+        ],
+      },
+      { type: 'h3', text: 'Higher-hazard workplaces (construction, warehousing, engineering, manufacturing)' },
+      {
+        type: 'ul',
+        items: [
+          `**Fewer than 5 employees** — at least one appointed person.`,
+          `**5 to 50 employees** — at least one first aider trained in EFAW or FAW, depending on the type of injuries that might occur.`,
+          `**More than 50 employees** — at least one FAW-trained first aider for every 50 employed (or part thereof).`,
+        ],
+      },
+      {
+        type: 'callout',
+        title: "Don't forget cover, not just count",
+        text: `A single first aider is no cover at all once you account for holidays, sickness and shift patterns. Your assessment has to guarantee provision at all times people are at work — which usually means more trained people than the bare guide numbers suggest.`,
+      },
+      { type: 'h2', text: 'The field and lone-worker problem' },
+      {
+        type: 'p',
+        text: `The suggested numbers assume people are gathered on one site. A dispersed field workforce breaks that assumption: an engineer working alone, an hour from the nearest colleague, cannot share the site's first aider. For [lone and remote workers](/insights/lone-worker-safety-guide) the needs assessment has to consider personal first-aid provision, training, and — critically — how an incident is raised and located when there is no one else there to raise it.`,
+      },
+      { type: 'h2', text: 'When first aid is given, record it' },
+      {
+        type: 'p',
+        text: `First-aid provision and incident recording are two halves of the same duty. Every time first aid is administered, the details should be recorded — what happened, to whom, when, and what was done. That record feeds your [accident book obligations](/insights/accident-book-requirements-uk), informs the next needs assessment, and starts the clock on [RIDDOR reporting](/insights/riddor-reporting-explained) if the injury turns out to be reportable.`,
+      },
+      {
+        type: 'p',
+        text: `This is where jobsafe earns its place alongside the first-aid kit: the moment first aid is given, the incident is [captured in seconds](/academy) on a phone — with location, time and photos — reaches a supervisor instantly, and is stored with a full audit trail. For a lone worker miles from base, that automatic location on a report can be the fastest way to get help to the right place. [See how it works](/academy), or call us on 0333 8000 883.`,
+      },
+    ],
+    sources: [
+      { label: 'Health and Safety (First-Aid) Regulations 1981', href: 'https://www.legislation.gov.uk/uksi/1981/917/contents' },
+      { label: 'HSE — First aid at work: your questions answered (INDG214)', href: 'https://www.hse.gov.uk/pubns/indg214.htm' },
+      { label: 'HSE — First aid needs assessment', href: 'https://www.hse.gov.uk/first-aid/employer-responsibilities.htm' },
+      { label: 'HSE — First aid at work (L74 Approved Code of Practice)', href: 'https://www.hse.gov.uk/pubns/priced/l74.pdf' },
+    ],
+    related: ['accident-book-requirements-uk', 'lone-worker-safety-guide'],
+  },
+
+  {
     slug: 'riddor-reporting-explained',
     title: 'RIDDOR Reporting Explained: What UK Employers Must Report — and the Deadlines',
     description:
