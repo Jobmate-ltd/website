@@ -20,19 +20,14 @@ import {
   type FaqEntry,
 } from '@/lib/schema'
 import {
-  PiCameraPlus,
-  PiChartBar,
-  PiClockCountdown,
   PiCrosshair,
   PiFileArrowDown,
-  PiFolderOpen,
   PiHandshake,
   PiMagnifyingGlass,
   PiScales,
   PiSiren,
   PiTimer,
   PiUsersThree,
-  PiWifiSlash,
 } from 'react-icons/pi'
 
 const PAGE_PATH = '/industries/window-door-fitters'
@@ -48,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Health & Safety Software for Window & Door Fitters | jobsafe',
     description:
-      'The paperwork you would want to already have, the day something goes wrong. Incident and near-miss reporting built for UK installation businesses.',
+      'Fix your incident reporting in 24 hours. Evidence-grade incident and near-miss reporting built for UK window, door and glazing installation businesses.',
     url: PAGE_URL,
     type: 'website',
   },
@@ -90,61 +85,6 @@ const painCards = [
     icon: PiUsersThree,
     title: 'A subbie crew had a near miss on Friday. You hear about it on Monday.',
     body: 'Real-time alerts notify the office the moment a report is submitted — whoever is on the job, wherever the site is.',
-  },
-]
-
-const deepDives = [
-  {
-    n: '01',
-    icon: PiClockCountdown,
-    eyebrow: 'Incident & near-miss reporting',
-    title: 'Report it while it’s still fresh — not from memory.',
-    body: 'A sealed unit that slips, a ladder that kicks out, a near miss with the forklift in the yard — your fitters capture what happened in under a minute, from the phone already in their pocket, before they’ve left the scene. Not written up three days later, when it’s become "he said, she said".',
-    quote: 'Capture what happened on-site in minutes — not from memory, next week.',
-  },
-  {
-    n: '02',
-    icon: PiCameraPlus,
-    eyebrow: 'Photo, video & voice evidence',
-    title: 'Evidence anchored in time and place.',
-    body: 'Photos, video clips and voice notes are attached at the point of capture, and every report is automatically GPS-tagged and timestamped. When a claim lands six months later, you’re not reconstructing events — you’re opening the record.',
-    quote: 'Anchored in time and place, the moment it’s captured.',
-  },
-  {
-    n: '03',
-    icon: PiWifiSlash,
-    eyebrow: 'Offline mode',
-    title: 'Works where your crews actually work.',
-    body: 'Up scaffolding, in a stairwell, in a plant room with no bars — the app stores the report locally and syncs the moment signal returns. A site with no coverage is never a reason for no record.',
-    quote: 'No signal on site is not an excuse for no record.',
-  },
-  {
-    n: '04',
-    icon: PiSiren,
-    eyebrow: 'Real-time alerts',
-    title: 'The office knows the same day. Not at handover. Not on Monday.',
-    body: 'The moment a report is submitted, the right people are notified by push and email, with escalation if nobody responds. Whether it’s your own fitters or a subcontracted crew on the other side of the county, you hear about it while there’s still something you can do about it.',
-    quote: 'Notified the moment it happens — whoever’s on the job.',
-  },
-  {
-    n: '05',
-    icon: PiFolderOpen,
-    eyebrow: 'Full audit trail',
-    title: 'An audit trail your insurer can lean on.',
-    body: 'Every report, and every action taken on it, is held as an immutable, timestamped record — and it’s exportable when someone asks. At renewal, in a tender, or across the table from a loss adjuster, "we take safety seriously" becomes something you can hand over rather than something you say.',
-    quote: 'Walk into your renewal with evidence, not promises.',
-  },
-  {
-    n: '06',
-    icon: PiChartBar,
-    eyebrow: 'Dashboard analytics',
-    title: 'Spot the pattern before it becomes an injury.',
-    body: 'The dashboard shows where reports cluster — by site, by category, over time. If near misses keep stacking up around upstairs installs or the yard forklift, that’s the risk assessment to revisit next, backed by your own data rather than a hunch.',
-    quote: 'Your own reports tell you which risk assessment to revisit next.',
-    link: {
-      href: '/insights/rams-risk-assessments-method-statements',
-      label: 'How incident data keeps RAMS alive',
-    },
   },
 ]
 
@@ -240,9 +180,8 @@ export default function WindowDoorFittersPage() {
                 className="font-black leading-[1.05] tracking-tight text-white mb-7 text-balance"
                 style={{ fontSize: 'clamp(2.4rem, 4.6vw, 4.2rem)' }}
               >
-                The paperwork you&apos;d want to{' '}
-                <em className="not-italic text-brand">already have</em>, the day
-                something goes wrong.
+                Fix your incident reporting in{' '}
+                <em className="not-italic text-brand">24 hours</em>
               </h1>
               <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">
                 Glass is heavy, edges are sharp, and half the job happens up a
@@ -279,46 +218,81 @@ export default function WindowDoorFittersPage() {
               </ul>
             </div>
 
-            {/* Right — real product shot */}
+            {/* Right — on-site footage. Greyscale is baked into the encode
+                (public/videos, ffmpeg hue=s=0); the red is the soft glow
+                behind the frame plus a low-opacity brand wash, so the footage
+                sits in the hero's palette rather than beside it. */}
             <div className="w-full lg:w-[45%] flex justify-center">
-              <img
-                src="/images/jobsafe-hero-duo.png"
-                alt="Two smartphones showing the jobsafe app — the incident report menu, and the analytics dashboard with reports by category, site breakdown and 12-week trend"
-                width={793}
-                height={773}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                className="max-w-full max-h-[60vh] lg:max-h-[640px] object-contain mx-auto"
-                style={{
-                  filter:
-                    'drop-shadow(0 0 18px rgb(var(--brand-rgb) / 0.5)) drop-shadow(0 0 48px rgb(var(--brand-rgb) / 0.28)) drop-shadow(0 14px 30px rgb(0 0 0 / 0.55))',
-                }}
-              />
+              <div className="relative w-full max-w-xl">
+                {/* Red blur behind the frame */}
+                <div
+                  aria-hidden
+                  className="absolute -inset-10 pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 60% 40%, rgb(var(--brand-rgb) / 0.35) 0%, transparent 65%)',
+                    filter: 'blur(40px)',
+                  }}
+                />
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_14px_40px_rgb(0_0_0/0.6)]">
+                  <video
+                    src="/videos/window-fitter-hero.mp4"
+                    poster="/videos/window-fitter-hero-poster.jpg"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="A fitter installing a window on site"
+                    className="w-full h-auto block"
+                  />
+                  {/* Brand wash + vignette over the greyscale footage */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 85% 15%, rgb(var(--brand-rgb) / 0.22) 0%, transparent 55%), linear-gradient(to top, rgb(0 0 0 / 0.35) 0%, transparent 40%)',
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Liability note ────────────────────────────────────────────────── */}
-      <section className="bg-surface-0 border-y border-white/10">
-        <div className="mx-auto max-w-5xl px-6 py-8 md:py-10">
-          <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6">
-            <div className="shrink-0 w-10 h-10 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center">
-              <PiScales className="size-5 text-brand" strokeWidth={1.75} />
-            </div>
-            <p className="text-sm md:text-base text-white/80 leading-relaxed">
-              <span className="font-bold text-white">
-                Director liability is personal —
-              </span>{' '}
-              under the Health and Safety at Work etc. Act 1974, what protects
-              the people running the business is being able to{' '}
-              <span className="font-bold text-brand">show</span> that reasonably
-              practicable steps were taken. That is an evidence question: a
-              dated, geotagged, immutable reporting trail demonstrates your
-              system; good intentions only describe it.
-            </p>
+      {/* ── The point: director liability ─────────────────────────────────
+          The selling point of the page — full editorial statement, not a
+          footnote band. Sits directly under the hero, before any feature
+          copy. */}
+      <section className="relative bg-surface-0 border-y border-white/10 overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none w-[900px] h-[500px]"
+          style={{
+            background:
+              'radial-gradient(ellipse at top, rgb(var(--brand-rgb) / 0.14) 0%, transparent 70%)',
+          }}
+        />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
+          <div className="mx-auto w-12 h-12 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center mb-8">
+            <PiScales className="size-6 text-brand" strokeWidth={1.75} />
           </div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance text-white leading-[1.05] mb-8">
+            Director liability
+            <br />
+            is <em className="not-italic text-brand">personal</em>.
+          </h2>
+          <p className="text-white/80 text-lg md:text-2xl leading-relaxed text-balance max-w-3xl mx-auto">
+            Under the Health and Safety at Work etc. Act 1974, what protects
+            the people running the business is being able to{' '}
+            <span className="font-bold text-white">show</span> that reasonably
+            practicable steps were taken. That is an evidence question: a
+            dated, geotagged, immutable reporting trail{' '}
+            <span className="font-bold text-white">demonstrates</span> your
+            system — good intentions only describe it.
+          </p>
         </div>
       </section>
 
@@ -350,62 +324,6 @@ export default function WindowDoorFittersPage() {
                 {title}
               </h3>
               <p className="text-white/50 text-sm leading-relaxed">{body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Feature deep-dives ────────────────────────────────────────────── */}
-      <section className="py-14 md:py-16 bg-surface-0">
-        <div className="text-center mb-16 px-4">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">
-            How jobsafe covers you
-          </p>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white">
-            From the scene
-            <br />
-            to the record
-          </h2>
-        </div>
-        <div className="mx-auto max-w-6xl px-6 flex flex-col gap-6 md:gap-10">
-          {deepDives.map(({ n, icon: Icon, eyebrow, title, body, quote, link }, i) => (
-            <div
-              key={n}
-              className="grid md:grid-cols-2 gap-6 md:gap-12 items-center rounded-2xl border border-white/10 bg-surface-1 p-8 md:p-12 overflow-hidden"
-            >
-              <div className={i % 2 === 1 ? 'md:order-2' : undefined}>
-                <p className="text-xs font-bold tracking-widest text-brand uppercase mb-3">
-                  {n} — {eyebrow}
-                </p>
-                <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4 text-balance">
-                  {title}
-                </h3>
-                <p className="text-white/50 text-sm md:text-base leading-relaxed">
-                  {body}
-                </p>
-                {link && (
-                  <Link
-                    href={link.href}
-                    className="inline-block mt-4 text-sm font-semibold text-brand hover:underline"
-                  >
-                    {link.label} →
-                  </Link>
-                )}
-              </div>
-              <div
-                className={`relative rounded-xl border border-white/10 p-8 md:p-10 min-h-[180px] flex flex-col justify-center ${
-                  i % 2 === 1 ? 'md:order-1' : ''
-                }`}
-                style={{
-                  background:
-                    'radial-gradient(circle at 30% 20%, rgb(var(--brand-rgb) / 0.14) 0%, rgb(17 17 17) 70%)',
-                }}
-              >
-                <Icon className="size-8 text-brand mb-5" strokeWidth={1.5} />
-                <p className="text-lg md:text-xl font-bold text-white leading-snug text-balance">
-                  &ldquo;{quote}&rdquo;
-                </p>
-              </div>
             </div>
           ))}
         </div>
