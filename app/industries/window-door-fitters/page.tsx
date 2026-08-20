@@ -4,6 +4,7 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import Pricing from '@/components/sections/Pricing'
 import PageFAQ from '@/components/sections/PageFAQ'
+import Reveal from '@/components/ui/reveal'
 import {
   ENTRY_PRICE_LABEL,
   PHONE_DISPLAY,
@@ -158,7 +159,7 @@ export default function WindowDoorFittersPage() {
       />
       <Navbar />
 
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
+      {/* ── Hero: split text / on-site footage ────────────────────────────── */}
       <section className="relative overflow-hidden bg-black">
         <div
           className="absolute top-0 right-0 pointer-events-none"
@@ -172,7 +173,7 @@ export default function WindowDoorFittersPage() {
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-14 md:pt-20 md:pb-16 w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Left — text */}
-            <div className="flex flex-col w-full lg:w-[55%]">
+            <Reveal className="flex flex-col w-full lg:w-[55%]">
               <p className="text-xs font-bold tracking-widest text-brand uppercase mb-6">
                 For UK window, door &amp; garage door installers
               </p>
@@ -191,7 +192,7 @@ export default function WindowDoorFittersPage() {
                 a client or the HSE asks what happened, you answer in seconds,
                 not scrambles.
               </p>
-              <div className="flex flex-wrap items-center gap-4 mb-10">
+              <div className="flex flex-wrap items-center gap-4">
                 <a
                   href={SIGNUP_TRIAL_URL}
                   className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
@@ -202,27 +203,16 @@ export default function WindowDoorFittersPage() {
                   href="/toolkit"
                   className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
                 >
-                  Get the free reporting toolkit
+                  Get the free toolkit
                 </Link>
               </div>
-              <ul className="flex flex-wrap gap-x-8 gap-y-3">
-                {trustFacts.map((fact) => (
-                  <li
-                    key={fact}
-                    className="text-xs text-white/60 uppercase tracking-widest flex items-center gap-2"
-                  >
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
-                    {fact}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </Reveal>
 
             {/* Right — on-site footage. Greyscale is baked into the encode
                 (public/videos, ffmpeg hue=s=0); the red is the soft glow
                 behind the frame plus a low-opacity brand wash, so the footage
                 sits in the hero's palette rather than beside it. */}
-            <div className="w-full lg:w-[45%] flex justify-center">
+            <Reveal index={1} className="w-full lg:w-[45%] flex justify-center">
               <div className="relative w-full max-w-xl">
                 {/* Red blur behind the frame */}
                 <div
@@ -257,9 +247,24 @@ export default function WindowDoorFittersPage() {
                   />
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
+      </section>
+
+      {/* ── Trust strip ───────────────────────────────────────────────────── */}
+      <section className="bg-surface-0 border-t border-white/10">
+        <ul className="mx-auto max-w-5xl px-6 py-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0 sm:divide-x sm:divide-white/10">
+          {trustFacts.map((fact) => (
+            <li
+              key={fact}
+              className="text-xs text-white/60 uppercase tracking-widest flex items-center gap-2 sm:px-8"
+            >
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
+              {fact}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ── The point: director liability ─────────────────────────────────
@@ -276,125 +281,132 @@ export default function WindowDoorFittersPage() {
           }}
         />
         <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center mb-8">
-            <PiScales className="size-6 text-brand" strokeWidth={1.75} />
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance text-white leading-[1.05] mb-8">
-            Director liability
-            <br />
-            is <em className="not-italic text-brand">personal</em>.
-          </h2>
-          <p className="text-white/80 text-lg md:text-2xl leading-relaxed text-balance max-w-3xl mx-auto">
-            Under the Health and Safety at Work etc. Act 1974, what protects
-            the people running the business is being able to{' '}
-            <span className="font-bold text-white">show</span> that reasonably
-            practicable steps were taken. That is an evidence question: a
-            dated, geotagged, immutable reporting trail{' '}
-            <span className="font-bold text-white">demonstrates</span> your
-            system — good intentions only describe it.
-          </p>
+          <Reveal>
+            <div className="mx-auto w-12 h-12 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center mb-8">
+              <PiScales className="size-6 text-brand" strokeWidth={1.75} />
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance text-white leading-[1.05] mb-8">
+              Director liability
+              <br />
+              is <em className="not-italic text-brand">personal</em>.
+            </h2>
+            <p className="text-white/80 text-lg md:text-2xl leading-relaxed text-balance max-w-3xl mx-auto">
+              Under the Health and Safety at Work etc. Act 1974, what protects
+              the people running the business is being able to{' '}
+              <span className="font-bold text-white">show</span> that reasonably
+              practicable steps were taken. That is an evidence question: a
+              dated, geotagged, immutable reporting trail{' '}
+              <span className="font-bold text-white">demonstrates</span> your
+              system — good intentions only describe it.
+            </p>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Pain cards ────────────────────────────────────────────────────── */}
-      <section className="py-14 md:py-16 bg-surface-0">
-        <div className="text-center mb-14 px-4">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">
-            Sound familiar?
-          </p>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white">
-            Four moments every installer
-            <br />
-            recognises
-          </h2>
-          <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
-            Fitting glass and doors for a living means heavy, awkward, sharp
-            loads, work at height, and crews spread across sites. When something
-            goes wrong, the record you kept is the difference.
-          </p>
-        </div>
-        <div className="mx-auto max-w-5xl px-6 grid gap-4 md:grid-cols-2">
-          {painCards.map(({ icon: Icon, title, body }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-colors duration-200"
-            >
-              <Icon className="size-6 text-brand mb-4" strokeWidth={1.5} />
-              <h3 className="text-white font-bold text-base leading-snug mb-3">
-                {title}
-              </h3>
-              <p className="text-white/50 text-sm leading-relaxed">{body}</p>
-            </div>
-          ))}
+      <section className="py-16 md:py-20 bg-surface-0">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal className="mb-12 max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white mb-4">
+              Four moments every installer recognises
+            </h2>
+            <p className="text-white/50 text-sm leading-relaxed">
+              Fitting glass and doors for a living means heavy, awkward, sharp
+              loads, work at height, and crews spread across sites. When
+              something goes wrong, the record you kept is the difference.
+            </p>
+          </Reveal>
+          <div className="grid gap-4 md:grid-cols-2">
+            {painCards.map(({ icon: Icon, title, body }, i) => (
+              <Reveal key={title} index={i}>
+                <div className="h-full rounded-xl border border-white/10 bg-surface-1 p-7 transition-colors duration-200 hover:border-brand/40">
+                  <div className="w-10 h-10 rounded-md bg-brand/10 border border-brand/20 flex items-center justify-center mb-5">
+                    <Icon className="size-5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-white font-bold text-base leading-snug mb-3">
+                    {title}
+                  </h3>
+                  <p className="text-white/50 text-sm leading-relaxed">{body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── Commercial payoff ─────────────────────────────────────────────── */}
-      <section className="py-14 md:py-16 bg-surface-0 border-t border-white/10">
-        <div className="text-center mb-14 px-4">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">
-            Beyond compliance
-          </p>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white">
-            Win the work. Keep the cover.
-            <br />
-            Pass the audit.
-          </h2>
-          <p className="text-white/50 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
-            Installers rarely lose contracts on price alone. They lose them on
-            paperwork they couldn&apos;t produce in time.
-          </p>
-        </div>
-        <div className="mx-auto max-w-5xl px-6 grid gap-4 md:grid-cols-3">
-          {commercialCards.map(({ icon: Icon, title, body }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-white/10 bg-white/5 p-6"
+      {/* ── Commercial payoff: hairline-divided columns ───────────────────── */}
+      <section className="py-16 md:py-20 bg-surface-0 border-t border-white/10">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white mb-4">
+              Win the work. Keep the cover.
+              <br />
+              Pass the audit.
+            </h2>
+            <p className="text-white/50 max-w-xl mx-auto text-sm leading-relaxed">
+              Installers rarely lose contracts on price alone. They lose them on
+              paperwork they couldn&apos;t produce in time.
+            </p>
+          </Reveal>
+          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-y border-white/10">
+            {commercialCards.map(({ icon: Icon, title, body }, i) => (
+              <Reveal key={title} index={i}>
+                <div className="h-full px-2 py-10 md:px-10">
+                  <Icon className="size-6 text-brand mb-5" strokeWidth={1.5} />
+                  <h3 className="text-white font-bold text-lg mb-3">{title}</h3>
+                  <p className="text-white/50 text-sm leading-relaxed">{body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <p className="text-center mt-10">
+            <Link
+              href="/insights/riddor-reporting-explained"
+              className="text-sm font-semibold text-brand hover:underline"
             >
-              <Icon className="size-6 text-brand mb-4" strokeWidth={1.5} />
-              <h3 className="text-white font-bold text-base mb-3">{title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{body}</p>
-            </div>
-          ))}
+              RIDDOR reporting, explained in plain English →
+            </Link>
+          </p>
         </div>
-        <p className="text-center mt-8 px-6">
-          <Link
-            href="/insights/riddor-reporting-explained"
-            className="text-sm font-semibold text-brand hover:underline"
-          >
-            RIDDOR reporting, explained in plain English →
-          </Link>
-        </p>
       </section>
 
       {/* ── Lower-commitment offer: the free toolkit ──────────────────────── */}
-      <section className="relative py-14 md:py-16 bg-surface-0 border-t border-white/10 overflow-hidden">
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 w-[500px] h-[500px]"
-          style={{
-            background:
-              'radial-gradient(circle, rgb(var(--brand-rgb) / 0.14) 0%, transparent 70%)',
-            transform: 'translate(-30%, 30%)',
-          }}
-        />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center mb-6">
-            <PiFileArrowDown className="size-6 text-brand" strokeWidth={1.5} />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-balance text-white mb-4">
-            Not sure where your gaps are? Start free.
-          </h2>
-          <p className="text-white/50 text-base leading-relaxed mb-8 max-w-xl mx-auto">
-            The jobsafe site reporting toolkit is free for UK trades: a
-            ready-to-use incident and near-miss report template, the RIDDOR
-            decision flowchart, and near-miss triage — no obligation, no jargon.
-          </p>
-          <Link
-            href="/toolkit"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-white hover:bg-white/90 text-black font-bold text-sm transition active:scale-[0.97]"
-          >
-            Get the free toolkit
-          </Link>
+      <section className="py-16 md:py-20 bg-surface-0">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal>
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface-1">
+              <div
+                aria-hidden
+                className="absolute inset-y-0 right-0 w-1/2 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle at right center, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
+                }}
+              />
+              <div className="relative z-10 grid md:grid-cols-[1fr_auto] items-center gap-8 p-8 md:p-12">
+                <div>
+                  <div className="w-10 h-10 rounded-md bg-brand/10 border border-brand/20 flex items-center justify-center mb-5">
+                    <PiFileArrowDown className="size-5 text-brand" strokeWidth={1.5} />
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-black tracking-tight text-balance text-white mb-4">
+                    Not sure where your gaps are? Start free.
+                  </h2>
+                  <p className="text-white/50 text-base leading-relaxed max-w-xl">
+                    The jobsafe site reporting toolkit is free for UK trades: a
+                    ready-to-use incident and near-miss report template, the
+                    RIDDOR decision flowchart, and near-miss triage — no
+                    obligation, no jargon.
+                  </p>
+                </div>
+                <Link
+                  href="/toolkit"
+                  className="inline-flex items-center justify-center whitespace-nowrap px-8 py-4 rounded-md bg-white hover:bg-white/90 text-black font-bold text-sm transition active:scale-[0.97]"
+                >
+                  Get the free toolkit
+                </Link>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -408,8 +420,9 @@ export default function WindowDoorFittersPage() {
       />
 
       {/* ── Final CTA ─────────────────────────────────────────────────────── */}
-      <section className="relative py-16 bg-surface-0 overflow-hidden border-t border-white/10">
+      <section className="relative py-16 md:py-20 bg-surface-0 overflow-hidden border-t border-white/10">
         <div
+          aria-hidden
           className="pointer-events-none absolute bottom-0 right-0 w-[600px] h-[600px]"
           style={{
             background:
@@ -418,30 +431,32 @@ export default function WindowDoorFittersPage() {
           }}
         />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight mb-6">
-            Be ready before you&apos;re asked.
-          </h2>
-          <p className="text-white/50 text-lg leading-relaxed mb-4">
-            Start your free trial and see exactly what jobsafe would show an
-            insurer, a client or the HSE about your business today.
-          </p>
-          <p className="text-white/40 text-sm mb-10">
-            From {ENTRY_PRICE_LABEL} per licence per month. {TRIAL.label}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href={SIGNUP_TRIAL_URL}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-brand hover:bg-brand-hover text-white font-semibold text-sm tracking-wide transition active:scale-[0.97]"
-            >
-              Start your free trial
-            </a>
-            <a
-              href={PHONE_HREF}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 hover:border-white/40 text-white font-semibold text-sm tracking-wide transition active:scale-[0.97]"
-            >
-              Talk it through — {PHONE_DISPLAY}
-            </a>
-          </div>
+          <Reveal>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight mb-6">
+              Be ready before you&apos;re asked.
+            </h2>
+            <p className="text-white/50 text-lg leading-relaxed mb-4">
+              Start your free trial and see exactly what jobsafe would show an
+              insurer, a client or the HSE about your business today.
+            </p>
+            <p className="text-white/40 text-sm mb-10">
+              From {ENTRY_PRICE_LABEL} per licence per month. {TRIAL.label}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={SIGNUP_TRIAL_URL}
+                className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-brand hover:bg-brand-hover text-white font-bold text-sm transition active:scale-[0.97]"
+              >
+                Start your free trial
+              </a>
+              <a
+                href={PHONE_HREF}
+                className="inline-flex items-center justify-center px-8 py-4 rounded-md border border-white/20 hover:border-white/40 text-white font-bold text-sm transition active:scale-[0.97]"
+              >
+                Call {PHONE_DISPLAY}
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 

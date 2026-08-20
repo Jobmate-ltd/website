@@ -1,11 +1,18 @@
 'use client'
 import React from 'react'
-import { PiList as MenuIcon, PiPhone as Phone, PiX as XIcon } from 'react-icons/pi'
+import { PiCaretDown as CaretDown, PiList as MenuIcon, PiPhone as Phone, PiX as XIcon } from 'react-icons/pi'
 import { Sheet, SheetClose, SheetContent, SheetTitle } from '@/components/ui/sheet'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SIGNUP_TRIAL_URL, LOGIN_URL } from '@/lib/links'
 import Image from 'next/image'
+import Link from 'next/link'
+
+/** Industry landing pages. Add new ones here; the desktop dropdown and the
+    mobile menu both render from this list. */
+const industryLinks = [
+  { label: 'Window & Door Fitters', href: '/industries/window-door-fitters' },
+]
 
 export function Navbar() {
   const [open, setOpen] = React.useState(false)
@@ -29,11 +36,43 @@ export function Navbar() {
       <nav className="mx-auto flex items-center justify-between p-1.5 px-4">
         <Image src="/images/jobsafe_logo-removebg-preview.png" alt="jobsafe — Workplace Incident Reporting Software" width={160} height={52} className="h-10 w-auto" />
         <div className="hidden items-center gap-1 lg:flex">
-          {links.map((link) => (
-            <a key={link.href} className={buttonVariants({ variant: 'ghost', size: 'sm' })} href={link.href}>
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            link.label === 'Industries' ? (
+              /* Hover/focus dropdown listing the industry landing pages. The
+                 top-level link still jumps to the homepage industries section;
+                 the panel stays open across the pt-2 hover bridge. */
+              <div key={link.href} className="group relative">
+                <a
+                  href={link.href}
+                  aria-haspopup="true"
+                  className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1')}
+                >
+                  {link.label}
+                  <CaretDown
+                    className="size-3 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                    strokeWidth={2}
+                  />
+                </a>
+                <div className="invisible absolute left-0 top-full pt-2 opacity-0 translate-y-1 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                  <div className="min-w-60 rounded-lg border border-white/10 bg-black/80 p-1.5 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+                    {industryLinks.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className="block rounded-md px-3 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a key={link.href} className={buttonVariants({ variant: 'ghost', size: 'sm' })} href={link.href}>
+                {link.label}
+              </a>
+            ),
+          )}
         </div>
         <div className="flex items-center gap-2">
           {/* Phone moves to xl: with eight nav links the row overflows a 1024px
@@ -112,6 +151,21 @@ export function Navbar() {
                             {link.label}
                           </span>
                         </a>
+                        {link.label === 'Industries' && (
+                          <ul className="pb-3 pl-10">
+                            {industryLinks.map((sub) => (
+                              <li key={sub.href}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={() => setOpen(false)}
+                                  className="block py-1.5 text-base font-bold uppercase tracking-tight text-white/60 transition-colors hover:text-white active:text-white/80"
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>
