@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import MotionProvider from '@/components/MotionProvider'
 import LaunchTicker from '@/components/sections/LaunchTicker'
 import ChatWidget from '@/components/ChatWidget'
@@ -136,6 +137,7 @@ export default function RootLayout({
         <MotionProvider>{children}</MotionProvider>
         <ChatWidget />
         <StickyDemoBar />
+        <SpeedInsights />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL"
           strategy="afterInteractive"
