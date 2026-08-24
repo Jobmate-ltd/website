@@ -6,6 +6,7 @@ import HowItWorks from '@/components/sections/HowItWorks'
 import AnimatedForm from '@/components/sections/AnimatedForm'
 import ResultsGrid from '@/components/sections/ResultsGrid'
 import Industries from '@/components/sections/Industries'
+import DemoStrip from '@/components/sections/DemoStrip'
 import Pricing from '@/components/sections/Pricing'
 import FAQ from '@/components/sections/FAQ'
 import GetStarted from '@/components/sections/GetStarted'
@@ -38,6 +39,10 @@ export default function Page() {
       <HowItWorks />
       <AnimatedForm />
       <ResultsGrid />
+      {/* Mid-page demo interception: the reader has just seen the outcomes and
+          is about to hit a price. Whoever is convinced but not ready to
+          self-serve otherwise leaves here. */}
+      <DemoStrip />
       <Pricing />
       <FAQ />
       <GetStarted />

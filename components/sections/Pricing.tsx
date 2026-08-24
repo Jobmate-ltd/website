@@ -2,9 +2,10 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { TimelineContent } from '@/components/ui/timeline-animation'
 import { cn } from '@/lib/utils'
-import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import { DEMO_BOOKING_URL, SIGNUP_TRIAL_URL } from '@/lib/links'
 import { PRICING_TIERS, TRIAL } from '@/lib/brand'
 import AmbientGlow from '@/components/AmbientGlow'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import NumberFlow from '@number-flow/react'
 import { PiChecks as CheckCheck } from 'react-icons/pi'
 import { motion } from 'motion/react'
@@ -55,8 +56,13 @@ const plans = [
     yearlyPrice: 0,
     isCustom: true,
     threshold: '1,000+ licences',
-    buttonText: 'Contact us',
-    buttonHref: 'mailto:sales@jobsafe.cloud',
+    // A 1,000-licence rollout is not an email thread, it is a conversation, so
+    // this tier books one instead of opening a mail client. `demo` routes it
+    // through <BookDemoButton> for the shared tracking, new-tab handling and
+    // screen-reader announcement; the href and label below stay accurate.
+    buttonText: 'Book a demo',
+    buttonHref: DEMO_BOOKING_URL,
+    demo: true,
     popular: false,
     featuresHeader: 'Everything included, plus:',
     features: [
@@ -250,17 +256,27 @@ export default function Pricing() {
                 </CardContent>
 
                 <CardFooter>
-                  <a
-                    href={plan.buttonHref}
-                    className={cn(
-                      'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition active:scale-[0.97]',
-                      plan.popular
-                        ? 'bg-brand hover:bg-brand-hover text-white'
-                        : 'border border-white/20 hover:border-white/40 text-white'
-                    )}
-                  >
-                    {plan.buttonText}
-                  </a>
+                  {'demo' in plan && plan.demo ? (
+                    <BookDemoButton
+                      placement="pricing-enterprise"
+                      variant="secondary"
+                      size="md"
+                      block
+                      className="rounded-lg"
+                    />
+                  ) : (
+                    <a
+                      href={plan.buttonHref}
+                      className={cn(
+                        'w-full text-center font-bold text-sm px-6 py-3 rounded-lg transition active:scale-[0.97]',
+                        plan.popular
+                          ? 'bg-brand hover:bg-brand-hover text-white'
+                          : 'border border-white/20 hover:border-white/40 text-white'
+                      )}
+                    >
+                      {plan.buttonText}
+                    </a>
+                  )}
                 </CardFooter>
               </Card>
             </TimelineContent>
@@ -269,6 +285,13 @@ export default function Pricing() {
 
         <p className="text-center text-white/60 text-sm mt-8">
           {TRIAL.label}
+        </p>
+        <p className="mt-3 text-center text-sm text-white/40">
+          Not sure which tier fits?{' '}
+          <BookDemoButton placement="pricing-footnote" variant="quiet">
+            Book a demo
+          </BookDemoButton>{' '}
+          and we will size it with you.
         </p>
 
       </div>

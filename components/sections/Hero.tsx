@@ -1,7 +1,9 @@
 'use client'
 import { motion, useReducedMotion } from 'framer-motion'
+import { PiPlayCircle as PlayCircle } from 'react-icons/pi'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { HowItWorksVideo } from '@/components/hero/how-it-works-video'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
 import { ENTRY_PRICE_LABEL } from '@/lib/brand'
 
@@ -73,21 +75,33 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center justify-start gap-4 mb-16"
+              className="flex flex-wrap items-center justify-start gap-x-4 gap-y-3 mb-16"
             >
+              {/* Two buttons and one text link, in that order of weight. The
+                  video used to be the bordered secondary; booking a demo is the
+                  higher-intent action, so it takes the red fill, sign-up takes
+                  the border (and the beam that came with it), and the video
+                  steps down to a link. Three buttons in a row would have read as
+                  three equal choices, which is not what any of them are. */}
+              <BookDemoButton placement="home-hero" />
               <a
                 href={SIGNUP_TRIAL_URL}
-                className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
+                className="relative overflow-hidden rounded-md border border-white/20 px-8 py-4 text-sm font-bold text-white transition duration-200 hover:-translate-y-px hover:border-white/40 active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
               >
-                Sign up now
+                <span className="relative z-10">Sign up now</span>
+                <BorderBeam colorFrom="var(--color-brand)" colorTo="var(--color-brand-deep)" duration={4} size={60} borderWidth={2} />
               </a>
               <HowItWorksVideo>
                 <button
                   type="button"
-                  className="relative overflow-hidden border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
+                  className="group inline-flex items-center gap-2 rounded-md px-2 py-4 text-sm font-bold text-white/60 transition-colors hover:text-white"
                 >
-                  <span className="relative z-10">SEE HOW IT WORKS</span>
-                  <BorderBeam colorFrom="var(--color-brand)" colorTo="var(--color-brand-deep)" duration={4} size={60} borderWidth={2} />
+                  <PlayCircle
+                    className="size-5 shrink-0 transition-transform duration-200 group-hover:scale-110 motion-reduce:group-hover:scale-100"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                  See how it works
                 </button>
               </HowItWorksVideo>
             </motion.div>

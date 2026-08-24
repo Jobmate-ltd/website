@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import { TRIAL } from '@/lib/brand'
 
 export default function AcademyCta() {
@@ -43,17 +44,15 @@ export default function AcademyCta() {
           transition={{ duration: 0.55, delay: 0.16 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          {/* Was "Book a Demo" pointing at `tel:`. It books a slot now, and the
+              radius matches the rest of the site's CTAs (rounded-md) rather
+              than the pill this section used on its own. */}
+          <BookDemoButton placement="academy-closing" />
           <a
             href={SIGNUP_TRIAL_URL}
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-brand hover:bg-brand-hover text-white font-semibold text-sm tracking-wide transition active:scale-[0.97]"
+            className="inline-flex items-center justify-center rounded-md border border-white/25 px-8 py-4 text-sm font-bold whitespace-nowrap text-white transition duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
           >
             Sign up now
-          </a>
-          <a
-            href="tel:03338000883"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 hover:border-white/40 text-white font-semibold text-sm tracking-wide transition active:scale-[0.97]"
-          >
-            Book a Demo
           </a>
         </motion.div>
       </div>

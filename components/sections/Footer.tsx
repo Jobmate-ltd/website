@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { PiDownloadSimple as Download, PiArrowSquareOut as ExternalLink, PiEnvelopeSimple as Mail, PiPhone as Phone } from 'react-icons/pi'
 import NewsletterSignup from '@/components/sections/NewsletterSignup'
+import BookDemoButton from '@/components/ui/book-demo-button'
 
 type SvgProps = { size?: number; strokeWidth?: number; className?: string }
 
@@ -81,6 +82,10 @@ export default function Footer() {
             <p className="text-white/50 text-sm leading-relaxed max-w-sm">
               Record. Resolve. Prevent. — Mobile incident reporting software for field teams, transport operators, and industrial sites across the UK.
             </p>
+            {/* The footer is the one section on every route, so it carries the
+                demo ask for the pages that have no CTA section of their own
+                (privacy, terms, the insights index). */}
+            <BookDemoButton placement="footer" size="md" />
             <a
               href="tel:03338000883"
               className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-max"

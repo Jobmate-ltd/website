@@ -5,6 +5,7 @@ import { Sheet, SheetClose, SheetContent, SheetTitle } from '@/components/ui/she
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SIGNUP_TRIAL_URL, LOGIN_URL } from '@/lib/links'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -29,7 +30,10 @@ export function Navbar() {
   return (
     <header className={cn(
       'sticky top-12 z-50',
-      'mx-auto w-full max-w-5xl rounded-lg border border-white/10',
+      // The bar is a centred pill, so its width — not the viewport's — is the
+      // budget, and it was already full before "Book a demo" existed. It grows
+      // on wider screens rather than the nav wrapping onto a second line.
+      'mx-auto w-full max-w-5xl xl:max-w-6xl 2xl:max-w-7xl rounded-lg border border-white/10',
       'shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.08)]',
       'bg-black/50 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-black/40',
     )}>
@@ -45,7 +49,7 @@ export function Navbar() {
                 <a
                   href={link.href}
                   aria-haspopup="true"
-                  className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1')}
+                  className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 xl:px-3')}
                 >
                   {link.label}
                   <CaretDown
@@ -68,25 +72,39 @@ export function Navbar() {
                 </div>
               </div>
             ) : (
-              <a key={link.href} className={buttonVariants({ variant: 'ghost', size: 'sm' })} href={link.href}>
+              <a key={link.href} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'px-2 xl:px-3')} href={link.href}>
                 {link.label}
               </a>
             ),
           )}
         </div>
+        {/* Action cluster, in ascending weight left to right: log in (text),
+            sign up (white fill), book a demo (brand fill). "Book a demo" holds
+            the red slot because it is the action with the highest intent and
+            the one this navbar previously had no room for at all.
+
+            Breakpoints are set by what fits on one line, which the nav must do:
+            the phone number needs 2xl, "Sign up now" needs xl, and "Log in"
+            appears with the link row at lg. "Book a demo" is the one control
+            shown at every width, including the smallest phones, where the bar
+            is logo + demo + menu. Everything dropped at a given width is in the
+            menu sheet, the footer, or both. */}
         <div className="flex items-center gap-2">
-          {/* Phone moves to xl: with eight nav links the row overflows a 1024px
-              viewport; the number stays in the mobile menu and the footer. */}
-          <a href="tel:03338000883" className="hidden xl:flex items-center gap-2 whitespace-nowrap text-sm text-white/90 hover:text-white transition-colors font-medium">
+          <a href="tel:03338000883" className="hidden 2xl:flex items-center gap-2 whitespace-nowrap text-sm text-white/90 hover:text-white transition-colors font-medium">
             <Phone className="size-4" strokeWidth={1.5} />
             0333 8000 883
           </a>
-          <a href={LOGIN_URL} className="hidden lg:inline-flex items-center whitespace-nowrap bg-white hover:bg-white/90 text-brand font-bold text-sm px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 animate-login-pulse motion-reduce:animate-none motion-reduce:hover:scale-100">
+          <a href={LOGIN_URL} className="hidden lg:inline-flex items-center whitespace-nowrap px-2 py-2 text-sm font-semibold text-white/70 hover:text-white transition-colors">
             Log in
           </a>
-          <a href={SIGNUP_TRIAL_URL} className="whitespace-nowrap bg-brand hover:bg-brand-hover text-white font-bold text-sm px-4 py-2 rounded-md transition active:scale-[0.97]">
+          <a href={SIGNUP_TRIAL_URL} className="hidden xl:inline-flex items-center whitespace-nowrap bg-white hover:bg-white/90 text-brand-deep font-bold text-sm px-4 py-2 rounded-md transition active:scale-[0.97]">
             Sign up now
           </a>
+          <BookDemoButton
+            placement="navbar"
+            size="sm"
+            className="animate-cta-pulse motion-reduce:animate-none"
+          />
           <Sheet open={open} onOpenChange={setOpen}>
             <Button size="icon" variant="outline" onClick={() => setOpen(!open)} className="lg:hidden border-white/10" aria-label="Open menu">
               <MenuIcon className="size-4" />
@@ -177,15 +195,16 @@ export function Navbar() {
                   style={{ animationDelay: `${60 + links.length * 45}ms` }}
                 >
                   <div className="flex flex-col gap-3">
+                    <BookDemoButton placement="mobile-menu" block onClick={() => setOpen(false)} />
                     <a
                       href={SIGNUP_TRIAL_URL}
-                      className="w-full rounded-md bg-brand px-8 py-4 text-center text-sm font-bold whitespace-nowrap text-white transition active:scale-[0.97] hover:bg-brand-hover"
+                      className="w-full rounded-md bg-white px-8 py-4 text-center text-sm font-bold whitespace-nowrap text-brand-deep transition-all duration-200 hover:bg-white/90"
                     >
                       Sign up now
                     </a>
                     <a
                       href={LOGIN_URL}
-                      className="w-full rounded-md bg-white px-8 py-4 text-center text-sm font-bold whitespace-nowrap text-brand transition-all duration-200 hover:bg-white/90"
+                      className="w-full rounded-md border border-white/25 px-8 py-4 text-center text-sm font-bold whitespace-nowrap text-white transition hover:border-white/50 hover:bg-white/[0.04] active:scale-[0.97]"
                     >
                       Log in
                     </a>

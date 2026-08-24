@@ -4,6 +4,7 @@ import Script from 'next/script'
 import MotionProvider from '@/components/MotionProvider'
 import LaunchTicker from '@/components/sections/LaunchTicker'
 import ChatWidget from '@/components/ChatWidget'
+import StickyDemoBar from '@/components/StickyDemoBar'
 import GrainOverlay from '@/components/GrainOverlay'
 import {
   CANONICAL_HOME,
@@ -124,11 +125,17 @@ export default function RootLayout({
           } as unknown as React.ScriptHTMLAttributes<HTMLScriptElement>)}
         />
       </head>
-      <body className={`${geist.variable} min-h-full flex flex-col`}>
+      {/*
+        `pb-[72px] lg:pb-0`: reserves the height of <StickyDemoBar />, which is
+        fixed to the bottom of small viewports and would otherwise sit over the
+        last rows of the footer. Desktop has no bar, so no reserve.
+      */}
+      <body className={`${geist.variable} flex min-h-full flex-col pb-[72px] lg:pb-0`}>
         <LaunchTicker />
         <GrainOverlay />
         <MotionProvider>{children}</MotionProvider>
         <ChatWidget />
+        <StickyDemoBar />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL"
           strategy="afterInteractive"

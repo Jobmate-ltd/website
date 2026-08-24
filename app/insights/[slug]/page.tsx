@@ -6,6 +6,7 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import PostBody from '@/components/insights/PostBody'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import {
   getAllPosts,
   getPostBySlug,
@@ -210,20 +211,23 @@ export default async function InsightPostPage({
               See how jobsafe captures incidents in seconds — online or off — and
               keeps every report audit-ready across your whole field team.
             </p>
+            {/* End of a long read is the highest-intent moment on this page, so
+                the demo takes the fill and sign-up takes the border. */}
             <div className="flex flex-wrap items-center justify-center gap-3">
+              <BookDemoButton placement="insights-article-cta" size="md" />
               <a
                 href={SIGNUP_TRIAL_URL}
-                className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-7 py-3.5 rounded-md transition active:scale-[0.97]"
+                className="rounded-md border border-white/25 px-7 py-3.5 text-sm font-bold text-white transition duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
               >
                 Sign up now
               </a>
-              <Link
-                href="/#how-it-works"
-                className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-7 py-3.5 rounded-md transition active:scale-[0.97]"
-              >
-                See how it works
-              </Link>
             </div>
+            <Link
+              href="/#how-it-works"
+              className="mt-5 inline-block text-sm font-bold text-white/50 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-brand"
+            >
+              See how it works
+            </Link>
           </div>
         </div>
       </section>

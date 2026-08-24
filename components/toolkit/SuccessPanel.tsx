@@ -1,6 +1,8 @@
 "use client";
 
 import { CheckCircle2, Download } from "lucide-react";
+import BookDemoButton from "@/components/ui/book-demo-button";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/brand";
 
 interface Props {
   firstName: string;
@@ -74,12 +76,24 @@ export function SuccessPanel({ firstName, downloadUrl }: Props) {
         </p>
 
         <div className="mt-6 flex flex-col gap-3 border-t border-[var(--tk-ink-line)] pt-6 text-[14px] sm:flex-row sm:items-center sm:justify-between">
-          <a
-            href="tel:03338000883"
-            className="font-bold text-[var(--tk-paper)] underline decoration-[var(--tk-ink-line)] underline-offset-4 hover:decoration-[var(--tk-crimson)]"
-          >
-            Book a demo: 0333 8000 883
-          </a>
+          {/* This read "Book a demo: 0333 8000 883" and dialled the office. The
+              demo control now books a slot; the phone number stays as what it
+              actually is, a phone number. */}
+          <div className="flex flex-col gap-1.5">
+            <BookDemoButton
+              placement="toolkit-success"
+              variant="quiet"
+              className="w-max font-bold text-[var(--tk-paper)] decoration-[var(--tk-ink-line)] hover:text-[var(--tk-paper)] hover:decoration-[var(--tk-crimson)]"
+            >
+              Book a demo
+            </BookDemoButton>
+            <a
+              href={PHONE_HREF}
+              className="w-max text-[13px] text-[var(--tk-muted)] hover:text-[var(--tk-paper)]"
+            >
+              Or call {PHONE_DISPLAY}
+            </a>
+          </div>
           <a
             href={downloadUrl}
             className="inline-flex items-center gap-2 text-[var(--tk-muted)] hover:text-[var(--tk-paper)]"

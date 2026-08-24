@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import {
   ADDRESS,
   EMAIL_SALES,
@@ -318,6 +319,14 @@ export default function About() {
 
           <section>
             <h2 className="text-white font-bold text-xl mb-3">Contact us</h2>
+            <p className="mb-5">
+              The quickest way to judge whether jobsafe suits your operation is
+              to watch it handle a report from one of your own sites.{' '}
+              <BookDemoButton placement="about-contact" variant="quiet" className="text-brand hover:text-brand decoration-brand/40 hover:decoration-brand">
+                Book a demo
+              </BookDemoButton>{' '}
+              and we will do exactly that. Otherwise, we are here:
+            </p>
             <address className="not-italic space-y-1">
               <p className="text-white/80 font-semibold">{LEGAL_NAME}</p>
               <p>{ADDRESS.streetAddress}</p>
