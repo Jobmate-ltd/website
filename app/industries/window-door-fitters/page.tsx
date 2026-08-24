@@ -6,6 +6,7 @@ import Pricing from '@/components/sections/Pricing'
 import PageFAQ from '@/components/sections/PageFAQ'
 import Reveal from '@/components/ui/reveal'
 import {
+  DEMO_DURATION_LABEL,
   ENTRY_PRICE_LABEL,
   PHONE_DISPLAY,
   PHONE_HREF,
@@ -13,6 +14,7 @@ import {
   TRIAL,
 } from '@/lib/brand'
 import { SIGNUP_TRIAL_URL } from '@/lib/links'
+import BookDemoButton from '@/components/ui/book-demo-button'
 import {
   breadcrumbSchema,
   graph,
@@ -192,16 +194,20 @@ export default function WindowDoorFittersPage() {
                 a client or the HSE asks what happened, you answer in seconds,
                 not scrambles.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
+              {/* Same weighting as the homepage hero: demo takes the fill,
+                  trial takes the border, the lead magnet steps down to a link
+                  so the row reads as two choices rather than three. */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+                <BookDemoButton placement="industry-fitters-hero" />
                 <a
                   href={SIGNUP_TRIAL_URL}
-                  className="bg-brand hover:bg-brand-hover text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
+                  className="rounded-md border border-white/20 px-8 py-4 text-sm font-bold text-white transition duration-200 hover:-translate-y-px hover:border-white/40 active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
                 >
                   Start your free trial
                 </a>
                 <Link
                   href="/toolkit"
-                  className="border border-white/20 hover:border-white/40 text-white font-bold text-sm px-8 py-4 rounded-md transition active:scale-[0.97]"
+                  className="px-2 py-4 text-sm font-bold text-white/60 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-brand"
                 >
                   Get the free toolkit
                 </Link>
@@ -436,26 +442,32 @@ export default function WindowDoorFittersPage() {
               Be ready before you&apos;re asked.
             </h2>
             <p className="text-white/50 text-lg leading-relaxed mb-4">
-              Start your free trial and see exactly what jobsafe would show an
-              insurer, a client or the HSE about your business today.
+              Book {DEMO_DURATION_LABEL} and we will show you exactly what
+              jobsafe would put in front of an insurer, a client or the HSE
+              about your business today.
             </p>
             <p className="text-white/40 text-sm mb-10">
               From {ENTRY_PRICE_LABEL} per licence per month. {TRIAL.label}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <BookDemoButton placement="industry-fitters-closing" />
               <a
                 href={SIGNUP_TRIAL_URL}
-                className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-brand hover:bg-brand-hover text-white font-bold text-sm transition active:scale-[0.97]"
+                className="inline-flex items-center justify-center rounded-md border border-white/25 px-8 py-4 text-sm font-bold whitespace-nowrap text-white transition duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
               >
                 Start your free trial
               </a>
+            </div>
+            <p className="mt-6 text-sm text-white/40">
+              Or call{' '}
               <a
                 href={PHONE_HREF}
-                className="inline-flex items-center justify-center px-8 py-4 rounded-md border border-white/20 hover:border-white/40 text-white font-bold text-sm transition active:scale-[0.97]"
+                className="font-semibold text-white/60 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-brand"
               >
-                Call {PHONE_DISPLAY}
+                {PHONE_DISPLAY}
               </a>
-            </div>
+              .
+            </p>
           </Reveal>
         </div>
       </section>

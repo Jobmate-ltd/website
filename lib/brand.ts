@@ -143,6 +143,24 @@ export const SIGNUP_TRIAL_URL = 'https://app.jobsafe.cloud/signup-trial' as cons
 export const PARENT_ORG_URL = 'https://jobmate.cloud' as const
 
 /**
+ * The sales demo booking link. Calendly owns the calendar, the confirmation
+ * email and the reminders; the site's only job is to get people to it.
+ *
+ * Every "Book a demo" control on the site resolves to this constant, via
+ * <BookDemoButton>. There is exactly ONE demo destination: the CTA used to
+ * point at `tel:` in three places, which meant "book a demo" asked the visitor
+ * to phone during office hours and hope somebody picked up. It does not any more.
+ *
+ * The trailing path segment is the Calendly event's duration. If that event is
+ * re-timed or renamed, change this URL and DEMO_DURATION_LABEL together, or the
+ * page promises a slot length the booking screen does not offer.
+ */
+export const DEMO_BOOKING_URL = 'https://calendly.com/jobmate-sales/30min' as const
+
+/** Reads out of the URL above. Quoted in CTA copy so the length is no surprise. */
+export const DEMO_DURATION_LABEL = '30 minutes' as const
+
+/**
  * `sameAs` — the entity disambiguation payload. jobsafe competes for its own
  * name with jobsafe.co.nz, jobsafe Pro, a Swedish entity and a Polish PPE
  * brand. These links are how a crawler tells us apart from them.

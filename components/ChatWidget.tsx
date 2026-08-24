@@ -10,8 +10,8 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { SIGNUP_TRIAL_URL } from '@/lib/links'
-import { EMAIL_SALES as SALES_EMAIL_ADDRESS, ENTRY_PRICE_LABEL, PHONE_DISPLAY, TRIAL, VOLUME_PRICE_LABEL } from '@/lib/brand'
+import { DEMO_BOOKING_URL, SIGNUP_TRIAL_URL } from '@/lib/links'
+import { DEMO_DURATION_LABEL, EMAIL_SALES as SALES_EMAIL_ADDRESS, ENTRY_PRICE_LABEL, PHONE_DISPLAY, TRIAL, VOLUME_PRICE_LABEL } from '@/lib/brand'
 
 type QuickAction = { label: string; href: string }
 type Message = { id: number; role: 'bot' | 'user'; text: string; actions?: QuickAction[] }
@@ -21,6 +21,9 @@ const PHONE_HREF = 'tel:03338000883'
 const SALES_HREF = `mailto:${SALES_EMAIL_ADDRESS}`
 
 const START_TRIAL: QuickAction = { label: 'Start free trial', href: SIGNUP_TRIAL_URL }
+/* The widget used to answer "can I see a demo?" by offering a phone number.
+   It offers the calendar now, in the same words the rest of the site uses. */
+const BOOK_DEMO: QuickAction = { label: 'Book a demo', href: DEMO_BOOKING_URL }
 const CALL_US: QuickAction = { label: `Call ${PHONE_LABEL}`, href: PHONE_HREF }
 const EMAIL_SALES: QuickAction = { label: 'Email sales', href: SALES_HREF }
 const SEE_PRICING: QuickAction = { label: 'See pricing', href: '/#pricing' }
@@ -40,8 +43,8 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   {
     keywords: ['trial', 'free', 'try', 'demo', 'test', 'evaluate', 'card'],
     answer:
-      `Every plan comes with a ${TRIAL.days}-day free trial${TRIAL.cardRequired ? '' : ', and no credit card is required'}. You can start straight away, or book a quick demo with our team.`,
-    actions: [START_TRIAL, CALL_US],
+      `Every plan comes with a ${TRIAL.days}-day free trial${TRIAL.cardRequired ? '' : ', and no credit card is required'}. You can start straight away, or book a ${DEMO_DURATION_LABEL} demo and we will walk you through it on your own sites.`,
+    actions: [BOOK_DEMO, START_TRIAL],
   },
   // "How do I…" entries. The specific ones sit here, ABOVE the broader
   // feature/support entries, so a concrete question gets the concrete lesson.
@@ -104,8 +107,8 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   {
     keywords: ['enterprise', 'large', '1000', '1,000', 'big team', 'sla', 'account manager', 'dpa'],
     answer:
-      'For 1,000+ users we offer Enterprise: a dedicated account manager, a custom SLA, a GDPR data-processing agreement, and priority support. Tell us about your team and we will tailor it to you.',
-    actions: [EMAIL_SALES, CALL_US],
+      'For 1,000+ users we offer Enterprise: a dedicated account manager, a custom SLA, a GDPR data-processing agreement, and priority support. Book a demo and we will size a rollout around your sites.',
+    actions: [BOOK_DEMO, EMAIL_SALES],
   },
   {
     keywords: ['data', 'security', 'gdpr', 'privacy', 'secure', 'store', 'storage'],
@@ -122,8 +125,8 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   {
     keywords: ['start', 'sign up', 'signup', 'get started', 'begin', 'register', 'onboard', 'set up'],
     answer:
-      'Getting started is quick: start your free trial (no card required) and you can be reporting in minutes. Prefer a walkthrough? Give us a call.',
-    actions: [START_TRIAL, CALL_US],
+      'Getting started is quick: start your free trial (no card required) and you can be reporting in minutes. Prefer a walkthrough first? Book a demo and we will show you.',
+    actions: [START_TRIAL, BOOK_DEMO],
   },
   // Generic learning catch-all. Deliberately LAST: any "how do I…" question
   // the entries above have not already answered lands here and is sent to the
@@ -136,11 +139,12 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   },
 ]
 
-const FALLBACK_ACTIONS: QuickAction[] = [VISIT_ACADEMY, CALL_US, EMAIL_SALES]
+const FALLBACK_ACTIONS: QuickAction[] = [BOOK_DEMO, VISIT_ACADEMY, EMAIL_SALES]
 
 const SUGGESTIONS = [
   'How much does it cost?',
   'Is there a free trial?',
+  'Can I book a demo?',
   'How do I create a report?',
   'Does it work offline?',
   'What features are included?',
@@ -159,7 +163,7 @@ function findAnswer(query: string): { text: string; actions: QuickAction[] } {
   }
   return {
     text:
-      "I'm not certain about that one, but a human can help. Give us a call or email sales@jobsafe.cloud. And if you're wondering how to do something in the app, the academy's short lessons probably cover it.",
+      "I'm not certain about that one, but a human can help. Book a demo and ask us directly, or email sales@jobsafe.cloud. And if you're wondering how to do something in the app, the academy's short lessons probably cover it.",
     actions: FALLBACK_ACTIONS,
   }
 }
@@ -189,7 +193,17 @@ function ActionLink({ action, onNavigate }: { action: QuickAction; onNavigate: (
   return (
     <a
       href={action.href}
-      onClick={onNavigate}
+      onClick={() => {
+        // Demo clicks are counted here too, so the chat widget shows up in the
+        // same `book_demo_click` report as every <BookDemoButton> placement.
+        if (action.href === DEMO_BOOKING_URL) {
+          const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
+          if (typeof gtag === 'function') {
+            gtag('event', 'book_demo_click', { placement: 'chat-widget', destination: 'calendly' })
+          }
+        }
+        onNavigate()
+      }}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       className="inline-flex items-center rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-brand/20"
     >
@@ -245,8 +259,10 @@ export default function ChatWidget() {
     fabRef.current?.focus()
   }
 
+  // bottom-24 below lg: clears <StickyDemoBar />, which pins a demo CTA to the
+  // bottom of small viewports. Desktop has no bar, so bottom-5 there.
   return (
-    <div className="fixed bottom-5 right-5 z-[60] flex flex-col items-end gap-3 print:hidden">
+    <div className="fixed right-5 bottom-24 z-[60] flex flex-col items-end gap-3 print:hidden lg:bottom-5">
       {open && (
         <div
           role="dialog"

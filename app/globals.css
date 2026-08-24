@@ -122,8 +122,12 @@ input[type='range']::-moz-range-thumb {
     height: 0;
     }
   }
-  --animate-login-pulse: login-pulse 2.8s ease-in-out infinite;
-  @keyframes login-pulse {
+  /* Slow attention glow on the primary conversion CTA. Was `login-pulse`, on
+     the navbar's "Log in" button; the navbar's primary action is now "Book a
+     demo", so the token moved with it and was renamed to say what it is for.
+     Every consumer pairs it with `motion-reduce:animate-none`. */
+  --animate-cta-pulse: cta-pulse 2.8s ease-in-out infinite;
+  @keyframes cta-pulse {
   0%, 100% {
     box-shadow: 0 0 0 0 rgb(var(--brand-rgb) / 0);
     }
