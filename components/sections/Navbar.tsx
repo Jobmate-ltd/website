@@ -29,7 +29,7 @@ export function Navbar() {
   ]
   return (
     <header className={cn(
-      'sticky top-12 z-50',
+      'sticky top-3 z-50',
       // The bar is a centred pill, so its width — not the viewport's — is the
       // budget, and it was already full before "Book a demo" existed. It grows
       // on wider screens rather than the nav wrapping onto a second line.

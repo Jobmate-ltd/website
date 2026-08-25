@@ -114,26 +114,30 @@ export const TRIAL = {
   label: '14-day free trial. No credit card required.',
 } as const
 
-/**
- * The launch promotion.
+/*
+ * The launch promotion — "the first 200 sign-ups get 6 months free" — has been
+ * retired, along with the announcement ticker that carried it. It is not
+ * paused behind a flag; the copy and the component are gone.
  *
- * `enabled` is deliberately `false` until Adam confirms which offer is real.
- * The previous implementation ran a *simulated* depletion counter — a
- * deterministic countdown from 200 to a floor of 11 that "never hits zero" to
- * "keep some urgency". That is a fabricated statistic (§0.7) and, presented as
- * remaining stock, a false-scarcity claim of the kind the DMCC Act 2024 and the
- * CPUTRs treat as a banned commercial practice. The counter has been removed
- * outright rather than made accurate. Do not reinstate it.
+ * Two pieces of history worth keeping, because both are easy to recreate:
  *
- * If the "6 months free" offer is real, set `enabled: true` and REMOVE the
- * free-trial line from the pricing section. Never run both.
+ * 1. The ticker originally rendered "· N spots remaining", where N came from a
+ *    deterministic countdown from 200 to a floor of 11 across thirty days,
+ *    unconnected to any sign-up and floored so it never reached zero. That is a
+ *    fabricated statistic, and presented as remaining availability it is the
+ *    kind of false-scarcity claim the DMCC Act 2024 and the CPUTRs treat as a
+ *    banned commercial practice. If remaining places are ever shown again, the
+ *    number must come from a real sign-ups endpoint and must be allowed to
+ *    hit zero.
+ *
+ * 2. There is exactly ONE offer on the site at a time. That offer is now the
+ *    free trial in `TRIAL` above. Any future promotion retires the trial line
+ *    first — never both at once. The `single-offer` rule in scripts/seo-audit.mjs
+ *    still guards this: it fires if a re-added LAUNCH_OFFER const in this file
+ *    is switched on while the pricing section still advertises the trial.
+ *    (Spelled out rather than shown as code: that rule greps this file, and a
+ *    literal example would match it and fail the build from inside a comment.)
  */
-export const LAUNCH_OFFER = {
-  enabled: false,
-  headline: 'jobsafe is live — sign-ups now open',
-  /** Copy to use if, and only if, the promotion is confirmed and the trial line is retired. */
-  promotionalHeadline: 'jobsafe is live — the first 200 sign-ups get 6 months free',
-} as const
 
 // ── App & entity links ───────────────────────────────────────────────────────
 

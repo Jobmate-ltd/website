@@ -67,7 +67,7 @@ The instructions' own list, T1–T9, plus three found in the code.
 |---|---|---|
 | T1 | Fabricated testimonials | **Does not exist.** See above. |
 | T2 | Meta says £2.75, entry tier is £3.00 | Fixed. One price, from `lib/brand.ts`. |
-| T3 | "6 months free" vs "3-day free trial" | **Blocked on Adam.** Counter removed; see T10. |
+| T3 | "6 months free" vs "3-day free trial" | **Resolved.** Promotion retired outright; the trial is the only offer. See T10. |
 | T4 | `alt="The JobSafe app…"`, `alt="JobSafe"` | Fixed. Patch 2, 3. |
 | T5 | `og:image` 1203×633 | Metadata fixed; **asset must be regenerated.** |
 | T6 | Canonical missing trailing slash | Fixed. `CANONICAL_HOME`. |
@@ -116,9 +116,16 @@ claim the Digital Markets, Competition and Consumers Act 2024 and the CPUTRs
 treat as a banned commercial practice — on the homepage of a product sold to
 compliance professionals.
 
-I did not make it accurate. I removed it. `LaunchTicker` is now a server
+I did not make it accurate. I removed it. `LaunchTicker` became a server
 component with no state, no timer, and one line of copy read from
 `LAUNCH_OFFER` in `lib/brand.ts`.
+
+**Update.** The ticker has since been removed entirely, and with it the
+"first 200 sign-ups get 6 months free" copy everywhere it appeared: the
+announcement bar, the toolkit landing page, the toolkit success panel and the
+toolkit follow-up email. `LAUNCH_OFFER` is deleted from `lib/brand.ts`; the
+free trial in `TRIAL` is now the site's single offer. The `single-offer` audit
+rule is kept as a guard against a future promotion running alongside the trial.
 
 ### T12 — the star rating
 
@@ -186,14 +193,15 @@ jobsafe has no checklists module.
 
 Four things I could not and should not do alone.
 
-**P0-2 — which offer is real?** *(Adam)*
-The ticker promised six months free. The pricing section promises a 3-day trial
-with no card. The Chargebee configuration reportedly requires a card at signup,
-so the site may currently be advertising two offers, neither of which is true.
-The ticker's promotional copy is disabled until you say. Set
-`LAUNCH_OFFER.enabled = true` **and** delete the trial line from `Pricing.tsx` if
-the promotion is real — the audit fails if both are live. Reconcile
-`TRIAL.cardRequired` against Chargebee either way.
+**P0-2 — which offer is real?** *(Adam)* — **half answered.**
+The offer question is settled: the six-months-free promotion has been retired
+and the ticker deleted, so the free trial is the only offer on the site.
+
+**Still open:** the trial's own terms. The site says no card is required; the
+Chargebee configuration reportedly requires one at signup. `TRIAL.cardRequired`
+in `lib/brand.ts` is `false` and needs reconciling against Chargebee — with the
+promotion gone, this is now the only offer the site makes, so if it is wrong it
+is wrong on its own.
 
 **T5 — regenerate the og:image.** *(Harrison)*
 `public/` was not in the repository I was given, so I could not resize it. The
