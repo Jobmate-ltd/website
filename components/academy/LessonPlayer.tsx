@@ -1,12 +1,25 @@
 import Image from 'next/image'
 import type { LessonVideo } from '@/lib/academy'
+import YouTubeEmbed from '@/components/academy/YouTubeEmbed'
 
 /**
- * The lesson's video slot. Renders a native player once `video.src` is set in
- * lib/academy.ts; until then, a composed placeholder that says exactly what is
- * coming. Server-safe: no client JS beyond the native <video> element.
+ * The lesson's video slot. Renders a YouTube facade when `video.youtubeId` is
+ * set in lib/academy.ts, a native player when `video.src` is, and until either
+ * exists, a composed placeholder that says exactly what is coming. Stays a
+ * server component: only the YouTube facade ships client JS, and only when used.
  */
 export default function LessonPlayer({ video, title }: { video: LessonVideo; title: string }) {
+  if (video.youtubeId) {
+    return (
+      <YouTubeEmbed
+        id={video.youtubeId}
+        title={title}
+        caption={video.caption}
+        poster={video.poster}
+      />
+    )
+  }
+
   if (video.src) {
     return (
       <figure className="overflow-hidden rounded-2xl border border-white/10 bg-black">
