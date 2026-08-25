@@ -3,7 +3,6 @@ import { Geist } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import MotionProvider from '@/components/MotionProvider'
-import LaunchTicker from '@/components/sections/LaunchTicker'
 import ChatWidget from '@/components/ChatWidget'
 import StickyDemoBar from '@/components/StickyDemoBar'
 import GrainOverlay from '@/components/GrainOverlay'
@@ -132,7 +131,6 @@ export default function RootLayout({
         last rows of the footer. Desktop has no bar, so no reserve.
       */}
       <body className={`${geist.variable} flex min-h-full flex-col pb-[72px] lg:pb-0`}>
-        <LaunchTicker />
         <GrainOverlay />
         <MotionProvider>{children}</MotionProvider>
         <ChatWidget />

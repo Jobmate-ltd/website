@@ -71,9 +71,6 @@ export function SuccessPanel({ firstName, downloadUrl }: Props) {
         >
           Start free
         </a>
-        <p className="mt-3 text-center text-[13px] font-bold text-[var(--tk-paper)]">
-          First 200 sign-ups get 6 months free.
-        </p>
 
         <div className="mt-6 flex flex-col gap-3 border-t border-[var(--tk-ink-line)] pt-6 text-[14px] sm:flex-row sm:items-center sm:justify-between">
           {/* This read "Book a demo: 0333 8000 883" and dialled the office. The

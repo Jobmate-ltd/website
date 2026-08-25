@@ -134,7 +134,7 @@ async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welco
       `1. Print the report template and put copies in the cabin.\n` +
       `2. Pin the RIDDOR flowchart next to the accident book.\n\n` +
       `When you are ready to stop doing this on paper, jobsafe records the same report in about 30 seconds ` +
-      `on a phone, from £3 per licence a month. The first 200 sign-ups get 6 months free: ${site}\n\n` +
+      `on a phone, from £3 per licence a month: ${site}\n\n` +
       `Record. Resolve. Prevent.\nThe jobsafe team`,
   });
   return sent ? "ok" : "failed";

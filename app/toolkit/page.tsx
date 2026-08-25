@@ -205,9 +205,6 @@ export default function ToolkitPage() {
               >
                 Start free
               </a>
-              <p className="text-[13px] font-bold text-[var(--tk-ink)]">
-                First 200 sign-ups get 6 months free.
-              </p>
             </div>
           </div>
 
