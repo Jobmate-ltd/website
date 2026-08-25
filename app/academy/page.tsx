@@ -3,7 +3,8 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import Lessons from '@/components/academy/Lessons'
 import AcademyCta from '@/components/academy/AcademyCta'
-import { LESSONS } from '@/lib/academy'
+import LessonPlayer from '@/components/academy/LessonPlayer'
+import { LESSONS, FEATURED_VIDEO } from '@/lib/academy'
 import { SITE_URL } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
 }
 
 export default function AcademyPage() {
+  const featuredId = FEATURED_VIDEO.video.youtubeId
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -33,6 +36,22 @@ export default function AcademyPage() {
           { '@type': 'ListItem', position: 2, name: 'Academy', item: `${SITE_URL}/academy` },
         ],
       },
+      // The featured film is the only real video on the page today, so it is
+      // the only thing that earns a VideoObject. Lessons join it as they land.
+      ...(featuredId
+        ? [
+            {
+              '@type': 'VideoObject',
+              name: FEATURED_VIDEO.title,
+              description: FEATURED_VIDEO.description,
+              thumbnailUrl: [`https://img.youtube.com/vi/${featuredId}/hqdefault.jpg`],
+              uploadDate: FEATURED_VIDEO.uploadDate,
+              duration: FEATURED_VIDEO.duration,
+              embedUrl: `https://www.youtube.com/embed/${featuredId}`,
+              url: `${SITE_URL}/academy`,
+            },
+          ]
+        : []),
       {
         '@type': 'ItemList',
         name: 'jobsafe academy lessons',
@@ -82,6 +101,21 @@ export default function AcademyPage() {
             Watch a lesson, then do it yourself.
           </p>
         </div>
+      </section>
+
+      {/* Featured film — the product on a real job. It sits above the chapters
+          rather than inside them because it is a product film, not a how-to. */}
+      <section className="relative max-w-5xl mx-auto px-6 pb-16">
+        <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">
+          {FEATURED_VIDEO.eyebrow}
+        </p>
+        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4">
+          {FEATURED_VIDEO.title}
+        </h2>
+        <p className="text-white/50 leading-relaxed max-w-2xl mb-8">
+          {FEATURED_VIDEO.promise}
+        </p>
+        <LessonPlayer video={FEATURED_VIDEO.video} title={FEATURED_VIDEO.title} />
       </section>
 
       <Lessons />

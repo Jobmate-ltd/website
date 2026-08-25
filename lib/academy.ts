@@ -6,8 +6,13 @@
 // "recording in production" state and switches to a real player the moment a
 // src is set here. Nothing else needs to change to take a lesson live.
 //
-// Recordings should be MP4 (H.264), 16:9, silent, under ~60 seconds, dropped
-// into /public/videos/academy/ and referenced as '/videos/academy/<slug>.mp4'.
+// A lesson can be backed either way:
+//   * YouTube — set `video.youtubeId`. Preferred for anything already uploaded
+//     to the jobmate channel; the page renders a click-to-play facade, so
+//     nothing loads from youtube.com until the viewer presses play.
+//   * Self-hosted — set `video.src`. MP4 (H.264), 16:9, silent, under ~60
+//     seconds, dropped into /public/videos/academy/ and referenced as
+//     '/videos/academy/<slug>.mp4'.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface LessonStep {
@@ -18,6 +23,8 @@ export interface LessonStep {
 export interface LessonVideo {
   /** Path under /public, e.g. '/videos/academy/create-an-incident-report.mp4'. Null = not recorded yet. */
   src: string | null
+  /** YouTube id, e.g. 'EWk11JQAjqA'. Takes precedence over `src` when both are set. */
+  youtubeId?: string
   /** Optional poster frame shown before playback. */
   poster?: string
   /** Accessible description of what the recording shows. */
@@ -35,6 +42,44 @@ export interface AcademyLesson {
   promise: string
   steps: readonly LessonStep[]
   video: LessonVideo
+}
+
+export interface FeaturedVideo {
+  /** Small label above the heading. */
+  eyebrow: string
+  title: string
+  /** One-line promise under the heading. */
+  promise: string
+  video: LessonVideo
+  /** ISO-8601 publication date, for VideoObject structured data. */
+  uploadDate: string
+  /** ISO-8601 duration, e.g. 'PT1M51S'. */
+  duration: string
+  /** Longer description, used for structured data rather than on the page. */
+  description: string
+}
+
+/**
+ * The film that opens the academy. It is a product film rather than a how-to,
+ * so it sits above the chapters instead of pretending to be one of them. To
+ * retire it, delete this export and the <Featured /> block in app/academy/page.tsx;
+ * to turn it into a lesson, move `video` onto the relevant entry in LESSONS.
+ */
+export const FEATURED_VIDEO: FeaturedVideo = {
+  eyebrow: 'Start here',
+  title: 'jobsafe on a window installation',
+  promise:
+    'The whole product on one real job: what a fitter sees on site, and what the office sees back at the desk.',
+  video: {
+    src: null,
+    youtubeId: 'EWk11JQAjqA',
+    caption:
+      'Product film: jobsafe used across a window installation, from capture on site through to review in the office.',
+  },
+  uploadDate: '2026-08-25',
+  duration: 'PT1M51S',
+  description:
+    'A short product film showing jobsafe on a window installation job: capturing HSSE and general incidents on site from a phone, and reviewing them from the desktop dashboard.',
 }
 
 export const LESSONS: readonly AcademyLesson[] = [
