@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
@@ -27,26 +28,26 @@ import {
   PiFileArrowDown,
   PiHandshake,
   PiMagnifyingGlass,
-  PiMoonStars,
   PiScales,
   PiSiren,
-  PiUsersThree,
+  PiTimer,
+  PiWifiSlash,
 } from 'react-icons/pi'
 
-const PAGE_PATH = '/industries/healthcare'
+const PAGE_PATH = '/industries/field-services'
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`
 
 export const metadata: Metadata = {
-  title: 'Health & Safety Software for Healthcare & Care Homes',
+  title: 'Health & Safety Software for Field Service Teams',
   description:
-    'Incident and near-miss reporting for UK care homes, home care and clinical teams. Photo, GPS and timestamped evidence an inspector can trust. Start free.',
+    'Incident and near-miss reporting for UK field service and mobile engineering teams. Works with no signal — photo, GPS and timestamped evidence. Start free.',
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: 'Health & Safety Software for Healthcare & Care Homes | jobsafe',
+    title: 'Health & Safety Software for Field Service Teams | jobsafe',
     description:
-      'Every incident logged is a patient protected. Evidence-grade incident and near-miss reporting built for UK care homes, home care and clinical teams.',
+      'Reporting that travels with your engineers. Evidence-grade incident and near-miss capture for UK field service, maintenance and mobile engineering teams.',
     url: PAGE_URL,
     type: 'website',
   },
@@ -56,7 +57,7 @@ const pageGraph = jsonLd(
   graph(
     breadcrumbSchema([
       { name: 'Home', item: `${SITE_URL}/` },
-      { name: 'Care Homes, Home Care & Healthcare', item: PAGE_URL },
+      { name: 'Field Service & Mobile Engineering', item: PAGE_URL },
     ]),
     softwareApplicationSchema(PAGE_URL),
   ),
@@ -66,30 +67,30 @@ const pageGraph = jsonLd(
 // Every claim below is a claim the site already makes about the product
 // (capture speed, offline mode, media evidence, GPS/timestamps, alerts,
 // immutable exportable records, dashboards). Nothing here promises a module
-// jobsafe does not have (§0.4, §0.7) — in particular, this page is explicit
-// that jobsafe is workplace HSSE reporting and not a clinical patient-safety
-// system, because in healthcare the two are routinely confused.
+// jobsafe does not have (§0.4, §0.7) — in particular this page states plainly
+// that jobsafe is not a man-down or panic-alarm service, because a field
+// service buyer searching for lone worker cover will otherwise assume it is.
 
 const painCards = [
   {
     icon: PiMagnifyingGlass,
-    title: 'An inspector asks for six months of incidents. How long does the answer take?',
-    body: 'Every report lives in one place — searchable, timestamped and ready in seconds, not “bear with us” while somebody hunts for the accident book in the office drawer.',
+    title: 'Your client asks for the report on an incident that happened at their site. How long does that take?',
+    body: 'Every report lives in one place — searchable, timestamped and ready in seconds, rather than a call round the team to work out who was on that job and what they remember.',
   },
   {
     icon: PiSiren,
-    title: 'A transfer goes wrong and a carer’s back goes with it. What happens next?',
-    body: 'The carer logs it where it happened, with photos, location and time attached — while the facts are still facts and not a memory of a busy shift.',
+    title: 'An engineer puts a foot through a ceiling in an empty loft. Nobody saw it.',
+    body: 'The engineer logs it where it happened, with photos, location and time attached. On a lone visit that account is the only evidence there will ever be — so it needs to be captured while it is still accurate.',
   },
   {
-    icon: PiMoonStars,
-    title: 'The fall happened on nights. The write-up happens when someone gets a minute.',
-    body: 'A report reconstructed three days later from a handover note protects nobody. jobsafe captures it on the shift, on the spot, in under a minute.',
+    icon: PiWifiSlash,
+    title: 'The near miss happened in a basement plant room with no bars on the phone.',
+    body: 'The app stores the report on the device and syncs the moment a connection returns. No signal is not a reason for a missing record, and your engineers stop deciding which incidents are worth the hassle.',
   },
   {
-    icon: PiUsersThree,
-    title: 'An agency carer had a near miss on a Friday visit. You hear about it on Monday.',
-    body: 'Real-time alerts notify the office the moment a report is submitted — employed, bank or agency, whichever home or postcode they are working in.',
+    icon: PiTimer,
+    title: 'Friday’s near miss gets written up when the paperwork gets done. Which is Tuesday.',
+    body: 'A report reconstructed from a four-day-old memory in a van at the end of a shift protects nobody. jobsafe captures it on the job in under a minute, and alerts the office the moment it is submitted.',
   },
 ]
 
@@ -97,68 +98,68 @@ const commercialCards = [
   {
     icon: PiHandshake,
     title: 'Insurance renewals',
-    body: 'An active, dated reporting history shows an employers’ liability underwriter a provider that manages its risk rather than one that hopes. Walk in with evidence, not assurances.',
+    body: 'You work on premises you do not control, so public liability sits alongside employers’ liability at every renewal. An active, dated reporting history shows an underwriter a contractor that manages its risk rather than one that hopes.',
   },
   {
     icon: PiCrosshair,
-    title: 'Commissioners and frameworks',
-    body: 'Local authorities, integrated care boards and private clients increasingly ask for proof of a working safety management system before a provider joins the list. Producing your reporting record quickly is the ticket to bigger contracts.',
+    title: 'PQQs and approval schemes',
+    body: 'CHAS, SafeContractor, Constructionline and most client pre-qualification questionnaires ask for your accident and incident record. Producing it quickly is the difference between staying on the approved list and quietly dropping off it.',
   },
   {
     icon: PiScales,
-    title: 'The day the inspector asks',
-    body: 'If a CQC inspector or an HSE officer asks what happened and what you did about it, the answer is already written — timestamped, geotagged and in order. See our plain-English guide to RIDDOR reporting duties.',
+    title: 'The day the HSE asks',
+    body: 'If an inspector asks what happened and what you did about it, the answer is already written — timestamped, geotagged and in order. See our plain-English guide to RIDDOR reporting duties.',
   },
 ]
 
 const faqs: readonly FaqEntry[] = [
   {
-    q: 'Is jobsafe a clinical patient-safety system?',
-    a: 'No, and it does not pretend to be. jobsafe is workplace health and safety reporting: accidents, near misses and hazards affecting the people doing the work and the people around them. It sits alongside your clinical governance and patient-safety arrangements rather than replacing them, and it does not submit to national patient-safety services on your behalf. What it does is give you a fast, evidenced, timestamped record of what actually happened on site.',
+    q: 'Is jobsafe a lone worker alarm?',
+    a: 'No. jobsafe is not a man-down device or a monitored panic-alarm service, and it does not replace one where your risk assessment calls for it. What it does is close the distance after something happens: a report submitted from site carries GPS and a timestamp automatically and reaches the office in real time, so an incident involving an engineer working alone is known about in minutes rather than at the end of a shift. Our lone worker safety guide sets out where each control fits.',
   },
   {
-    q: 'Does jobsafe replace our risk assessments and care plans?',
-    a: 'No — and it shouldn’t. Your risk assessments and care plans set out how work should be done safely; jobsafe is the reporting layer that tells you whether those controls are actually holding. Every incident and near miss your staff capture is feedback on a specific task, building, round or piece of equipment, so you know which assessment to revisit before the next shift rather than after an injury.',
+    q: 'We can’t risk-assess every site we visit. Does jobsafe help with that?',
+    a: 'That is precisely the gap it fills. You cannot pre-assess a customer’s plant room you have never seen, so what protects you is what the engineer recorded when they got there. Every near miss captured on a real visit is feedback on a specific site, task or piece of kit, and the dashboard shows you which of them keep coming back — so your generic assessments and toolbox talks get updated from evidence rather than guesswork.',
   },
   {
-    q: 'Can it handle multiple homes, branches and agency staff?',
-    a: 'Yes. jobsafe is licensed per user, so employed, bank and agency staff all report through the same app, and every report automatically carries who, where and when. The dashboard breaks reports down by site, so a provider running several homes or branches sees each location — and the whole picture — in one place.',
+    q: 'What happens when there’s no signal on site?',
+    a: 'The mobile app stores reports locally and syncs to the cloud as soon as connectivity returns. Engineers can capture incidents in basements, plant rooms, lift shafts, substations and rural sites with no coverage at all, without losing a single record.',
+  },
+  {
+    q: 'Can it handle engineers across several regions, plus subcontractors?',
+    a: 'Yes. jobsafe is licensed per user, so employed engineers and subcontracted ones report through the same app, and every report automatically carries who, where and when. The dashboard breaks reports down by site, so a business with no shared depot still sees each location — and the whole picture — in one place.',
+  },
+  {
+    q: 'An incident happened on a client’s premises. Whose record is it?',
+    a: 'Yours, and you keep it. The report belongs to your account, is immutable once submitted, and is exportable with its photos, video and voice notes attached — so you can hand the client, their principal contractor or your insurer an evidenced account of what your engineer found and did, without giving up your own record of it.',
   },
   {
     q: 'Does it help with RIDDOR reporting?',
     a: 'It gives your responsible person what RIDDOR decisions depend on: a fast, dated record of what happened, with the evidence attached. Reports are timestamped and geotagged at the point of capture, so the timeline is already in front of you when you are deciding whether something is reportable and by when. Submitting to the HSE remains your decision — our free toolkit includes a RIDDOR decision flowchart to make it a quick one.',
   },
   {
-    q: 'What happens when there’s no signal — in a service user’s home, a lift or a plant room?',
-    a: 'The mobile app stores reports locally and syncs to the cloud as soon as connectivity returns. Community and domiciliary staff can capture incidents in flats, lifts, rural properties and basements with no coverage at all, without losing a single record.',
-  },
-  {
-    q: 'Is it safe to attach photos in a care setting?',
-    a: 'Media is stored under UK GDPR — encrypted in transit and at rest on AWS, with a data processing agreement available on request. What goes into a report remains your call and your policy: for most incidents the evidence that matters is the hazard rather than the person — the wet floor, the failed hoist sling, the damaged bed rail — and your staff should be told to record it that way.',
-  },
-  {
-    q: 'Can we export evidence for an inspector, a commissioner or an insurer?',
-    a: 'Yes. Every report is timestamped, immutable and exportable, with its photos, video and voice notes permanently linked to the record — so you hand over an evidenced account rather than a reconstruction.',
+    q: 'Can engineers attach photos and video from the job?',
+    a: 'Yes. Photos, short video clips and voice notes are attached directly within the report, automatically timestamped and geotagged at the point of capture, and permanently linked to the incident record. A voice note matters more than it sounds in this trade: an engineer in gloves on a cold roof will talk when they will not type.',
   },
   {
     q: 'How long does it take to get set up?',
-    a: 'Most teams are live within 30 minutes. There’s no installation, no hardware and no IT involvement: create an account, invite your staff by email, and you’re reporting. Onboarding guides and short video lessons in the academy get carers, nurses and support workers confident from day one.',
+    a: 'Most teams are live within 30 minutes. There’s no installation, no hardware and no IT involvement: create an account, invite your engineers by email, and you’re reporting. Onboarding guides and short video lessons in the academy get crews confident from day one.',
   },
   {
     q: 'What does the free trial include?',
-    a: `The full product, free for ${TRIAL.days} days, with no credit card required. Set it up across one home or one community round, capture some real reports, and see exactly what jobsafe would show an inspector, a commissioner or an insurer about your service before you pay a penny.`,
+    a: `The full product, free for ${TRIAL.days} days, with no credit card required. Put it on a few vans, capture some real reports from real visits, and see exactly what jobsafe would show a client, an insurer or the HSE about your business before you pay a penny.`,
   },
 ]
 
 const trustFacts = [
-  'Built for UK care and clinical teams',
-  'Works offline on home visits',
+  'Built for UK mobile engineering teams',
+  'Works with no signal at all',
   TRIAL.label,
 ]
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
-export default function HealthcarePage() {
+export default function FieldServicesPage() {
   return (
     <main className="bg-surface-0 min-h-screen">
       <script
@@ -167,7 +168,7 @@ export default function HealthcarePage() {
       />
       <Navbar />
 
-      {/* ── Hero: split text / on-site footage ────────────────────────────── */}
+      {/* ── Hero: split text / on-site still ──────────────────────────────── */}
       <section className="relative overflow-hidden bg-black">
         <div
           className="absolute top-0 right-0 pointer-events-none"
@@ -183,29 +184,30 @@ export default function HealthcarePage() {
             {/* Left — text */}
             <Reveal className="flex flex-col w-full lg:w-[55%]">
               <p className="text-xs font-bold tracking-widest text-brand uppercase mb-6">
-                For UK care homes, home care &amp; healthcare providers
+                For UK field service, maintenance &amp; mobile engineering teams
               </p>
               <h1
                 className="font-black leading-[1.05] tracking-tight text-white mb-7 text-balance"
                 style={{ fontSize: 'clamp(2.4rem, 4.6vw, 4.2rem)' }}
               >
-                Every incident logged is a patient{' '}
-                <em className="not-italic text-brand">protected</em>.
+                Reporting that{' '}
+                <em className="not-italic text-brand">travels</em> with your
+                engineers
               </h1>
               <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">
-                Hoists and transfers, sharps, wet floors, aggression, and staff
-                working alone in other people&apos;s homes at seven in the
-                morning. jobsafe gives carers, nurses and support workers a
-                sixty-second way to record accidents and near misses —
-                photographed, GPS-anchored and timestamped — so when an
-                inspector, a commissioner or an insurer asks what happened, you
-                answer in seconds rather than scrambles.
+                Plant rooms with no bars on the phone. Roofs, lofts,
+                substations, and customer sites nobody from your office has ever
+                walked. jobsafe gives lone and mobile engineers a sixty-second
+                way to record accidents and near misses — photographed,
+                GPS-anchored, timestamped, and stored on the device until
+                there&apos;s a signal — so when a client, an insurer or the HSE
+                asks what happened, you answer in seconds rather than scrambles.
               </p>
               {/* Same weighting as the homepage hero: demo takes the fill,
                   trial takes the border, the lead magnet steps down to a link
                   so the row reads as two choices rather than three. */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-                <BookDemoButton placement="industry-healthcare-hero" />
+                <BookDemoButton placement="industry-field-services-hero" />
                 <a
                   href={SIGNUP_TRIAL_URL}
                   className="rounded-md border border-white/20 px-8 py-4 text-sm font-bold text-white transition duration-200 hover:-translate-y-px hover:border-white/40 active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
@@ -221,10 +223,14 @@ export default function HealthcarePage() {
               </div>
             </Reveal>
 
-            {/* Right — on-site footage. Greyscale is baked into the encode
-                (public/videos, ffmpeg hue=s=0); the red is the soft glow
-                behind the frame plus a low-opacity brand wash, so the footage
-                sits in the hero's palette rather than beside it. */}
+            {/* Right — on-site still, in the same frame the fitters and
+                healthcare heroes use for footage: greyscale baked into the
+                asset, red blur behind, brand wash and vignette over the top.
+                A still rather than video because there is no field service
+                footage yet; swapping in a <video> later is a like-for-like
+                replacement of this <Image>, nothing around it changes. The
+                colour original is the homepage industries card, so the two
+                read as the same photograph graded for two jobs. */}
             <Reveal index={1} className="w-full lg:w-[45%] flex justify-center">
               <div className="relative w-full max-w-xl">
                 {/* Red blur behind the frame */}
@@ -238,18 +244,15 @@ export default function HealthcarePage() {
                   }}
                 />
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_14px_40px_rgb(0_0_0/0.6)]">
-                  <video
-                    src="/videos/healthcare-hero.mp4"
-                    poster="/videos/healthcare-hero-poster.jpg"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    aria-label="A carer supporting an older resident in a care home lounge"
+                  <Image
+                    src="/images/industries/field-services-hero.jpg"
+                    alt="A field engineer inspecting a wind turbine alone at a remote hillside site"
+                    width={1280}
+                    height={720}
+                    priority
                     className="w-full h-auto block"
                   />
-                  {/* Brand wash + vignette over the greyscale footage */}
+                  {/* Brand wash + vignette over the greyscale still */}
                   <div
                     aria-hidden
                     className="absolute inset-0 pointer-events-none"
@@ -280,7 +283,7 @@ export default function HealthcarePage() {
         </ul>
       </section>
 
-      {/* ── The point: good governance is an evidence test ────────────────
+      {/* ── The point: the duty travels with the engineer ─────────────────
           The selling point of the page — full editorial statement, not a
           footnote band. Sits directly under the hero, before any feature
           copy. */}
@@ -299,24 +302,21 @@ export default function HealthcarePage() {
               <PiScales className="size-6 text-brand" strokeWidth={1.75} />
             </div>
             <h2 className="text-4xl md:text-6xl font-black tracking-tight text-balance text-white leading-[1.05] mb-8">
-              Good governance is
+              You don&apos;t own the site.
               <br />
-              an <em className="not-italic text-brand">evidence</em> test.
+              You still own the{' '}
+              <em className="not-italic text-brand">duty</em>.
             </h2>
             <p className="text-white/80 text-lg md:text-2xl leading-relaxed text-balance max-w-3xl mx-auto">
-              Regulation 17 of the Health and Social Care Act 2008 (Regulated
-              Activities) Regulations 2014 requires providers to keep accurate,
-              complete and contemporaneous records, and to assess, monitor and
-              mitigate risks to health and safety. The Health and Safety at Work
-              etc. Act 1974 asks the same of you for your staff. Both are
-              evidence questions: a dated, geotagged, immutable reporting trail{' '}
+              Section 2 of the Health and Safety at Work etc. Act 1974 follows
+              your engineer onto premises you have never seen, and section 3
+              extends it to everyone else your work affects. You cannot
+              pre-assess every site — which makes what your engineer{' '}
+              <span className="font-bold text-white">recorded</span> when they
+              got there the thing that stands up later. A dated, geotagged,
+              immutable trail{' '}
               <span className="font-bold text-white">demonstrates</span> your
-              system — good intentions only{' '}
-              <span className="font-bold text-white">describe</span> it.
-            </p>
-            <p className="text-white/40 text-sm leading-relaxed max-w-2xl mx-auto mt-8">
-              Regulation 17 is the England wording. The Care Inspectorate, Care
-              Inspectorate Wales and RQIA ask the same question in their own.
+              system; good intentions only describe it.
             </p>
           </Reveal>
         </div>
@@ -327,13 +327,12 @@ export default function HealthcarePage() {
         <div className="mx-auto max-w-5xl px-6">
           <Reveal className="mb-12 max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white mb-4">
-              Four moments every provider recognises
+              Four moments every engineer recognises
             </h2>
             <p className="text-white/50 text-sm leading-relaxed">
-              Care work is physical, unpredictable and often done alone or at
-              three in the morning, by people who move between homes, rounds and
-              rotas. When something goes wrong, the record you kept is the
-              difference.
+              Field work means unfamiliar sites, no supervisor in sight, patchy
+              coverage and paperwork that waits until the van is parked up. When
+              something goes wrong, the record you kept is the difference.
             </p>
           </Reveal>
           <div className="grid gap-4 md:grid-cols-2">
@@ -359,13 +358,13 @@ export default function HealthcarePage() {
         <div className="mx-auto max-w-6xl px-6">
           <Reveal className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white mb-4">
-              Win the contract. Keep the cover.
+              Win the work. Keep the cover.
               <br />
-              Pass the inspection.
+              Stay on the list.
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm leading-relaxed">
-              Providers rarely lose a framework place on price alone. They lose
-              it on evidence they couldn&apos;t produce in time.
+              Contractors rarely lose an account on price alone. They lose it on
+              evidence they couldn&apos;t produce in time.
             </p>
           </Reveal>
           <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-y border-white/10">
@@ -381,16 +380,16 @@ export default function HealthcarePage() {
           </div>
           <p className="text-center mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8">
             <Link
+              href="/insights/lone-worker-safety-guide"
+              className="text-sm font-semibold text-brand hover:underline"
+            >
+              Lone worker safety, in practice →
+            </Link>
+            <Link
               href="/insights/riddor-reporting-explained"
               className="text-sm font-semibold text-brand hover:underline"
             >
               RIDDOR reporting, explained in plain English →
-            </Link>
-            <Link
-              href="/insights/lone-worker-safety-guide"
-              className="text-sm font-semibold text-brand hover:underline"
-            >
-              Lone worker safety, for staff on community rounds →
             </Link>
           </p>
         </div>
@@ -418,8 +417,8 @@ export default function HealthcarePage() {
                     Not sure where your gaps are? Start free.
                   </h2>
                   <p className="text-white/50 text-base leading-relaxed max-w-xl">
-                    The jobsafe site reporting toolkit is free for UK employers:
-                    a ready-to-use incident and near-miss report template, the
+                    The jobsafe site reporting toolkit is free for UK trades: a
+                    ready-to-use incident and near-miss report template, the
                     RIDDOR decision flowchart, and near-miss triage — no
                     obligation, no jargon.
                   </p>
@@ -442,7 +441,7 @@ export default function HealthcarePage() {
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
       <PageFAQ
         faqs={faqs}
-        intro="Straight answers for care and healthcare providers weighing up jobsafe."
+        intro="Straight answers for field service businesses weighing up jobsafe."
       />
 
       {/* ── Final CTA ─────────────────────────────────────────────────────── */}
@@ -459,18 +458,18 @@ export default function HealthcarePage() {
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight mb-6">
-              Evidence, not recollection.
+              Your engineers are already out there.
             </h2>
             <p className="text-white/50 text-lg leading-relaxed mb-4">
               Book {DEMO_DURATION_LABEL} and we will show you exactly what
-              jobsafe would put in front of an inspector, a commissioner or an
-              insurer about your service today.
+              jobsafe would put in front of a client, an insurer or the HSE
+              about your business today.
             </p>
             <p className="text-white/40 text-sm mb-10">
               From {ENTRY_PRICE_LABEL} per licence per month. {TRIAL.label}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <BookDemoButton placement="industry-healthcare-closing" />
+              <BookDemoButton placement="industry-field-services-closing" />
               <a
                 href={SIGNUP_TRIAL_URL}
                 className="inline-flex items-center justify-center rounded-md border border-white/25 px-8 py-4 text-sm font-bold whitespace-nowrap text-white transition duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
