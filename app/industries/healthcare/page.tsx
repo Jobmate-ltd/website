@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Health & Safety Software for Healthcare & Care Homes | jobsafe',
     description:
-      'Fix your incident reporting before your next inspection. Evidence-grade incident and near-miss reporting built for UK care homes, home care and clinical teams.',
+      'Every incident logged is a patient protected. Evidence-grade incident and near-miss reporting built for UK care homes, home care and clinical teams.',
     url: PAGE_URL,
     type: 'website',
   },
@@ -189,9 +189,8 @@ export default function HealthcarePage() {
                 className="font-black leading-[1.05] tracking-tight text-white mb-7 text-balance"
                 style={{ fontSize: 'clamp(2.4rem, 4.6vw, 4.2rem)' }}
               >
-                Fix your incident reporting{' '}
-                <em className="not-italic text-brand">before</em> your next
-                inspection
+                Every incident logged is a patient{' '}
+                <em className="not-italic text-brand">protected</em>.
               </h1>
               <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">
                 Hoists and transfers, sharps, wet floors, aggression, and staff
