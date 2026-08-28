@@ -15,6 +15,7 @@ const industryLinks = [
   { label: 'Window & Door Fitters', href: '/industries/window-door-fitters' },
   { label: 'Healthcare & Social Care', href: '/industries/healthcare' },
   { label: 'Field Service', href: '/industries/field-services' },
+  { label: 'Transport & Logistics', href: '/industries/transport-logistics' },
 ]
 
 export function Navbar() {
