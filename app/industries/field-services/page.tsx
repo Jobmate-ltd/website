@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
@@ -168,7 +167,7 @@ export default function FieldServicesPage() {
       />
       <Navbar />
 
-      {/* ── Hero: split text / on-site still ──────────────────────────────── */}
+      {/* ── Hero: split text / on-site footage ────────────────────────────── */}
       <section className="relative overflow-hidden bg-black">
         <div
           className="absolute top-0 right-0 pointer-events-none"
@@ -223,14 +222,13 @@ export default function FieldServicesPage() {
               </div>
             </Reveal>
 
-            {/* Right — on-site still, in the same frame the fitters and
-                healthcare heroes use for footage: greyscale baked into the
-                asset, red blur behind, brand wash and vignette over the top.
-                A still rather than video because there is no field service
-                footage yet; swapping in a <video> later is a like-for-like
-                replacement of this <Image>, nothing around it changes. The
-                colour original is the homepage industries card, so the two
-                read as the same photograph graded for two jobs. */}
+            {/* Right — on-site footage. Greyscale is baked into the encode
+                (public/videos, ffmpeg hue=s=0); the red is the soft glow
+                behind the frame plus a low-opacity brand wash, so the footage
+                sits in the hero's palette rather than beside it. The plant
+                room is dim enough that a straight desaturation read as a black
+                box against the hero, so the grade carries a gamma and contrast
+                lift as well. */}
             <Reveal index={1} className="w-full lg:w-[45%] flex justify-center">
               <div className="relative w-full max-w-xl">
                 {/* Red blur behind the frame */}
@@ -244,15 +242,18 @@ export default function FieldServicesPage() {
                   }}
                 />
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_14px_40px_rgb(0_0_0/0.6)]">
-                  <Image
-                    src="/images/industries/field-services-hero.jpg"
-                    alt="A field engineer inspecting a wind turbine alone at a remote hillside site"
-                    width={1280}
-                    height={720}
-                    priority
+                  <video
+                    src="/videos/field-services-hero.mp4"
+                    poster="/videos/field-services-hero-poster.jpg"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="Two engineers inspecting valves and pipework in a plant room"
                     className="w-full h-auto block"
                   />
-                  {/* Brand wash + vignette over the greyscale still */}
+                  {/* Brand wash + vignette over the greyscale footage */}
                   <div
                     aria-hidden
                     className="absolute inset-0 pointer-events-none"
