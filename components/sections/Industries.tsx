@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { PiHardHat as HardHat, PiBuildings as Building2, PiFactory as Factory, PiLightning as Zap, PiTruck as Truck, PiBriefcase as Briefcase } from 'react-icons/pi'
+import { PiHardHat as HardHat, PiBuildings as Building2, PiFactory as Factory, PiLightning as Zap, PiTruck as Truck, PiBriefcase as Briefcase, PiFirstAid as FirstAid } from 'react-icons/pi'
 
 const options = [
   {
@@ -39,6 +39,12 @@ const options = [
     description: 'Give lone workers a fast, offline-capable way to report incidents wherever the job takes them — no signal required.',
     image: '/images/industries/field-services.png',
     icon: <Briefcase size={20} strokeWidth={1.5} className="text-white" />,
+  },
+  {
+    title: 'Healthcare & Social Care',
+    description: 'Capture moving-and-handling injuries, sharps, falls and aggression on the shift they happen — evidence an inspector, commissioner or insurer can follow.',
+    image: '/images/industries/healthcare.png',
+    icon: <FirstAid size={20} strokeWidth={1.5} className="text-white" />,
   },
 ]
 
