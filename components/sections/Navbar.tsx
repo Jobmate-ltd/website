@@ -13,6 +13,7 @@ import Link from 'next/link'
     mobile menu both render from this list. */
 const industryLinks = [
   { label: 'Window & Door Fitters', href: '/industries/window-door-fitters' },
+  { label: 'Healthcare & Social Care', href: '/industries/healthcare' },
 ]
 
 export function Navbar() {
