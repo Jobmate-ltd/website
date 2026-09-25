@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // ─────────────────────────────────────────────────────────────────────────────
-// jobsafe — SEO audit.
+// jobsafe — SEO and truth audit.
 //
-// Every defect fixed in the P0 sprint has a check here. The point is not to
-// find problems once; it is to make it impossible to reintroduce them without
-// the build going red.
+// Every defect fixed in the P0 sprint and in Phase 1 has a check here. The
+// point is not to find problems once; it is to make it impossible to
+// reintroduce them without the build going red.
 //
 // Zero dependencies. Runs on the Node already required to build the site.
 //
@@ -24,10 +24,13 @@ import { join, relative, extname } from 'node:path'
 
 /** Directories we never lint. `_legacy/` is a museum piece, not shipped code. */
 const SKIP_DIRS = new Set(['node_modules', '.next', '.git', '_legacy', 'out', 'build', 'coverage'])
-const SOURCE_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.md'])
+const SOURCE_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.md', '.css'])
 
 /** Files allowed to contain price literals: the source of truth, and the audit itself. */
 const PRICE_LITERAL_ALLOWLIST = ['lib/brand.ts', 'scripts/seo-audit.mjs', 'test/seo.test.mjs']
+
+/** The only file allowed to contain a colour literal (Workstream A). */
+const COLOUR_LITERAL_ALLOWLIST = ['app/globals.css']
 
 export const RULES = {
   BRAND_CASING: 'brand-casing',
@@ -40,7 +43,15 @@ export const RULES = {
   NO_CHECKLISTS: 'no-checklists',
   CANONICAL_TRAILING_SLASH: 'canonical-trailing-slash',
   SINGLE_OFFER: 'single-offer',
-  FAQ_FORCE_MOUNT: 'faq-force-mount',
+  FAQ_SERVER_RENDERED: 'faq-server-rendered',
+  // Phase 1
+  OTTO_SCRIPT: 'otto-script',
+  COLOUR_LITERAL: 'colour-literal',
+  UNSOURCED_NUMBER: 'unsourced-number',
+  TRIAL_CARD_CLAIM: 'trial-card-claim',
+  MAKER_LINE: 'maker-line',
+  VAT_SHOWN: 'vat-shown',
+  CANONICAL_EVERYWHERE: 'canonical-everywhere',
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -76,6 +87,24 @@ function findLines(source, pattern) {
   return hits
 }
 
+/** Generic "this pattern must not appear" rule over a file list. */
+function forbid(files, root, { rule, pattern, message, skip = () => false, exts }) {
+  const violations = []
+  for (const file of files) {
+    const rel = relative(root, file)
+    if (skip(rel)) continue
+    if (exts && !exts.has(extname(file))) continue
+    const source = readFileSync(file, 'utf8')
+    if (ignoresRule(source, rule)) continue
+    for (const { line, text } of findLines(source, pattern)) {
+      violations.push({ rule, file: rel, line, message: `${message}: ${text.slice(0, 90)}` })
+    }
+  }
+  return violations
+}
+
+const isTooling = (rel) => rel.startsWith('docs/') || rel.startsWith('patches/') || rel.startsWith('scripts/') || rel.startsWith('test/')
+
 // ── the checks ───────────────────────────────────────────────────────────────
 
 /**
@@ -87,91 +116,48 @@ function findLines(source, pattern) {
  * inside a URL path segment where casing is not ours to choose.
  */
 function checkBrandCasing(files, root) {
-  const violations = []
   // `Jobmate`/`JobMate` are a different, correctly-capitalised legal entity.
-  const pattern = /\b(JobSafe|Jobsafe|JOBSAFE|JobSAFE|Job Safe)\b/
-  for (const file of files) {
-    const source = readFileSync(file, 'utf8')
-    if (ignoresRule(source, RULES.BRAND_CASING)) continue
-    for (const { line, text } of findLines(source, pattern)) {
-      violations.push({
-        rule: RULES.BRAND_CASING,
-        file: relative(root, file),
-        line,
-        message: `brand must be lowercase \`jobsafe\`: ${text.slice(0, 90)}`,
-      })
-    }
-  }
-  return violations
+  return forbid(files, root, {
+    rule: RULES.BRAND_CASING,
+    pattern: /\b(JobSafe|Jobsafe|JOBSAFE|JobSAFE|Job Safe)\b/,
+    message: 'brand must be lowercase `jobsafe`',
+    exts: new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.md']),
+  })
 }
 
 /** Defect T8. Google has ignored `<meta name="keywords">` since 2009. */
 function checkMetaKeywords(files, root) {
-  const violations = []
-  for (const file of files) {
-    const rel = relative(root, file)
-    // Post-level `keywords` in lib/insights.ts is content metadata, not a meta
-    // tag — but `app/insights/[slug]/page.tsx` passes it INTO Next's metadata,
-    // which does render <meta name="keywords">. Both are caught below.
-    if (!rel.startsWith('app/')) continue
-    const source = readFileSync(file, 'utf8')
-    if (ignoresRule(source, RULES.META_KEYWORDS)) continue
-    for (const { line, text } of findLines(source, /^\s*keywords:/)) {
-      violations.push({
-        rule: RULES.META_KEYWORDS,
-        file: rel,
-        line,
-        message: `Next renders this as <meta name="keywords">, which is ignored by Google and signals a thin strategy: ${text.slice(0, 70)}`,
-      })
-    }
-  }
-  return violations
+  // Post-level `keywords` in lib/insights.ts is content metadata, not a meta
+  // tag — but a page that passes it INTO Next's metadata renders the tag.
+  return forbid(files, root, {
+    rule: RULES.META_KEYWORDS,
+    pattern: /^\s*keywords:/,
+    message: 'Next renders this as <meta name="keywords">, which is ignored by Google and signals a thin strategy',
+    skip: (rel) => !rel.startsWith('app/'),
+  })
 }
 
 /** §8. No self-declared star ratings. There are no reviews yet. */
 function checkAggregateRating(files, root) {
-  const violations = []
-  for (const file of files) {
-    const rel = relative(root, file)
-    if (rel === 'scripts/seo-audit.mjs' || rel === 'test/seo.test.mjs') continue
-    const source = readFileSync(file, 'utf8')
-    if (ignoresRule(source, RULES.AGGREGATE_RATING)) continue
-    // As a property key or a quoted string — i.e. actually emitted. Prose in a
-    // comment explaining why we do not use it is exactly the documentation we
-    // want to keep.
-    for (const { line } of findLines(source, /aggregateRating\s*[:=]|['"]aggregateRating['"]/)) {
-      violations.push({
-        rule: RULES.AGGREGATE_RATING,
-        file: rel,
-        line,
-        message:
-          'aggregateRating without verifiable third-party reviews is a manual-action risk and a false claim (§8). Claim G2/Capterra first.',
-      })
-    }
-  }
-  return violations
+  // As a property key or a quoted string — i.e. actually emitted. Prose in a
+  // comment explaining why we do not use it is exactly the documentation we
+  // want to keep.
+  return forbid(files, root, {
+    rule: RULES.AGGREGATE_RATING,
+    pattern: /aggregateRating\s*[:=]|['"]aggregateRating['"]/,
+    message: 'aggregateRating without verifiable third-party reviews is a manual-action risk and a false claim (§8). Claim G2/Capterra first',
+    skip: (rel) => rel === 'scripts/seo-audit.mjs' || rel === 'test/seo.test.mjs',
+  })
 }
 
 /** Defect T2. One price, from one place. */
 function checkPriceLiterals(files, root) {
-  const violations = []
-  const pattern = /£\s?\d+\.\d{2}/
-  for (const file of files) {
-    const rel = relative(root, file)
-    if (PRICE_LITERAL_ALLOWLIST.includes(rel)) continue
-    if (rel.startsWith('docs/') || rel.startsWith('patches/')) continue
-    const source = readFileSync(file, 'utf8')
-    if (ignoresRule(source, RULES.PRICE_LITERAL)) continue
-    for (const { line, text } of findLines(source, pattern)) {
-      violations.push({
-        rule: RULES.PRICE_LITERAL,
-        file: rel,
-        line,
-        message: `hard-coded price. Import from lib/brand.ts instead: ${text.slice(0, 80)}`,
-      })
-    }
-  }
-  return violations
+  return forbid(files, root, {
+    rule: RULES.PRICE_LITERAL,
+    pattern: /£\s?\d+\.\d{2}/,
+    message: 'hard-coded price. Import from lib/brand.ts instead',
+    skip: (rel) => PRICE_LITERAL_ALLOWLIST.includes(rel) || rel.startsWith('docs/') || rel.startsWith('patches/'),
+  })
 }
 
 /** A URL fragment is not a URL. Sitemaps have no concept of one. */
@@ -187,153 +173,89 @@ function checkSitemapFragments(root) {
   }))
 }
 
-/** Defect T5. The spec is 1200×630. The asset shipped at 1203×633. */
+/** Defect T5. The spec is 1200×630. The asset once shipped at 1203×633. */
 function checkOgImage(root) {
   const file = join(root, 'public/images/og-image.png')
   if (!existsSync(file)) {
-    return [
-      {
-        rule: RULES.OG_IMAGE_DIMENSIONS,
-        file: 'public/images/og-image.png',
-        line: 0,
-        severity: 'warn',
-        message: 'not found — cannot verify dimensions. Expected 1200×630.',
-      },
-    ]
+    return [{ rule: RULES.OG_IMAGE_DIMENSIONS, file: 'public/images/og-image.png', line: 0, severity: 'warn', message: 'not found — cannot verify dimensions. Expected 1200×630.' }]
   }
   const dims = pngDimensions(readFileSync(file))
-  if (!dims) {
-    return [
-      {
-        rule: RULES.OG_IMAGE_DIMENSIONS,
-        file: 'public/images/og-image.png',
-        line: 0,
-        message: 'not a valid PNG.',
-      },
-    ]
-  }
+  if (!dims) return [{ rule: RULES.OG_IMAGE_DIMENSIONS, file: 'public/images/og-image.png', line: 0, message: 'not a valid PNG.' }]
   if (dims.width !== 1200 || dims.height !== 630) {
-    return [
-      {
-        rule: RULES.OG_IMAGE_DIMENSIONS,
-        file: 'public/images/og-image.png',
-        line: 0,
-        message: `is ${dims.width}×${dims.height}, must be 1200×630. Fix with:  npx sharp-cli -i public/images/og-image.png -o public/images/og-image.png resize 1200 630 --fit cover`,
-      },
-    ]
+    return [{ rule: RULES.OG_IMAGE_DIMENSIONS, file: 'public/images/og-image.png', line: 0, message: `is ${dims.width}×${dims.height}, must be 1200×630. Regenerate it from the /opengraph-image route.` }]
   }
   return []
 }
 
-/** §5.1. 140–158 chars, quotes the entry price, ends on a concrete verb. */
+/**
+ * §5.1. 140–158 chars, quotes the entry price WITH VAT shown, never the volume
+ * rate, and ends on a concrete verb.
+ */
 export function checkMetaDescription(description) {
   const violations = []
   const len = description.length
   if (len < 140 || len > 158) {
-    violations.push({
-      rule: RULES.META_DESCRIPTION,
-      file: 'app/layout.tsx',
-      line: 0,
-      message: `description is ${len} chars, must be 140–158.`,
-    })
+    violations.push({ rule: RULES.META_DESCRIPTION, file: 'app/layout.tsx', line: 0, message: `description is ${len} chars, must be 140–158.` })
   }
   if (description.includes('£2.75')) {
-    violations.push({
-      rule: RULES.META_DESCRIPTION,
-      file: 'app/layout.tsx',
-      line: 0,
-      message: 'quotes the volume rate £2.75; a new customer pays the entry price. Snippet must match the landing page.',
-    })
+    violations.push({ rule: RULES.META_DESCRIPTION, file: 'app/layout.tsx', line: 0, message: 'quotes the volume rate £2.75; a new customer pays the entry price. Snippet must match the landing page.' })
+  }
+  if (/£\d+\.\d{2}(?! \+ VAT)/.test(description)) {
+    violations.push({ rule: RULES.META_DESCRIPTION, file: 'app/layout.tsx', line: 0, message: 'quotes a price without "+ VAT" beside it (Workstream C.4).' })
   }
   if (!/\b(Start|Report|Capture|Try|See)\b[^.]*\.$/.test(description)) {
-    violations.push({
-      rule: RULES.META_DESCRIPTION,
-      file: 'app/layout.tsx',
-      line: 0,
-      message: 'must end on a concrete verb (§5.1).',
-    })
+    violations.push({ rule: RULES.META_DESCRIPTION, file: 'app/layout.tsx', line: 0, message: 'must end on a concrete verb (§5.1).' })
   }
   return violations
 }
 
 /** §0.4. jobsafe has no checklists feature. Permanently out of scope. */
 function checkNoChecklists(files, root) {
-  const violations = []
-  const pattern = /\bchecklists?\b|\bform builder\b/i
-  for (const file of files) {
-    const rel = relative(root, file)
-    if (rel.startsWith('docs/') || rel.startsWith('patches/') || rel.startsWith('scripts/') || rel.startsWith('test/')) continue
-    const source = readFileSync(file, 'utf8')
-    if (ignoresRule(source, RULES.NO_CHECKLISTS)) continue
-    for (const { line, text } of findLines(source, pattern)) {
-      violations.push({
-        rule: RULES.NO_CHECKLISTS,
-        file: rel,
-        line,
-        message: `jobsafe has no checklists feature (§0.4). If this is a deliberate negative claim, add "seo-audit-ignore: no-checklists" and say why: ${text.slice(0, 70)}`,
-      })
-    }
-  }
-  return violations
+  return forbid(files, root, {
+    rule: RULES.NO_CHECKLISTS,
+    pattern: /\bchecklists?\b|\bform builder\b/i,
+    message: 'jobsafe has no checklists feature (§0.4). If this is a deliberate negative claim, add "seo-audit-ignore: no-checklists" and say why',
+    skip: isTooling,
+  })
 }
 
 /** Defect T3. Exactly one offer may be live. */
 function checkSingleOffer(root) {
   const brandFile = join(root, 'lib/brand.ts')
-  const pricingFile = join(root, 'components/sections/Pricing.tsx')
+  const pricingFile = join(root, 'components/site/pricing.tsx')
   if (!existsSync(brandFile)) return []
-
   const brand = readFileSync(brandFile, 'utf8')
   const launchEnabled = /LAUNCH_OFFER\s*=\s*\{[^}]*enabled:\s*true/s.test(brand)
   if (!launchEnabled) return []
-
-  const trialVisible =
-    existsSync(pricingFile) && /free trial|TRIAL\.label/i.test(readFileSync(pricingFile, 'utf8'))
-
+  const trialVisible = existsSync(pricingFile) && /free trial|TRIAL\.label|trialSentence/i.test(readFileSync(pricingFile, 'utf8'))
   if (trialVisible) {
-    return [
-      {
-        rule: RULES.SINGLE_OFFER,
-        file: 'lib/brand.ts',
-        line: 0,
-        message:
-          'LAUNCH_OFFER.enabled is true while the pricing section still advertises the free trial. Two contradictory offers ~400px apart (defect T3). Retire one.',
-      },
-    ]
+    return [{ rule: RULES.SINGLE_OFFER, file: 'lib/brand.ts', line: 0, message: 'LAUNCH_OFFER.enabled is true while the pricing section still advertises the free trial. Two contradictory offers ~400px apart (defect T3). Retire one.' }]
   }
   return []
 }
 
-/** Defect T7. FAQPage is only valid if the answers are in the HTML. */
-function checkFaqForceMount(root) {
-  const file = join(root, 'components/sections/FAQ.tsx')
-  if (!existsSync(file)) return []
-  const source = readFileSync(file, 'utf8')
-  const emitsSchema = /faqPageSchema/.test(source)
-  const forcesMount = /forceMount/.test(source)
-
-  if (emitsSchema && !forcesMount) {
-    return [
-      {
-        rule: RULES.FAQ_FORCE_MOUNT,
-        file: 'components/sections/FAQ.tsx',
-        line: 0,
-        message:
-          'emits FAQPage schema but Radix unmounts closed <Accordion.Content>. The answers are not in the server-rendered HTML, so the markup is invalid. Add forceMount.',
-      },
-    ]
+/**
+ * Defect T7. FAQPage is only valid if the answers are in the HTML. Any
+ * component that emits `faqPageSchema` must render the answers server-side:
+ * either a native <details> (collapsed by the browser, never unmounted) or a
+ * Radix accordion with `forceMount` and the `data-[state=closed]:h-0` collapse.
+ */
+function checkFaqServerRendered(files, root) {
+  const violations = []
+  for (const file of files) {
+    const rel = relative(root, file)
+    if (!rel.startsWith('components/')) continue
+    const source = readFileSync(file, 'utf8')
+    if (!/faqPageSchema\(/.test(source)) continue
+    const usesDetails = /<details\b/.test(source)
+    const forcesMount = /forceMount/.test(source)
+    if (!usesDetails && !forcesMount) {
+      violations.push({ rule: RULES.FAQ_SERVER_RENDERED, file: rel, line: 0, message: 'emits FAQPage schema but the answers are not in the server-rendered HTML. Use <details>, or forceMount with a CSS collapse.' })
+    } else if (forcesMount && !usesDetails && !/data-\[state=closed\]:h-0/.test(source)) {
+      violations.push({ rule: RULES.FAQ_SERVER_RENDERED, file: rel, line: 0, message: 'forceMount without `data-[state=closed]:h-0` renders every answer open on first paint.' })
+    }
   }
-  if (forcesMount && !/data-\[state=closed\]:h-0/.test(source)) {
-    return [
-      {
-        rule: RULES.FAQ_FORCE_MOUNT,
-        file: 'components/sections/FAQ.tsx',
-        line: 0,
-        message: 'forceMount without `data-[state=closed]:h-0` renders every answer open on first paint.',
-      },
-    ]
-  }
-  return []
+  return violations
 }
 
 /** §5.1. The homepage canonical must be self-referential and exact. */
@@ -343,18 +265,145 @@ function checkCanonicalTrailingSlash(root) {
   const source = readFileSync(file, 'utf8')
   const match = source.match(/CANONICAL_HOME\s*=\s*`?['"`]?([^'"`\n]*)/)
   const value = match?.[1] ?? ''
-  // Templated form `${SITE_URL}/` is the expected shape.
   if (!/\/`?$/.test(value.trim())) {
-    return [
-      {
-        rule: RULES.CANONICAL_TRAILING_SLASH,
-        file: 'lib/brand.ts',
-        line: 0,
-        message: `CANONICAL_HOME must end with a trailing slash to match the served URL and the GSC property (defect T6). Got: ${value}`,
-      },
-    ]
+    return [{ rule: RULES.CANONICAL_TRAILING_SLASH, file: 'lib/brand.ts', line: 0, message: `CANONICAL_HOME must end with a trailing slash to match the served URL and the GSC property (defect T6). Got: ${value}` }]
   }
   return []
+}
+
+// ── Phase 1 rules ────────────────────────────────────────────────────────────
+
+/**
+ * Workstream C.1. The Search Atlas "OTTO" dynamic-optimisation script rewrote
+ * titles and H1s in the browser, injected hidden AI-written text and a hidden
+ * 30-question FAQ, and added a keyword list that included "job safe pro". It
+ * must never come back, under any of its names.
+ */
+function checkOttoScript(files, root) {
+  return forbid(files, root, {
+    rule: RULES.OTTO_SCRIPT,
+    pattern: /sa-dynamic-optimization|dynamic_optimization\.js|searchatlas\.com\/scripts|data-uuid="09a87fea/,
+    message: 'Search Atlas OTTO dynamic-optimisation script. It rewrites pages in the browser and injects hidden text (Workstream C.1)',
+    skip: isTooling,
+  })
+}
+
+/**
+ * Workstream A. app/globals.css is the only file allowed to contain a colour
+ * literal. Components reach colour through the token utilities. The default
+ * Tailwind palette is removed, so a `bg-black` or `text-white` silently does
+ * nothing — which is exactly why it is also caught here.
+ */
+export const COLOUR_LITERAL = /(?:[:(,=\[\s'"`])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})(?![\w-])|\b(?:rgba?|hsla?)\(\s*\d/
+export const DARK_UTILITY = /\b(?:bg|text|border|from|to|via|divide|ring|fill|stroke|outline|decoration|placeholder|accent|shadow)-(?:black|white|zinc-\d+|gray-\d+|slate-\d+|neutral-\d+|stone-\d+|red-\d+|surface-\d)(?:\/\d+|\/\[[^\]]+\])?\b/
+
+function checkColourLiterals(files, root) {
+  const violations = []
+  for (const file of files) {
+    const rel = relative(root, file)
+    if (COLOUR_LITERAL_ALLOWLIST.includes(rel) || isTooling(rel)) continue
+    if (extname(file) === '.md') continue
+    const source = readFileSync(file, 'utf8')
+    if (ignoresRule(source, RULES.COLOUR_LITERAL)) continue
+    for (const { line, text } of findLines(source, COLOUR_LITERAL)) {
+      violations.push({ rule: RULES.COLOUR_LITERAL, file: rel, line, message: `colour literal outside app/globals.css. Use a token utility or lib/tokens.ts: ${text.slice(0, 80)}` })
+    }
+    for (const { line, text } of findLines(source, DARK_UTILITY)) {
+      violations.push({ rule: RULES.COLOUR_LITERAL, file: rel, line, message: `dark-world / default-palette utility. The palette is tokens only (bg-canvas, text-ink-1 …): ${text.slice(0, 80)}` })
+    }
+  }
+  return violations
+}
+
+/**
+ * Workstream C.5. Numbers nobody can stand behind. Each of these appeared on
+ * the site without a source; none may return. HSE statistics in the insights
+ * articles are allowed because they name their source and year on the page.
+ */
+export const UNSOURCED = /\b3\s?[×x]\s?faster|<\s?60\s?s\b|under 60 seconds|over 70%|£10,000\+|live within 30 minutes|\bin 24 hours\b|sixty-second|about 30 seconds|\b30 sec\b|in under a minute|3× faster/i
+
+function checkUnsourcedNumbers(files, root) {
+  return forbid(files, root, {
+    rule: RULES.UNSOURCED_NUMBER,
+    pattern: UNSOURCED,
+    message: 'unsourced number (Workstream C.5). Replace with a verifiable product fact, or name the source and year on the page',
+    skip: isTooling,
+  })
+}
+
+/**
+ * Workstream C.4. "No card required" may only be said if checkout agrees.
+ * `TRIAL.cardRequired` in lib/brand.ts is the switch; `trialSentence()` is
+ * the only place the wording lives.
+ */
+function checkTrialCardClaim(files, root) {
+  const brandFile = join(root, 'lib/brand.ts')
+  if (!existsSync(brandFile)) return []
+  const cardRequired = /cardRequired:\s*true/.test(readFileSync(brandFile, 'utf8'))
+  if (!cardRequired) return []
+  return forbid(files, root, {
+    rule: RULES.TRIAL_CARD_CLAIM,
+    pattern: /no (?:credit )?card (?:is )?required|without a (?:credit )?card|no credit card|card-free/i,
+    message: 'checkout takes a card at sign-up (TRIAL.cardRequired = true). Use trialSentence() and never say otherwise',
+    skip: (rel) => rel === 'lib/brand.ts' || isTooling(rel),
+  })
+}
+
+/** Workstream C.6. One maker line everywhere: "jobsafe is made by Jobmate Ltd." */
+function checkMakerLine(files, root) {
+  return forbid(files, root, {
+    rule: RULES.MAKER_LINE,
+    pattern: /Jobmate['’]s jobsafe|jobsafe HSSE module|Part of the Jobmate platform|Part of jobmate Group|a product of Jobmate/i,
+    message: 'retired maker line. Use MAKER_LINE from lib/brand.ts ("jobsafe is made by Jobmate Ltd.")',
+    skip: isTooling,
+  })
+}
+
+/**
+ * Workstream C.4. Every price shown carries "+ VAT". A price expression in a
+ * page or component must have VAT on the same line or within the next three
+ * (JSX wraps). The _EX_VAT_ labels carry it themselves.
+ */
+const PRICE_EXPRESSION = /\bENTRY_PRICE_LABEL\b|\bVOLUME_PRICE_LABEL\b|\bADMIN_PRICE_LABEL\b|\bformatPrice\(/
+
+function checkVatShown(files, root) {
+  const violations = []
+  for (const file of files) {
+    const rel = relative(root, file)
+    if (!(rel.startsWith('app/') || rel.startsWith('components/'))) continue
+    const source = readFileSync(file, 'utf8')
+    if (ignoresRule(source, RULES.VAT_SHOWN)) continue
+    const lines = source.split('\n')
+    lines.forEach((text, i) => {
+      if (!PRICE_EXPRESSION.test(text)) return
+      // A bare identifier on its own line is an import list, not a price shown.
+      if (/^\s*[A-Z_]+,?\s*$/.test(text) || /^\s*import\b/.test(text)) return
+      const window = lines.slice(i, i + 4).join('\n')
+      if (!/VAT/.test(window)) {
+        violations.push({ rule: RULES.VAT_SHOWN, file: rel, line: i + 1, message: `price shown without "+ VAT" beside it (Workstream C.4): ${text.trim().slice(0, 80)}` })
+      }
+    })
+  }
+  return violations
+}
+
+/**
+ * Workstream C.7. Every page sets a self-referencing canonical, Open Graph and
+ * Twitter block through `pageMetadata()` from lib/seo.ts, which cannot forget
+ * any of them.
+ */
+function checkCanonicalEverywhere(files, root) {
+  const violations = []
+  for (const file of files) {
+    const rel = relative(root, file)
+    if (!rel.startsWith('app/') || !/\/page\.tsx$/.test(rel)) continue
+    const source = readFileSync(file, 'utf8')
+    if (ignoresRule(source, RULES.CANONICAL_EVERYWHERE)) continue
+    if (!/pageMetadata\(/.test(source)) {
+      violations.push({ rule: RULES.CANONICAL_EVERYWHERE, file: rel, line: 0, message: 'page does not build its metadata with pageMetadata() from lib/seo.ts, so its canonical, OG and Twitter tags are not guaranteed.' })
+    }
+  }
+  return violations
 }
 
 // ── runner ───────────────────────────────────────────────────────────────────
@@ -364,14 +413,16 @@ export function runAudit(root = process.cwd()) {
     .map((d) => join(root, d))
     .filter(existsSync)
     .flatMap((d) => walk(d))
+  const configFile = join(root, 'next.config.ts')
+  if (existsSync(configFile)) files.push(configFile)
 
   let description = ''
   const layout = join(root, 'app/layout.tsx')
   if (existsSync(layout)) {
     const m = readFileSync(layout, 'utf8').match(/const SITE_DESCRIPTION\s*=\s*\n?\s*`([^`]*)`/)
     if (m) {
-      // Resolve the one interpolation we allow in the description.
-      description = m[1].replace(/\$\{ENTRY_PRICE_LABEL\}/g, '£3.00')
+      // Resolve the interpolations we allow in the description.
+      description = m[1].replace(/\$\{ENTRY_PRICE_EX_VAT_LABEL\}/g, '£3.00 + VAT').replace(/\$\{ENTRY_PRICE_LABEL\}/g, '£3.00')
     }
   }
 
@@ -385,8 +436,15 @@ export function runAudit(root = process.cwd()) {
     ...(description ? checkMetaDescription(description) : []),
     ...checkNoChecklists(files, root),
     ...checkSingleOffer(root),
-    ...checkFaqForceMount(root),
+    ...checkFaqServerRendered(files, root),
     ...checkCanonicalTrailingSlash(root),
+    ...checkOttoScript(files, root),
+    ...checkColourLiterals(files, root),
+    ...checkUnsourcedNumbers(files, root),
+    ...checkTrialCardClaim(files, root),
+    ...checkMakerLine(files, root),
+    ...checkVatShown(files, root),
+    ...checkCanonicalEverywhere(files, root),
   ]
 }
 

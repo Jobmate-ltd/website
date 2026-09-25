@@ -25,7 +25,10 @@ export interface InsightSource {
 
 export interface InsightPost {
   slug: string
+  /** The editorial headline, rendered as the H1. */
   title: string
+  /** Optional shorter <title> for search results (≤ 60 chars). Defaults to `title`. */
+  seoTitle?: string
   /** <head> meta description — keep ≤ ~160 chars. */
   description: string
   /** Short summary used on listing cards. */
@@ -35,6 +38,8 @@ export interface InsightPost {
   author: string
   /** ISO yyyy-mm-dd. */
   date: string
+  /** ISO yyyy-mm-dd the copy last changed, if after `date`. Feeds the sitemap and dateModified. */
+  updated?: string
   /** Estimated reading time in minutes. */
   readingTime: number
   content: InsightBlock[]
@@ -43,12 +48,13 @@ export interface InsightPost {
   related: string[]
 }
 
-export { SITE_URL } from './brand'
+export { SITE_URL } from './brand.ts'
 
 const posts: InsightPost[] = [
   {
     slug: 'rams-risk-assessments-method-statements',
     title: 'RAMS Explained: Risk Assessments and Method Statements for UK Sites',
+    seoTitle: 'RAMS explained: risk assessments and method statements',
     description:
       'What a RAMS is, whether it is a legal requirement, the difference between a risk assessment and a method statement, what to include, and how to keep them live.',
     excerpt:
@@ -173,6 +179,7 @@ const posts: InsightPost[] = [
   {
     slug: 'how-to-investigate-a-workplace-accident',
     title: 'How to Investigate a Workplace Accident: Finding the Root Cause, Not the Blame',
+    seoTitle: 'How to investigate a workplace accident',
     description:
       'A practical guide to accident investigation the HSE way: the four steps of HSG245, immediate vs underlying vs root causes, the 5 Whys, and how to prevent a repeat.',
     excerpt:
@@ -288,6 +295,7 @@ const posts: InsightPost[] = [
   {
     slug: 'first-aid-at-work-requirements',
     title: 'First Aid at Work: How Many First Aiders Do You Actually Need?',
+    seoTitle: 'First aid at work: how many first aiders do you need?',
     description:
       'A plain guide to UK first-aid law: the needs assessment, how many first aiders are required for low and higher-hazard workplaces, and what appointed persons, EFAW and FAW mean.',
     excerpt:
@@ -406,6 +414,7 @@ const posts: InsightPost[] = [
   {
     slug: 'riddor-reporting-explained',
     title: 'RIDDOR Reporting Explained: What UK Employers Must Report — and the Deadlines',
+    seoTitle: 'RIDDOR reporting explained: what to report and when',
     description:
       'A plain-English guide to RIDDOR reporting for UK employers: who must report, what counts as reportable, the exact deadlines, and how to stay audit-ready.',
     excerpt:
@@ -593,6 +602,7 @@ const posts: InsightPost[] = [
   {
     slug: 'near-miss-reporting-safety-culture',
     title: "Near Miss Reporting: The Cheapest Safety Win You're Probably Ignoring",
+    seoTitle: 'Near miss reporting and safety culture',
     description:
       'Why near miss reporting matters, what the safety triangle really tells us, and how to build a reporting culture your field teams will actually use.',
     excerpt:
@@ -719,6 +729,7 @@ const posts: InsightPost[] = [
   {
     slug: 'lone-worker-safety-guide',
     title: 'Lone Worker Safety: Your Legal Duties and How to Protect Field Teams',
+    seoTitle: 'Lone worker safety: legal duties and how to protect field teams',
     description:
       'A practical guide to lone worker safety in the UK: what the law requires, the risks field teams face, and how to keep dispersed and offline workers safe.',
     excerpt:
@@ -855,6 +866,7 @@ const posts: InsightPost[] = [
   {
     slug: 'accident-book-requirements-uk',
     title: "The Accident Book: What UK Law Actually Requires — and What It Doesn't",
+    seoTitle: 'Accident book requirements in the UK',
     description:
       'Who must keep an accident book, what goes in an entry, how long to keep records, the GDPR rules, and whether an electronic accident book is legal in the UK.',
     excerpt:
@@ -966,6 +978,7 @@ const posts: InsightPost[] = [
   {
     slug: 'riddor-changes-2026-consultation',
     title: 'RIDDOR Is Changing: What the 2026 Reform Proposes — and How to Get Ahead of It',
+    seoTitle: 'RIDDOR changes 2026: what the reform proposes',
     description:
       'The HSE has consulted on the biggest RIDDOR shake-up since 2013: reportable diseases up from 6 to 19, clearer definitions, revised dangerous occurrences. What to do now.',
     excerpt:
@@ -1054,6 +1067,7 @@ const posts: InsightPost[] = [
   {
     slug: 'toolbox-talks-that-work',
     title: 'Toolbox Talks That Actually Work: A Practical Guide for UK Sites',
+    seoTitle: 'Toolbox talks that actually work',
     description:
       'How long a toolbox talk should last, how often to run them, what to cover, the records inspectors expect to see, and how to stop site briefings going stale.',
     excerpt:

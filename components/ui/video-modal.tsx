@@ -2,215 +2,83 @@
 
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { cn } from "@/lib/utils"
+import { Play, X } from 'lucide-react'
+import { youtubeEmbedUrl, youtubeThumbnail } from '@/lib/youtube'
 
-const VideoModal = DialogPrimitive.Root
+/**
+ * VideoModal — the opened state of <VideoDialog/>. Loaded on demand the first
+ * time a visitor opens a film, so Radix Dialog is not in the initial bundle
+ * of every page that has a "See how it works" button.
+ *
+ * Nothing from YouTube loads until the visitor presses play inside the
+ * dialog; until then it shows the (always-available) hqdefault thumbnail.
+ * Uses the privacy-enhanced youtube-nocookie.com embed so no advertising
+ * cookies are set by the player.
+ */
+export function VideoModal({
+  youtubeId,
+  title,
+  description,
+  open,
+  onOpenChange,
+}: {
+  youtubeId: string
+  title: string
+  description: string
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
+  const [playing, setPlaying] = React.useState(false)
 
-const VideoModalTrigger = DialogPrimitive.Trigger
-
-const VideoModalPortal = DialogPrimitive.Portal
-
-const VideoModalClose = DialogPrimitive.Close
-
-const VideoModalOverlay = React.forwardRef<
-   React.ElementRef<typeof DialogPrimitive.Overlay>,
-   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-   <DialogPrimitive.Overlay
-      ref={ref}
-      className={cn(
-         'data-[state=closed]:animate-modal-fade-out data-[state=open]:animate-modal-fade-in fixed inset-0 z-50 backdrop-blur-xl',
-         className,
-      )}
-      {...props}
-   />
-))
-VideoModalOverlay.displayName = DialogPrimitive.Overlay.displayName
-
-const VideoModalContent = React.forwardRef<
-   React.ElementRef<typeof DialogPrimitive.Content>,
-   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-   <VideoModalPortal>
-      <VideoModalOverlay />
-      <DialogPrimitive.Content
-         ref={ref}
-         className={cn(
-            'fixed left-1/2 top-1/2 z-50 flex h-screen w-screen -translate-x-1/2 -translate-y-1/2 items-center justify-center p-3',
-            'data-[state=closed]:animate-modal-fade-out data-[state=open]:animate-modal-fade-in data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[50%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[50%] transition-all',
-            className,
-         )}
-         {...props}
-      >
-         <div className="relative mx-auto flex size-full items-center justify-center rounded-2xl border border-gray-950/[.1] bg-gray-50/[.2] dark:border-gray-50/[.1] dark:bg-gray-950/[.5]">
-            {/* Mobile close button */}
-            <CloseIcon isMobile />
-
-            <div className="flex h-4/5 w-full max-w-5xl gap-6">
-               {/* Desktop close button */}
-               <CloseIcon />
-               <div className="flex w-full flex-col max-lg:p-4 max-lg:text-center">
-                  {children}
-               </div>
-            </div>
-         </div>
-      </DialogPrimitive.Content>
-   </VideoModalPortal>
-))
-
-VideoModalContent.displayName = DialogPrimitive.Content.displayName
-
-const VideoModalTitle = React.forwardRef<
-   React.ElementRef<typeof DialogPrimitive.Title>,
-   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-   <DialogPrimitive.Title
-      ref={ref}
-      className={cn(
-         'mb-4 text-4xl font-bold text-gray-950 dark:text-gray-50',
-         className,
-      )}
-      {...props}
-   />
-))
-VideoModalTitle.displayName = DialogPrimitive.Title.displayName
-
-const VideoModalDescription = React.forwardRef<
-   React.ElementRef<typeof DialogPrimitive.Description>,
-   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-   <DialogPrimitive.Description
-      ref={ref}
-      className={cn(
-         'mb-6 text-xl text-gray-950/80 dark:text-gray-50/70',
-         className,
-      )}
-      {...props}
-   />
-))
-VideoModalDescription.displayName = DialogPrimitive.Description.displayName
-
-const VideoPreview = React.forwardRef<
-   HTMLDivElement,
-   React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
-   <div
-      ref={ref}
-      className={cn(
-         'absolute inset-0 z-10 transition-opacity duration-500 group-[.playing]:pointer-events-none group-[.playing]:opacity-0',
-         className,
-      )}
-      {...props}
-   >
-      {children}
-   </div>
-))
-VideoPreview.displayName = 'VideoPreview'
-
-const VideoPlayButton = React.forwardRef<
-   HTMLDivElement,
-   React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
-   <div
-      ref={ref}
-      className={cn(
-         'absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-300 group-[.playing]:pointer-events-none group-[.playing]:opacity-0',
-         className,
-      )}
-      {...props}
-   >
-      {children}
-   </div>
-))
-VideoPlayButton.displayName = 'VideoPlayButton'
-
-const VideoPlayer = React.forwardRef<
-   HTMLDivElement,
-   React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
-   const [isPlaying, setIsPlaying] = React.useState(false)
-
-   return (
-      <div
-         ref={ref}
-         className={cn(
-            'group relative aspect-video max-w-4xl overflow-hidden rounded-xl border border-gray-950/[.1] object-cover dark:border-gray-50/[.1]',
-            isPlaying && 'playing',
-            className,
-         )}
-         onClick={() => setIsPlaying(true)}
-         {...props}
-      >
-         {children}
-      </div>
-   )
-})
-VideoPlayer.displayName = 'VideoPlayer'
-
-const VideoModalVideo = React.forwardRef<
-   HTMLDivElement,
-   React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
-   <div
-      ref={ref}
-      className={cn(
-         'aspect-video max-w-4xl overflow-hidden rounded-xl border border-gray-950/[.1] object-cover shadow-xl dark:border-gray-50/[.1]',
-         className,
-      )}
-      {...props}
-   >
-      {children}
-   </div>
-))
-VideoModalVideo.displayName = 'VideoModalVideo'
-
-const CloseIcon = React.forwardRef<
-   React.ElementRef<typeof VideoModalClose>,
-   React.ComponentPropsWithoutRef<typeof VideoModalClose> & {
-      isMobile?: boolean
-   }
->(({ className, isMobile = false, ...props }, ref) => (
-   <VideoModalClose
-      ref={ref}
-      className={cn(
-         'rounded-full border border-gray-950/[.1] bg-gray-950/[.01] p-2 transition duration-300 hover:bg-gray-950/[.05] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
-         isMobile
-            ? 'absolute right-4 top-4 lg:hidden'
-            : 'hidden self-start lg:block',
-         className,
-      )}
-      {...props}
-   >
-      <svg
-         fill="none"
-         height="12"
-         viewBox="0 0 12 12"
-         width="12"
-         xmlns="http://www.w3.org/2000/svg"
-      >
-         <path
-            d="M1 1L11 11M11 1L1 11"
-            className="stroke-current"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-         >
-         </path>
-      </svg>
-      <span className="sr-only">Close</span>
-   </VideoModalClose>
-))
-
-CloseIcon.displayName = 'CloseIcon'
-
-export {
-   VideoModal,
-   VideoModalTrigger,
-   VideoModalContent,
-   VideoModalTitle,
-   VideoModalDescription,
-   VideoModalVideo,
-   VideoPreview,
-   VideoPlayButton,
-   VideoPlayer,
+  return (
+    <DialogPrimitive.Root
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) setPlaying(false)
+        onOpenChange(next)
+      }}
+    >
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-ink-1/60 data-[state=open]:animate-fade-in" />
+        <DialogPrimitive.Content
+          className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-frame border border-line-1 bg-canvas p-2 shadow-frame data-[state=open]:animate-rise-in"
+          aria-describedby={undefined}
+        >
+          <DialogPrimitive.Title className="sr-only">{title}</DialogPrimitive.Title>
+          <DialogPrimitive.Description className="sr-only">{description}</DialogPrimitive.Description>
+          <div className="relative aspect-video w-full overflow-hidden rounded-[6px] bg-ink-1">
+            {playing ? (
+              <iframe
+                className="absolute inset-0 size-full"
+                src={youtubeEmbedUrl(youtubeId)}
+                title={title}
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setPlaying(true)}
+                aria-label={`Play video: ${title}`}
+                className="group absolute inset-0 flex items-center justify-center"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element -- a remote thumbnail; loaded lazily and only inside an opened dialog */}
+                <img src={youtubeThumbnail(youtubeId)} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
+                <span className="relative grid size-16 place-items-center rounded-pill bg-brand-strong text-canvas shadow-hover transition-transform duration-200 group-hover:scale-105 motion-reduce:group-hover:scale-100">
+                  <Play className="size-7 translate-x-0.5 fill-current" aria-hidden="true" />
+                </span>
+              </button>
+            )}
+          </div>
+          <DialogPrimitive.Close className="absolute -top-3 -right-3 grid size-11 place-items-center rounded-pill border border-line-1 bg-canvas text-ink-3 shadow-hover transition-colors hover:text-ink-1">
+            <X className="size-5" aria-hidden="true" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  )
 }
+
+export default VideoModal

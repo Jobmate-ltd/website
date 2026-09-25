@@ -1,74 +1,40 @@
-import { type ComponentPropsWithoutRef } from "react"
+import { type ComponentPropsWithoutRef } from 'react'
+import { cn } from '@/lib/utils'
 
-import { cn } from "@/lib/utils"
-
-interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
-  /**
-   * Optional CSS class name to apply custom styles
-   */
-  className?: string
-  /**
-   * Whether to reverse the animation direction
-   * @default false
-   */
+/**
+ * Marquee — repeats its children in a row that scrolls continuously.
+ *
+ * Duration comes from `--marquee-duration` (default 40s), the gap from
+ * `--marquee-gap`. Pauses on hover with `pauseOnHover`; reduced motion stops
+ * it entirely via the global rule. Repeated copies are hidden from assistive
+ * tech so a screen reader hears the content once.
+ *
+ * @example
+ *   <Marquee pauseOnHover className="[--marquee-duration:30s]"><ul>…</ul></Marquee>
+ */
+interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
   reverse?: boolean
-  /**
-   * Whether to pause the animation on hover
-   * @default false
-   */
   pauseOnHover?: boolean
-  /**
-   * Content to be displayed in the marquee
-   */
-  children: React.ReactNode
-  /**
-   * Whether to animate vertically instead of horizontally
-   * @default false
-   */
-  vertical?: boolean
-  /**
-   * Number of times to repeat the content
-   * @default 4
-   */
   repeat?: number
 }
 
-export function Marquee({
-  className,
-  reverse = false,
-  pauseOnHover = false,
-  children,
-  vertical = false,
-  repeat = 4,
-  ...props
-}: MarqueeProps) {
+export function Marquee({ className, reverse = false, pauseOnHover = false, children, repeat = 3, ...props }: MarqueeProps) {
   return (
-    <div
-      {...props}
-      className={cn(
-        "group flex gap-(--gap) overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
-        {
-          "flex-row": !vertical,
-          "flex-col": vertical,
-        },
-        className
-      )}
-    >
-      {Array(repeat)
-        .fill(0)
-        .map((_, i) => (
-          <div
-            key={i}
-            className={cn("flex shrink-0 justify-around gap-(--gap)", {
-              "animate-marquee flex-row": !vertical,
-              "animate-marquee-vertical flex-col": vertical,
-              "group-hover:[animation-play-state:paused]": pauseOnHover,
-              "[animation-direction:reverse]": reverse,
-            })}
-          >
-            {children}
-          </div>
-        ))}
+    <div {...props} className={cn('marquee-track flex gap-[var(--marquee-gap,1rem)] overflow-hidden [--marquee-gap:1rem]', className)}>
+      {Array.from({ length: repeat }, (_, i) => (
+        <div
+          key={i}
+          aria-hidden={i > 0 ? 'true' : undefined}
+          className={cn('marquee-row flex shrink-0 items-center justify-around gap-[var(--marquee-gap,1rem)] animate-marquee', {
+            'group-hover:[animation-play-state:paused]': pauseOnHover,
+            '[animation-direction:reverse]': reverse,
+          })}
+        >
+          {children}
+        </div>
+      ))}
     </div>
   )
 }
+
+export default Marquee

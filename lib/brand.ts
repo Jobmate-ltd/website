@@ -5,12 +5,14 @@
 // site must be read from this file. Nothing here may be duplicated as a string
 // literal elsewhere: `npm run seo:audit` fails the build if it is.
 //
-// Rules encoded here (see SEO Operating Instructions §0):
+// Rules encoded here (see SEO Operating Instructions §0 and docs/REBUILD.md):
 //   1. The brand is `jobsafe` — always lowercase. Sentence-start is no exception.
 //   2. UK English. Dates DD/MM/YYYY.
 //   7. Never fabricate customers, testimonials, ratings or statistics.
 //
-// Last verified against live Chargebee/site data: 09/07/2026.
+// Last verified against checkout (the Inputs block of the Phase 1 brief):
+// 25/09/2026. Worker £3.00, Admin £12.00, volume £2.75 for 500–1,000, annual
+// "2 months free", 14-day trial with a card required at sign-up.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** The brand string. Lowercase. Always. */
@@ -19,8 +21,17 @@ export const BRAND = 'jobsafe' as const
 /** Registered legal entity behind the product. */
 export const LEGAL_NAME = 'Jobmate Ltd' as const
 
+/** The one maker line, used verbatim everywhere the maker is named. */
+export const MAKER_LINE = `${BRAND} is made by ${LEGAL_NAME}.` as const
+
+/** Footer credit. */
+export const MADE_IN_LINE = `Made by ${LEGAL_NAME}, Wolverhampton` as const
+
 /** No trailing slash. Append explicitly where a path is needed. */
 export const SITE_URL = 'https://www.jobsafe.cloud' as const
+
+/** The bare apex. Requests here are redirected permanently to SITE_URL. */
+export const APEX_HOST = 'jobsafe.cloud' as const
 
 /**
  * The homepage canonical. Trailing slash, because that is what is served and
@@ -29,6 +40,11 @@ export const SITE_URL = 'https://www.jobsafe.cloud' as const
  * `trailingSlash: false`), which is correct and self-consistent.
  */
 export const CANONICAL_HOME = `${SITE_URL}/` as const
+
+/** Absolute, self-referencing canonical for any path. `'/'` → CANONICAL_HOME. */
+export function canonicalFor(path: string): string {
+  return path === '/' ? CANONICAL_HOME : `${SITE_URL}${path}`
+}
 
 /** Stable schema.org node identifiers, referenced by @id across the graph. */
 export const SCHEMA_ID = {
@@ -48,6 +64,8 @@ export const PHONE_HREF = 'tel:03338000883' as const
 
 export const EMAIL_SALES = 'sales@jobsafe.cloud' as const
 export const EMAIL_SUPPORT = 'support@jobsafe.cloud' as const
+/** Data-protection enquiries. Routed to support until a DPO address exists. */
+export const EMAIL_PRIVACY = EMAIL_SUPPORT
 
 export const ADDRESS = {
   streetAddress: '86 Tettenhall Road',
@@ -57,39 +75,111 @@ export const ADDRESS = {
 } as const
 
 // ── Pricing ──────────────────────────────────────────────────────────────────
-// The entry price is what a new customer actually pays. Meta descriptions,
-// JSON-LD `offers`, and the chat widget must all quote ENTRY_PRICE — never the
-// volume rate — or the snippet promises a price the landing page does not honour.
+// Two licence types, priced per licence per month, ex VAT. Meta descriptions,
+// JSON-LD `offers`, the chat widget, llms.txt and every pricing block read the
+// values below — never a typed-out figure. Every displayed price carries
+// VAT_SUFFIX so the site never quotes a number checkout will not charge.
 
 export const CURRENCY = 'GBP' as const
 export const CURRENCY_SYMBOL = '£' as const
 
+/** Shown beside every price. Prices on this site are always ex VAT. */
+export const VAT_SUFFIX = '+ VAT' as const
+export const VAT_NOTE = 'All prices exclude VAT, which is charged at the prevailing UK rate.' as const
+
 export interface PricingTier {
-  /** Per licence, per month, ex VAT. `null` = bespoke / contact sales. */
+  /** Per licence, per month, ex VAT. `null` = bespoke / book a demo. */
   readonly price: number | null
   readonly threshold: string
   readonly popular?: boolean
 }
 
+export type LicenceId = 'worker' | 'admin'
+
+export interface LicenceType {
+  readonly id: LicenceId
+  /** As checkout labels it. */
+  readonly name: string
+  /** Per licence, per month, ex VAT. */
+  readonly price: number
+  /** Who holds this licence and what it lets them do. */
+  readonly summary: string
+  readonly includes: readonly string[]
+  /** Volume rates, if checkout applies any. The first tier is the entry price. */
+  readonly volume?: readonly PricingTier[]
+}
+
+/** Worker volume tiers, as checkout applies them. */
 export const PRICING_TIERS: readonly PricingTier[] = [
   { price: 3.0, threshold: 'Up to 500 licences' },
   { price: 2.75, threshold: '500–1,000 licences', popular: true },
   { price: null, threshold: '1,000+ licences' },
 ] as const
 
-/** The price a new customer pays. Quote this, and only this, in metadata. */
-export const ENTRY_PRICE = 3.0 as const
+export const LICENCES: Readonly<Record<LicenceId, LicenceType>> = {
+  worker: {
+    id: 'worker',
+    name: 'Worker',
+    price: 3.0,
+    summary: 'For the people doing the work. Report incidents, near misses and hazards from the app, online or off.',
+    includes: [
+      'Unlimited incident and near-miss reports',
+      'Works offline, syncs when back in signal',
+      'Photo, video and voice attachments',
+      'Automatic GPS and timestamp on every report',
+    ],
+    volume: PRICING_TIERS,
+  },
+  admin: {
+    id: 'admin',
+    name: 'Admin',
+    price: 12.0,
+    summary: 'For supervisors and safety leads. Review, assign and close reports from the dashboard.',
+    includes: [
+      'Real-time alerts when a report lands',
+      'Dashboard analytics and site breakdowns',
+      'Full audit trail on every report',
+      'Export for insurers, clients and inspectors',
+    ],
+  },
+} as const
 
-/** Annual billing discount, applied to the per-licence rate. */
-export const ANNUAL_DISCOUNT = 0.1 as const
+/** The price a new customer pays for a Worker licence. Quote this in metadata. */
+export const ENTRY_PRICE = LICENCES.worker.price
+
+/** The Admin licence rate. Always quoted alongside the Worker rate. */
+export const ADMIN_PRICE = LICENCES.admin.price
+
+/**
+ * Annual billing terms, exactly as checkout words them. Twelve months for the
+ * price of ten: a yearly licence costs ANNUAL_MONTHS_CHARGED × the monthly rate.
+ */
+export const ANNUAL_TERMS = '2 months free' as const
+export const ANNUAL_MONTHS_CHARGED = 10 as const
 
 /** Formats a price the way the site displays it: `£3.00`. */
 export function formatPrice(value: number): string {
   return `${CURRENCY_SYMBOL}${value.toFixed(2)}`
 }
 
+/** `£3.00 + VAT` — a price with the VAT suffix the site never omits. */
+export function formatPriceExVat(value: number): string {
+  return `${formatPrice(value)} ${VAT_SUFFIX}`
+}
+
+/** Per licence, per year, on annual billing: monthly × ANNUAL_MONTHS_CHARGED. */
+export function annualPrice(monthly: number): number {
+  return Math.round(monthly * ANNUAL_MONTHS_CHARGED * 100) / 100
+}
+
 /** `£3.00` — the canonical entry-price string. */
 export const ENTRY_PRICE_LABEL = formatPrice(ENTRY_PRICE)
+
+/** `£3.00 + VAT` — the entry price as it must appear in copy. */
+export const ENTRY_PRICE_EX_VAT_LABEL = formatPriceExVat(ENTRY_PRICE)
+
+/** `£12.00 + VAT` — the Admin rate as it must appear in copy. */
+export const ADMIN_PRICE_EX_VAT_LABEL = formatPriceExVat(ADMIN_PRICE)
 
 /**
  * `£2.75` — the 500–1,000 licence rate. Derived, never typed. Only ever quoted
@@ -98,21 +188,33 @@ export const ENTRY_PRICE_LABEL = formatPrice(ENTRY_PRICE)
  */
 export const VOLUME_PRICE_LABEL = formatPrice(PRICING_TIERS[1].price as number)
 
+/** One line that states the whole price list, for copy that has room for it. */
+export const PRICE_SUMMARY_LINE =
+  `Worker licences from ${ENTRY_PRICE_EX_VAT_LABEL} per licence per month, Admin licences ${ADMIN_PRICE_EX_VAT_LABEL}. ` +
+  `Annual billing: ${ANNUAL_TERMS}.`
+
 // ── Offers ───────────────────────────────────────────────────────────────────
 // There must be exactly ONE offer live at any moment. Two offers ~400px apart
 // is not a promotion, it is a contradiction, and it reads as bait.
 
 export const TRIAL = {
-  /** 14 days, confirmed 14/07/2026 (previously 3). */
+  /** 14 days, confirmed against checkout 25/09/2026. */
   days: 14,
   /**
-   * Verify against the Chargebee signup configuration before changing.
-   * As of 09/07/2026 the site claims no card is required. Chargebee appears to
-   * require one. THIS IS UNRESOLVED — see docs/SEO-P0.md, item P0-2.
+   * Checkout takes a payment card at sign-up (confirmed 25/09/2026). The site
+   * therefore never says "no card required". Flip this only when checkout
+   * changes, and `trialSentence()` follows automatically.
    */
-  cardRequired: false,
-  label: '14-day free trial. No credit card required.',
+  cardRequired: true,
+  label: '14-day free trial',
 } as const
+
+/** The one sentence the site uses to describe the trial. */
+export function trialSentence(): string {
+  return TRIAL.cardRequired
+    ? `${TRIAL.label}. A payment card is taken at sign-up.`
+    : `${TRIAL.label}. No card required.`
+}
 
 /*
  * The launch promotion — "the first 200 sign-ups get 6 months free" — has been
@@ -135,11 +237,9 @@ export const TRIAL = {
  *    first — never both at once. The `single-offer` rule in scripts/seo-audit.mjs
  *    still guards this: it fires if a re-added LAUNCH_OFFER const in this file
  *    is switched on while the pricing section still advertises the trial.
- *    (Spelled out rather than shown as code: that rule greps this file, and a
- *    literal example would match it and fail the build from inside a comment.)
  */
 
-// ── App & entity links ───────────────────────────────────────────────────────
+// ── App & entity links (the current app; unchanged in Phase 1) ───────────────
 
 export const LOGIN_URL = 'https://app.jobsafe.cloud/login' as const
 export const SIGNUP_TRIAL_URL = 'https://app.jobsafe.cloud/signup-trial' as const
@@ -151,9 +251,7 @@ export const PARENT_ORG_URL = 'https://jobmate.cloud' as const
  * email and the reminders; the site's only job is to get people to it.
  *
  * Every "Book a demo" control on the site resolves to this constant, via
- * <BookDemoButton>. There is exactly ONE demo destination: the CTA used to
- * point at `tel:` in three places, which meant "book a demo" asked the visitor
- * to phone during office hours and hope somebody picked up. It does not any more.
+ * <BookDemoButton>. There is exactly ONE demo destination.
  *
  * The trailing path segment is the Calendly event's duration. If that event is
  * re-timed or renamed, change this URL and DEMO_DURATION_LABEL together, or the
@@ -163,6 +261,111 @@ export const DEMO_BOOKING_URL = 'https://calendly.com/jobmate-sales/30min' as co
 
 /** Reads out of the URL above. Quoted in CTA copy so the length is no surprise. */
 export const DEMO_DURATION_LABEL = '30 minutes' as const
+
+/** Public assets the site links to. */
+export const BROCHURE_PATH = '/jobsafe-brochure.pdf' as const
+
+// ── Phase 2 groundwork ───────────────────────────────────────────────────────
+// The platform is not in production yet. Everything below is typed and empty by
+// default; a component that reads an unset value must render the safe fallback
+// ("Book a demo" → DEMO_BOOKING_URL) and never an invented number or URL.
+// Preview deployments set NEXT_PUBLIC_PLATFORM_LAUNCH=true.
+
+/** `true` only when NEXT_PUBLIC_PLATFORM_LAUNCH is exactly "true". */
+export const PLATFORM_LAUNCH = process.env.NEXT_PUBLIC_PLATFORM_LAUNCH === 'true'
+
+/**
+ * Phase 2 routes call this and return `notFound()` while it is false; the
+ * sitemap and nav leave them out. Wrapped in a function so tests can stub the
+ * environment and so call sites read as a question, not a constant.
+ */
+export function isPlatformLaunched(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.NEXT_PUBLIC_PLATFORM_LAUNCH === 'true'
+}
+
+/** Reads an optional absolute URL from the environment. Empty → null. */
+export function optionalUrl(name: string, env: NodeJS.ProcessEnv = process.env): string | null {
+  const value = env[name]?.trim()
+  if (!value) return null
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.toString() : null
+  } catch {
+    return null
+  }
+}
+
+/** Where the new platform lives. Unset until Phase 2 goes live. */
+export const PLATFORM_APP_URL = optionalUrl('NEXT_PUBLIC_PLATFORM_APP_URL')
+export const PLATFORM_SIGNUP_URL = optionalUrl('NEXT_PUBLIC_PLATFORM_SIGNUP_URL')
+export const PLATFORM_LOGIN_URL = optionalUrl('NEXT_PUBLIC_PLATFORM_LOGIN_URL')
+/** The open live demo of the platform. Unset until it is public. */
+export const LIVE_DEMO_URL = optionalUrl('NEXT_PUBLIC_LIVE_DEMO_URL')
+/** Phase 2 demo booking. Unset → every demo control falls back to DEMO_BOOKING_URL. */
+export const BOOK_DEMO_URL = optionalUrl('NEXT_PUBLIC_BOOK_DEMO_URL')
+
+/** The safe fallback for any unset Phase 2 call to action. */
+export const FALLBACK_CTA = { label: 'Book a demo', href: DEMO_BOOKING_URL } as const
+
+export interface Cta {
+  readonly label: string
+  readonly href: string
+}
+
+/** Resolves an optional Phase 2 URL to a CTA, or to the fallback if unset. */
+export function ctaFor(url: string | null, label: string): Cta {
+  return url ? { label, href: url } : FALLBACK_CTA
+}
+
+export type PriceBookTierId = 'essentials' | 'professional' | 'enterprise'
+
+export interface PriceBookTier {
+  readonly id: PriceBookTierId
+  readonly name: string
+  /** Per user, per month, ex VAT. `null` = not yet set, or bespoke. */
+  readonly pricePerUserMonthExVat: number | null
+  /** e.g. "2 months free". `null` = not yet set. */
+  readonly annualTerms: string | null
+  /** Module names, as the platform labels them. Empty until Phase 2. */
+  readonly includedModules: readonly string[]
+}
+
+/**
+ * The Phase 2 price book. Every tier is empty by default; `priceBookLabel()`
+ * renders "Book a demo" for an unset price and never a number nobody agreed.
+ */
+export const PRICE_BOOK: Readonly<Record<PriceBookTierId, PriceBookTier>> = {
+  essentials: {
+    id: 'essentials',
+    name: 'Essentials',
+    pricePerUserMonthExVat: null,
+    annualTerms: null,
+    includedModules: [],
+  },
+  professional: {
+    id: 'professional',
+    name: 'Professional',
+    pricePerUserMonthExVat: null,
+    annualTerms: null,
+    includedModules: [],
+  },
+  enterprise: {
+    id: 'enterprise',
+    name: 'Enterprise',
+    pricePerUserMonthExVat: null,
+    annualTerms: null,
+    includedModules: [],
+  },
+} as const
+
+/** `£x.xx + VAT per user per month`, or the fallback label when unset. */
+export function priceBookLabel(tier: PriceBookTier): string {
+  return tier.pricePerUserMonthExVat === null
+    ? FALLBACK_CTA.label
+    : `${formatPriceExVat(tier.pricePerUserMonthExVat)} per user per month`
+}
+
+// ── Entity links ─────────────────────────────────────────────────────────────
 
 /**
  * `sameAs` — the entity disambiguation payload. jobsafe competes for its own
@@ -180,6 +383,12 @@ export const SAME_AS: readonly string[] = [
   'https://apps.apple.com/gb/app/jobsafe/id6767254776',
 ] as const
 
+export const SOCIAL = {
+  linkedin: SAME_AS[0],
+  x: SAME_AS[1],
+  instagram: SAME_AS[2],
+} as const
+
 /**
  * The X account that actually exists. The site previously declared
  * `twitter:site` as `@jobsafecloud`, which does not resolve; the verified
@@ -188,8 +397,10 @@ export const SAME_AS: readonly string[] = [
 export const TWITTER_HANDLE = '@JobmateCloud' as const
 
 // ── Open Graph ───────────────────────────────────────────────────────────────
-// The spec is 1200×630. The asset shipped at 1203×633, which some crawlers
-// letterbox. `npm run seo:audit` reads the PNG header and fails if it drifts.
+// Every route generates its own 1200×630 image with next/og (see lib/og.tsx).
+// The static file below is the light-theme fallback used by JSON-LD nodes that
+// want a plain image URL. `npm run seo:audit` reads the PNG header and fails
+// if it drifts from 1200×630.
 
 export const OG_IMAGE = {
   path: '/images/og-image.png',
@@ -198,14 +409,33 @@ export const OG_IMAGE = {
   alt: 'jobsafe — workplace incident reporting software',
 } as const
 
-export const LOGO_PATH = '/images/jobsafe_logo-removebg-preview.png' as const
+/**
+ * The wordmark on light: ink "job", crimson "safe". Exported at 1× (300×97)
+ * and 2× (600×194) in PNG and WebP. A vector SVG is still needed from design.
+ */
+export const WORDMARK = {
+  src: '/images/brand/jobsafe-wordmark.png',
+  src2x: '/images/brand/jobsafe-wordmark@2x.png',
+  webp: '/images/brand/jobsafe-wordmark.webp',
+  webp2x: '/images/brand/jobsafe-wordmark@2x.webp',
+  width: 300,
+  height: 97,
+  alt: BRAND,
+} as const
+
+/** Used in schema.org `logo`. The 2× wordmark is the crispest asset we have. */
+export const LOGO_PATH = WORDMARK.src2x
+
+// ── Analytics ────────────────────────────────────────────────────────────────
+// Loaded only after analytics consent (components/site/Analytics.tsx).
+
+export const GA4_MEASUREMENT_ID = 'G-72H4Q5HDVL' as const
 
 // ── Copy guards ──────────────────────────────────────────────────────────────
 //
-// The lists of forbidden brand casings, and of features jobsafe does not have,
-// deliberately live in `scripts/seo-audit.mjs` rather than here. They are lint
-// rules, not application constants: nothing at runtime reads them, and spelling
-// the forbidden terms out inside a file the site imports would be a small,
-// silly way to violate the very rules they encode. The audit found this exact
-// mistake in an earlier draft of this file, which is rather the point of it.
-
+// The lists of forbidden brand casings, of features jobsafe does not have, of
+// unsourced numbers and of retired maker lines deliberately live in
+// `scripts/seo-audit.mjs` rather than here. They are lint rules, not
+// application constants: nothing at runtime reads them, and spelling the
+// forbidden terms out inside a file the site imports would be a small, silly
+// way to violate the very rules they encode.

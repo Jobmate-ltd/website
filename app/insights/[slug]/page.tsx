@@ -1,19 +1,22 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { PiArrowLeft as ArrowLeft, PiArrowRight as ArrowRight, PiClock as Clock, PiCaretRight as ChevronRight } from 'react-icons/pi'
-import Navbar from '@/components/sections/Navbar'
-import Footer from '@/components/sections/Footer'
-import PostBody from '@/components/insights/PostBody'
-import { SIGNUP_TRIAL_URL } from '@/lib/links'
-import BookDemoButton from '@/components/ui/book-demo-button'
-import {
-  getAllPosts,
-  getPostBySlug,
-  getRelatedPosts,
-  formatDate,
-  SITE_URL,
-} from '@/lib/insights'
+import { ArrowLeft, ArrowRight, Clock } from 'lucide-react'
+import { pageMetadata } from '@/lib/seo'
+import { formatDate, getAllPosts, getPostBySlug, getRelatedPosts } from '@/lib/insights'
+import { OG_IMAGE, SIGNUP_TRIAL_URL, SITE_URL, canonicalFor } from '@/lib/brand'
+import { blogPostingSchema, breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
+import { Header } from '@/components/site/header'
+import { Footer } from '@/components/site/footer'
+import { Breadcrumbs } from '@/components/site/breadcrumbs'
+import { PostBody } from '@/components/insights/post-body'
+import { Container } from '@/components/ui/container'
+import { Section } from '@/components/ui/section'
+import { Eyebrow } from '@/components/ui/eyebrow'
+import { HeroBackdrop } from '@/components/ui/hero-backdrop'
+import { Card } from '@/components/ui/card'
+import { Chip } from '@/components/ui/chip'
+import { CtaBand } from '@/components/ui/cta-band'
 
 // Render only the slugs we know about; 404 anything else.
 export const dynamicParams = false
@@ -22,254 +25,150 @@ export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) return {}
-
-  const url = `${SITE_URL}/insights/${post.slug}`
-  return {
-    title: post.title,
+  return pageMetadata({
+    path: `/insights/${post.slug}`,
+    title: post.seoTitle ?? post.title,
     description: post.description,
-    alternates: { canonical: url },
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      url,
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
-    },
-  }
+    ogTitle: post.title,
+    type: 'article',
+    publishedTime: post.date,
+    modifiedTime: post.updated ?? post.date,
+    authors: [post.author],
+  })
 }
 
-export default async function InsightPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+const linkClass = 'font-semibold text-brand-strong underline decoration-brand-tint-18 underline-offset-4 hover:decoration-brand-strong'
+
+export default async function InsightPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) notFound()
 
   const related = getRelatedPosts(slug)
-  const url = `${SITE_URL}/insights/${post.slug}`
+  const path = `/insights/${post.slug}`
+  const url = canonicalFor(path)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BlogPosting',
+  const pageGraph = jsonLd(
+    graph(
+      blogPostingSchema({
+        url,
         headline: post.title,
         description: post.description,
         datePublished: post.date,
-        dateModified: post.date,
-        articleSection: post.category,
-        // seo-audit-ignore: meta-keywords — this is schema.org BlogPosting
-        // `keywords` in JSON-LD, not a <meta name="keywords"> tag. The
-        // Metadata-export keywords (which Next does render as that tag) have
-        // been removed from generateMetadata above.
-        keywords: post.keywords.join(', '),
-        url,
-        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-        image: `${SITE_URL}/images/og-image.png`,
-        author: { '@type': 'Organization', name: 'jobsafe', url: SITE_URL },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Jobmate Ltd',
-          url: 'https://jobmate.cloud',
-          logo: {
-            '@type': 'ImageObject',
-            url: `${SITE_URL}/images/jobsafe_logo-removebg-preview.png`,
-          },
-        },
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-          { '@type': 'ListItem', position: 2, name: 'Insights', item: `${SITE_URL}/insights` },
-          { '@type': 'ListItem', position: 3, name: post.title, item: url },
-        ],
-      },
-    ],
-  }
+        dateModified: post.updated ?? post.date,
+        section: post.category,
+        tags: post.keywords,
+        author: post.author,
+        image: `${SITE_URL}${OG_IMAGE.path}`,
+      }),
+      breadcrumbSchema([
+        { name: 'Home', item: `${SITE_URL}/` },
+        { name: 'Insights', item: `${SITE_URL}/insights` },
+        { name: post.title, item: url },
+      ]),
+    ),
+  )
 
   return (
-    <main className="bg-surface-0 min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Navbar />
+    <>
+      <Header />
+      <main className="flex-1">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
+        <article>
+          <header className="relative overflow-hidden border-b border-line-1 bg-canvas">
+            <HeroBackdrop radial="right" beam={false} />
+            <Container size="prose" className="relative pb-10 pt-10 md:pb-12 md:pt-14">
+              <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Insights', href: '/insights' }, { name: post.title, href: path }]} className="mb-8" />
+              <Eyebrow className="mb-4">{post.category}</Eyebrow>
+              <h1 className="type-h2 text-ink-1 md:text-[48px]">{post.title}</h1>
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 type-small text-ink-5">
+                <span>{post.author}</span>
+                <span aria-hidden="true" className="text-grey-400">
+                  •
+                </span>
+                <time dateTime={post.date} className="type-mono text-xs">
+                  {formatDate(post.date)}
+                </time>
+                <span aria-hidden="true" className="text-grey-400">
+                  •
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="size-3.5" aria-hidden="true" />
+                  {post.readingTime} min read
+                </span>
+              </div>
+            </Container>
+          </header>
 
-      <article>
-        {/* Header */}
-        <header className="relative overflow-hidden">
-          <div
-            className="absolute top-0 right-0 pointer-events-none"
-            style={{
-              width: '600px',
-              height: '600px',
-              background:
-                'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.14) 0%, transparent 70%)',
-            }}
-          />
-          <div className="relative z-10 max-w-3xl mx-auto px-6 pt-16 pb-10 md:pt-20">
-            {/* Breadcrumb */}
-            <nav
-              aria-label="Breadcrumb"
-              className="flex items-center gap-2 text-xs text-white/40 mb-8"
-            >
-              <Link href="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-              <ChevronRight className="size-3" />
-              <Link href="/insights" className="hover:text-white transition-colors">
-                Insights
-              </Link>
-            </nav>
+          <Container size="prose" className="pt-10">
+            <PostBody blocks={post.content} />
+          </Container>
 
-            <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
-              {post.category}
-            </p>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight text-balance text-white leading-tight tracking-tight mb-6">
-              {post.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/50">
-              <span>{post.author}</span>
-              <span className="text-white/20">•</span>
-              <time dateTime={post.date}>{formatDate(post.date)}</time>
-              <span className="text-white/20">•</span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="size-3.5" strokeWidth={1.5} />
-                {post.readingTime} min read
-              </span>
-            </div>
-          </div>
-        </header>
+          {post.sources.length > 0 ? (
+            <Container size="prose" className="pb-4 pt-6">
+              <Card className="p-6">
+                <p className="type-eyebrow mb-4 text-ink-4">Sources and further reading</p>
+                <ul className="flex flex-col gap-2.5">
+                  {post.sources.map((source) => (
+                    <li key={source.href}>
+                      <a href={source.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2 text-sm text-ink-3 transition-colors hover:text-ink-1">
+                        <ArrowRight className="mt-0.5 size-3.5 shrink-0 text-brand" aria-hidden="true" />
+                        <span>
+                          {source.label}
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </Container>
+          ) : null}
+        </article>
 
-        {/* Body */}
-        <div className="max-w-3xl mx-auto px-6 pb-4">
-          <hr className="border-white/10 mb-10" />
-          <PostBody blocks={post.content} />
-        </div>
-
-        {/* Sources */}
-        {post.sources.length > 0 && (
-          <div className="max-w-3xl mx-auto px-6 pb-4">
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-bold tracking-widest text-white/60 uppercase mb-4">
-                Sources &amp; further reading
-              </p>
-              <ul className="space-y-2.5">
-                {post.sources.map((source) => (
-                  <li key={source.href}>
-                    <a
-                      href={source.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-white/60 hover:text-brand transition-colors inline-flex items-start gap-2"
-                    >
-                      <ArrowRight className="size-3.5 mt-0.5 shrink-0 text-brand" strokeWidth={2} />
-                      {source.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-      </article>
-
-      {/* CTA */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center">
-          <div
-            className="absolute -bottom-20 -left-20 pointer-events-none"
-            style={{
-              width: '320px',
-              height: '320px',
-              background:
-                'radial-gradient(circle, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
-            }}
-          />
-          <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-3">
-              Record. Resolve. Prevent.
-            </h2>
-            <p className="text-white/50 max-w-md mx-auto mb-7 text-sm leading-relaxed">
-              See how jobsafe captures incidents in seconds — online or off — and
-              keeps every report audit-ready across your whole field team.
-            </p>
-            {/* End of a long read is the highest-intent moment on this page, so
-                the demo takes the fill and sign-up takes the border. */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <BookDemoButton placement="insights-article-cta" size="md" />
-              <a
-                href={SIGNUP_TRIAL_URL}
-                className="rounded-md border border-white/25 px-7 py-3.5 text-sm font-bold text-white transition duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.97] motion-reduce:hover:translate-y-0"
-              >
-                Sign up now
-              </a>
-            </div>
-            <Link
-              href="/#how-it-works"
-              className="mt-5 inline-block text-sm font-bold text-white/50 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-brand"
-            >
+        <CtaBand
+          placement="insights-article-cta"
+          title="Record. Resolve. Prevent."
+          copy="See how jobsafe captures incidents on the spot, online or off, and keeps every report audit-ready across your whole field team."
+          secondary={{ label: 'Sign up now', href: SIGNUP_TRIAL_URL }}
+          note={
+            <Link href="/#how-it-works" className={linkClass}>
               See how it works
             </Link>
-          </div>
-        </div>
-      </section>
+          }
+        />
 
-      {/* Related posts */}
-      {related.length > 0 && (
-        <section className="max-w-3xl mx-auto px-6 pb-24">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-6">
-            Keep reading
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {related.map((rel) => (
-              <Link
-                key={rel.slug}
-                href={`/insights/${rel.slug}`}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-brand/50 hover:bg-white/[0.05]"
-              >
-                <span className="text-[11px] font-bold tracking-widest text-brand uppercase mb-3">
-                  {rel.category}
-                </span>
-                <h3 className="text-base font-bold text-white leading-snug mb-4 grow">
-                  {rel.title}
-                </h3>
-                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-brand">
-                  Read article
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <Link
-            href="/insights"
-            className="mt-10 inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="size-4" strokeWidth={1.5} />
-            All insights
-          </Link>
-        </section>
-      )}
-
+        {related.length > 0 ? (
+          <Section>
+            <Eyebrow className="mb-6">Keep reading</Eyebrow>
+            <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {related.map((rel) => (
+                <li key={rel.slug}>
+                  <Link href={`/insights/${rel.slug}`} className="group block h-full rounded-control">
+                    <Card interactive className="flex h-full flex-col gap-3 p-6">
+                      <Chip status="brand">{rel.category}</Chip>
+                      <h3 className="type-h3 flex-1 text-ink-1">{rel.title}</h3>
+                      <span className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-strong">
+                        Read article
+                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0" aria-hidden="true" />
+                      </span>
+                    </Card>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link href="/insights" className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-ink-4 transition-colors hover:text-ink-1">
+              <ArrowLeft className="size-4" aria-hidden="true" />
+              All insights
+            </Link>
+          </Section>
+        ) : null}
+      </main>
       <Footer />
-    </main>
+    </>
   )
 }

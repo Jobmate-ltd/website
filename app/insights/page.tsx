@@ -1,144 +1,101 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { PiArrowRight as ArrowRight, PiClock as Clock } from 'react-icons/pi'
-import Navbar from '@/components/sections/Navbar'
-import Footer from '@/components/sections/Footer'
-import { getAllPosts, formatDate, SITE_URL } from '@/lib/insights'
+import { ArrowRight, Clock } from 'lucide-react'
+import { pageMetadata } from '@/lib/seo'
+import { formatDate, getAllPosts } from '@/lib/insights'
+import { BRAND, OG_IMAGE, SITE_URL, canonicalFor } from '@/lib/brand'
+import { blogSchema, breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
+import { Header } from '@/components/site/header'
+import { Footer } from '@/components/site/footer'
+import { Breadcrumbs } from '@/components/site/breadcrumbs'
+import { PageHero } from '@/components/site/page-hero'
+import { Section } from '@/components/ui/section'
+import { Card } from '@/components/ui/card'
+import { Chip } from '@/components/ui/chip'
+import { Reveal } from '@/components/ui/reveal'
 
-export const metadata: Metadata = {
-  title: 'Insights',
+const PATH = '/insights'
+const URL = canonicalFor(PATH)
+
+export const metadata: Metadata = pageMetadata({
+  path: PATH,
+  title: 'Insights: incident reporting, RIDDOR and field safety',
   description:
-    'Practical guidance on workplace incident reporting, HSSE compliance, RIDDOR, near misses and lone worker safety — written for field service, construction and industrial teams.',
-  alternates: {
-    canonical: `${SITE_URL}/insights`,
-  },
-  openGraph: {
-    title: 'Insights | jobsafe',
-    description:
-      'Practical guidance on incident reporting, compliance and protecting the people who do the work.',
-    url: `${SITE_URL}/insights`,
-    type: 'website',
-  },
-}
+    'Practical guidance on workplace incident reporting, HSSE compliance, RIDDOR, near misses and lone worker safety, written for field service, construction and industrial teams.',
+  ogTitle: 'Safety insights from the field | jobsafe',
+})
 
 export default function InsightsIndex() {
   const posts = getAllPosts()
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Blog',
-        '@id': `${SITE_URL}/insights`,
-        name: 'jobsafe Insights',
-        description:
-          'Practical guidance on workplace incident reporting, HSSE compliance and field safety.',
-        url: `${SITE_URL}/insights`,
-        publisher: {
-          '@type': 'Organization',
-          name: 'Jobmate Ltd',
-          url: 'https://jobmate.cloud',
-        },
-        blogPost: posts.map((post) => ({
-          '@type': 'BlogPosting',
+  const pageGraph = jsonLd(
+    graph(
+      blogSchema(
+        URL,
+        posts.map((post) => ({
+          url: `${SITE_URL}/insights/${post.slug}`,
           headline: post.title,
           description: post.description,
           datePublished: post.date,
-          url: `${SITE_URL}/insights/${post.slug}`,
+          section: post.category,
+          tags: post.keywords,
+          author: post.author,
+          image: `${SITE_URL}${OG_IMAGE.path}`,
         })),
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-          { '@type': 'ListItem', position: 2, name: 'Insights', item: `${SITE_URL}/insights` },
-        ],
-      },
-    ],
-  }
+      ),
+      breadcrumbSchema([
+        { name: 'Home', item: `${SITE_URL}/` },
+        { name: 'Insights', item: URL },
+      ]),
+    ),
+  )
 
   return (
-    <main className="bg-surface-0 min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Navbar />
-
-      {/* Header */}
-      <section className="relative overflow-hidden">
-        {/* Red glow — top right, matching the hero */}
-        <div
-          className="absolute top-0 right-0 pointer-events-none"
-          style={{
-            width: '600px',
-            height: '600px',
-            background:
-              'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
-          }}
+    <>
+      <Header />
+      <main className="flex-1">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
+        <PageHero
+          breadcrumbs={<Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Insights', href: PATH }]} />}
+          eyebrow="Insights"
+          title={
+            <>
+              Safety insights <span className="text-brand">from the field</span>
+            </>
+          }
+          lead={`Practical, no-nonsense guidance on incident reporting, HSSE compliance and protecting the people who do the work. Written by the ${BRAND} team for the teams who cannot afford to get it wrong.`}
         />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
-            Insights
-          </p>
-          <h1
-            className="font-black uppercase leading-none tracking-tight text-white mb-6"
-            style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)' }}
-          >
-            Safety insights<br />
-            <span className="text-brand">from the field</span>
-          </h1>
-          <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
-            Practical, no-nonsense guidance on incident reporting, HSSE compliance
-            and protecting the people who do the work — written for the teams who
-            can&apos;t afford to get it wrong.
-          </p>
-        </div>
-      </section>
 
-      {/* Posts grid */}
-      <section className="max-w-5xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/insights/${post.slug}`}
-              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-brand/50 hover:bg-white/[0.05]"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <span className="text-[11px] font-bold tracking-widest text-brand uppercase">
-                  {post.category}
-                </span>
-              </div>
-
-              <h2 className="text-xl font-bold text-white leading-snug mb-3 group-hover:text-white">
-                {post.title}
-              </h2>
-
-              <p className="text-white/50 text-sm leading-relaxed mb-6 grow">
-                {post.excerpt}
-              </p>
-
-              <div className="flex items-center justify-between border-t border-white/10 pt-4">
-                <span className="text-xs text-white/40">
-                  {formatDate(post.date)}
-                </span>
-                <span className="flex items-center gap-1.5 text-xs text-white/40">
-                  <Clock className="size-3.5" strokeWidth={1.5} />
-                  {post.readingTime} min read
-                </span>
-              </div>
-
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand">
-                Read article
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
+        <Section>
+          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post, i) => (
+              <Reveal as="li" key={post.slug} index={i % 3}>
+                <Link href={`/insights/${post.slug}`} className="group block h-full rounded-control">
+                  <Card interactive className="flex h-full flex-col gap-4 p-6">
+                    <Chip status="brand">{post.category}</Chip>
+                    <h2 className="type-h3 text-ink-1">{post.title}</h2>
+                    <p className="type-small flex-1 text-ink-5">{post.excerpt}</p>
+                    <div className="flex items-center justify-between border-t border-line-1 pt-4 type-small text-ink-5">
+                      <time dateTime={post.date} className="type-mono text-xs">
+                        {formatDate(post.date)}
+                      </time>
+                      <span className="flex items-center gap-1.5 text-xs">
+                        <Clock className="size-3.5" aria-hidden="true" />
+                        {post.readingTime} min read
+                      </span>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-strong">
+                      Read article
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0" aria-hidden="true" />
+                    </span>
+                  </Card>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        </Section>
+      </main>
       <Footer />
-    </main>
+    </>
   )
 }

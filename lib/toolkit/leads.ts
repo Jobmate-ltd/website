@@ -1,7 +1,8 @@
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import type { Lead } from "./schema";
-import { isWorkEmail } from "./schema";
+import type { Lead } from "./schema.ts";
+import { isWorkEmail } from "./schema.ts";
+import { ENTRY_PRICE_EX_VAT_LABEL, SITE_URL } from "../brand.ts";
 
 export interface StoredLead extends Omit<Lead, "companyWebsite"> {
   id: string;
@@ -104,7 +105,7 @@ async function notifySales(lead: StoredLead): Promise<DeliveryReport["notificati
     text: rows.map(([k, v]) => `${k}: ${v}`).join("\n"),
     html: `<h2 style="font:700 18px system-ui;margin:0 0 12px">New toolkit download</h2>
 <table style="font:14px system-ui;border-collapse:collapse">
-${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#6E6E6E">${k}</td><td style="padding:4px 0"><strong>${escapeHtml(v)}</strong></td></tr>`).join("")}
+${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;opacity:.7">${k}</td><td style="padding:4px 0"><strong>${escapeHtml(v)}</strong></td></tr>`).join("")}
 </table>`,
   });
   return sent ? "ok" : "failed";
@@ -118,7 +119,7 @@ ${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#6E6E6E">${k
 async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welcomeEmail"]> {
   if (process.env.TOOLKIT_SEND_WELCOME_EMAIL !== "true") return "skipped";
   const from = process.env.TOOLKIT_FROM_EMAIL;
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jobsafe.cloud";
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL;
   if (!emailConfigured() || !from) return "skipped";
 
   const firstName = lead.fullName.split(" ")[0];
@@ -133,8 +134,8 @@ async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welco
       `Two things worth doing this week:\n` +
       `1. Print the report template and put copies in the cabin.\n` +
       `2. Pin the RIDDOR flowchart next to the accident book.\n\n` +
-      `When you are ready to stop doing this on paper, jobsafe records the same report in about 30 seconds ` +
-      `on a phone, from £3 per licence a month: ${site}\n\n` +
+      `When you are ready to stop doing this on paper, jobsafe records the same report on a phone, ` +
+      `works offline, and costs from ${ENTRY_PRICE_EX_VAT_LABEL} per licence a month: ${site}\n\n` +
       `Record. Resolve. Prevent.\nThe jobsafe team`,
   });
   return sent ? "ok" : "failed";

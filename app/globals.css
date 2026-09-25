@@ -1,170 +1,321 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+/* ─────────────────────────────────────────────────────────────────────────────
+   jobsafe — design tokens. SINGLE SOURCE OF TRUTH for colour.
 
-/* ── Design tokens ──────────────────────────────────────────────────────────
-   Single source of truth for the brand accent and dark surface scale. These
-   emit as CSS custom properties on :root and back the `brand` / `surface-*`
-   utilities (bg-brand, text-brand, border-brand/20, bg-surface-1, …), so the
-   brand colour is a one-line change rather than 80+ hardcoded hexes. */
+   These values are the product's own light token system (src/styles/globals.css
+   in Jobmate-ltd/jobsafe), so the marketing site and the app read as one
+   company. This is the ONLY file in the codebase allowed to contain a colour
+   literal: `npm run seo:audit` fails the build if a hex, rgb() or hsl() value
+   appears anywhere else. Components reach colour through Tailwind utilities
+   (bg-canvas, text-ink-2, border-line-1, bg-brand-strong …) or the CSS custom
+   properties this block emits (--color-brand, --color-ink-1 …).
+
+   Server code that needs a colour value (the OG image renderer, the theme-color
+   meta tag) reads this file through lib/tokens.ts rather than repeating it.
+   ───────────────────────────────────────────────────────────────────────────── */
 @theme {
-  --color-brand: #e5342a;
-  --color-brand-hover: #c42d24;
-  --color-brand-deep: #7f1010;
-  /* Space-separated RGB channels of --color-brand, for translucent glows/shadows
-     via rgb(var(--brand-rgb) / <alpha>). Keep in sync with --color-brand. */
-  --brand-rgb: 229 52 42;
+  /* ── Type families (wired to next/font in app/layout.tsx) ────────────────── */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-surface-0: #0a0a0a;
-  --color-surface-1: #111111;
-  --color-surface-2: #1a1a1a;
+  /* ── Colour. The default palette is removed so only tokens exist. ────────── */
+  --color-*: initial;
 
-  /* Brand-tinted keyboard focus ring (shadcn's --color-ring was never defined) */
-  --color-ring: #e5342a;
-}
+  /* Grounds */
+  --color-canvas: #ffffff;
+  --color-bg: #f7f8fa;
+  --color-canvas-muted: #fcfcfd;
 
-html {
-  scroll-behavior: smooth;
-  background-color: #0a0a0a;
-}
+  /* Ink. ink-5 is the lightest colour allowed for text. */
+  --color-ink-1: #0a0a0a;
+  --color-ink-2: #1f2937;
+  --color-ink-3: #2e3540;
+  --color-ink-4: #313844;
+  --color-ink-5: #3e4654;
 
-/* Honour prefers-reduced-motion across the whole site: neutralise CSS-driven
-   animation, transition and smooth-scroll. framer-motion is handled separately
-   via <MotionProvider reducedMotion="user">. */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  /* Lines */
+  --color-line-1: #e5e7eb;
+  --color-line-2: #eef0f3;
+  --color-line-3: #f3f4f6;
+
+  /* Decorative strokes only. 2.5:1 on white — never text. */
+  --color-grey-400: #9ca3af;
+
+  /* Brand. `brand` for icons, display words ≥ 24px, illustrations and focus
+     rings; `brand-strong` for solid buttons, links, eyebrows and any crimson
+     text under 24px (AA on canvas and on bg); `brand-dark` for button hover. */
+  --color-brand: #e63946;
+  --color-brand-strong: #cd1a27;
+  --color-brand-dark: #c42d24;
+  --color-brand-tint-04: rgba(230, 57, 70, 0.04);
+  --color-brand-tint-08: rgba(230, 57, 70, 0.08);
+  --color-brand-tint-18: rgba(230, 57, 70, 0.18);
+
+  /* Status. For product-style UI and pills only — never decorative accents. */
+  --color-good-text: #15803d;
+  --color-good-tint: rgba(34, 197, 94, 0.1);
+  --color-warning-text: #b45309;
+  --color-warning-tint: rgba(245, 158, 11, 0.1);
+  --color-info-text: #1d4ed8;
+  --color-info-tint: rgba(29, 78, 216, 0.08);
+  --color-neutral-text: #444c59;
+  --color-neutral-tint: #f3f4f6;
+  --color-critical-text: #cd1a27;
+  --color-critical-tint: rgba(230, 57, 70, 0.08);
+
+  /* ── Radii. Deliberately squared, following the product. ────────────────── */
+  --radius-*: initial;
+  --radius-control: 4px; /* buttons, inputs, cards, chips */
+  --radius-frame: 8px; /* screenshot frames and the hero device only */
+  --radius-pill: 9999px; /* pills and avatars */
+
+  /* ── Depth. Borders do the separating; shadows stay quiet. ──────────────── */
+  --shadow-*: initial;
+  --shadow-rest: 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-hover: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 12px rgb(15 23 42 / 0.06);
+  --shadow-frame: 0 24px 60px rgb(15 23 42 / 0.1);
+
+  /* ── Motion ─────────────────────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration-base: 220ms;
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-rise-in: rise-in var(--duration-base) var(--ease-out-expo) both;
+  --animate-fade-in: fade-in var(--duration-fast) ease-out both;
+  --animate-sheet-down: sheet-down var(--duration-base) var(--ease-out-expo) both;
+  --animate-sheet-up: sheet-up var(--duration-fast) ease-in both;
+  --animate-menu-in: menu-in var(--duration-base) var(--ease-out-expo) both;
+  --animate-beam: beam 1400ms var(--ease-out-expo) 300ms both;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
+    }
   }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes sheet-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes sheet-up {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes beam {
+    from {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+      opacity: 0.55;
+    }
   }
 }
 
-body {
-  background-color: #0a0a0a;
-  color: #ffffff;
-  font-family: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
-}
-
-/* Site-wide keyboard focus ring. :where() keeps specificity at 0 so any
-   component can still opt out or restyle. Brand-tinted, offset so it reads
-   against the dark surfaces. Only shows for keyboard users (:focus-visible). */
+/* ── Base ─────────────────────────────────────────────────────────────────── */
 @layer base {
-  :where(a, button, [role="button"], summary):focus-visible {
+  html {
+    color-scheme: light;
+    background-color: var(--color-canvas);
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink-2);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink-1);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Site-wide keyboard focus ring. :where() keeps specificity at zero so any
+     component can restyle it. Brand crimson, offset to read on every ground. */
+  :where(a, button, [role="button"], summary, input, select, textarea):focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
+    border-radius: var(--radius-control);
+  }
+
+  ::selection {
+    background-color: var(--color-brand-tint-18);
+    color: var(--color-ink-1);
+  }
+
+  /* Honour prefers-reduced-motion across the whole site: everything instant. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  background: #ffffff;
-  border: 2px solid rgba(255,255,255,0.2);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+/* ── Type roles (Workstream A) ─────────────────────────────────────────────── */
+@utility type-display {
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+@utility type-h2 {
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+@utility type-h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+@utility type-lead {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+@utility type-body {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+@utility type-small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+@utility type-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+/* Report numbers, dates, prices in tables, regulation references. */
+@utility type-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+/* Keeps running text near 65 characters. */
+@utility measure {
+  max-width: 65ch;
 }
 
-input[type='range']::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #ffffff;
-  border: 2px solid rgba(255,255,255,0.2);
-  border-radius: 50%;
-  cursor: pointer;
+/* ── Signature texture: the 60px grid as ink at 4.5%, heroes only ───────────
+   Fades out downwards with a mask. One soft crimson radial per hero at 8–10%. */
+@utility hero-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-ink-1) 4.5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink-1) 4.5%, transparent) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+}
+@utility hero-radial {
+  background: radial-gradient(circle at 50% 50%, var(--color-brand-tint-08) 0%, transparent 65%);
 }
 
-@theme inline {
-  /* Wire the next/font Geist variable into Tailwind's font-sans token so the
-     `font-sans` utility and the base font-family both resolve to Geist. */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+/* ── Scroll reveal ─────────────────────────────────────────────────────────
+   Content renders visible. `data-reveal="pending"` is only ever set by
+   <Reveal/> on elements that are below the fold at mount, and flips to "in"
+   the moment they enter the viewport. Nothing waits at opacity:0 for an
+   observer that never fires, and reduced-motion never sets pending at all. */
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(14px);
+}
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-base) var(--ease-out-expo),
+    transform var(--duration-base) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
 
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  @keyframes marquee {
-  from {
-    transform: translateX(0);
-    }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-    }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  @keyframes accordion-down {
-  from {
-    height: 0;
-    }
-  to {
-    height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-    }
-  to {
-    height: 0;
-    }
-  }
-  /* Slow attention glow on the primary conversion CTA. Was `login-pulse`, on
-     the navbar's "Log in" button; the navbar's primary action is now "Book a
-     demo", so the token moved with it and was renamed to say what it is for.
-     Every consumer pairs it with `motion-reduce:animate-none`. */
-  --animate-cta-pulse: cta-pulse 2.8s ease-in-out infinite;
-  @keyframes cta-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgb(var(--brand-rgb) / 0);
-    }
-  50% {
-    box-shadow: 0 0 14px 1px rgb(var(--brand-rgb) / 0.55);
-    }
-  }
-  /* Mobile-menu items: staggered rise via per-item animation-delay. `both`
-     holds opacity 0 through the delay; if animations are unavailable the
-     property is ignored and items simply render visible. */
-  --animate-menu-item: menu-item-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-  @keyframes menu-item-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-    }
-  to {
-    opacity: 1;
-    transform: none;
-    }
-  }
-  --animate-modal-fade-in: modal-fade-in 500ms ease-out;
-  --animate-modal-fade-out: modal-fade-out 500ms ease-in;
-  @keyframes modal-fade-in {
-  0% {
-    opacity: 0;
-    }
-  100% {
-    opacity: 1;
-    }
-  }
-  @keyframes modal-fade-out {
-  0% {
-    opacity: 1;
-    }
-  100% {
-    opacity: 0;
-    }
-  }
+/* Native <details> FAQ: answers are in the HTML, collapsed with CSS, never
+   unmounted. The marker is drawn by the component instead. */
+details.faq > summary {
+  list-style: none;
+}
+details.faq > summary::-webkit-details-marker {
+  display: none;
+}
+details.faq[open] > summary .faq-marker {
+  transform: rotate(45deg);
+}
+
+/* Marquee pause on hover (FactStrip variant="marquee"). */
+.marquee-track:hover .marquee-row {
+  animation-play-state: paused;
 }
