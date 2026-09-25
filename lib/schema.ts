@@ -14,8 +14,8 @@
 //     `aggregateRating` until real reviews exist on a third-party platform.
 //
 //   • NO `FAQPage` unless the answer text is server-rendered and visible. See
-//     `components/sections/FAQ.tsx`, which emits its own FAQPage from the same
-//     array it renders, so the schema and the DOM cannot drift apart.
+//     `components/ui/faq.tsx`, which emits its own FAQPage from the same array
+//     it renders, so the schema and the DOM cannot drift apart.
 //
 // See SEO Operating Instructions §5.2 and §8.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -26,19 +26,20 @@ import {
   CANONICAL_HOME,
   CURRENCY,
   EMAIL_SALES,
-  ENTRY_PRICE,
   LEGAL_NAME,
+  LICENCES,
   LOGO_PATH,
+  OG_IMAGE,
   PARENT_ORG_URL,
   PHONE_E164,
   SAME_AS,
   SCHEMA_ID,
   SITE_URL,
-} from './brand'
+} from './brand.ts'
 
-type JsonLdNode = Record<string, unknown>
+export type JsonLdNode = Record<string, unknown>
 
-/** The `Organization` node. Carried by `/` and `/about`. */
+/** The `Organization` node. Carried by every route from the root layout. */
 export function organizationSchema(): JsonLdNode {
   return {
     '@type': 'Organization',
@@ -52,6 +53,14 @@ export function organizationSchema(): JsonLdNode {
     address: {
       '@type': 'PostalAddress',
       ...ADDRESS,
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: PHONE_E164,
+      email: EMAIL_SALES,
+      contactType: 'sales',
+      areaServed: 'GB',
+      availableLanguage: 'en',
     },
     parentOrganization: {
       '@type': 'Organization',
@@ -74,12 +83,31 @@ export function websiteSchema(): JsonLdNode {
   }
 }
 
+/** One `Offer` per licence type, ex VAT, per licence per month. */
+function licenceOffers(): JsonLdNode[] {
+  return Object.values(LICENCES).map((licence) => ({
+    '@type': 'Offer',
+    name: `${licence.name} licence`,
+    price: licence.price.toFixed(2),
+    priceCurrency: CURRENCY,
+    availability: 'https://schema.org/InStock',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: licence.price.toFixed(2),
+      priceCurrency: CURRENCY,
+      unitText: 'licence per month',
+      valueAddedTaxIncluded: false,
+    },
+  }))
+}
+
 /**
  * The `SoftwareApplication` node. Carried by `/` and every money page.
  *
- * `offers.price` is the ENTRY price — what a new customer pays — not the
- * volume rate. Quoting the volume rate in schema while the landing page charges
- * the entry rate is the same defect as quoting it in a meta description.
+ * `offers` lists the ENTRY price of each licence type — what a new customer
+ * pays — never the volume rate. Quoting the volume rate in schema while the
+ * landing page charges the entry rate is the same defect as quoting it in a
+ * meta description.
  */
 export function softwareApplicationSchema(url: string = CANONICAL_HOME): JsonLdNode {
   return {
@@ -90,20 +118,11 @@ export function softwareApplicationSchema(url: string = CANONICAL_HOME): JsonLdN
     applicationSubCategory: 'Health and Safety Incident Reporting',
     operatingSystem: 'iOS, Android, Web',
     description:
-      'Workplace incident reporting software for field service, construction and transport teams. HSSE compliant, offline-capable, ISO 45001 aligned.',
+      'Workplace incident reporting software for UK field service, construction, care and transport teams. Works offline, with photo, video, GPS and timestamp evidence on every report.',
     url,
+    image: `${SITE_URL}${OG_IMAGE.path}`,
     publisher: { '@id': SCHEMA_ID.organization },
-    offers: {
-      '@type': 'Offer',
-      price: ENTRY_PRICE.toFixed(2),
-      priceCurrency: CURRENCY,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: ENTRY_PRICE.toFixed(2),
-        priceCurrency: CURRENCY,
-        unitText: 'licence per month',
-      },
-    },
+    offers: licenceOffers(),
     // NO aggregateRating. See the file header.
   }
 }
@@ -143,6 +162,89 @@ export function faqPageSchema(entries: readonly FaqEntry[]): JsonLdNode {
       '@type': 'Question',
       name: q,
       acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  }
+}
+
+export interface ArticleInput {
+  readonly url: string
+  readonly headline: string
+  readonly description: string
+  /** ISO date. */
+  readonly datePublished: string
+  readonly dateModified?: string
+  readonly section: string
+  /** Topic tags; rendered as schema.org `keywords` on the BlogPosting. */
+  readonly tags: readonly string[]
+  readonly author: string
+  readonly image: string
+}
+
+/** `BlogPosting` for an insights article. */
+export function blogPostingSchema(article: ArticleInput): JsonLdNode {
+  return {
+    '@type': 'BlogPosting',
+    headline: article.headline,
+    description: article.description,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified ?? article.datePublished,
+    articleSection: article.section,
+    // schema.org `keywords`, not a <meta name="keywords"> tag (§5.1, T8).
+    keywords: article.tags.join(', '),
+    url: article.url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': article.url },
+    image: article.image,
+    inLanguage: 'en-GB',
+    author: { '@type': 'Organization', name: article.author, url: SITE_URL },
+    publisher: { '@id': SCHEMA_ID.organization },
+  }
+}
+
+/** `Blog` for the insights index. */
+export function blogSchema(url: string, posts: readonly ArticleInput[]): JsonLdNode {
+  return {
+    '@type': 'Blog',
+    '@id': url,
+    name: `${BRAND} insights`,
+    description: 'Practical guidance on workplace incident reporting, HSSE compliance and field safety.',
+    url,
+    inLanguage: 'en-GB',
+    publisher: { '@id': SCHEMA_ID.organization },
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.headline,
+      description: post.description,
+      datePublished: post.datePublished,
+      url: post.url,
+    })),
+  }
+}
+
+export interface VideoInput {
+  readonly name: string
+  readonly description: string
+  readonly thumbnailUrl: string
+  readonly uploadDate: string
+  readonly duration: string
+  readonly embedUrl: string
+  readonly url: string
+}
+
+/** `VideoObject` for an embedded film that really exists. */
+export function videoObjectSchema(video: VideoInput): JsonLdNode {
+  return { '@type': 'VideoObject', ...video }
+}
+
+/** `ItemList` of named, linked items. */
+export function itemListSchema(name: string, items: readonly { name: string; url: string }[]): JsonLdNode {
+  return {
+    '@type': 'ItemList',
+    name,
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      url: item.url,
     })),
   }
 }

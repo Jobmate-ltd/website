@@ -1,34 +1,69 @@
 'use client'
-import { motion } from 'framer-motion'
+
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 /**
- * Restrained scroll-reveal used by the industry landing pages. Matches the
- * homepage sections' entrance language (short rise + fade, once, on view).
- * Reduced motion is handled globally by <MotionProvider reducedMotion="user">.
+ * Reveal — a restrained reveal-on-scroll that can never hide content.
+ *
+ * The element renders visible. On mount, only if it is below the fold and the
+ * visitor has not asked for reduced motion, it is set to `pending` and an
+ * IntersectionObserver flips it to `in` (once) as it scrolls into view. If
+ * JavaScript never runs, or the observer never fires, nothing is hidden.
+ * `index` staggers a group by 60ms per step.
+ *
+ * @example
+ *   <Reveal index={1}><Card … /></Reveal>
  */
-export default function Reveal({
-  children,
+export function Reveal({
   index = 0,
+  as: Tag = 'div',
   className,
-}: {
-  children: React.ReactNode
-  /** Stagger position within a group; each step adds 80ms of delay. */
-  index?: number
-  className?: string
-}) {
+  style,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLElement> & { index?: number; as?: 'div' | 'li' | 'article' | 'section' }) {
+  const ref = React.useRef<HTMLElement>(null)
+
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!('IntersectionObserver' in window)) return
+
+    // The observer's first callback says whether the element is on screen, so
+    // there is no getBoundingClientRect() here: a synchronous read right after
+    // hydration forces layout on every Reveal on the page.
+    let first = true
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting)
+        if (first) {
+          first = false
+          if (visible) {
+            observer.disconnect() // already on screen: leave it visible
+            return
+          }
+          el.dataset.reveal = 'pending'
+          return
+        }
+        if (visible) {
+          el.dataset.reveal = 'in'
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.55,
-        delay: index * 0.08,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
+    // @ts-expect-error -- the ref is typed for the union of tags we allow
+    <Tag ref={ref} className={cn(className)} style={{ ...style, '--reveal-delay': `${index * 60}ms` } as React.CSSProperties} {...props}>
       {children}
-    </motion.div>
+    </Tag>
   )
 }
+
+export default Reveal

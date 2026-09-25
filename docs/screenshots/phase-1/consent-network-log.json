@@ -1,0 +1,1016 @@
+{
+  "capturedAt": "2026-09-25T11:30:25.731Z",
+  "base": "http://localhost:3000",
+  "phases": [
+    {
+      "label": "First visit, no choice made",
+      "total": 55,
+      "thirdParty": [],
+      "nonEssential": [],
+      "rows": [
+        {
+          "url": "http://localhost:3000/",
+          "type": "document",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/manrope_variable_latin-s.p.0jqazm8k6u60w.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fbrand%2Fjobsafe-wordmark%402x.png&w=128&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fjobsafe-hero-duo.png&w=640&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/011l5xtrv0wor.css",
+          "type": "stylesheet",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/03889zsuz_r3f.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/07uz2g0_38qia.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/032ederpq5uk6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0wj8l4fwydekq.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/turbopack-0gfvfth136std.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0~ekro4dwr2lx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15kkz14ouerlw.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cc3.5pwjp14~.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0i0rycz_z.alx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/14~ya7fr3jeqc.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0e~vipj56q9nz.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15mesoa.tgf5m.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/jetbrains_mono_variable_latin-s.0133apsln3rta.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fvideos%2Fwindow-fitter-hero-poster.jpg&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fhealthcare.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffield-services.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Flogistics.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fconstruction.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffacilities.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fmanufacturing.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fenergy.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/favicon.ico?favicon.0op1x1plyn77k.ico",
+          "type": "other",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=nn07o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cd8ipp71l0mg.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0zengpz876n9p.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/00igvjilab51d.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/12bo8jfg45noi.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=uudir",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pr6k",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1ufj5",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=2wlno",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0g4crx0726kj4.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1yy5o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=q144w",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0t6705vw6.~18.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=ivliq",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0etok579jmrg6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=8wd90",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1855t",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Fjobsafe-admin-dashboard.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Femployee-app.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        }
+      ]
+    },
+    {
+      "label": "After \"Reject all\", then a reload",
+      "total": 51,
+      "thirdParty": [],
+      "nonEssential": [],
+      "rows": [
+        {
+          "url": "http://localhost:3000/",
+          "type": "document",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/manrope_variable_latin-s.p.0jqazm8k6u60w.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fbrand%2Fjobsafe-wordmark%402x.png&w=128&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fjobsafe-hero-duo.png&w=640&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/011l5xtrv0wor.css",
+          "type": "stylesheet",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/03889zsuz_r3f.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/07uz2g0_38qia.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/032ederpq5uk6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0wj8l4fwydekq.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/turbopack-0gfvfth136std.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0~ekro4dwr2lx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15kkz14ouerlw.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cc3.5pwjp14~.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0i0rycz_z.alx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/14~ya7fr3jeqc.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0e~vipj56q9nz.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15mesoa.tgf5m.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fvideos%2Fwindow-fitter-hero-poster.jpg&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fhealthcare.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffield-services.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Flogistics.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/jetbrains_mono_variable_latin-s.0133apsln3rta.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fconstruction.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffacilities.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fmanufacturing.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fenergy.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Fjobsafe-admin-dashboard.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Femployee-app.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/favicon.ico?favicon.0op1x1plyn77k.ico",
+          "type": "other",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=nn07o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cd8ipp71l0mg.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0zengpz876n9p.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/00igvjilab51d.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/12bo8jfg45noi.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=uudir",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1ufj5",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=2wlno",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pr6k",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1yy5o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=q144w",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0t6705vw6.~18.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=ivliq",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0g4crx0726kj4.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0etok579jmrg6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        }
+      ]
+    },
+    {
+      "label": "After \"Accept all\"",
+      "total": 57,
+      "thirdParty": [
+        "https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL"
+      ],
+      "nonEssential": [
+        "https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL",
+        "http://localhost:3000/_vercel/speed-insights/script.js"
+      ],
+      "rows": [
+        {
+          "url": "http://localhost:3000/",
+          "type": "document",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/manrope_variable_latin-s.p.0jqazm8k6u60w.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fbrand%2Fjobsafe-wordmark%402x.png&w=128&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fjobsafe-hero-duo.png&w=640&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/011l5xtrv0wor.css",
+          "type": "stylesheet",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/03889zsuz_r3f.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/07uz2g0_38qia.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/032ederpq5uk6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0wj8l4fwydekq.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/turbopack-0gfvfth136std.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0~ekro4dwr2lx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15kkz14ouerlw.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cc3.5pwjp14~.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0i0rycz_z.alx.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/14~ya7fr3jeqc.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0e~vipj56q9nz.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/15mesoa.tgf5m.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fvideos%2Fwindow-fitter-hero-poster.jpg&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fhealthcare.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffield-services.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Flogistics.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fconstruction.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Ffacilities.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fmanufacturing.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Findustries%2Fenergy.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Fjobsafe-admin-dashboard.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/media/jetbrains_mono_variable_latin-s.0133apsln3rta.woff2",
+          "type": "font",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/image?url=%2Fimages%2Fscreens%2Femployee-app.png&w=384&q=75",
+          "type": "image",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/favicon.ico?favicon.0op1x1plyn77k.ico",
+          "type": "other",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=nn07o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0cd8ipp71l0mg.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0zengpz876n9p.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/00igvjilab51d.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/12bo8jfg45noi.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=uudir",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/about?_rsc=1pr6k",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=1ufj5",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/academy?_rsc=2wlno",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0g4crx0726kj4.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=1yy5o",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/insights?_rsc=q144w",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0t6705vw6.~18.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/?_rsc=ivliq",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1r34m",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/_next/static/chunks/0etok579jmrg6.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1pn8p",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=8wd90",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "http://localhost:3000/cookies?_rsc=1855t",
+          "type": "fetch",
+          "method": "GET",
+          "party": "first-party"
+        },
+        {
+          "url": "https://www.googletagmanager.com/gtag/js?id=G-72H4Q5HDVL",
+          "type": "script",
+          "method": "GET",
+          "party": "third-party"
+        },
+        {
+          "url": "http://localhost:3000/_vercel/speed-insights/script.js",
+          "type": "script",
+          "method": "GET",
+          "party": "first-party"
+        }
+      ]
+    }
+  ],
+  "cookiesAfterAccept": [
+    "jobsafe_consent"
+  ]
+}

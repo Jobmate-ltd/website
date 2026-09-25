@@ -1,126 +1,100 @@
 import type { Metadata } from 'next'
-import Navbar from '@/components/sections/Navbar'
-import Footer from '@/components/sections/Footer'
-import Lessons from '@/components/academy/Lessons'
-import AcademyCta from '@/components/academy/AcademyCta'
-import LessonPlayer from '@/components/academy/LessonPlayer'
-import { LESSONS, FEATURED_VIDEO } from '@/lib/academy'
-import { SITE_URL } from '@/lib/brand'
+import { pageMetadata } from '@/lib/seo'
+import { FEATURED_VIDEO, LESSONS } from '@/lib/academy'
+import { SIGNUP_TRIAL_URL, SITE_URL, canonicalFor, trialSentence } from '@/lib/brand'
+import { breadcrumbSchema, graph, itemListSchema, jsonLd, videoObjectSchema } from '@/lib/schema'
+import { Header } from '@/components/site/header'
+import { Footer } from '@/components/site/footer'
+import { Breadcrumbs } from '@/components/site/breadcrumbs'
+import { PageHero } from '@/components/site/page-hero'
+import { Lessons, isRecorded } from '@/components/academy/lessons'
+import { LessonPlayer } from '@/components/academy/lesson-player'
+import { youtubeThumbnail } from '@/lib/youtube'
+import { Section } from '@/components/ui/section'
+import { Eyebrow } from '@/components/ui/eyebrow'
+import { CtaBand } from '@/components/ui/cta-band'
 
-export const metadata: Metadata = {
-  title: 'Academy',
+const PATH = '/academy'
+const URL = canonicalFor(PATH)
+
+export const metadata: Metadata = pageMetadata({
+  path: PATH,
+  title: 'Academy: video lessons on using jobsafe',
   description:
-    'Short video lessons on using jobsafe: create incident and HSSE reports, resolve them, and read the admin dashboard. Each one done in seconds.',
-  alternates: {
-    canonical: `${SITE_URL}/academy`,
-  },
-  openGraph: {
-    title: 'Academy | jobsafe',
-    description:
-      'Short video lessons on using jobsafe, from your first incident report to the admin dashboard.',
-    url: `${SITE_URL}/academy`,
-    type: 'website',
-  },
-}
+    'Watch jobsafe on a real job, then learn to create incident and HSSE reports, resolve them, and read the admin dashboard in short video lessons.',
+  ogTitle: 'jobsafe academy: watch it done',
+})
 
 export default function AcademyPage() {
   const featuredId = FEATURED_VIDEO.video.youtubeId
+  const recorded = LESSONS.filter(isRecorded)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-          { '@type': 'ListItem', position: 2, name: 'Academy', item: `${SITE_URL}/academy` },
-        ],
-      },
+  const pageGraph = jsonLd(
+    graph(
+      breadcrumbSchema([
+        { name: 'Home', item: `${SITE_URL}/` },
+        { name: 'Academy', item: URL },
+      ]),
       // The featured film is the only real video on the page today, so it is
       // the only thing that earns a VideoObject. Lessons join it as they land.
       ...(featuredId
         ? [
-            {
-              '@type': 'VideoObject',
+            videoObjectSchema({
               name: FEATURED_VIDEO.title,
               description: FEATURED_VIDEO.description,
-              thumbnailUrl: [`https://img.youtube.com/vi/${featuredId}/hqdefault.jpg`],
+              thumbnailUrl: youtubeThumbnail(featuredId),
               uploadDate: FEATURED_VIDEO.uploadDate,
               duration: FEATURED_VIDEO.duration,
-              embedUrl: `https://www.youtube.com/embed/${featuredId}`,
-              url: `${SITE_URL}/academy`,
-            },
+              embedUrl: `https://www.youtube-nocookie.com/embed/${featuredId}`,
+              url: URL,
+            }),
           ]
         : []),
-      {
-        '@type': 'ItemList',
-        name: 'jobsafe academy lessons',
-        itemListElement: LESSONS.map((lesson, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          name: lesson.title,
-          url: `${SITE_URL}/academy#${lesson.slug}`,
-        })),
-      },
-    ],
-  }
+      // Only recorded lessons are listed; unrecorded ones are not content.
+      ...(recorded.length
+        ? [itemListSchema('jobsafe academy lessons', recorded.map((lesson) => ({ name: lesson.title, url: `${URL}#${lesson.slug}` })))]
+        : []),
+    ),
+  )
 
   return (
-    <main className="bg-surface-0 min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Navbar />
-
-      {/* Header — editorial, matching the insights index */}
-      <section className="relative overflow-hidden">
-        {/* Red glow — top right, matching the hero */}
-        <div
-          className="absolute top-0 right-0 pointer-events-none"
-          style={{
-            width: '600px',
-            height: '600px',
-            background:
-              'radial-gradient(circle at top right, rgb(var(--brand-rgb) / 0.16) 0%, transparent 70%)',
-          }}
+    <>
+      <Header />
+      <main className="flex-1">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
+        <PageHero
+          breadcrumbs={<Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Academy', href: PATH }]} />}
+          eyebrow="jobsafe academy"
+          title={
+            <>
+              Watch it <span className="text-brand">done</span>
+            </>
+          }
+          lead="Short recordings of jobsafe, exactly as your team will use it. Watch a lesson, then do it yourself."
         />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-20 pb-14 md:pt-24 md:pb-16">
-          <p className="text-xs font-bold tracking-widest text-brand uppercase mb-5">
-            jobsafe academy
-          </p>
-          <h1
-            className="font-black uppercase leading-none tracking-tight text-white mb-6"
-            style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)' }}
-          >
-            Watch it done<br />
-            <span className="text-brand">in seconds</span>
-          </h1>
-          <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
-            Short recordings of jobsafe, exactly as your team will use it.
-            Watch a lesson, then do it yourself.
-          </p>
-        </div>
-      </section>
 
-      {/* Featured film — the product on a real job. It sits above the chapters
-          rather than inside them because it is a product film, not a how-to. */}
-      <section className="relative max-w-5xl mx-auto px-6 pb-16">
-        <p className="text-xs font-bold tracking-widest text-brand uppercase mb-4">
-          {FEATURED_VIDEO.eyebrow}
-        </p>
-        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-tight mb-4">
-          {FEATURED_VIDEO.title}
-        </h2>
-        <p className="text-white/50 leading-relaxed max-w-2xl mb-8">
-          {FEATURED_VIDEO.promise}
-        </p>
-        <LessonPlayer video={FEATURED_VIDEO.video} title={FEATURED_VIDEO.title} />
-      </section>
+        <Section id="featured">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-14">
+            <div className="flex flex-col gap-4">
+              <Eyebrow>{FEATURED_VIDEO.eyebrow}</Eyebrow>
+              <h2 className="type-h2 text-ink-1">{FEATURED_VIDEO.title}</h2>
+              <p className="type-lead text-ink-4">{FEATURED_VIDEO.promise}</p>
+            </div>
+            <LessonPlayer video={FEATURED_VIDEO.video} title={FEATURED_VIDEO.title} />
+          </div>
+        </Section>
 
-      <Lessons />
-      <AcademyCta />
+        <Lessons />
+
+        <CtaBand
+          tone="white"
+          placement="academy-closing"
+          title="Now try it yourself"
+          copy={`Everything in these lessons is in the app from day one. ${trialSentence()}`}
+          secondary={{ label: 'Sign up now', href: SIGNUP_TRIAL_URL }}
+        />
+      </main>
       <Footer />
-    </main>
+    </>
   )
 }

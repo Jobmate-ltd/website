@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "home",
+    "path": "/",
+    "scores": {
+      "performance": 91,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "lcp": "3.1 s",
+      "cls": "0",
+      "tbt": "170 ms",
+      "fcp": "1.3 s"
+    },
+    "fetchTime": "2026-09-25T11:28:29.608Z",
+    "lighthouseVersion": "13.5.0"
+  },
+  {
+    "slug": "industry-healthcare",
+    "path": "/industries/healthcare",
+    "scores": {
+      "performance": 92,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "lcp": "3.3 s",
+      "cls": "0",
+      "tbt": "80 ms",
+      "fcp": "1.2 s"
+    },
+    "fetchTime": "2026-09-25T11:28:48.988Z",
+    "lighthouseVersion": "13.5.0"
+  },
+  {
+    "slug": "article-riddor",
+    "path": "/insights/riddor-reporting-explained",
+    "scores": {
+      "performance": 95,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "lcp": "2.9 s",
+      "cls": "0",
+      "tbt": "60 ms",
+      "fcp": "1.2 s"
+    },
+    "fetchTime": "2026-09-25T11:29:06.432Z",
+    "lighthouseVersion": "13.5.0"
+  }
+]

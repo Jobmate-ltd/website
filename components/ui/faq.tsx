@@ -1,46 +1,78 @@
-export default function FAQs() {
-    return (
-        <section className="scroll-py-16 py-16 md:scroll-py-32 md:py-32">
-            <div className="mx-auto max-w-5xl px-6">
-                <div className="grid gap-y-12 px-2 lg:[grid-template-columns:1fr_auto]">
-                    <div className="text-center lg:text-left">
-                        <h2 className="mb-4 text-3xl font-semibold md:text-4xl">
-                            Frequently <br className="hidden lg:block" /> Asked <br className="hidden lg:block" />
-                            Questions
-                        </h2>
-                        <p>Accusantium quisquam. Illo, omnis?</p>
-                    </div>
+import * as React from 'react'
+import { Plus } from 'lucide-react'
+import { faqPageSchema, graph, jsonLd, type FaqEntry } from '@/lib/schema'
+import { Section } from '@/components/ui/section'
+import { SectionHeading } from '@/components/ui/section-heading'
 
-                    <div className="divide-y divide-dashed sm:mx-auto sm:max-w-lg lg:mx-0">
-                        <div className="pb-6">
-                            <h3 className="font-medium">What is the refund policy?</h3>
-                            <p className="text-muted-foreground mt-4">We offer a 30-day money back guarantee. If you are not satisfied with our product, you can request a refund within 30 days of your purchase.</p>
-
-                            <ol className="list-outside list-decimal space-y-2 pl-4">
-                                <li className="text-muted-foreground mt-4">To request a refund, please contact our support team with your order number and reason for the refund.</li>
-                                <li className="text-muted-foreground mt-4">Refunds will be processed within 3-5 business days.</li>
-                                <li className="text-muted-foreground mt-4">Please note that refunds are only available for new customers and are limited to one per customer.</li>
-                            </ol>
-                        </div>
-                        <div className="py-6">
-                            <h3 className="font-medium">How do I cancel my subscription?</h3>
-                            <p className="text-muted-foreground mt-4">You can cancel your subscription at any time by logging into your account and clicking on the cancel button.</p>
-                        </div>
-                        <div className="py-6">
-                            <h3 className="font-medium">Can I upgrade my plan?</h3>
-                            <p className="text-muted-foreground my-4">Yes, you can upgrade your plan at any time by logging into your account and selecting the plan you want to upgrade to.</p>
-                            <ul className="list-outside list-disc space-y-2 pl-4">
-                                <li className="text-muted-foreground">You will be charged the difference in price between your current plan and the plan you are upgrading to.</li>
-                                <li className="text-muted-foreground">Your new plan will take effect immediately and you will be billed at the new rate on your next billing cycle.</li>
-                            </ul>
-                        </div>
-                        <div className="py-6">
-                            <h3 className="font-medium">Do you offer phone support?</h3>
-                            <p className="text-muted-foreground mt-4">We do not offer phone support at this time. However, you can contact us via email or live chat for any questions or concerns you may have.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+/**
+ * Faq — server-rendered questions and answers.
+ *
+ * Each item is a native <details>: the answer text is in the HTML, collapsed
+ * by the browser rather than unmounted, and needs no JavaScript to open. The
+ * FAQPage JSON-LD is emitted from the same array that is rendered, so the
+ * schema and the visible text are the same text by construction. Google
+ * explicitly permits collapsed accordions for FAQ rich results; it does not
+ * permit answers that are absent from the DOM. `name` gives the group
+ * exclusive-open behaviour in browsers that support it.
+ *
+ * @example
+ *   <Faq eyebrow="FAQ" title="Questions" items={faqs} />
+ */
+export interface FaqProps {
+  items: readonly FaqEntry[]
+  eyebrow?: string
+  title?: React.ReactNode
+  lead?: React.ReactNode
+  tone?: 'white' | 'grey'
+  id?: string
+  /** Emit FAQPage JSON-LD (default true). Set false on a page that already has one. */
+  schema?: boolean
+  className?: string
 }
+
+export function Faq({
+  items,
+  eyebrow = 'FAQ',
+  title = 'Frequently asked questions',
+  lead,
+  tone = 'white',
+  id = 'faq',
+  schema = true,
+  className,
+}: FaqProps) {
+  const groupId = React.useId().replace(/:/g, '')
+  return (
+    <Section id={id} tone={tone} className={className}>
+      {schema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(graph(faqPageSchema(items))) }} />
+      ) : null}
+      <div className="grid gap-10 lg:grid-cols-[1fr_minmax(0,36rem)] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading eyebrow={eyebrow} title={title} lead={lead} tone={tone} />
+        </div>
+        <div className="divide-y divide-line-1 border-y border-line-1">
+          {items.map((item, i) => (
+            <details key={item.q} className="faq group" name={`faq-${groupId}`}>
+              <summary className="flex cursor-pointer items-start justify-between gap-4 py-5 text-left">
+                <span className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-pill bg-brand-tint-08 type-mono text-[11px] font-medium text-brand-strong">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-[15px] font-bold leading-snug text-ink-1 md:text-base">{item.q}</span>
+                </span>
+                <Plus
+                  aria-hidden="true"
+                  className="faq-marker mt-0.5 size-5 shrink-0 text-brand transition-transform duration-200 ease-out-expo"
+                  strokeWidth={2.25}
+                />
+              </summary>
+              <p className="type-body pb-6 pl-9 text-ink-4">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+export default Faq

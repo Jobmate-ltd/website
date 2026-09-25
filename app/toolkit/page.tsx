@@ -1,235 +1,143 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { Manrope } from "next/font/google";
-import { LeadForm } from "@/components/toolkit/LeadForm";
-import "@/styles/toolkit.css";
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import { pageMetadata } from '@/lib/seo'
+import { ENTRY_PRICE_EX_VAT_LABEL, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor } from '@/lib/brand'
+import { breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
+import { Header } from '@/components/site/header'
+import { Footer } from '@/components/site/footer'
+import { Breadcrumbs } from '@/components/site/breadcrumbs'
+import { LeadForm } from '@/components/toolkit/lead-form'
+import { Container } from '@/components/ui/container'
+import { Section } from '@/components/ui/section'
+import { SectionHeading } from '@/components/ui/section-heading'
+import { Eyebrow } from '@/components/ui/eyebrow'
+import { HeroBackdrop } from '@/components/ui/hero-backdrop'
+import { MediaFrame } from '@/components/ui/frame'
+import { CtaBand } from '@/components/ui/cta-band'
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
-  display: "swap",
-  variable: "--font-manrope",
-});
+const PATH = '/toolkit'
+const URL = canonicalFor(PATH)
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jobsafe.cloud";
-
-export const metadata: Metadata = {
-  title: "The Site Incident & Near-Miss Reporting Toolkit | jobsafe",
+/**
+ * The title carries the site name once: the root template appends " | jobsafe",
+ * so the page title must not (the previous page rendered "… | jobsafe | jobsafe").
+ */
+export const metadata: Metadata = pageMetadata({
+  path: PATH,
+  title: 'The site incident and near-miss reporting toolkit',
   description:
-    "Free for UK construction: a ready-to-use incident and near-miss report template, the RIDDOR decision flowchart, and near-miss triage. Record. Resolve. Prevent.",
-  alternates: { canonical: `${SITE}/toolkit` },
-  openGraph: {
-    type: "website",
-    url: `${SITE}/toolkit`,
-    siteName: "jobsafe",
-    locale: "en_GB",
-    title: "The Site Incident & Near-Miss Reporting Toolkit",
-    description:
-      "The report template, the RIDDOR flowchart, and near-miss triage. Free, for UK sites.",
-    images: [
-      {
-        url: `${SITE}/toolkit/og-toolkit.png`,
-        width: 1200,
-        height: 630,
-        alt: "The Site Incident & Near-Miss Reporting Toolkit, by jobsafe",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@JobmateCloud",
-    title: "The Site Incident & Near-Miss Reporting Toolkit",
-    description: "The report template, the RIDDOR flowchart, and near-miss triage. Free, for UK sites.",
-    images: [`${SITE}/toolkit/og-toolkit.png`],
-  },
-};
+    'Free for UK construction: a seven-page PDF with a ready-to-use incident and near-miss report template, the RIDDOR decision flowchart, and near-miss triage. Record. Resolve. Prevent.',
+  ogTitle: 'Free incident and near-miss reporting toolkit | jobsafe',
+})
 
+/** The toolkit is a seven-page PDF; these are the three working pages it is built around. */
 const INSIDE = [
   {
-    n: "01",
-    title: "The report template",
-    body: "Every field an investigator needs, and none they do not. Print it, or fill it on-screen.",
-    image: "/toolkit/page-template.png",
-    alt: "The incident and near-miss report template page from the toolkit",
+    n: '01',
+    title: 'The report template',
+    body: 'Every field an investigator needs, and none they do not. Print it, or fill it on-screen.',
+    image: '/toolkit/page-template.png',
+    alt: 'The incident and near-miss report template page from the toolkit',
   },
   {
-    n: "02",
-    title: "Is it RIDDOR-reportable?",
-    body: "Four questions. The first “yes” tells you whether it goes to the HSE, and by when.",
-    image: "/toolkit/page-flowchart.png",
-    alt: "The RIDDOR decision flowchart page from the toolkit",
+    n: '02',
+    title: 'Is it RIDDOR-reportable?',
+    body: 'Four questions. The first “yes” tells you whether it goes to the HSE, and by when.',
+    image: '/toolkit/page-flowchart.png',
+    alt: 'The RIDDOR decision flowchart page from the toolkit',
   },
   {
-    n: "03",
-    title: "Near-miss triage",
-    body: "What to do in the first 24 hours, from making it safe to naming the owner of the fix.",
-    image: "/toolkit/page-triage.png",
-    alt: "The near-miss triage page from the toolkit",
+    n: '03',
+    title: 'Near-miss triage',
+    body: 'What to do in the first 24 hours after a near miss, from making it safe to naming the owner of the fix.',
+    image: '/toolkit/page-triage.png',
+    alt: 'The near-miss triage page from the toolkit',
   },
-] as const;
+] as const
+
+const pageGraph = jsonLd(
+  graph(
+    breadcrumbSchema([
+      { name: 'Home', item: `${SITE_URL}/` },
+      { name: 'Toolkit', item: URL },
+    ]),
+  ),
+)
 
 export default function ToolkitPage() {
   return (
-    <main
-      className={`tk ${manrope.variable} min-h-[100dvh] bg-[var(--tk-ink)] font-[family-name:var(--font-manrope)] text-[var(--tk-paper)] antialiased`}
-    >
-      {/* Hero: message left, gate right. The form is the CTA, so there is no second one here. */}
-      <section className="relative overflow-hidden border-b border-[var(--tk-ink-line)]">
-        <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-14 px-5 pb-20 pt-14 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-28 lg:pt-20">
-          <div className="min-w-0">
-            <a
-              href="/"
-              className="inline-block rounded-md transition-opacity hover:opacity-80"
-              aria-label="jobsafe home"
-            >
-              <Image
-                src="/toolkit/jobsafe-lockup.png"
-                alt="jobsafe"
-                width={148}
-                height={53}
-                priority
-              />
-            </a>
+    <>
+      <Header />
+      <main className="flex-1">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
 
-            <p
-              className="tk-rise mt-12 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--tk-crimson)]"
-              style={{ ["--tk-i" as string]: 0 }}
-            >
-              Free toolkit · UK construction
-            </p>
-
-            <h1
-              className="tk-rise mt-4 text-[40px] font-extrabold leading-[1.06] tracking-tight sm:text-[50px] lg:text-[56px]"
-              style={{ ["--tk-i" as string]: 1 }}
-            >
-              Most near-misses
-              <br />
-              <span className="text-[var(--tk-crimson)]">never get written down.</span>
-            </h1>
-
-            <div
-              className="tk-rise tk-hazard mt-7 h-[7px] w-[190px] rounded-[1px]"
-              style={{ ["--tk-i" as string]: 2 }}
-              aria-hidden="true"
-            />
-
-            <p
-              className="tk-rise mt-7 max-w-[46ch] text-[17px] leading-relaxed text-[var(--tk-muted)]"
-              style={{ ["--tk-i" as string]: 3 }}
-            >
-              This is the toolkit that fixes that. The report template, the RIDDOR flowchart, and
-              near-miss triage.
-            </p>
-
-            <div
-              className="tk-rise mt-10 hidden max-w-[430px] lg:block"
-              style={{ ["--tk-i" as string]: 4 }}
-            >
-              <Image
-                src="/toolkit/page-cover.png"
-                alt="The cover of the Site Incident and Near-Miss Reporting Toolkit"
-                width={430}
-                height={608}
-                className="w-[230px] rounded-sm shadow-[0_24px_60px_-20px_rgba(0,0,0,0.75)] ring-1 ring-white/10"
-              />
-            </div>
-          </div>
-
-          <div className="min-w-0 lg:pt-[86px]">
-            <LeadForm />
-          </div>
-        </div>
-      </section>
-
-      {/* What is inside: three real pages, not three identical text cards. */}
-      <section className="border-b border-[var(--tk-ink-line)]">
-        <div className="mx-auto max-w-[1180px] px-5 py-20 md:px-8 lg:py-24">
-          <h2 className="max-w-[20ch] text-[30px] font-extrabold leading-[1.1] tracking-tight sm:text-[36px]">
-            Seven pages. Nothing you have to read twice.
-          </h2>
-
-          <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {INSIDE.map((item) => (
-              <article key={item.n} className="min-w-0">
-                <div className="overflow-hidden rounded-sm bg-[var(--tk-ink-raised)] ring-1 ring-white/10">
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    width={640}
-                    height={905}
-                    className="h-auto w-full"
-                  />
-                </div>
-                <p className="mt-6 text-[13px] font-extrabold text-[var(--tk-crimson)]">{item.n}</p>
-                <h3 className="mt-1 text-[19px] font-extrabold tracking-tight">{item.title}</h3>
-                <p className="mt-2 max-w-[34ch] text-[14px] leading-relaxed text-[var(--tk-muted)]">
-                  {item.body}
+        {/* Hero: message left, gate right. The form is the CTA, so there is no second one here. */}
+        <section className="relative overflow-hidden border-b border-line-1 bg-canvas">
+          <HeroBackdrop radial="left" />
+          <Container size="wide" className="relative pb-16 pt-10 md:pb-24 md:pt-14">
+            <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Toolkit', href: PATH }]} className="mb-8" />
+            <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+              <div className="flex flex-col gap-6">
+                <Eyebrow>Free toolkit · UK construction</Eyebrow>
+                <h1 className="type-display text-ink-1">
+                  Most near-misses
+                  <br />
+                  <span className="text-brand">never get written down.</span>
+                </h1>
+                <p className="type-lead measure text-ink-4">
+                  This is the toolkit that fixes that: a seven-page PDF with the report template, the RIDDOR flowchart, and
+                  near-miss triage.
                 </p>
-              </article>
-            ))}
-          </div>
+                <div className="hidden max-w-[230px] lg:block">
+                  <MediaFrame>
+                    <Image src="/toolkit/page-cover.png" alt="The cover of the Site Incident and Near-Miss Reporting Toolkit" width={430} height={608} sizes="230px" />
+                  </MediaFrame>
+                </div>
+              </div>
+              <div className="lg:pt-10">
+                <LeadForm />
+              </div>
+            </div>
+          </Container>
+        </section>
 
-          <p className="mt-14 max-w-[62ch] border-l-2 border-[var(--tk-crimson)] pl-5 text-[14px] leading-relaxed text-[var(--tk-muted)]">
-            Guidance for UK workplaces, not legal advice. RIDDOR thresholds and deadlines change, so
-            always check the current guidance at{" "}
-            <a
-              href="https://www.hse.gov.uk/riddor/"
-              className="font-bold text-[var(--tk-paper)] underline decoration-[var(--tk-crimson)] underline-offset-4"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
+        {/* What is inside: three real pages, not three identical text cards. */}
+        <Section tone="grey">
+          <SectionHeading eyebrow="What is inside" title="Seven pages, three tools. Nothing you have to read twice." lead="The three pages you will use on site, from the seven in the PDF." tone="grey" />
+          <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {INSIDE.map((item) => (
+              <li key={item.n} className="flex flex-col gap-4">
+                <MediaFrame>
+                  <Image src={item.image} alt={item.alt} width={640} height={905} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                </MediaFrame>
+                <p className="type-mono text-sm font-medium text-brand-strong">{item.n}</p>
+                <h3 className="type-h3 -mt-2 text-ink-1">{item.title}</h3>
+                <p className="type-small text-ink-5">{item.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="type-small mt-12 max-w-[62ch] border-l-2 border-brand pl-5 text-ink-4">
+            Guidance for UK workplaces, not legal advice. RIDDOR thresholds and deadlines change, so always check the current
+            guidance at{' '}
+            <a href="https://www.hse.gov.uk/riddor/" rel="noreferrer noopener" target="_blank" className="font-semibold text-brand-strong underline underline-offset-4">
               hse.gov.uk/riddor
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
             .
           </p>
-        </div>
-      </section>
+        </Section>
 
-      {/* The offer. Full-bleed crimson, the way the carousels end. */}
-      <section className="relative overflow-hidden bg-[var(--tk-crimson)] text-[var(--tk-ink)]">
-        <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-10 px-5 py-20 md:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:py-24">
-          <div>
-            <h2 className="text-[32px] font-extrabold leading-[1.06] tracking-tight sm:text-[42px]">
-              Now do all of that
-              <br />
-              <span className="text-[var(--tk-paper)]">from your phone.</span>
-            </h2>
-            <p className="mt-5 max-w-[48ch] text-[16px] leading-relaxed text-[var(--tk-paper)]">
-              Same report, same detail, about 30 seconds. It routes itself to the right person and
-              tracks to close-out, from £3 per licence a month.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="https://app.jobsafe.cloud/signup-trial"
-                className="inline-flex items-center rounded-md bg-[var(--tk-ink)] px-7 py-3.5 text-[15px] font-extrabold text-[var(--tk-paper)] transition-transform duration-150 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.985]"
-              >
-                Start free
-              </a>
-            </div>
-          </div>
-
-          <Image
-            src="/toolkit/jobsafe-phones.png"
-            alt="The jobsafe app: the incident capture screen and the reporting dashboard"
-            width={520}
-            height={527}
-            className="mx-auto w-full max-w-[360px]"
-          />
-        </div>
-        <div className="tk-hazard h-[10px] w-full" aria-hidden="true" />
-      </section>
-
-      <footer className="mx-auto flex max-w-[1180px] flex-col gap-4 px-5 py-10 text-[13px] text-[var(--tk-muted)] md:flex-row md:items-center md:justify-between md:px-8">
-        <p className="font-extrabold uppercase tracking-[0.14em] text-[var(--tk-paper)]">
-          Record. Resolve. Prevent.
-        </p>
-        <p>
-          Part of jobmate Group ·{" "}
-          <a href="/privacy-policy" className="underline underline-offset-4 hover:text-[var(--tk-paper)]">
-            Privacy policy
-          </a>
-        </p>
-      </footer>
-    </main>
-  );
+        <CtaBand
+          tone="white"
+          placement="toolkit-closing"
+          title="Now do all of that from your phone"
+          copy="Same report, same detail, from the phone in your pocket. It routes itself to the right person and tracks to close-out."
+          primary={{ label: 'Start your free trial', href: SIGNUP_TRIAL_URL }}
+          secondary={{ label: 'Book a demo', href: '/#get-started' }}
+          note={`From ${ENTRY_PRICE_EX_VAT_LABEL} per licence per month. ${TRIAL.label}.`}
+        />
+      </main>
+      <Footer />
+    </>
+  )
 }
