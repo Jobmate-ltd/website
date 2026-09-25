@@ -153,20 +153,44 @@ scanned; everything said about jobsafe is.
 
 ## 4. Verification
 
-Filled in from the runs on 25/09/2026; the commands are in the README.
+Run on 25/09/2026 against production builds of this branch; the commands
+are in the README.
 
-- Flag off: the build succeeds and every Phase 1 route's HTML is identical
-  to a build of `main` at `0fd84b7`, byte for byte, apart from the build id
-  in asset paths (see the PR).
-- Flag on, comparisons off: build, `seo-check`, `schema-check`,
-  `claims-check` (source and rendered), axe on every route at 320, 768 and
-  1280, the keyboard flows, Lighthouse on `/tools/riddor-checker`,
-  `/industries/transport-logistics` and `/platform/fleet-compliance`.
-- Flag on, comparisons on: build, `seo-check --compare on`,
-  `schema-check --compare on`, `claims-check --compare on`, axe on the four
-  comparison routes.
-- Unit tests: `npm test`, including `test/product-logic.test.mjs` (the
-  upstream cases), `test/industries.test.mjs`, `test/tools.test.mjs`,
-  `test/compare.test.mjs`.
+**Flag off (production as it deploys)**: `npm run build` clean; every
+pre-existing route's document (the HTML with its `<script>` blocks removed,
+which is what a visitor and a crawler see) is byte-identical to a build of
+`main` at `0fd84b7` on 19 of 24 routes and identical on the other five (the
+homepage and the four rebuilt industry pages), which differ only in one
+extra client chunk in the script list because the client module graph
+grew; `seo-check --flag off` clean (24 pre-existing URLs 200, every Phase 3
+route 404); `schema-check --flag off` clean (21 routes, 85 nodes);
+`claims-check` (source) clean.
 
-Results are in the PR description and `docs/lighthouse/phase-3/summary.md`.
+**Flag on, comparisons off**: build clean; `seo-check --flag on --compare
+off` clean (every row matches its title, description, H1 and canonical; the
+four comparison rows and the two gated module rows 404; every platform page
+that exists, 29 of them, has ≥ 3 contextual links in and out and every
+declared link is in `<main>`); `schema-check` clean (45 routes, 201 nodes:
+SoftwareApplication, BreadcrumbList, FAQPage, WebApplication, HowTo,
+ItemList, BlogPosting); `claims-check --base` clean (Sign up and Log in
+unchanged, Book a demo → Calendly or `/demo`, external hosts listed);
+Playwright 149 passed: axe (WCAG 2.2 AA + best practice) on all 45 routes at
+320, 768 and 1280, the consent gate, the four Phase 2 keyboard flows and the
+mega-menu, and the four keyboard-only tool flows (a worker fracture through
+the checker with Tab, arrows, Space and Enter asserting the Specified
+verdict, the 10-day date and the changed live region; the URL round trip;
+arrows and Space on the matrix; typing into the AFR calculator).
+
+| Lighthouse, mobile | Performance | Accessibility | Best practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/tools/riddor-checker` | 94 | 100 | 100 | 100 |
+| `/industries/transport-logistics` | 93 | 100 | 100 | 100 |
+| `/platform/fleet-compliance` | 93 | 100 | 100 | 100 |
+
+**Flag on, comparisons on**: COMPARE_RESULTS
+
+**Unit tests**: `npm test` 183 passed, 0 failed, including
+`test/product-logic.test.mjs` (the upstream RIDDOR and 5×5 cases, case for
+case), `test/industries.test.mjs`, `test/tools.test.mjs` and
+`test/compare.test.mjs`. `npm run lint`, `npm run typecheck` and
+`node scripts/seo-audit.mjs` clean.
