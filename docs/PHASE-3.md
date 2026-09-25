@@ -187,7 +187,14 @@ arrows and Space on the matrix; typing into the AFR calculator).
 | `/industries/transport-logistics` | 93 | 100 | 100 | 100 |
 | `/platform/fleet-compliance` | 93 | 100 | 100 | 100 |
 
-**Flag on, comparisons on**: COMPARE_RESULTS
+**Flag on, comparisons on**: build clean; `seo-check --flag on --compare
+on` clean (the four comparison rows match their titles, descriptions, H1s
+and canonicals; 33 platform pages with ≥ 3 links in and out; every
+declared link in `<main>`); `schema-check --compare on` clean (49 routes,
+217 nodes); `claims-check --base --compare on` clean (competitor-side copy
+exempt, jobsafe-side copy scanned; external hosts now include mitti.com,
+evotix.com, ecoonline.com and asa.org.uk, each linked as a source); axe on
+`/compare` and the three comparisons at 320, 768 and 1280: 12 passed.
 
 **Unit tests**: `npm test` 183 passed, 0 failed, including
 `test/product-logic.test.mjs` (the upstream RIDDOR and 5×5 cases, case for
