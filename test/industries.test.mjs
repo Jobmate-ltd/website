@@ -153,10 +153,21 @@ describe('Phase 3 module pages (lib/platform-modules-phase-3.ts)', () => {
     assert.equal(modulePageName('fleet'), 'Fleet & plant')
   })
 
-  test('every "built for" industry and "try it free" tool is a page that exists', () => {
+  test('every "built for" industry and "try it free" tool is a page that exists and is declared in the registry', () => {
     for (const page of MODULE_PAGES) {
-      for (const href of page.industries ?? []) assert.ok(routeExists(href, true, ALL_ON), `${page.id} → ${href}`)
-      for (const tool of page.tools ?? []) assert.ok(Object.values(TOOL_PATHS).includes(tool.href), `${page.id} → ${tool.href}`)
+      for (const href of page.industries ?? []) {
+        assert.ok(routeExists(href, true, ALL_ON), `${page.id} → ${href}`)
+        assert.ok(LINK_REGISTRY[page.path].includes(href), `${page.path} renders a card for ${href} but lib/seo/links.ts does not declare it`)
+      }
+      for (const tool of page.tools ?? []) {
+        assert.ok(Object.values(TOOL_PATHS).includes(tool.href), `${page.id} → ${tool.href}`)
+        assert.ok(LINK_REGISTRY[page.path].includes(tool.href), `${page.path} renders a card for ${tool.href} but lib/seo/links.ts does not declare it`)
+      }
+    }
+    // Every industry page is "built for" on at least three module pages, so it has ≥ 3 contextual links in before the tools and the homepage are counted.
+    for (const path of INDUSTRY_PATHS) {
+      const from = MODULE_PAGES.filter((page) => (page.industries ?? []).includes(path)).map((page) => page.id)
+      assert.ok(from.length >= 3, `${path} is built for on ${from.length} module pages (${from.join(', ')}); need 3`)
     }
   })
 

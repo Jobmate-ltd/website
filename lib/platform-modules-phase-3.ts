@@ -202,7 +202,7 @@ export const PHASE_3_MODULE_PAGES: readonly ModulePage[] = [
       { q: 'What are the asset statuses?', a: 'In service, Service due, Off road and Disposed.' },
     ],
     doNotClaim: ['telematics', 'tachograph data', 'O-licence compliance', 'FORS or CLOCS features', 'email or push reminders'],
-    industries: ['/industries/transport-logistics', '/industries/manufacturing-warehousing', '/industries/field-services'],
+    industries: ['/industries/transport-logistics', '/industries/manufacturing-warehousing', '/industries/field-services', '/industries/window-door-fitters'],
     tools: [{ label: 'Accident frequency rate calculator', href: '/tools/accident-frequency-rate' }],
   },
   {

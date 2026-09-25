@@ -175,7 +175,7 @@ const PHASE_2_PAGES: readonly ModulePage[] = [
       { q: 'Is the F2508 form built in?', a: 'The statutory particulars that go on an F2508 are collected in the seven-step form, and the register keeps what must be kept. The submission itself is made on HSE’s online form.' },
       { q: 'What about the accident book?', a: 'The register records the accident book (BI 510) declaration alongside the RIDDOR status, so the two records agree.' },
     ],
-    industries: ['/industries/transport-logistics', '/industries/construction', '/industries/healthcare'],
+    industries: ['/industries/transport-logistics', '/industries/construction', '/industries/healthcare', '/industries/window-door-fitters'],
     tools: [
       { label: 'Is it RIDDOR reportable? Free checker', href: '/tools/riddor-checker' },
       { label: 'Accident frequency rate calculator', href: '/tools/accident-frequency-rate' },
