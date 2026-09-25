@@ -10,6 +10,7 @@ import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PostBody } from '@/components/insights/post-body'
+import { ModuleBacklink } from '@/components/insights/module-backlink'
 import { Container } from '@/components/ui/container'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
@@ -107,6 +108,7 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
           <Container size="prose" className="pt-10">
             <PostBody blocks={post.content} />
           </Container>
+          <ModuleBacklink path={`/insights/${post.slug}`} />
 
           {post.sources.length > 0 ? (
             <Container size="prose" className="pb-4 pt-6">

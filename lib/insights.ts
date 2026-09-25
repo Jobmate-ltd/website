@@ -9,7 +9,7 @@
 // foot of the article.
 
 export type InsightBlock =
-  | { type: 'p'; text: string }
+  | { type: 'p'; text: string; /** Replaces `text` while NEXT_PUBLIC_PLATFORM_LAUNCH is on (claims the platform copy must not make). */ launchText?: string }
   | { type: 'h2'; text: string }
   | { type: 'h3'; text: string }
   | { type: 'ul'; items: string[] }
@@ -577,6 +577,7 @@ const posts: InsightPost[] = [
       {
         type: 'p',
         text: `That is exactly the gap jobsafe is built to close. Incidents are [captured at the point they happen](/#how-it-works), with photos, GPS and a timestamp, even offline — and every action is held in an immutable [audit trail](/#features) you can put in front of an HSE inspector or your insurer. If you are also working on getting ahead of incidents before they become RIDDOR reports, our guide to [near miss reporting](/insights/near-miss-reporting-safety-culture) is the natural next read.`,
+        launchText: `That is exactly the gap jobsafe is built to close. Incidents are [captured at the point they happen](/platform/incident-reporting), with photos, GPS and a timestamp, even offline; [RIDDOR triage](/platform/riddor) gives a live verdict on what is reportable and by when; and every action is written to the [history on the record](/security#access) you can put in front of an HSE inspector or your insurer. If you are also working on getting ahead of incidents before they become RIDDOR reports, our guide to [near miss reporting](/insights/near-miss-reporting-safety-culture) is the natural next read.`,
       },
       { type: 'h2', text: 'Staying audit-ready' },
       {
@@ -847,6 +848,7 @@ const posts: InsightPost[] = [
       {
         type: 'p',
         text: `Protecting lone workers comes down to closing the distance between an incident and someone who can respond — even when there is no signal and no witness. That is the problem jobsafe is built around: incident capture that [works fully offline](/#features) and syncs the moment a connection returns, automatic GPS and timestamps on every report, real-time alerts to supervisors, and an immutable audit trail that proves you met your duty of care. It is designed for [the industries where people work alone and far from base](/#industries) — and your engineers will actually use it, because it lives on the phone already in their pocket.`,
+        launchText: `Protecting lone workers comes down to closing the distance between an incident and someone who can respond, even when there is no signal and no witness. That is the problem jobsafe is built around: incident capture that [works fully offline](/platform/offline) and syncs the moment a connection returns, automatic GPS and timestamps on every report, in-app alerts to supervisors, an SOS screen with the right numbers for the site, and a history on every record that shows you met your duty of care. It is designed for [the industries where people work alone and far from base](/#industries), and your engineers will actually use it, because it lives on the phone already in their pocket.`,
       },
       {
         type: 'p',

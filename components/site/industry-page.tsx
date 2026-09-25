@@ -2,8 +2,11 @@ import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, FileDown } from 'lucide-react'
-import { DEMO_DURATION_LABEL, ENTRY_PRICE_EX_VAT_LABEL, PHONE_DISPLAY, PHONE_HREF, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor } from '@/lib/brand'
-import { breadcrumbSchema, graph, jsonLd, softwareApplicationSchema, type FaqEntry } from '@/lib/schema'
+import { DEMO_DURATION_LABEL, ENTRY_PRICE_EX_VAT_LABEL, PHONE_DISPLAY, PHONE_HREF, PLATFORM_LAUNCH, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor } from '@/lib/brand'
+import { breadcrumbSchema, graph, jsonLd, platformApplicationSchema, softwareApplicationSchema, type FaqEntry } from '@/lib/schema'
+import { modulesWithPages } from '@/lib/platform'
+import { PlatformIcon } from '@/components/platform/icons'
+import { PricingTeaser } from '@/components/platform/pricing-teaser'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
@@ -78,6 +81,14 @@ export interface IndustryContent {
   }
   faqs: readonly FaqEntry[]
   faqIntro: string
+  /**
+   * Phase 2 overrides, applied only while NEXT_PUBLIC_PLATFORM_LAUNCH is on:
+   * replacement answers keyed by question, for the FAQs that used to deny a
+   * module the platform now has. Phase 3 rebuilds these pages fully.
+   */
+  launch?: {
+    faqs?: Readonly<Record<string, string>>
+  }
   closing: {
     title: string
     copy: string
@@ -98,13 +109,14 @@ function HeroMedia({ media }: { media: IndustryMedia }) {
 
 export function IndustryPage({ content }: { content: IndustryContent }) {
   const url = canonicalFor(content.path)
+  const faqs = PLATFORM_LAUNCH && content.launch?.faqs ? content.faqs.map((faq) => ({ ...faq, a: content.launch?.faqs?.[faq.q] ?? faq.a })) : content.faqs
   const pageGraph = jsonLd(
     graph(
       breadcrumbSchema([
         { name: 'Home', item: `${SITE_URL}/` },
         { name: content.breadcrumb, item: url },
       ]),
-      softwareApplicationSchema(url),
+      PLATFORM_LAUNCH ? platformApplicationSchema(url) : softwareApplicationSchema(url),
     ),
   )
 
@@ -227,9 +239,41 @@ export function IndustryPage({ content }: { content: IndustryContent }) {
           </Card>
         </Section>
 
-        <Pricing tone="white" />
+        {PLATFORM_LAUNCH ? (
+          <>
+          <Section tone="white" divider>
+            <SectionHeading eyebrow="In the platform" title="The modules behind this page" lead="Incident reporting was where jobsafe started. The platform now carries the rest of the record; these are the pages for it." />
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {modulesWithPages().map((module) => (
+                <li key={module.id}>
+                  <Link href={module.path} className="flex h-full flex-col gap-3 rounded-control border border-line-1 bg-canvas p-5 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-grey-400 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+                    <span className="flex size-9 items-center justify-center rounded-control bg-brand-tint-08 text-brand">
+                      <PlatformIcon name={module.icon} className="size-[18px]" />
+                    </span>
+                    <span className="text-base font-bold text-ink-1">{module.name}</span>
+                    <span className="type-small text-ink-4">{module.promise}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="type-small mt-6 text-ink-5">
+              <Link href="/platform" className="font-semibold text-brand-strong hover:underline">
+                See the whole platform
+              </Link>
+              , or how it{' '}
+              <Link href="/platform/offline" className="font-semibold text-brand-strong hover:underline">
+                works offline
+              </Link>
+              .
+            </p>
+          </Section>
+          <PricingTeaser />
+          </>
+        ) : (
+          <Pricing tone="white" />
+        )}
 
-        <Faq items={content.faqs} lead={content.faqIntro} tone="grey" />
+        <Faq items={faqs} lead={content.faqIntro} tone="grey" />
 
         <CtaBand
           tone="white"

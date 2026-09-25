@@ -41,6 +41,7 @@ import {
   isPlatformLaunched,
   optionalUrl,
   priceBookLabel,
+  priceBookHasPrices,
   trialSentence,
 } from '../lib/brand.ts'
 import { STATIC_ROUTES, publicRoutes, isoDate } from '../lib/routes.ts'
@@ -150,14 +151,17 @@ describe('Phase 2 groundwork (Workstream E)', () => {
     assert.deepEqual(ctaFor('https://demo.jobsafe.cloud/', 'Open the live demo'), { label: 'Open the live demo', href: 'https://demo.jobsafe.cloud/' })
   })
 
-  test('the price book has the three tiers, all empty, and never invents a number', () => {
+  test('the price book has the three tiers with no prices set, and never invents a number', () => {
     assert.deepEqual(Object.keys(PRICE_BOOK), ['essentials', 'professional', 'enterprise'])
     for (const tier of Object.values(PRICE_BOOK)) {
-      assert.equal(tier.pricePerUserMonthExVat, null)
+      assert.equal(tier.pricePerUserMonthExVat, null, `${tier.id} must not carry a price until the inputs are agreed`)
       assert.equal(tier.annualTerms, null)
-      assert.deepEqual(tier.includedModules, [])
-      assert.equal(priceBookLabel(tier), 'Book a demo')
+      assert.ok(tier.includedModules.length > 0, `${tier.id} lists what it includes`)
     }
+    assert.equal(priceBookLabel(PRICE_BOOK.essentials), 'Book a demo for pricing')
+    assert.equal(priceBookLabel(PRICE_BOOK.professional), 'Book a demo for pricing')
+    assert.equal(priceBookLabel(PRICE_BOOK.enterprise), 'Talk to us')
+    assert.equal(priceBookHasPrices(), false)
     assert.equal(priceBookLabel({ ...PRICE_BOOK.essentials, pricePerUserMonthExVat: 4 }), '£4.00 + VAT per user per month')
   })
 })

@@ -159,6 +159,12 @@ const content: IndustryContent = {
     },
   ],
   faqIntro: 'Straight answers for the people who sign the tender and carry the liability.',
+  // Phase 2, flag on: the product attaches photos, video and PDFs; voice notes are not built.
+  launch: {
+    faqs: {
+      "Can we export evidence for a customer audit or an insurer?": "Yes. Every report is timestamped and exportable, with its photographs, video and documents linked to the record. That is the difference between handing a customer’s auditor an evidenced account and handing them a reconstruction written the week they asked for it.",
+    },
+  },
   closing: {
     title: 'Three years of evidence starts today.',
     copy: 'jobsafe would put in front of a customer’s auditor, an underwriter or the HSE about your operation today.',

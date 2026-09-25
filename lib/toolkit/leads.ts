@@ -36,7 +36,7 @@ export async function deliverLead(lead: StoredLead): Promise<DeliveryReport> {
 }
 
 /** 1. Forward to a CRM / Zapier / Make / n8n endpoint. */
-async function postWebhook(lead: StoredLead): Promise<DeliveryReport["webhook"]> {
+export async function postWebhook(lead: object): Promise<DeliveryReport["webhook"]> {
   const url = process.env.LEADS_WEBHOOK_URL;
   if (!url) return "skipped";
   try {
@@ -66,7 +66,7 @@ async function postWebhook(lead: StoredLead): Promise<DeliveryReport["webhook"]>
  * Note: serverless filesystems are ephemeral. This is a dev/self-host convenience,
  * not the system of record. Set LEADS_FILE to enable it.
  */
-async function appendToFile(lead: StoredLead): Promise<DeliveryReport["file"]> {
+export async function appendToFile(lead: object): Promise<DeliveryReport["file"]> {
   const target = process.env.LEADS_FILE;
   if (!target) return "skipped";
   try {
@@ -141,7 +141,7 @@ async function sendWelcomeEmail(lead: StoredLead): Promise<DeliveryReport["welco
   return sent ? "ok" : "failed";
 }
 
-interface OutboundEmail {
+export interface OutboundEmail {
   from: string;
   to: string[];
   subject: string;
@@ -150,7 +150,7 @@ interface OutboundEmail {
 }
 
 /** True when any email provider is configured. */
-function emailConfigured(): boolean {
+export function emailConfigured(): boolean {
   return Boolean(process.env.SENDGRID_API_KEY || process.env.RESEND_API_KEY);
 }
 
@@ -160,7 +160,7 @@ function emailConfigured(): boolean {
  * address by clicking a link); Resend is the fallback. Never throws — a failed
  * alert must never cost the download.
  */
-async function sendEmail(email: OutboundEmail): Promise<boolean> {
+export async function sendEmail(email: OutboundEmail): Promise<boolean> {
   const sendgridKey = process.env.SENDGRID_API_KEY;
   if (sendgridKey) return sendViaSendGrid(sendgridKey, email);
   const resendKey = process.env.RESEND_API_KEY;
@@ -215,7 +215,7 @@ async function sendViaResend(apiKey: string, email: OutboundEmail): Promise<bool
   }
 }
 
-function escapeHtml(value: string): string {
+export function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

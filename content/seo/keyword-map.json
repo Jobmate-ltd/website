@@ -1,0 +1,158 @@
+{
+  "$comment": "The keyword map: one row per page. `buildMetadata()` in lib/seo takes title, description and H1 from here; scripts/seo-check.mjs verifies the rendered page matches. `phase` is the phase the page arrives in. A row with `prelaunch` describes the page as it renders while NEXT_PUBLIC_PLATFORM_LAUNCH is off; the top-level fields are the post-launch row. Volumes are UK monthly searches; kd is keyword difficulty. Rows without volume data are marked null.",
+  "updated": "2026-09-25",
+  "rows": [
+    {
+      "path": "/",
+      "phase": 2,
+      "primary": { "keyword": "health and safety software", "volume": 390, "kd": 63 },
+      "supporting": [
+        { "keyword": "health and safety software uk", "volume": 70 },
+        { "keyword": "ehs software", "volume": 260 },
+        { "keyword": "health and safety app", "volume": 170 },
+        { "keyword": "workplace safety software", "volume": 110 },
+        { "keyword": "hse software", "volume": 70 }
+      ],
+      "title": "Health and safety software for UK operators | jobsafe",
+      "description": "Incidents, RIDDOR, risk assessments, permits, fleet checks and training in one offline-first app, hosted in the UK. Book a 30-minute walkthrough.",
+      "h1": "One health and safety platform. Built for UK law. Works without signal.",
+      "paa": ["What are some good health and safety apps?", "What is an EHS software?", "What are HSE software systems?"],
+      "prelaunch": {
+        "title": "jobsafe — incident reporting software for UK field teams",
+        "description": "Incident reporting software for UK field teams. Works offline, with photo, GPS and timestamp evidence. From £3.00 + VAT a licence. Start your free trial.",
+        "h1": "Record. Resolve. Prevent."
+      }
+    },
+    {
+      "path": "/platform",
+      "phase": 2,
+      "primary": { "keyword": "health and safety management software", "volume": 110, "kd": 32 },
+      "supporting": [
+        { "keyword": "health and safety compliance software", "volume": 110 },
+        { "keyword": "safety management software", "volume": 70 },
+        { "keyword": "ehs management software", "volume": 50 },
+        { "keyword": "health and safety management system software", "volume": 30 },
+        { "keyword": "occupational health and safety software", "volume": 40 }
+      ],
+      "title": "Health and safety management software | jobsafe",
+      "description": "One record from first report to last certificate: incidents, RIDDOR, risk and bowtie, permits, checklists, fleet, training and documents. Offline.",
+      "h1": "Health and safety management software, in one record"
+    },
+    {
+      "path": "/platform/incident-reporting",
+      "phase": 2,
+      "primary": { "keyword": "incident reporting software", "volume": 170, "kd": 57 },
+      "supporting": [
+        { "keyword": "incident management software", "volume": 170 },
+        { "keyword": "near miss reporting", "volume": 480 },
+        { "keyword": "incident reporting app", "volume": 30 },
+        { "keyword": "accident reporting software", "volume": 20 },
+        { "keyword": "near miss reporting software", "volume": 10 }
+      ],
+      "title": "Incident reporting software, offline and UK hosted | jobsafe",
+      "description": "Seven-step incident and near-miss reports from any phone, with photos, GPS, people, vehicles and RIDDOR triage. Works offline. Hosted in the UK.",
+      "h1": "Incident and near-miss reporting software",
+      "paa": ["What tool should be used for reporting incidents?"]
+    },
+    {
+      "path": "/platform/riddor",
+      "phase": 2,
+      "primary": { "keyword": "riddor reporting software", "volume": null, "kd": null },
+      "supporting": [
+        { "keyword": "riddor form", "volume": 320 },
+        { "keyword": "f2508", "volume": 170 },
+        { "keyword": "riddor reporting timescales", "volume": 210 }
+      ],
+      "title": "RIDDOR reporting software with deadlines built in | jobsafe",
+      "description": "Statutory RIDDOR 2013 triage with a live verdict, 10 and 15-day deadlines and an F2508 register. You submit to HSE; jobsafe keeps you on time.",
+      "h1": "RIDDOR reporting software"
+    },
+    {
+      "path": "/platform/risk-assessments",
+      "phase": 2,
+      "primary": { "keyword": "risk assessment software", "volume": 260, "kd": 77 },
+      "supporting": [
+        { "keyword": "risk assessment app", "volume": 140 },
+        { "keyword": "coshh risk assessment", "volume": 1300 },
+        { "keyword": "suitable and sufficient risk assessment", "volume": 70 }
+      ],
+      "title": "Risk assessment software with 5×5 scoring | jobsafe",
+      "description": "Digital risk assessments with 5×5 scoring, hierarchy of control, COSHH, fire, DSE and manual handling types, bowtie analysis and approval.",
+      "h1": "Risk assessment software",
+      "paa": ["What is the best risk assessment software?", "Can I do my own risk assessment?"]
+    },
+    {
+      "path": "/platform/permits-to-work",
+      "phase": 2,
+      "primary": { "keyword": "permit to work system", "volume": 390, "kd": 49 },
+      "supporting": [
+        { "keyword": "permit to work software", "volume": 30 },
+        { "keyword": "electronic permit to work", "volume": 20 },
+        { "keyword": "digital permit to work", "volume": 10 },
+        { "keyword": "hot work permit", "volume": 1300 }
+      ],
+      "title": "Permit to work system, gated on competence | jobsafe",
+      "description": "Hot works, confined space, height, electrical, excavation and roof permits that will not issue until contractor competence and a live risk assessment check out.",
+      "h1": "Permit to work software"
+    },
+    {
+      "path": "/platform/offline",
+      "phase": 2,
+      "primary": { "keyword": "offline health and safety app", "volume": null, "kd": null },
+      "supporting": [{ "keyword": "offline incident reporting", "volume": 0 }],
+      "title": "Offline health and safety app that syncs itself | jobsafe",
+      "description": "Every jobsafe module saves to the phone first and syncs when signal returns. Pending sync shows on each record, and the newest edit wins on every device.",
+      "h1": "An offline health and safety app for the yard, the basement and the cab"
+    },
+    {
+      "path": "/pricing",
+      "phase": 2,
+      "primary": { "keyword": "health and safety software pricing", "volume": 0, "kd": 15 },
+      "supporting": [{ "keyword": "health and safety software cost", "volume": 10 }],
+      "title": "Health and safety software pricing | jobsafe",
+      "description": "Published prices in pounds with VAT shown, per user per month. Essentials, Professional and Enterprise, plus a cost-of-paper calculator. No form needed.",
+      "h1": "Health and safety software pricing, in pounds with VAT shown"
+    },
+    {
+      "path": "/security",
+      "phase": 2,
+      "primary": { "keyword": "uk hosted health and safety software", "volume": null, "kd": null },
+      "supporting": [],
+      "title": "Security and UK data hosting | jobsafe",
+      "description": "Where jobsafe keeps your safety records: London hosting, each organisation walled off, private file storage, six role levels and CSV export.",
+      "h1": "Your safety records stay in the UK"
+    },
+    {
+      "path": "/demo",
+      "phase": 2,
+      "primary": { "keyword": "health and safety software demo", "volume": null, "kd": null },
+      "supporting": [],
+      "title": "Book a 30-minute jobsafe walkthrough | jobsafe",
+      "description": "See incidents, RIDDOR, risk assessments, permits and fleet checks running on a UK haulier’s setup, walked through live by someone who knows the product.",
+      "h1": "See jobsafe working"
+    },
+    {
+      "path": "/contact",
+      "phase": 2,
+      "primary": { "keyword": "contact jobsafe", "volume": null, "kd": null },
+      "supporting": [],
+      "title": "Contact sales and support | jobsafe",
+      "description": "Talk to jobsafe sales or support: sales@jobsafe.cloud, support@jobsafe.cloud or 0333 8000 883. Made by Jobmate Ltd, Wolverhampton.",
+      "h1": "Contact jobsafe"
+    },
+    {
+      "path": "/about",
+      "phase": 1,
+      "primary": { "keyword": "jobsafe", "volume": null, "kd": null },
+      "supporting": [],
+      "title": "About jobsafe | UK health and safety platform",
+      "description": "jobsafe is made by Jobmate Ltd in Wolverhampton: a UK health and safety platform for operators whose work happens in yards, sites, depots and vans.",
+      "h1": "About jobsafe",
+      "prelaunch": {
+        "title": "About jobsafe: UK incident reporting software | jobsafe",
+        "description": "jobsafe is a UK workplace incident reporting app made by Jobmate Ltd in Wolverhampton. Who we are, what the app does, and what it deliberately does not do.",
+        "h1": "About jobsafe, UK workplace incident reporting"
+      }
+    }
+  ]
+}

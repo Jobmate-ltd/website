@@ -88,6 +88,47 @@
   --animate-sheet-up: sheet-up var(--duration-fast) ease-in both;
   --animate-menu-in: menu-in var(--duration-base) var(--ease-out-expo) both;
   --animate-beam: beam 1400ms var(--ease-out-expo) 300ms both;
+  --animate-accordion-down: accordion-down var(--duration-base) var(--ease-out-expo);
+  --animate-accordion-up: accordion-up var(--duration-fast) ease-in;
+  /* A var() inside a theme value resolves on :root, so the per-instance duration is set inline by the component. */
+  --animate-orbit: orbit 40s linear infinite;
+
+  /* Radix accordion content, measured by the primitive. */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  /* Magic UI orbiting-circles: --angle (deg) and --radius (px) per child. */
+  @keyframes orbit {
+    0% {
+      transform: translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * -1px)) rotate(calc(var(--angle) * -1deg));
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * -1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
+    }
+  }
+
+  /* Magic UI border-beam: --beam-from / --beam-to (%) per instance; offset-path set inline. */
+  @keyframes border-beam {
+    from {
+      offset-distance: var(--beam-from, 0%);
+    }
+    to {
+      offset-distance: var(--beam-to, 100%);
+    }
+  }
 
   @keyframes marquee {
     from {
