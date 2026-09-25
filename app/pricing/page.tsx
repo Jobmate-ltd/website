@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { EMAIL_SALES, PLATFORM_LAUNCH, canonicalFor, priceBookHasPrices } from '@/lib/brand'
+import { EMAIL_SALES, PLATFORM_LAUNCH, canonicalFor, priceBookHasPrices, COMPARE_PAGES } from '@/lib/brand'
 import { buildMetadata, h1For } from '@/lib/seo'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema, type FaqEntry } from '@/lib/schema'
 import { Header } from '@/components/site/header'
@@ -97,6 +97,12 @@ export default function Page() {
               Hosting and security are on the <Link href="/security" className="font-semibold text-brand-strong hover:underline">security page</Link>; the product is on the{' '}
               <Link href="/platform" className="font-semibold text-brand-strong hover:underline">platform overview</Link>, and it{' '}
               <Link href="/platform/offline" className="font-semibold text-brand-strong hover:underline">works offline</Link>. Questions? <Link href="/contact" className="font-semibold text-brand-strong hover:underline">Contact us</Link>.
+              {COMPARE_PAGES ? (
+                <>
+                  {' '}
+                  Weighing up the suites? <Link href="/compare" className="font-semibold text-brand-strong hover:underline">How jobsafe compares</Link>, every claim sourced and dated.
+                </>
+              ) : null}
             </>
           }
         />

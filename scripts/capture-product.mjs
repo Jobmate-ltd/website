@@ -21,7 +21,15 @@
 // own seed. Developer-only chrome (the demo user switcher, the build footer)
 // is hidden with injected CSS before each capture. Evidence files attached
 // during a capture are real files pushed through the product's own upload
-// controls. Alt text lives in ALT below; edit it here, never in the .ts.
+// controls, and the progress notes, document versions, checklist answers and
+// signature in the later states are entered through the product's own
+// controls too. Alt text lives in ALT below; edit it here, never in the .ts.
+//
+// Not captured because the product has no such screen: an evidence lightbox
+// (report evidence tiles are static thumbnails; nothing opens on click). Note
+// also that document-versions-desktop shows a file at v2 after the same name
+// was uploaded twice; the product bumps the version number in place and has
+// no version-history list to capture.
 //
 // A few stills are supplied by the product team rather than driven (STATIC):
 // they are still the real product, exported from assets/product-source/ by the
@@ -138,6 +146,81 @@ const ALT = {
     alt: 'jobsafe on a phone while offline: the banner says you are offline and changes are saved on this device and will sync when you reconnect, the sync chip reads Offline, 1 pending, and a near-miss report filed offline shows Open, Low and an amber Pending sync pill beside its status.',
     caption: 'Offline first: the record is saved on the device and syncs when the signal returns.',
   },
+  'actions-list-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe actions register in list view on the Overdue tab: a stat strip for open, overdue, high-priority, in-progress and closed actions, an overdue warning banner, the Open, Overdue, Assigned to me, Closed and All tabs with counts, search and Filters, the List and Board toggle with Export and Raise action, and a table of the two overdue actions with mono ids ACT-3070 and ACT-3038, owner avatars, site, High priority pills, due dates marked 6d and 2d overdue, red Overdue status pills and a Complete quick action.',
+    caption: 'Overdue is worked out from the due date; every action carries an owner and a deadline.',
+  },
+  'action-detail-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe action ACT-3041, Replace damaged racking upright at Bay 14, open in a drawer over the actions register: an In progress status picker with High priority and Due in 4 days pills, inline controls for the owner Dan Rowley, priority and due date, then site, department, raised by and created rows, the description, two timestamped progress notes from Claire Mensah with the Add a progress note box under them, and Mark complete and Delete in the footer.',
+    caption: 'Status, owner and due date change inline; every note is stamped on the timeline.',
+  },
+  'fleet-list-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe fleet register in list view: a stat strip for assets on register, in service, off road, statutory date passed and due within 30 days, a warning banner for the passed statutory date, and a table of nine assets with mono ids like FLT-204, HGV-118 and MEW-302, asset type, site, keeper, MOT, service and inspection dates, with overdue dates in red (a LOLER inspection 9 days overdue, a service 4 days overdue), due-soon dates in amber and In service, Off road or Service due status pills.',
+    caption: 'Every vehicle and item of plant with its statutory dates, flagged before and after they lapse.',
+  },
+  'asset-detail-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe asset HGV-122, a Scania R 450 tractor unit BX25 TRD at Birmingham, open in a drawer over the fleet register: Service due, HGV tractor unit and 61,480 km pills, Detail and History tabs (two history entries), compliance rows for MOT / plating, road tax, insurance, next service in red as 4 days overdue, next safety inspection in amber as due in 20 days and the 6-weekly inspection cycle, then registration, make and model, site, department, keeper Adeola Adebayo, acquired date and the editable odometer, with the status select, Raise action and Remove in the footer.',
+    caption: 'MOT, tax, insurance, service and inspection dates on one record, with its history one tab away.',
+  },
+  'course-matrix-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe course and refresher matrix: a stat strip for network compliance, expired, expiring within 90 days, required but not held and courses tracked, a banner naming nine work-stopping competence gaps, the legend for Valid, Expiring, Expired, Booked, Not held and Not required cells, and the matrix of employees against Core H&S, Plant & operations, Driving & transport and Specialist course groups, critical courses marked with a warning, expiry dates in green cells, days left in amber, days expired in red and required courses not held shown as a red cross.',
+    caption: 'Valid, expiring, expired, booked, not held or not required, for every person and course.',
+  },
+  'development-plan-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe competency drawer for Adeola Adebayo, Supervisor, over the training matrix: current capability 70% against a target of 80%, a capability gap of 4 and 6 of 10 capable, the generated individual development plan listing five skills to take from their current level to target (working at height, fire warden, first aid at work, asbestos awareness and toolbox talk sign-off) with a priority line under each, the skill breakdown of current against target levels, the start of the outstanding and overdue list, and Generate development plan and Export record in the footer.',
+    caption: 'One click turns the gaps in the matrix into a development plan for that person.',
+  },
+  'documents-tree-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe document control: a note that you are signed in as Claire Mensah at access level 4 and folders above your level are locked, the folder tree with Policies and statements, Fleet and compliance, Risk assessments with Birmingham, Leeds and Wolverhampton sub-folders, Training and competence, Permits and contractors with Competence packs, and RIDDOR and investigations, each with its document count; the Policies and statements folder open showing 4 files, min level 1 and a Level 1+ access select, and the file list with PDF and DOC kind tags, version, size, uploader and date on each line (the seeded files are metadata only, shown with a No file chip), Current or Signed tags and a menu per file.',
+    caption: 'Folders carry a minimum access level; files carry their version, tag and uploader.',
+  },
+  'document-versions-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe document control with the Fleet and compliance folder open at min level 2: a LOLER thorough examination PDF uploaded twice through the Upload button is listed once as v2 with its size, uploader Claire Mensah, the upload date and a download button, above the seeded LOLER schedule spreadsheet at v6 and the operator licence PDF at v1, each tagged Current and marked metadata only with a No file chip.',
+    caption: 'Upload a file with the same name and it becomes the next version, not a duplicate.',
+  },
+  'dashboard-trend-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe dashboard filtered to the Birmingham depot, scrolled to the lower half: the last two reports of the live incident feed, the foot of the reports-by-category card, the hotspots by site card listing Birmingham, Bristol, Glasgow, Leeds and Wolverhampton with stacked category bars and totals for the last 30 days and Birmingham highlighted as the selected filter, and the incidents over time card below showing the last 12 weeks by category for Birmingham as a line chart with HSSE, near miss, incident and other legend counts, pins on the high-severity events and a Weekly or Monthly toggle.',
+    caption: 'Pick a depot in the hotspots and the whole dashboard, 12-week trend included, follows it.',
+  },
+  'bowtie-barrier-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe bowtie barrier drawer for Aisle-end convex mirrors, a preventive barrier on the threat Pedestrian walks into the FLT operating aisle, over the RA-101 worksheet: the barrier name field, the barrier type select reading Hardware, passive, the current effectiveness choice of Effective, Degraded, Failed or Not in place with Degraded selected, a barrier credit of 0.50 explained as type weight times effectiveness, a note field, one escalation factor, Mirrors dirty or misaligned, with its control Added to the weekly warehouse inspection, and Save barrier, Raise barrier action and delete in the footer.',
+    caption: 'Each barrier has a type, an honest effectiveness rating and the factors that defeat it.',
+  },
+  'bowtie-audit-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe bowtie barrier audit for RA-101 under the barrier diagram: the barrier type weighting legend (hardware passive ×1.25, hardware active ×1, hardware + human ×0.7, human procedural ×0.5, continuous ×0.85), the effectiveness multiplier legend (Effective ×1, Degraded ×0.4, Failed ×0, Not in place ×0), then the audit card reading 4 critical, 4 to watch and 2 to note with a Raise 8 barrier actions button and a list naming each threat or consequence with the barrier that is not in place, the barrier that is degraded, or the escalation factor that has no control.',
+    caption: 'The audit lists every missing, failed or degraded barrier and raises an action for each.',
+  },
+  'contractor-detail-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe contractor record for Clyde Industrial Cleaning, C04, tank and drainage cleaning, open in a drawer over the contractors and competence tab: Suspended and 4 issues pills, a banner reading Not competent to receive a permit that lists the suspension and the expired employer liability insurance, RAMS and accreditation, competence evidence rows for employer liability, RAMS, accreditation and last audit with Expired or Within 12 months pills, the company contact, phone and operatives, permit history with PTW-0450 Interceptor tank clean, yard drainage marked Blocked, and the status select and Chase pack button in the footer.',
+    caption: 'Insurance, RAMS, accreditation and audit dates decide whether a contractor can hold a permit.',
+  },
+  'checklist-templates-desktop': {
+    kind: 'desktop',
+    alt: 'jobsafe checklists on the Templates tab: a stat strip for completed today, completed this week, failed this week, in progress and templates, search and Filters, and a table of six templates with mono ids and their basis: Forklift pre-use inspection (PUWER 1998, L117 ACOP), HGV daily walkaround check (DVSA daily walkaround, Guide to maintaining roadworthiness), Hot works permit close-out, MEWP pre-use inspection (IPAF pre-use, LOLER 1998), Site induction sign-off and Weekly fire warden walk-round, each with category, frequency, site, item count, when and by whom it was last completed and a Start button.',
+    caption: 'DVSA walkaround, forklift and MEWP pre-use, fire warden and induction checks, ready to run.',
+  },
+  'walkaround-fail-phone': {
+    kind: 'phone',
+    alt: 'jobsafe HGV daily walkaround check running on a phone, with the completion reference and Discard in the sticky bar: item 2, tyres and wheels, marked Fail on its Pass, Fail and N/A buttons, the required Describe the defect box filled in about missing wheel-nut indicators and a loose nut, the note that a corrective action is raised from this description, an attached photo thumbnail with its remove control beside Add photo, then items 3 and 4 marked Pass with Add note and Add photo, and the sticky footer reading 4/8, 1 failed, Saved between Save & exit and Sign & submit.',
+    caption: 'Pass, fail or N/A each item; a fail needs a note and raises an action on submit.',
+  },
+  'checklist-signoff-phone': {
+    kind: 'phone',
+    alt: 'jobsafe sign-off sheet for the HGV daily walkaround check on a phone, Wolverhampton, WV24 KLM Volvo FH 460: 6 passed or answered, 1 failed and 1 action to raise, the failed tyres and wheels item listed, Signed by Claire Mensah with a Draw or Type choice, a signature drawn on the pad with Undo and Clear under it, the line that by signing you confirm the checks were carried out as recorded, and Back and Submit with defects buttons.',
+    caption: 'Sign on the glass or type your name; the failed item becomes an action due in seven days.',
+  },
 }
 /* ── supplied stills ────────────────────────────────────────────────────────
    Real product renders handed over as PNG rather than captured here. The
@@ -223,6 +306,17 @@ async function scrollUnderTopbar(page, locator, gap = 16) {
   await page.waitForTimeout(250)
 }
 
+/**
+ * Drops the focus ring a drawer puts on its first control and parks the
+ * pointer on an empty stretch of the topbar, so no hover or focus style
+ * lands in the frame. Only for states whose auto-focus is incidental.
+ */
+async function park(page) {
+  await page.evaluate(() => document.activeElement?.blur?.())
+  await page.mouse.move(900, 28)
+  await page.waitForTimeout(150)
+}
+
 const results = new Map()
 const failures = []
 let TMP = ''
@@ -259,13 +353,17 @@ async function attempt(id, fn) {
   }
 }
 
-/** Real evidence files: a photo, a close-up crop of it, and a one-page PDF. */
+/**
+ * Real evidence files: a photo, a close-up crop of it, a one-page PDF, and a
+ * LOLER report PDF with the photo embedded (uploaded twice to make a version).
+ */
 async function buildEvidence() {
   const dir = join(TMP, 'evidence')
   mkdirSync(dir, { recursive: true })
   const photo = join(dir, 'IMG_2041.jpg')
   const closeup = join(dir, 'IMG_2042.jpg')
   const pdf = join(dir, 'Witness statement.pdf')
+  const loler = join(dir, 'LOLER thorough examination FLT-204.pdf')
   await sharp(SEED_PHOTO).resize({ width: 1600 }).jpeg({ quality: 82 }).toFile(photo)
   const m = await sharp(SEED_PHOTO).metadata()
   const w = Math.round(m.width * 0.42)
@@ -284,32 +382,72 @@ async function buildEvidence() {
       'curtainsider. Vehicle held at the gate; load re-secured before departure.',
     ]),
   )
-  return { photo, closeup, pdf }
+  const jpeg = await sharp(SEED_PHOTO).resize({ width: 1200 }).jpeg({ quality: 80 }).toBuffer()
+  const jm = await sharp(jpeg).metadata()
+  writeFileSync(
+    loler,
+    minimalPdf(
+      [
+        'Report of thorough examination, LOLER 1998 reg. 9',
+        'North Star Logistics Ltd, Leeds depot',
+        'Equipment: FLT-204, Linde H30D counterbalance, plant no. FLT204',
+        'Examined in service; no defects found that require the truck to be taken out of use.',
+        'Next thorough examination due within 12 months.',
+      ],
+      { jpeg, width: jm.width, height: jm.height },
+    ),
+  )
+  return { photo, closeup, pdf, loler }
 }
 
-function minimalPdf(lines) {
+/** A one-page PDF of `lines` in Helvetica, optionally with a JPEG placed under the text. */
+function minimalPdf(lines, image) {
   const esc = (s) => s.replace(/[\\()]/g, (c) => '\\' + c)
-  const content =
+  let content =
     'BT /F1 12 Tf 72 760 Td 16 TL ' + lines.map((l) => `(${esc(l)}) Tj T*`).join(' ') + ' ET'
+  if (image) {
+    const w = 451
+    const h = Math.round((w * image.height) / image.width)
+    content += ` q ${w} 0 0 ${h} 72 ${Math.max(40, 730 - lines.length * 16 - h)} cm /Im1 Do Q`
+  }
   const objs = [
-    '<< /Type /Catalog /Pages 2 0 R >>',
-    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
-    `<< /Length ${Buffer.byteLength(content)} >>\nstream\n${content}\nendstream`,
-    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+    Buffer.from('<< /Type /Catalog /Pages 2 0 R >>'),
+    Buffer.from('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'),
+    Buffer.from(
+      `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >>${image ? ' /XObject << /Im1 6 0 R >>' : ''} >> >>`,
+    ),
+    Buffer.from(`<< /Length ${Buffer.byteLength(content)} >>\nstream\n${content}\nendstream`),
+    Buffer.from('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'),
+    ...(image
+      ? [
+          Buffer.concat([
+            Buffer.from(
+              `<< /Type /XObject /Subtype /Image /Width ${image.width} /Height ${image.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.jpeg.length} >>\nstream\n`,
+            ),
+            image.jpeg,
+            Buffer.from('\nendstream'),
+          ]),
+        ]
+      : []),
   ]
-  let out = '%PDF-1.4\n'
+  const parts = [Buffer.from('%PDF-1.4\n', 'latin1')]
+  let length = parts[0].length
   const offsets = []
   objs.forEach((o, i) => {
-    offsets.push(Buffer.byteLength(out))
-    out += `${i + 1} 0 obj\n${o}\nendobj\n`
+    offsets.push(length)
+    const chunk = Buffer.concat([Buffer.from(`${i + 1} 0 obj\n`), o, Buffer.from('\nendobj\n')])
+    parts.push(chunk)
+    length += chunk.length
   })
-  const xref = Buffer.byteLength(out)
-  out +=
-    `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` +
-    offsets.map((o) => `${String(o).padStart(10, '0')} 00000 n \n`).join('') +
-    `trailer\n<< /Size ${objs.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`
-  return Buffer.from(out, 'latin1')
+  parts.push(
+    Buffer.from(
+      `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` +
+        offsets.map((o) => `${String(o).padStart(10, '0')} 00000 n \n`).join('') +
+        `trailer\n<< /Size ${objs.length + 1} /Root 1 0 R >>\nstartxref\n${length}\n%%EOF\n`,
+      'latin1',
+    ),
+  )
+  return Buffer.concat(parts)
 }
 
 /* ── desktop flow ─────────────────────────────────────────────────────────── */
@@ -468,6 +606,196 @@ async function desktopFlow(browser, evidence) {
     await capture(page, 'actions-board-desktop')
   })
 
+  await attempt('actions-list-desktop', async () => {
+    await open(page, '/actions?tab=overdue')
+    await page.getByRole('tab', { name: /^Overdue/, selected: true }).waitFor()
+    await page.getByRole('radio', { name: 'List' }).click()
+    await page.getByRole('table', { name: 'Actions, overdue' }).waitFor()
+    await settle(page)
+    await capture(page, 'actions-list-desktop')
+  })
+
+  await attempt('action-detail-desktop', async () => {
+    // ACT-3041: in progress, high priority, due in 4 days. The seed gives open actions no notes,
+    // so two are entered through the drawer's own "Add a progress note" control first.
+    await open(page, '/actions?open=ACT-3041')
+    const drawer = page.getByRole('dialog', { name: /Replace damaged racking upright/ })
+    await drawer.waitFor()
+    for (const text of [
+      'Racking contractor booked for Thursday. Bay 14 run cordoned off and isolated in the meantime.',
+      'Upright replaced and run re-inspected; awaiting the SEMA report before reloading.',
+    ]) {
+      await drawer.getByLabel('Add a progress note').fill(text)
+      await drawer.getByRole('button', { name: 'Add', exact: true }).click()
+      await drawer.getByText(text).waitFor()
+      // The mutation clears the box on success; wait for that so the next fill is not wiped.
+      await page.waitForFunction(
+        () => document.querySelector('textarea[aria-label="Add a progress note"]')?.value === '',
+      )
+    }
+    await settle(page)
+    await capture(page, 'action-detail-desktop')
+    await page.keyboard.press('Escape')
+  })
+
+  await attempt('fleet-list-desktop', async () => {
+    await open(page, '/fleet')
+    await page.getByRole('table', { name: 'Fleet register' }).waitFor()
+    await page.getByText(/^\d+d overdue$/).first().waitFor()
+    await capture(page, 'fleet-list-desktop')
+  })
+
+  await attempt('asset-detail-desktop', async () => {
+    // HGV-122: service overdue, inspection due soon, keeper, odometer and two history entries.
+    await open(page, '/fleet?open=HGV-122')
+    const drawer = page.getByRole('dialog', { name: /^HGV-122/ })
+    await drawer.getByRole('tab', { name: 'Detail', selected: true }).waitFor()
+    await drawer.getByText('Next safety inspection').waitFor()
+    await settle(page)
+    await park(page)
+    await capture(page, 'asset-detail-desktop')
+    await page.keyboard.press('Escape')
+  })
+
+  await attempt('course-matrix-desktop', async () => {
+    await open(page, '/training/courses')
+    await page.getByRole('note', { name: 'Cell legend' }).waitFor()
+    await page.getByRole('table', { name: /^Training matrix/ }).waitFor()
+    await park(page)
+    await capture(page, 'course-matrix-desktop')
+  })
+
+  await attempt('development-plan-desktop', async () => {
+    await open(page, '/training')
+    await page.getByRole('heading', { level: 1 }).waitFor()
+    // Row headers are buttons that open the person's drawer; Adeola Adebayo has five gaps to plan.
+    await page.locator('th[scope="row"] button').filter({ hasText: 'Adeola Adebayo' }).first().click()
+    const drawer = page.getByRole('dialog', { name: 'Adeola Adebayo' })
+    await drawer.getByRole('button', { name: 'Generate development plan' }).click()
+    await drawer.getByText(/Individual development plan, Adeola Adebayo/).waitFor()
+    await settle(page)
+    await capture(page, 'development-plan-desktop')
+    await page.keyboard.press('Escape')
+  })
+
+  await attempt('documents-tree-desktop', async () => {
+    await open(page, '/documents')
+    const folders = page.getByRole('navigation', { name: 'Folders' })
+    await folders.getByRole('button', { name: /^Policies and statements/ }).click()
+    await page.getByRole('combobox', { name: 'Minimum access level for Policies and statements' }).waitFor()
+    await page.getByRole('list', { name: 'Documents' }).getByRole('listitem').first().waitFor()
+    await settle(page)
+    await capture(page, 'documents-tree-desktop')
+  })
+
+  await attempt('document-versions-desktop', async () => {
+    if (!(await page.getByRole('navigation', { name: 'Folders' }).count())) await open(page, '/documents')
+    const folders = page.getByRole('navigation', { name: 'Folders' })
+    await folders.getByRole('button', { name: /^Fleet and compliance/ }).click()
+    await page.getByRole('combobox', { name: 'Minimum access level for Fleet and compliance' }).waitFor()
+    // The same file twice through the product's Upload control: the second upload becomes v2.
+    const name = 'LOLER thorough examination FLT-204.pdf'
+    const row = page.getByRole('list', { name: 'Documents' }).getByRole('listitem').filter({ hasText: name })
+    const input = page.locator('input[aria-label="Upload files"]')
+    await input.setInputFiles(evidence.loler)
+    await row.getByText(/^v1 ·/).waitFor()
+    await input.setInputFiles(evidence.loler)
+    await row.getByText(/^v2 ·/).waitFor()
+    await row.getByRole('link', { name: `Download ${name}` }).waitFor()
+    await settle(page)
+    await capture(page, 'document-versions-desktop')
+  })
+
+  await attempt('dashboard-trend-desktop', async () => {
+    // Hotspots plus the trend span ~1000 CSS px, so like report-detail this renders at 1760×1100
+    // CSS with a matching scale factor (still 2880×1800 output). Its own context also keeps the
+    // Birmingham depot filter, a per-device preference, away from the other captures.
+    const W = 1760
+    const H = 1100
+    const ctx = await browser.newContext({
+      viewport: { width: W, height: H },
+      deviceScaleFactor: (DESKTOP.width * DESKTOP.scale) / W,
+      locale: 'en-GB',
+      timezoneId: 'Europe/London',
+      colorScheme: 'light',
+      reducedMotion: 'reduce',
+    })
+    try {
+      const p = await ctx.newPage()
+      p.setDefaultTimeout(45_000)
+      await open(p, '/')
+      await p.getByRole('heading', { level: 1, name: 'Dashboard' }).waitFor()
+      await p.getByRole('group', { name: 'Sites' }).getByRole('button', { name: /Birmingham/ }).click()
+      await p.getByRole('button', { name: /^Site filter: Birmingham/ }).waitFor()
+      await settle(p)
+      await scrollUnderTopbar(p, p.getByRole('heading', { name: 'Hotspots by site' }), 20)
+      const chart = await p.getByRole('region', { name: /^Incidents over time chart/ }).boundingBox()
+      if (!chart || chart.y + chart.height > H) {
+        throw new Error(`trend chart not in frame (bottom at y=${chart ? chart.y + chart.height : 'n/a'})`)
+      }
+      await capture(p, 'dashboard-trend-desktop', {
+        clip: { x: 0, y: 0, width: W, height: H },
+        size: { width: DESKTOP.width * DESKTOP.scale, height: DESKTOP.height * DESKTOP.scale },
+      })
+    } finally {
+      await ctx.close()
+    }
+  })
+
+  const bowtie = async () => {
+    const dialog = page.getByRole('dialog')
+    if (await dialog.count()) {
+      await page.keyboard.press('Escape')
+      await dialog.first().waitFor({ state: 'detached' }).catch(() => {})
+    }
+    if (!(await page.getByRole('heading', { name: 'Barrier diagram' }).count())) {
+      await worksheet()
+      await page.getByRole('radio', { name: 'Bowtie' }).click()
+      await page.getByRole('heading', { name: 'Barrier diagram' }).waitFor()
+    }
+  }
+
+  await attempt('bowtie-barrier-desktop', async () => {
+    await bowtie()
+    // A degraded passive-hardware barrier with one controlled escalation factor.
+    await page.getByRole('button', { name: /^Aisle-end convex mirrors:/ }).click()
+    const drawer = page.getByRole('dialog', { name: 'Barrier', exact: true })
+    await drawer.getByRole('radiogroup', { name: 'Current effectiveness' }).waitFor()
+    await drawer.getByRole('textbox', { name: 'Escalation factor 1', exact: true }).waitFor()
+    await settle(page)
+    await capture(page, 'bowtie-barrier-desktop')
+    await page.keyboard.press('Escape')
+    await drawer.waitFor({ state: 'detached' })
+  })
+
+  await attempt('bowtie-audit-desktop', async () => {
+    await bowtie()
+    await page.getByRole('heading', { name: 'Barrier audit' }).waitFor()
+    // Frame from the weighting legend so the audit list has its key above it.
+    await scrollUnderTopbar(page, page.getByText('Barrier type, weighting', { exact: true }), 40)
+    await settle(page)
+    await capture(page, 'bowtie-audit-desktop')
+  })
+
+  await attempt('contractor-detail-desktop', async () => {
+    // C04: suspended, every evidence date expired, one blocked permit in its history.
+    await open(page, '/permits?contractor=C04')
+    const drawer = page.getByRole('dialog', { name: 'Clyde Industrial Cleaning' })
+    await drawer.getByRole('button', { name: 'Chase pack' }).waitFor()
+    await drawer.getByRole('list', { name: 'Permits for this contractor' }).waitFor()
+    await settle(page)
+    await park(page)
+    await capture(page, 'contractor-detail-desktop')
+    await page.keyboard.press('Escape')
+  })
+
+  await attempt('checklist-templates-desktop', async () => {
+    await open(page, '/checklists')
+    await page.getByRole('table', { name: 'Checklist templates' }).waitFor()
+    await page.getByRole('link', { name: 'Start HGV daily walkaround check' }).waitFor()
+    await capture(page, 'checklist-templates-desktop')
+  })
+
   await context.close()
 }
 
@@ -598,6 +926,66 @@ async function phoneFlow(browser, evidence) {
       await capture(page, 'report-new-riddor-phone')
     })
   }
+
+  /* DVSA walkaround (CL-001) on a phone: depot and vehicle picked, item 2 failed with a defect
+     note and a real photo through the item's own control, then the sign-off sheet signed on
+     the pad. The completion, its autosave and the defect count are the product's own. */
+  const items = page.getByRole('list', { name: 'Checklist items' }).getByRole('listitem')
+  const walkaroundToFail = async () => {
+    await open(page, '/checklists/CL-001')
+    await items.first().waitFor()
+    await page.getByRole('combobox', { name: /^Depot \/ site/ }).selectOption('WLV')
+    await page.getByRole('combobox', { name: /^HGV being checked/ }).selectOption('HGV-118')
+    await items.nth(0).getByRole('radio', { name: 'Pass' }).click()
+    await items.nth(1).getByRole('radio', { name: 'Fail' }).click()
+    await items
+      .nth(1)
+      .getByLabel('Describe the defect')
+      .fill(
+        'Nearside rear wheel: two wheel-nut indicators missing and one nut visibly loose. Not to be driven until torqued and re-checked.',
+      )
+    await items.nth(1).locator('input[type="file"]').setInputFiles(evidence.closeup)
+    await items.nth(1).getByRole('img', { name: /^Photo 1 for/ }).waitFor()
+    await items.nth(2).getByRole('radio', { name: 'Pass' }).click()
+    await items.nth(3).getByRole('radio', { name: 'Pass' }).click()
+    await page.getByRole('region', { name: 'Checklist actions' }).getByText(/4\/8 · 1 failed · Saved$/).waitFor()
+  }
+  let onWalkaround = false
+
+  await attempt('walkaround-fail-phone', async () => {
+    await walkaroundToFail()
+    onWalkaround = true
+    await settle(page)
+    await scrollUnderTopbar(page, items.nth(1), 8)
+    await capture(page, 'walkaround-fail-phone')
+  })
+
+  await attempt('checklist-signoff-phone', async () => {
+    if (!onWalkaround) await walkaroundToFail()
+    await items.nth(4).getByRole('radio', { name: 'Pass' }).click()
+    await items.nth(5).getByRole('radio', { name: 'Yes' }).click()
+    await items.nth(6).getByRole('spinbutton').fill('148412')
+    await page.getByRole('button', { name: 'Sign & submit' }).click()
+    const sheet = page.getByRole('dialog', { name: 'Sign off this checklist' })
+    await sheet.waitFor()
+    // Sign on the pad with pointer strokes.
+    const box = await sheet.getByRole('img', { name: /^Signed by .*: empty/ }).boundingBox()
+    if (!box) throw new Error('signature pad not visible')
+    const pts = [
+      [0.1, 0.72], [0.18, 0.3], [0.27, 0.68], [0.35, 0.34], [0.44, 0.7],
+      [0.53, 0.42], [0.62, 0.62], [0.72, 0.36], [0.82, 0.6], [0.9, 0.44],
+    ]
+    await page.mouse.move(box.x + box.width * pts[0][0], box.y + box.height * pts[0][1])
+    await page.mouse.down()
+    for (const [fx, fy] of pts.slice(1)) {
+      await page.mouse.move(box.x + box.width * fx, box.y + box.height * fy, { steps: 8 })
+    }
+    await page.mouse.up()
+    await sheet.getByRole('img', { name: /^Signed by .*: signed$/ }).waitFor()
+    await sheet.getByRole('button', { name: 'Submit with defects' }).waitFor()
+    await settle(page)
+    await capture(page, 'checklist-signoff-phone')
+  })
 
   await context.close()
 }

@@ -153,7 +153,7 @@ describe('no checklists (§0.4)', () => {
 
   test('still catches the claim on a Phase 1 surface', () => {
     assert.ok(has(auditFixture({ 'components/home/home-phase-1.tsx': 'title: "Inspection checklists"' }), RULES.NO_CHECKLISTS))
-    assert.ok(has(auditFixture({ 'app/industries/construction/page.tsx': 'const s = "site checklists"' }), RULES.NO_CHECKLISTS))
+    assert.ok(has(auditFixture({ 'app/industries/window-door-fitters/page.tsx': 'const s = "site checklists"' }), RULES.NO_CHECKLISTS))
     assert.ok(has(auditFixture({ 'lib/site.ts': "label: 'Checklists'" }), RULES.NO_CHECKLISTS))
   })
 

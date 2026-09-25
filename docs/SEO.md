@@ -89,7 +89,10 @@ Add a page to the registry when you add it to the map.
 
 ```
 NEXT_PUBLIC_PLATFORM_LAUNCH=true npm run build && npm run start &
-node scripts/seo-check.mjs --flag on
+node scripts/seo-check.mjs --flag on --compare off
+
+NEXT_PUBLIC_PLATFORM_LAUNCH=true NEXT_PUBLIC_COMPARE_PAGES=true npm run build && npm run start &
+node scripts/seo-check.mjs --flag on --compare on
 
 npm run build && npm run start &
 node scripts/seo-check.mjs --flag off
@@ -97,11 +100,14 @@ node scripts/seo-check.mjs --flag off
 
 Against a running production build it checks, per row: `<title>`, meta
 description and the single H1 equal the row for that state; the canonical
-is self-referencing; with the flag off every launch-only page is a 404;
-with the flag on every declared link is inside `<main>` and every Phase 2
-page has ≥ 3 in / ≥ 3 out; and in both states every URL that existed before
-Phase 2 still returns 200. It exits 1 on any miss and runs in CI for both
-states.
+is self-referencing; a page that does not exist in that state is a 404
+(every launch-only page with the flag off, the comparisons with
+`--compare off`, a module page whose Phase 3 input in `lib/brand.ts` is
+false); with the flag on every declared link is inside `<main>` and every
+platform page that exists has ≥ 3 in / ≥ 3 out, counted over the registry
+filtered to the pages that exist (`registryFor()`); and in both states
+every URL that existed before Phase 2 still returns 200. It exits 1 on any
+miss and runs in CI for all three states.
 
 ## 6. Build-time guards
 
@@ -159,3 +165,90 @@ it. When they do:
 
 Pointing Sign up and Log in at the platform, and adding a live demo, are
 separate decisions made after the flag, not with it.
+
+## 8. Phase 3: modules, industries, tools and comparisons
+
+Twenty-two rows joined the map on 25/09/2026, each with the title, meta
+description and H1 the Phase 3 brief set verbatim: the seven remaining
+module pages and the two gated ones, the seven industry pages (four rebuilt,
+three new), the `/tools` hub and its three tools, and the `/compare` hub and
+its three comparisons. The four rebuilt industry rows carry a `prelaunch`
+copy of their Phase 1 metadata so the flag-off render is unchanged; the
+comparison rows carry `compare: true` and the two gated module rows carry
+`gated: <input>`, which `seo-check` reads to expect a 404 in the states
+where those pages do not exist.
+
+### Who owns which query
+
+Two pages must never compete for the same query. The owner is the page
+whose title and H1 carry the phrase; the other page links to it and does
+not use the phrase in its title.
+
+| Query | Owner | Not the owner |
+| --- | --- | --- |
+| riddor reportable incidents, is it riddor reportable | `/tools/riddor-checker` | `/insights/riddor-reporting-explained` (links the checker) |
+| riddor reporting, what is riddor | `/insights/riddor-reporting-explained` | `/tools/riddor-checker` |
+| riddor reporting software (software intent) | `/platform/riddor` | both of the above (they link it) |
+| accident investigation, how to investigate | `/insights/how-to-investigate-a-workplace-accident` | `/platform/investigations` |
+| incident investigation software (software intent) | `/platform/investigations` | the article (it links the module) |
+| 5x5 risk matrix, risk matrix calculator | `/tools/risk-matrix` | `/platform/risk-assessments` (links the tool) |
+| five steps to risk assessment | a Phase 4 guide | `/tools/risk-matrix` (explains the five steps, links HSE) |
+| accident frequency rate calculation | `/tools/accident-frequency-rate` | `/industries/transport-logistics` (links the tool) |
+| bowtie diagram, bowtie analysis | `/platform/bowtie-analysis` | `/platform/risk-assessments` (links it both ways) |
+| <competitor> alternative | `/compare/<competitor>` | `/pricing` (links the hub) |
+
+### Internal-link rules
+
+- Every module page links `/platform`, its connected modules, every other
+  live module page (the "rest of the platform" list), the industries it is
+  "built for", the tool that runs its logic, its cluster articles and
+  `/demo`. The bowtie page and `/platform/risk-assessments` link each other.
+- Every industry page links the module behind each of its six pains, two
+  tools, `/platform` and `/demo`. The homepage links all seven industries.
+- Every tool links the module it is built from, its article(s), the other
+  two tools, the hub and `/demo`. Articles that cluster around a tool link
+  it back through `ModuleBacklink`.
+- Every comparison links `/pricing`, `/demo`, the hub, its two siblings,
+  the modules its rows cite, `/security` and `/platform/offline`.
+- Gated module pages (`/platform/checklists`, `/platform/contractors`) are
+  in the registry so their links are ready the day they exist; until then
+  `registryFor()` drops them everywhere.
+- Every new page has ≥ 3 contextual links in and out; `seo-check` proves it.
+
+### Schema by page type
+
+| Page type | Nodes |
+| --- | --- |
+| Module page, industry page | `SoftwareApplication` (the platform node) + `BreadcrumbList`; the FAQ component adds `FAQPage` |
+| Tool | `WebApplication` (its own `@id`, free, no rating) + `HowTo` (built from the rendered steps) + `BreadcrumbList` + `FAQPage` |
+| Tools hub, compare hub | `ItemList` + `BreadcrumbList` |
+| Comparison | `BreadcrumbList` + `FAQPage`; no node of any kind for the competitor, no rating |
+
+`schema-check` validates the required properties of every node on every
+route in the state under test, including the comparisons with
+`--compare on`.
+
+### Comparative advertising
+
+The comparison pages follow CAP Code section 3, rules 3.32 to 3.43: every
+competitor claim carries its source URL and the date it was checked, the
+pages say where the competitor is better, no competitor is rated, and no
+competitor logo or screenshot appears. Competitor-side copy lives in the
+fields `scripts/claims-check.mjs` names in `COMPETITOR_FIELDS` and renders
+inside elements marked `data-claims="competitor"`, so the checker scans
+only what the pages say about jobsafe. `docs/MONITORING.md` lists the
+pages to re-check and the rows each one affects.
+
+### Publications to pitch
+
+Five titles whose readers are the buyers these pages are written for, each
+with the page that fits its audience:
+
+1. Transport Operator (hauliers, transport managers): `/industries/transport-logistics` and the accident frequency rate calculator.
+2. SHP (safety and health practitioners): the RIDDOR checker and `/platform/bowtie-analysis`.
+3. IOSH Magazine (members, mostly practitioners): the 5×5 risk matrix calculator and the RIDDOR checker.
+4. Logistics UK, the association's member titles: `/industries/transport-logistics` and `/platform/fleet-compliance`.
+5. RHA's Roadway (Road Haulage Association members): `/industries/transport-logistics` and the walkaround-to-action story.
+
+A pitch offers the tool or the page as a resource the title can link, not
+a product announcement.

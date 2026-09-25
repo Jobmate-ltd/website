@@ -294,6 +294,41 @@ export function isPlatformLaunched(env: NodeJS.ProcessEnv = process.env): boolea
   return env.NEXT_PUBLIC_PLATFORM_LAUNCH === 'true'
 }
 
+/**
+ * Phase 3 inputs. Each one answers "has the product shipped this?" and each
+ * `false` limits what the site may say: a page gated on it is unbuilt (404,
+ * out of the menu and the sitemap) and no copy claims the capability. The
+ * brief left every value in brackets, so every value is `false`, the only
+ * reading that cannot produce a false claim; each was checked against the
+ * product code on 25/09/2026 (docs/PHASE-3.md). Flip one only when the
+ * product ships it; the page, the menu item and the sitemap entry follow.
+ */
+export const PHASE_3_INPUTS = {
+  /** Can customers create their own checklist templates in the platform? Gates /platform/checklists. */
+  checklistBuilderShipped: false,
+  /** Can customers add and edit contractors in the platform? Gates /platform/contractors. */
+  contractorCrudShipped: false,
+  /** Are owners emailed about actions? While false, copy says "the in-app bell". */
+  emailAlertsShipped: false,
+  /** Can records be imported from CSV? While false, compare pages say "Talk to us about moving your records". */
+  csvImportShipped: false,
+  /** Does the product generate PDFs? While false, nothing offers a PDF. */
+  pdfExportShipped: false,
+} as const
+
+export type Phase3Input = keyof typeof PHASE_3_INPUTS
+
+/**
+ * The comparison pages (Part D) need sign-off before comparative advertising
+ * goes live, so they sit behind their own flag as well as the launch flag.
+ * `true` only when NEXT_PUBLIC_COMPARE_PAGES is exactly "true".
+ */
+export const COMPARE_PAGES = process.env.NEXT_PUBLIC_COMPARE_PAGES === 'true'
+
+export function comparePagesEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.NEXT_PUBLIC_COMPARE_PAGES === 'true'
+}
+
 /** Reads an optional absolute URL from the environment. Empty → null. */
 export function optionalUrl(name: string, env: NodeJS.ProcessEnv = process.env): string | null {
   const value = env[name]?.trim()

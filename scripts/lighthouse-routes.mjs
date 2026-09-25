@@ -7,7 +7,7 @@
  *
  *   Accessibility 100 · SEO 100 · Best practices ≥ 95 · Performance ≥ 90
  *
- *   node scripts/lighthouse-routes.mjs [--base http://localhost:3000] [--out docs/lighthouse/phase-1] [--routes phase-1|phase-2]
+ *   node scripts/lighthouse-routes.mjs [--base http://localhost:3000] [--out docs/lighthouse/phase-1] [--routes phase-1|phase-2|phase-3]
  *
  * Needs the `lighthouse` CLI on the path (npx resolves it) and a Chrome;
  * point CHROME_PATH at one if the machine has no download access. Run it on
@@ -40,6 +40,12 @@ const PRESETS = {
     { slug: 'platform', path: '/platform' },
     { slug: 'pricing', path: '/pricing' },
     { slug: 'module-riddor', path: '/platform/riddor' },
+  ],
+  // Phase 3 Definition of done: the RIDDOR checker, the transport industry page and one module page.
+  'phase-3': [
+    { slug: 'tool-riddor-checker', path: '/tools/riddor-checker' },
+    { slug: 'industry-transport-logistics', path: '/industries/transport-logistics' },
+    { slug: 'module-fleet-compliance', path: '/platform/fleet-compliance' },
   ],
 }
 const preset = flag('--routes', 'phase-1')

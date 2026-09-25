@@ -30,8 +30,10 @@ import {
   PRICE_BOOK,
   priceBookLabel,
 } from '@/lib/brand'
-import { INDUSTRY_LINKS } from '@/lib/site'
+import { COMPARE_LINKS, FREE_TOOL_LINKS, INDUSTRY_LINKS, PLATFORM_INDUSTRY_LINKS } from '@/lib/site'
 import { MODULES } from '@/lib/platform'
+import { routeExists } from '@/lib/routes'
+import { modulePage } from '@/lib/platform-modules'
 
 /**
  * /llms.txt — a plain-text summary for AI crawlers, generated from
@@ -68,8 +70,12 @@ ${tiers}
 - Ask for pricing: ${SITE_URL}/pricing
 
 ## Industries
-${INDUSTRY_LINKS.map((industry) => `- ${industry.label}: ${SITE_URL}${industry.href}`).join('\n')}
+${PLATFORM_INDUSTRY_LINKS.filter((industry) => routeExists(industry.href, true)).map((industry) => `- ${industry.label}: ${industry.description} ${SITE_URL}${industry.href}`).join('\n')}
 
+## Free tools (the product's own logic, in the browser, no sign-up)
+${FREE_TOOL_LINKS.filter((tool) => routeExists(tool.href, true)).map((tool) => `- ${tool.label}: ${tool.description} ${SITE_URL}${tool.href}`).join('\n')}
+- Bowtie analysis, a view inside every risk assessment: ${SITE_URL}${modulePage('bowtie')?.path ?? '/platform/risk-assessments'}
+${COMPARE_LINKS.filter((link) => routeExists(link.href, true)).length ? `\n## Comparisons (every claim sourced and dated; CAP Code section 3)\n${COMPARE_LINKS.filter((link) => routeExists(link.href, true)).map((link) => `- ${link.label}: ${SITE_URL}${link.href}`).join('\n')}\n` : ''}
 ## Company
 ${MAKER_LINE} ${LEGAL_NAME} is based at ${ADDRESS_LINE}, United Kingdom. ${HOSTING_LINE}: ${HOSTING_DETAIL}.
 - Platform: ${SITE_URL}/platform

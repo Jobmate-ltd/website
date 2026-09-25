@@ -93,8 +93,13 @@ retired from the site so it cannot come back.
 - SafetyCulture renamed itself **Mitti** on 11/08/2026; safetyculture.com
   redirects to mitti.com. Write "Mitti (formerly SafetyCulture)" on first
   mention.
-- Evotix and EcoOnline publish no prices and gate demos behind 7- and 9-field
-  forms. Mitti prices in USD only and has no UK data region.
+- Evotix and EcoOnline publish no prices and gate demos behind 5- and 9-field
+  forms (checked 25/09/2026; every field required). Mitti prices in USD only
+  and has no UK data region; its identity and product analytics data are held
+  in the US whichever region the rest of an organisation's data is in.
+- The comparison pages (`/compare`, Phase 3) carry the sourced, dated version
+  of every such fact and sit behind `NEXT_PUBLIC_COMPARE_PAGES` until signed
+  off; `docs/MONITORING.md` lists the pages to re-check.
 
 ## 6. Design system
 
@@ -293,4 +298,7 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
 | Build guards | `scripts/seo-audit.mjs`, `test/seo.test.mjs`, `test/brand.test.mjs` |
 | Accessibility and consent e2e | `e2e/*.spec.ts`, `playwright.config.ts`, `.github/workflows/ci.yml` |
 | Screenshots | `scripts/screenshot-routes.mjs`, `docs/screenshots/` |
-| Phase notes | `docs/PHASE-1.md` |
+| Industry pages (Phase 3) | `lib/industries/*.ts` (content, facts with sources), `components/industries/industry-page.tsx` |
+| Free tools and the product logic they run | `lib/product-logic/` (generated, `docs/PRODUCT-LOGIC.md`), `lib/tools/`, `components/tools/`, `app/tools/` |
+| Comparisons | `lib/compare.ts`, `components/compare/`, `app/compare/`, `docs/MONITORING.md` |
+| Phase notes | `docs/PHASE-1.md`, `docs/PHASE-2.md`, `docs/PHASE-3.md` |

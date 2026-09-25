@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ArrowRight, Download, FileText } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Calculator, Download, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PLATFORM_LAUNCH, canonicalFor } from '@/lib/brand'
-import { FAMILIES, MODULES, moduleById, modulesWithPages, type ModuleId } from '@/lib/platform'
-import { modulePage } from '@/lib/platform-modules'
+import { FAMILIES, MODULES, moduleById } from '@/lib/platform'
+import { liveModulePages, moduleForPage, modulePage, modulePageLive, modulePageName, type ModulePageId } from '@/lib/platform-modules'
+import { PLATFORM_INDUSTRY_LINKS } from '@/lib/site'
+import { routeExists } from '@/lib/routes'
 import { clusterArticlesFor, linksFrom } from '@/lib/seo/links'
 import { h1For } from '@/lib/seo'
 import { getPostBySlug } from '@/lib/insights'
@@ -31,37 +33,43 @@ import { FaqAccordion } from '@/components/platform/faq-accordion'
  * ModulePageTemplate — every module page, in the brief's order: breadcrumb,
  * family eyebrow, hero (SEO H1 from the keyword map, display line, lead,
  * CTAs, screenshot), proof chips, three pains mapped to three outcomes,
- * three FeatureRows with real screens, "Connected to", the UK regulation
- * box, the FAQ, previous/next module, CTA. Driven entirely by the typed
- * content object in lib/platform-modules.ts; Phase 3 adds a module by adding
- * an object and a route file.
+ * three FeatureRows with real screens, "Connected to", "Built for" (the
+ * industry pages), the UK regulation box, the FAQ, "Try it free" (the tool
+ * that runs the same logic), previous/next module, CTA. Driven entirely by
+ * the typed content objects in lib/platform-modules.ts and
+ * lib/platform-modules-phase-3.ts; a page gated on a Phase 3 input is 404
+ * until the product ships it.
  *
  * @example
  *   // app/platform/riddor/page.tsx
  *   export default function Page() { return <ModulePageTemplate id="riddor" /> }
  */
-export function ModulePageTemplate({ id }: { id: ModuleId }) {
+export function ModulePageTemplate({ id }: { id: ModulePageId }) {
   if (!PLATFORM_LAUNCH) notFound()
   const page = modulePage(id)
-  if (!page) notFound()
-  const mod = moduleById(id)
+  if (!page || !modulePageLive(page)) notFound()
+  const mod = moduleForPage(id)
+  const name = modulePageName(id)
   const family = FAMILIES[mod.family]
   const h1 = h1For(page.path)
   const crumbs = [
     { name: 'Home', href: '/' },
     { name: 'Platform', href: '/platform' },
-    { name: mod.name, href: page.path },
+    { name, href: page.path },
   ]
-  const pages = modulesWithPages()
+  const pages = liveModulePages()
   const position = pages.findIndex((m) => m.id === id)
   const previous = pages[(position - 1 + pages.length) % pages.length]
   const next = pages[(position + 1) % pages.length]
   const connected = page.connected.map(moduleById)
+  const industries = (page.industries ?? []).map((href) => PLATFORM_INDUSTRY_LINKS.find((link) => link.href === href)).filter((link): link is NonNullable<typeof link> => Boolean(link) && routeExists(link!.href, PLATFORM_LAUNCH))
+  const tools = page.tools ?? []
   const articles = clusterArticlesFor(page.path)
     .map((href) => getPostBySlug(href.replace('/insights/', '')))
     .filter((post): post is NonNullable<typeof post> => Boolean(post))
   const showToolkit = linksFrom(page.path).includes('/toolkit')
   const otherPages = pages.filter((m) => m.id !== id)
+  const unbuilt = MODULES.filter((m) => m.path === null)
   const schema = jsonLd(graph(platformApplicationSchema(canonicalFor(page.path)), breadcrumbSchema(breadcrumbsFromTrail(crumbs))))
 
   return (
@@ -180,6 +188,27 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
           </ul>
         </Section>
 
+        {/* Built for: the industry pages that lead with this module */}
+        {industries.length ? (
+          <Section tone="white" divider>
+            <SectionHeading eyebrow="Built for" title={`Where ${name.toLowerCase()} earns its keep`} lead="One platform, worded for each sector. These pages start from this module." />
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {industries.map((industry) => (
+                <li key={industry.href}>
+                  <Link href={industry.href} className="flex h-full flex-col gap-2 rounded-control border border-line-1 bg-canvas p-5 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-grey-400 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+                    <span className="text-base font-bold leading-snug text-ink-1">{industry.label}</span>
+                    <span className="type-small text-ink-5">{industry.description}</span>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-bold text-brand-strong">
+                      See the page
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        ) : null}
+
         {/* 8: UK regulation, precisely */}
         <Section tone="white">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
@@ -198,7 +227,31 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
         </Section>
 
         {/* 9: FAQ */}
-        <FaqAccordion items={page.faqs} tone="grey" lead={`Straight answers about ${mod.name.toLowerCase()} in jobsafe.`} />
+        <FaqAccordion items={page.faqs} tone="grey" lead={`Straight answers about ${name.toLowerCase()} in jobsafe.`} />
+
+        {/* Try it free: the tool that runs this module's logic */}
+        {tools.length ? (
+          <Section tone="white" divider rhythm="tight">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+              <SectionHeading eyebrow="Try it free" title="The same logic, in the open" lead="No sign-up. The tool runs the product's own code in your browser." />
+              <ul className="grid gap-4 sm:grid-cols-2">
+                {tools.map((tool) => (
+                  <li key={tool.href}>
+                    <Link href={tool.href} className="flex h-full items-start gap-4 rounded-control border border-brand-tint-18 bg-brand-tint-04 p-5 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-brand hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-control bg-canvas text-brand">
+                        <Calculator className="size-[18px]" aria-hidden="true" />
+                      </span>
+                      <span className="flex flex-col gap-1">
+                        <span className="type-eyebrow text-brand-strong">Free tool</span>
+                        <span className="text-base font-bold leading-snug text-ink-1">{tool.label}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
+        ) : null}
 
         {/* Reading and tools: the cluster articles and, for incidents, the toolkit */}
         {articles.length || showToolkit ? (
@@ -241,13 +294,13 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
                 <ArrowLeft className="size-4 shrink-0 text-brand-strong" aria-hidden="true" />
                 <span className="flex flex-col">
                   <span className="type-eyebrow text-ink-4">Previous module</span>
-                  <span className="text-sm font-bold text-ink-1 group-hover:text-brand-strong">{previous.name}</span>
+                  <span className="text-sm font-bold text-ink-1 group-hover:text-brand-strong">{modulePageName(previous.id)}</span>
                 </span>
               </Link>
               <Link href={next.path} className="group flex items-center justify-end gap-3 rounded-control border border-line-1 bg-canvas p-4 text-right shadow-rest transition-[border-color,box-shadow] duration-200 hover:border-grey-400 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
                 <span className="flex flex-col">
                   <span className="type-eyebrow text-ink-4">Next module</span>
-                  <span className="text-sm font-bold text-ink-1 group-hover:text-brand-strong">{next.name}</span>
+                  <span className="text-sm font-bold text-ink-1 group-hover:text-brand-strong">{modulePageName(next.id)}</span>
                 </span>
                 <ArrowRight className="size-4 shrink-0 text-brand-strong" aria-hidden="true" />
               </Link>
@@ -261,7 +314,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
               {otherPages.map((m) => (
                 <li key={m.id}>
                   <Link href={m.path} className={cn('font-semibold text-ink-4 hover:text-ink-1')}>
-                    {m.name}
+                    {modulePageName(m.id)}
                   </Link>
                 </li>
               ))}
@@ -270,8 +323,8 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
                   Works offline
                 </Link>
               </li>
-              {MODULES.filter((m) => m.path === null).length ? (
-                <li className="text-ink-5">More module pages arrive in Phase 3.</li>
+              {unbuilt.length ? (
+                <li className="text-ink-5">{unbuilt.map((m) => m.name).join(' and ')}: pages arrive when the product ships in-app templates and contractor records.</li>
               ) : null}
             </ul>
           </nav>
@@ -279,7 +332,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
         <CtaBand
           tone="white"
           placement={`module-${id}-closing`}
-          title={`See ${mod.name.toLowerCase()} on your own setup.`}
+          title={`See ${name.toLowerCase()} on your own setup.`}
           copy="A 30-minute walkthrough with someone who knows the product, on a UK haulier’s data."
           secondary={{ label: 'How the demo works', href: '/demo' }}
         />

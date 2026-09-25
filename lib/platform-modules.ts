@@ -8,7 +8,17 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { ProductImageId } from './product-images.ts'
-import type { IconName, ModuleId } from './platform.ts'
+import type { Phase3Input } from './brand.ts'
+import { PHASE_3_INPUTS } from './brand.ts'
+import { MODULES, moduleById, type IconName, type ModuleId } from './platform.ts'
+import { PHASE_3_MODULE_PAGES } from './platform-modules-phase-3.ts'
+
+/**
+ * A page id is a module id, or `bowtie`: the bowtie page belongs to the risk
+ * module (it is a view inside a risk assessment) but has its own URL, copy
+ * and keyword row.
+ */
+export type ModulePageId = ModuleId | 'bowtie'
 
 export interface ModuleFeature {
   readonly title: string
@@ -18,8 +28,10 @@ export interface ModuleFeature {
 }
 
 export interface ModulePage {
-  readonly id: ModuleId
+  readonly id: ModulePageId
   readonly path: string
+  /** A Phase 3 input the page waits on. While it is false the page is 404, out of the menu and the sitemap. */
+  readonly gate?: Phase3Input
   /** The display line under the H1. */
   readonly display: string
   readonly lead: string
@@ -32,9 +44,14 @@ export interface ModulePage {
   readonly faqs: readonly { readonly q: string; readonly a: string }[]
   /** Not rendered. What the product does not do yet. */
   readonly doNotClaim: readonly string[]
+  /** Industry pages this module is "built for"; rendered as cards, only those that exist in the flag state. */
+  readonly industries?: readonly string[]
+  /** Free tools that run this module's logic; rendered as "Try it free". */
+  readonly tools?: readonly { readonly label: string; readonly href: string }[]
 }
 
-export const MODULE_PAGES: readonly ModulePage[] = [
+/** The Phase 2 pages. Phase 3 pages live in platform-modules-phase-3.ts and are merged below. */
+const PHASE_2_PAGES: readonly ModulePage[] = [
   {
     id: 'incidents',
     path: '/platform/incident-reporting',
@@ -95,6 +112,8 @@ export const MODULE_PAGES: readonly ModulePage[] = [
       { q: 'Can we get the data out?', a: 'Yes. The register exports to CSV with the filters you have applied. A report prints to PDF from the browser.' },
       { q: 'How do near misses fit in?', a: 'Near miss is one of the four categories, alongside HSSE, incident and other, with the same seven steps, so a near miss is as easy to record as an injury.' },
     ],
+    industries: ['/industries/facilities-management', '/industries/field-services', '/industries/transport-logistics'],
+    tools: [{ label: 'Accident frequency rate calculator', href: '/tools/accident-frequency-rate' }],
     doNotClaim: ['voice notes', 'push or email alerts', 'a real map', 'generated PDFs (it prints to PDF from the browser)'],
   },
   {
@@ -155,6 +174,11 @@ export const MODULE_PAGES: readonly ModulePage[] = [
       { q: 'What are the RIDDOR reporting timescales?', a: 'Deaths and specified injuries: notify without delay by telephone, then the form within 10 days. Over-7-day incapacitation: within 15 days. Injuries to people not at work and dangerous occurrences: within 10 days. Occupational diseases: within 10 days of the diagnosis. Gas incidents: within 14 days.' },
       { q: 'Is the F2508 form built in?', a: 'The statutory particulars that go on an F2508 are collected in the seven-step form, and the register keeps what must be kept. The submission itself is made on HSE’s online form.' },
       { q: 'What about the accident book?', a: 'The register records the accident book (BI 510) declaration alongside the RIDDOR status, so the two records agree.' },
+    ],
+    industries: ['/industries/transport-logistics', '/industries/construction', '/industries/healthcare', '/industries/window-door-fitters'],
+    tools: [
+      { label: 'Is it RIDDOR reportable? Free checker', href: '/tools/riddor-checker' },
+      { label: 'Accident frequency rate calculator', href: '/tools/accident-frequency-rate' },
     ],
     doNotClaim: ['filing RIDDOR with HSE', 'push or email reminders'],
   },
@@ -218,6 +242,8 @@ export const MODULE_PAGES: readonly ModulePage[] = [
       { q: 'What happens when a score is High?', a: 'High (10–16) means the risk must be reduced and sets a 30-day deadline. Extreme (17–25) means stop the activity.' },
       { q: 'Does it work offline?', a: 'Yes. Assessments save to the device first and sync when signal returns, like every module.' },
     ],
+    industries: ['/industries/manufacturing-warehousing', '/industries/construction', '/industries/window-door-fitters'],
+    tools: [{ label: '5×5 risk matrix calculator', href: '/tools/risk-matrix' }],
     doNotClaim: ['AI-written assessments', 'certification of any kind'],
   },
   {
@@ -280,14 +306,43 @@ export const MODULE_PAGES: readonly ModulePage[] = [
       { q: 'Are the confirmations kept?', a: 'Yes. Every control confirmation is stored on the permit, with who confirmed it.' },
       { q: 'Can contractors use it?', a: 'Contractor is a role level, and the gate checks contractor records. Creating new contractor records from inside the app is not available yet.' },
     ],
+    industries: ['/industries/construction', '/industries/facilities-management', '/industries/manufacturing-warehousing'],
     doNotClaim: ['signatures on issue or hand-back', 'adding contractors in-app'],
   },
 ]
 
-export function modulePage(id: ModuleId): ModulePage | undefined {
+export const MODULE_PAGES: readonly ModulePage[] = [...PHASE_2_PAGES, ...PHASE_3_MODULE_PAGES]
+
+export function modulePage(id: ModulePageId): ModulePage | undefined {
   return MODULE_PAGES.find((m) => m.id === id)
 }
 
 export function modulePageByPath(path: string): ModulePage | undefined {
   return MODULE_PAGES.find((m) => m.path === path)
+}
+
+/** The module a page belongs to: the bowtie page belongs to the risk module. */
+export function moduleForPage(id: ModulePageId) {
+  return moduleById(id === 'bowtie' ? 'risk' : id)
+}
+
+/** The name in the breadcrumb, the previous/next links and the CTA. */
+export function modulePageName(id: ModulePageId): string {
+  return id === 'bowtie' ? 'Bowtie analysis' : moduleById(id).name
+}
+
+/** Is the page built in this build? A gated page needs its input to be true. */
+export function modulePageLive(page: ModulePage, inputs: Readonly<Record<Phase3Input, boolean>> = PHASE_3_INPUTS): boolean {
+  return !page.gate || inputs[page.gate]
+}
+
+/**
+ * Every page that exists in this build, in platform order (Record, Resolve,
+ * Prevent, each module in MODULES order, the bowtie page after risk). This
+ * is the order of the previous/next links and of the "rest of the platform"
+ * list on every module page.
+ */
+export function liveModulePages(inputs: Readonly<Record<Phase3Input, boolean>> = PHASE_3_INPUTS): readonly ModulePage[] {
+  const order = MODULES.flatMap((m) => (m.id === 'risk' ? ['risk', 'bowtie'] : [m.id])) as readonly ModulePageId[]
+  return order.map((id) => MODULE_PAGES.find((page) => page.id === id)).filter((page): page is ModulePage => Boolean(page) && modulePageLive(page as ModulePage, inputs))
 }

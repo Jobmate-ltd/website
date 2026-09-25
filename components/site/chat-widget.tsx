@@ -32,6 +32,7 @@ import {
   VAT_SUFFIX,
   VOLUME_PRICE_LABEL,
   trialSentence,
+  COMPARE_PAGES,
 } from '@/lib/brand'
 import { trackDemoClick } from '@/components/ui/book-demo-button'
 
@@ -223,10 +224,39 @@ const PLATFORM_KNOWLEDGE_BASE: KbEntry[] = [
     actions: [{ label: 'Security and hosting', href: '/security' }],
   },
   {
-    keywords: ['industry', 'industries', 'sector', 'who', 'suitable', 'construction', 'transport', 'field service', 'care', 'haulage', 'fitter'],
+    keywords: ['industry', 'industries', 'sector', 'who', 'suitable', 'construction', 'transport', 'field service', 'care', 'haulage', 'fitter', 'facilities', 'manufacturing', 'warehouse'],
     answer: 'jobsafe is built for UK operators whose work happens in yards, sites, depots and vans: transport and logistics, window and door fitters, field service and care, with more sector pages on the way.',
     actions: [{ label: 'Industries', href: '/#industries' }, BOOK_DEMO],
   },
+  {
+    keywords: ['riddor checker', 'is it reportable', 'reportable', 'specified injury', 'over seven day', 'over 7 day', 'dangerous occurrence', 'deadline'],
+    answer: 'The free RIDDOR checker asks one question at a time, runs the product’s own triage and works the 10 or 15-day deadline out from the date. You submit to HSE; the checker links HSE’s page.',
+    actions: [{ label: 'Is it RIDDOR reportable?', href: '/tools/riddor-checker' }, { label: 'RIDDOR in the platform', href: '/platform/riddor' }],
+  },
+  {
+    keywords: ['risk matrix', '5x5', '5×5', 'likelihood', 'severity', 'risk score', 'risk rating', 'hierarchy of control'],
+    answer: 'The free 5×5 risk matrix calculator uses the product’s own scales and bands: pick likelihood and severity and read the score, the band and the action, with the hierarchy of control beside it.',
+    actions: [{ label: '5×5 risk matrix calculator', href: '/tools/risk-matrix' }, { label: 'Risk assessments in the platform', href: '/platform/risk-assessments' }],
+  },
+  {
+    keywords: ['accident frequency rate', 'afr', 'frequency rate', 'incident rate', 'pqq', 'tender', 'per 100,000 hours'],
+    answer: 'The free accident frequency rate calculator shows the working: reportable injuries × 100,000 ÷ hours worked, the convention UK tenders ask for, with its source named. jobsafe keeps the incident record the numerator comes from; it does not calculate the rate for you.',
+    actions: [{ label: 'AFR calculator', href: '/tools/accident-frequency-rate' }, { label: 'All free tools', href: '/tools' }],
+  },
+  {
+    keywords: ['free tool', 'free tools', 'calculator', 'checker'],
+    answer: 'Three free tools run the product’s own logic in your browser, no sign-up: the RIDDOR checker, the 5×5 risk matrix and the accident frequency rate calculator.',
+    actions: [{ label: 'All free tools', href: '/tools' }, BOOK_DEMO],
+  },
+  ...(COMPARE_PAGES
+    ? [
+        {
+          keywords: ['compare', 'comparison', 'versus', ' vs ', 'alternative', 'mitti', 'safetyculture', 'evotix', 'ecoonline', 'competitor'],
+          answer: 'The comparison pages set jobsafe beside Mitti (formerly SafetyCulture), Evotix and EcoOnline on the same fifteen rows, with every claim about them sourced and dated, and say where they are the better choice.',
+          actions: [{ label: 'Compare', href: '/compare' }, SEE_PLATFORM_PRICING],
+        },
+      ]
+    : []),
   {
     keywords: ['start', 'sign up', 'signup', 'get started', 'begin', 'register', 'onboard', 'set up'],
     answer: `Getting started begins with a ${DEMO_DURATION_LABEL} walkthrough: we show you the product on a real setup, agree a start date if it fits, and your administrator invites the team by email.`,

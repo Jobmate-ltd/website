@@ -17,13 +17,14 @@ import { SignalToggle } from '@/components/platform/signal-toggle'
 import { PlatformIndustries } from '@/components/platform/industries'
 import { WhySwitch } from '@/components/platform/why-switch'
 import { PricingTeaser } from '@/components/platform/pricing-teaser'
+import { FreeTools } from '@/components/platform/free-tools'
 import { FaqAccordion } from '@/components/platform/faq-accordion'
 
 /**
  * PlatformHomePage — the Phase 2 homepage, thirteen sections in the order
  * the brief sets: header, hero, fact strip, Record/Resolve/Prevent, the
  * incident story, UK law, the signal toggle, industries, why teams switch,
- * pricing teaser, (free tools: hidden until Phase 3), FAQ, CTA + footer.
+ * pricing teaser, free tools, FAQ, CTA + footer.
  * Rendered by app/page.tsx only when the launch flag is on.
  */
 const homeGraph = jsonLd(graph(platformApplicationSchema(CANONICAL_HOME)))
@@ -59,7 +60,7 @@ export function PlatformHomePage() {
         <PlatformIndustries />
         <WhySwitch />
         <PricingTeaser />
-        {/* Section 11, the free tools band, is hidden until Phase 3 ships the tools. */}
+        <FreeTools />
         <FaqAccordion items={[...HOME_FAQS, ...HOME_PAA]} lead="Straight answers, including the ones that are not yet a yes." />
         <CtaBand
           tone="grey"

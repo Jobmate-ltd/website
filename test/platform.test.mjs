@@ -32,7 +32,8 @@ import { getAllPosts } from '../lib/insights.ts'
 const ROOT = join(import.meta.dirname, '..')
 const PLATFORM_ROUTES = STATIC_ROUTES.filter((r) => r.platformOnly).map((r) => r.path)
 const ARTICLE_PATHS = getAllPosts().map((p) => `/insights/${p.slug}`)
-const pageExists = (path) => routeExists(path, true) || ARTICLE_PATHS.includes(path) || ['/insights', '/academy', '/toolkit'].includes(path)
+const ALL_ON = { compare: true, inputs: { checklistBuilderShipped: true, contractorCrudShipped: true, emailAlertsShipped: true, csvImportShipped: true, pdfExportShipped: true } }
+const pageExists = (path) => routeExists(path, true, ALL_ON) || ARTICLE_PATHS.includes(path) || ['/insights', '/academy', '/toolkit'].includes(path)
 
 /**
  * Phrases from the "never say" and "say once built" lists (docs/REBUILD.md §3
@@ -70,12 +71,33 @@ function assertNoForbiddenClaims(text, where) {
 // ── routes ───────────────────────────────────────────────────────────────────
 
 describe('route manifest (Phase 2 routes are held back by the flag)', () => {
-  test('every Phase 2 route is platformOnly and absent while the flag is off', () => {
-    assert.deepEqual(PLATFORM_ROUTES.sort(), ['/contact', '/demo', '/platform', '/platform/incident-reporting', '/platform/offline', '/platform/permits-to-work', '/platform/riddor', '/platform/risk-assessments', '/pricing', '/security'].sort())
+  const PHASE_2 = ['/contact', '/demo', '/platform', '/platform/incident-reporting', '/platform/offline', '/platform/permits-to-work', '/platform/riddor', '/platform/risk-assessments', '/pricing', '/security']
+  const PHASE_3 = ['/platform/investigations', '/platform/corrective-actions', '/platform/fleet-compliance', '/platform/training-competence', '/platform/document-control', '/platform/dashboards', '/platform/bowtie-analysis', '/industries/construction', '/industries/facilities-management', '/industries/manufacturing-warehousing', '/tools', '/tools/riddor-checker', '/tools/risk-matrix', '/tools/accident-frequency-rate']
+  const GATED = ['/platform/checklists', '/platform/contractors']
+  const COMPARE = ['/compare', '/compare/mitti-safetyculture', '/compare/evotix', '/compare/ecoonline']
+  const EVERYTHING_ON = { compare: true, inputs: { checklistBuilderShipped: true, contractorCrudShipped: true, emailAlertsShipped: true, csvImportShipped: true, pdfExportShipped: true } }
+
+  test('every Phase 2 and Phase 3 route is platformOnly and absent while the flag is off', () => {
+    assert.deepEqual([...PLATFORM_ROUTES].sort(), [...PHASE_2, ...PHASE_3, ...GATED, ...COMPARE].sort())
     for (const path of PLATFORM_ROUTES) {
-      assert.equal(routeExists(path, false), false, `${path} must not exist with the flag off`)
-      assert.equal(routeExists(path, true), true, `${path} must exist with the flag on`)
+      assert.equal(routeExists(path, false, EVERYTHING_ON), false, `${path} must not exist with the flag off`)
     }
+    for (const path of [...PHASE_2, ...PHASE_3]) assert.equal(routeExists(path, true), true, `${path} must exist with the flag on`)
+  })
+
+  test('comparison pages need NEXT_PUBLIC_COMPARE_PAGES as well, and gated modules need their input', () => {
+    for (const path of COMPARE) {
+      assert.equal(routeExists(path, true, { compare: false }), false, `${path} without the compare flag`)
+      assert.equal(routeExists(path, true, { compare: true }), true, `${path} with the compare flag`)
+    }
+    const off = { checklistBuilderShipped: false, contractorCrudShipped: false, emailAlertsShipped: false, csvImportShipped: false, pdfExportShipped: false }
+    assert.equal(routeExists('/platform/checklists', true, { inputs: off }), false)
+    assert.equal(routeExists('/platform/contractors', true, { inputs: off }), false)
+    assert.equal(routeExists('/platform/checklists', true, { inputs: { ...off, checklistBuilderShipped: true } }), true)
+    assert.equal(routeExists('/platform/contractors', true, { inputs: { ...off, contractorCrudShipped: true } }), true)
+    // The shipped defaults are the brief's inputs, all `no`.
+    assert.equal(routeExists('/platform/checklists', true), false)
+    assert.equal(routeExists('/platform/contractors', true), false)
   })
 
   test('no pre-existing URL changed: every Phase 1 route is still public with the flag off', () => {
@@ -168,6 +190,20 @@ describe('navigation for each flag state', () => {
     }
   })
 
+  test('flag on: Resources carries the Free tools column; the Compare column and footer column exist only with the compare flag', () => {
+    const resources = navForFlag(PLATFORM_NAV, true).items.find((i) => i.label === 'Resources')
+    const headings = (resources?.columns ?? []).map((c) => c.heading)
+    assert.ok(headings.includes('Free tools'), 'Free tools column missing')
+    // NEXT_PUBLIC_COMPARE_PAGES is unset in tests, so the comparisons are 404 and the column is dropped.
+    assert.ok(!headings.includes('Compare'), 'Compare column must not render while the comparison pages are 404')
+    const tools = resources?.columns?.find((c) => c.heading === 'Free tools')?.items.map((i) => i.href) ?? []
+    assert.deepEqual(tools, ['/tools/riddor-checker', '/tools/risk-matrix', '/tools/accident-frequency-rate', '/tools'])
+    const footer = footerForFlag(PLATFORM_FOOTER, true)
+    assert.ok(!footer.columns.some((c) => c.heading === 'Compare'), 'Compare footer column must not render while the comparison pages are 404')
+    assert.ok(footer.columns.find((c) => c.heading === 'Resources')?.links.some((l) => l.href === '/tools'), 'the footer lists the free tools')
+    assert.ok(footer.columns.find((c) => c.heading === 'Platform')?.links.some((l) => l.href === '/platform/bowtie-analysis'), 'the footer lists the bowtie page')
+  })
+
   test('the Platform promo card points at the tour anchor on /platform', () => {
     assert.equal(navPromo('Platform')?.href, '/platform#tour')
     assert.equal(navPromo('Nowhere'), null)
@@ -182,7 +218,7 @@ describe('navigation for each flag state', () => {
 // ── keyword map ──────────────────────────────────────────────────────────────
 
 describe('keyword map (content/seo/keyword-map.json)', () => {
-  test('has a row for every Phase 2 page, the homepage and /about', () => {
+  test('has a row for every platform page, the homepage and /about', () => {
     const paths = KEYWORD_ROWS.map((r) => r.path)
     for (const p of [...PLATFORM_ROUTES, '/', '/about']) assert.ok(paths.includes(p), `no keyword row for ${p}`)
   })
@@ -190,15 +226,16 @@ describe('keyword map (content/seo/keyword-map.json)', () => {
   test('every row points at a real page and its copy is within the limits', () => {
     const seen = new Set()
     for (const row of KEYWORD_ROWS) {
-      assert.ok(routeExists(row.path, true), `${row.path} is not a route`)
+      assert.ok(routeExists(row.path, true, ALL_ON), `${row.path} is not a route`)
       assert.ok(!seen.has(row.h1), `duplicate H1 "${row.h1}"`)
       seen.add(row.h1)
       assert.ok(row.title.length <= 70, `${row.path} title is ${row.title.length} chars`)
       assert.ok(row.description.length >= 70 && row.description.length <= 160, `${row.path} description is ${row.description.length} chars`)
       assert.ok(row.primary.keyword.length > 0)
       if (row.prelaunch) {
-        assert.ok(row.prelaunch.title.length <= 70)
-        assert.ok(row.prelaunch.description.length <= 160)
+        // The pre-launch copy is the Phase 1 page's metadata, verbatim, so the flag-off render never changes; it is not held to the launch limits.
+        assert.ok(row.prelaunch.title.length <= 80)
+        assert.ok(row.prelaunch.description.length <= 180)
       }
     }
   })
@@ -240,19 +277,22 @@ describe('internal link registry (lib/seo/links.ts)', () => {
     }
   })
 
-  test('every Phase 2 page has at least three contextual links in and three out', () => {
+  test('every platform page has at least three contextual links in and three out', () => {
     for (const path of PLATFORM_ROUTES) {
       assert.ok(linksFrom(path).length >= 3, `${path} has ${linksFrom(path).length} links out`)
       assert.ok(linksTo(path).length >= 3, `${path} has ${linksTo(path).length} links in`)
     }
   })
 
-  test('each module page links /platform and its connected modules, and its cluster articles link back', () => {
+  test('each module page links /platform and its cluster articles, and every article links back to a module page that lists it', () => {
     for (const path of Object.values(MODULE_PATHS)) {
       assert.ok(linksFrom(path).includes('/platform'), `${path} does not link /platform`)
       for (const article of clusterArticlesFor(path)) {
         assert.ok(linksFrom(path).includes(article), `${path} does not link its article ${article}`)
-        assert.equal(moduleFor(article), path, `${article} does not link back to ${path}`)
+        // An article may cluster around two modules (investigations and incidents both list the
+        // investigation guide); its backlink goes to one of them, and that one must list it.
+        const back = moduleFor(article)
+        assert.ok(back && clusterArticlesFor(back).includes(article), `${article} links back to ${back}, which does not list it`)
       }
     }
   })
@@ -294,11 +334,15 @@ describe('analytics gate', () => {
 // ── platform content model ───────────────────────────────────────────────────
 
 describe('platform content model (lib/platform.ts)', () => {
-  test('twelve modules across the three families, four with pages today', () => {
+  test('twelve modules across the three families; every module page is in the registry, and the gated two wait on their input', () => {
     assert.equal(MODULES.length, 12)
     assert.deepEqual(Object.keys(FAMILIES), ['record', 'resolve', 'prevent'])
     for (const family of Object.keys(FAMILIES)) assert.equal(modulesIn(family).length, 4)
-    assert.deepEqual(modulesWithPages().map((m) => m.path).sort(), Object.values(MODULE_PATHS).sort())
+    const gated = [MODULE_PATHS.checklists, MODULE_PATHS.contractors]
+    const expected = Object.values(MODULE_PATHS).filter((p) => p !== MODULE_PATHS.bowtie && !gated.includes(p))
+    assert.deepEqual(modulesWithPages().map((m) => m.path).sort(), expected.sort())
+    assert.equal(moduleById('checklists').path, null, 'checklists has no page until the builder ships')
+    assert.equal(moduleById('contractors').path, null, 'contractors has no page until in-app records ship')
   })
 
   test('every module with a page is a route, and only Checklists and Contractors are "expanding"', () => {
