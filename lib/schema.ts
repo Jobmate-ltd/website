@@ -223,6 +223,54 @@ export function faqPageSchema(entries: readonly FaqEntry[]): JsonLdNode {
   }
 }
 
+/**
+ * `WebApplication` — the free tools (Phase 3). A tool is a page that computes
+ * something in the browser; it is not the product, so it carries its own
+ * `@id`, no offers and no rating. `isAccessibleForFree` states the obvious
+ * for the rich-result validator.
+ */
+export function webApplicationSchema(tool: { readonly url: string; readonly name: string; readonly description: string }): JsonLdNode {
+  return {
+    '@type': 'WebApplication',
+    '@id': `${tool.url}#tool`,
+    name: tool.name,
+    url: tool.url,
+    description: tool.description,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    browserRequirements: 'Requires JavaScript',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: CURRENCY },
+    publisher: { '@id': SCHEMA_ID.organization },
+  }
+}
+
+export interface HowToStep {
+  readonly name: string
+  readonly text: string
+}
+
+/**
+ * `HowTo` — the explainer under a tool. Only ever built from the steps the
+ * page renders, so the schema and the visible text are the same text.
+ */
+export function howToSchema(howTo: { readonly url: string; readonly name: string; readonly description: string; readonly steps: readonly HowToStep[]; readonly totalTime?: string }): JsonLdNode {
+  return {
+    '@type': 'HowTo',
+    '@id': `${howTo.url}#howto`,
+    name: howTo.name,
+    description: howTo.description,
+    ...(howTo.totalTime ? { totalTime: howTo.totalTime } : {}),
+    step: howTo.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      url: `${howTo.url}#step-${index + 1}`,
+    })),
+  }
+}
+
 export interface ArticleInput {
   readonly url: string
   readonly headline: string

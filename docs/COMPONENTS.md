@@ -46,3 +46,15 @@ Libraries added in Phase 2: `motion` (MIT), `nextstepjs` (MIT),
 `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@radix-ui/react-slider`,
 `@radix-ui/react-switch`, `@radix-ui/react-toggle-group`,
 `@radix-ui/react-popover` (all MIT).
+
+## Phase 3
+
+Built in this repository, on the primitives above; nothing new was imported.
+
+| Component (file) | Built on | Notes |
+| --- | --- | --- |
+| `IndustryPageTemplate` (`components/industries/industry-page.tsx`) | Section, SectionHeading, Card, ProductShot, FaqAccordion, CtaBand | One template for all seven industry pages, driven by `lib/industries/*.ts`: sourced facts with the source and year printed beside each figure, six pains each linking a module page, three screens with sector captions, the legal framing with its sources, the two free tools, eight FAQs (FAQPage from the same array). A templates slot is reserved for Phase 4. |
+| `FreeTools` (`components/platform/free-tools.tsx`) | Section, Card pattern | Section 11 of the homepage: the three tools and the hub. |
+| `ModulePageTemplate` (`components/platform/module-page.tsx`, extended) | as Phase 2 | Now handles the bowtie page (a page of the risk module with its own URL), pages gated on a Phase 3 input (`notFound()` until the input is true), a "Built for" row of industry pages and a "Try it free" row of tools. |
+| `ComparePageTemplate`, `RowHelp` (`components/compare/compare-page.tsx`, `row-help.tsx`) | Table, Tooltip, Chip, FaqAccordion, CtaBand | The 15-row comparison with a tooltip per row, an edge marker in text, the competitor cell marked `data-claims="competitor"` with its source link and checked date; a stacked card list under `md:` so nothing scrolls sideways at 320px. |
+| `ToolPage` and the three tools (`components/tools/`) | PageHero, ToggleGroup, Slider, Card, FaqAccordion | The RIDDOR checker (`triage()` from `lib/product-logic/`, one question at a time, answers in the URL, `aria-live` verdict), the 5×5 matrix (the product's scales and bands) and the AFR calculator (the working shown, the convention sourced). Keyboard-only throughout. |

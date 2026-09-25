@@ -9,9 +9,15 @@
 // so the two can be compared.
 //
 // Insights articles carry their own dates in lib/insights.ts.
+//
+// seo-audit-ignore: no-checklists — the manifest lists /platform/checklists,
+// the module page gated on PHASE_3_INPUTS.checklistBuilderShipped. It is
+// platformOnly and `requires` that input, so it is 404, out of the nav and
+// out of the sitemap until the product ships the builder.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { MetadataRoute } from 'next'
+import { COMPARE_PAGES, PHASE_3_INPUTS, type Phase3Input } from './brand.ts'
 
 export interface StaticRoute {
   readonly path: string
@@ -21,12 +27,18 @@ export interface StaticRoute {
   readonly priority: number
   /** Phase 2 routes: hidden from the sitemap and nav until the platform launches. */
   readonly platformOnly?: boolean
+  /** Phase 3 comparison pages: also need NEXT_PUBLIC_COMPARE_PAGES. */
+  readonly compareOnly?: boolean
+  /** Phase 3 pages built only once a product input is true. */
+  readonly requires?: Phase3Input
 }
 
 /** Phase 1 shipped on 25/09/2026; every page it touched carries that date. */
 const PHASE_1 = '2026-09-25'
 /** Phase 2 pages carry the date the flag is flipped; until then this is their build date. */
 const PHASE_2 = '2026-09-25'
+/** Phase 3 pages: modules, industries, tools and comparisons. */
+const PHASE_3 = '2026-09-25'
 
 export const STATIC_ROUTES: readonly StaticRoute[] = [
   { path: '/', updated: PHASE_1, changeFrequency: 'weekly', priority: 1.0 },
@@ -52,16 +64,52 @@ export const STATIC_ROUTES: readonly StaticRoute[] = [
   { path: '/security', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.7, platformOnly: true },
   { path: '/demo', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
   { path: '/contact', updated: PHASE_2, changeFrequency: 'yearly', priority: 0.6, platformOnly: true },
+  // Phase 3: the remaining module pages, the new industries, the free tools and the comparisons.
+  { path: '/platform/investigations', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/platform/corrective-actions', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/platform/fleet-compliance', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/platform/training-competence', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/platform/document-control', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true },
+  { path: '/platform/dashboards', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true },
+  { path: '/platform/bowtie-analysis', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/platform/checklists', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true, requires: 'checklistBuilderShipped' },
+  { path: '/platform/contractors', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true, requires: 'contractorCrudShipped' },
+  { path: '/industries/construction', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/industries/facilities-management', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/industries/manufacturing-warehousing', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/tools', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true },
+  { path: '/tools/riddor-checker', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/tools/risk-matrix', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/tools/accident-frequency-rate', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/compare', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true, compareOnly: true },
+  { path: '/compare/mitti-safetyculture', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true, compareOnly: true },
+  { path: '/compare/evotix', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true, compareOnly: true },
+  { path: '/compare/ecoonline', updated: PHASE_3, changeFrequency: 'monthly', priority: 0.7, platformOnly: true, compareOnly: true },
 ] as const
 
-/** Is `path` a page in this flag state? Nav and footer never render a link this returns false for. */
-export function routeExists(path: string, platformLaunched: boolean): boolean {
-  return publicRoutes(platformLaunched).some((route) => route.path === path)
+/** The flags a route's existence depends on, beyond the launch flag. */
+export interface RouteFlags {
+  readonly compare?: boolean
+  readonly inputs?: Readonly<Record<Phase3Input, boolean>>
 }
 
-/** Routes that should be public now. Phase 2 routes are held back by the flag. */
-export function publicRoutes(platformLaunched: boolean): readonly StaticRoute[] {
-  return STATIC_ROUTES.filter((route) => !route.platformOnly || platformLaunched)
+/** Is `path` a page in this flag state? Nav and footer never render a link this returns false for. */
+export function routeExists(path: string, platformLaunched: boolean, flags: RouteFlags = {}): boolean {
+  return publicRoutes(platformLaunched, flags).some((route) => route.path === path)
+}
+
+/**
+ * Routes that should be public now. Phase 2 routes are held back by the
+ * launch flag; comparison pages also by NEXT_PUBLIC_COMPARE_PAGES; a page
+ * gated on a Phase 3 input by that input.
+ */
+export function publicRoutes(platformLaunched: boolean, { compare = COMPARE_PAGES, inputs = PHASE_3_INPUTS }: RouteFlags = {}): readonly StaticRoute[] {
+  return STATIC_ROUTES.filter((route) => {
+    if (route.platformOnly && !platformLaunched) return false
+    if (route.compareOnly && !compare) return false
+    if (route.requires && !inputs[route.requires]) return false
+    return true
+  })
 }
 
 /** `YYYY-MM-DD` → Date at midnight UTC. */

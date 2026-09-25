@@ -1,0 +1,31 @@
+{
+  "repo": "Jobmate-ltd/jobsafe",
+  "commit": "4e7a43cf1fcca064e10cf4ad3b9a8b8c979aa101",
+  "synced": "25/09/2026",
+  "files": {
+    "riddor-knowledge.ts": {
+      "source": "src/lib/domain/riddor/knowledge.ts",
+      "sourceHash": "4430b2f5e0aca13f",
+      "outputHash": "a79a53411c7172dc"
+    },
+    "risk-scoring.ts": {
+      "source": "src/lib/domain/risk/scoring.ts",
+      "sourceHash": "da26eb428a616515",
+      "outputHash": "2856e6f59aae6c74"
+    },
+    "enums.ts": {
+      "source": "src/lib/domain/enums.ts",
+      "sourceHash": "c05241a0a2d522ee",
+      "outputHash": "bfaf0eb8a2528cf7"
+    },
+    "date.ts": {
+      "source": "src/lib/format/date.ts",
+      "sourceHash": "c4191865d447fbdf",
+      "outputHash": "5632369dfe037c8e"
+    }
+  },
+  "sourceTests": {
+    "src/lib/domain/riddor/knowledge.test.ts": "512b9533c3992ef9",
+    "src/lib/domain/risk/scoring.test.ts": "d5e452a4d229a822"
+  }
+}

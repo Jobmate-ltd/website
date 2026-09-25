@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Accessibility, ArrowRight, Download, MapPin, Users, WifiOff } from 'lucide-react'
+import { Accessibility, ArrowRight, Calculator, Download, MapPin, Users, WifiOff } from 'lucide-react'
 import { PLATFORM_LAUNCH, canonicalFor } from '@/lib/brand'
 import { buildMetadata, h1For } from '@/lib/seo'
 import { FAMILIES, MODULES, type Family } from '@/lib/platform'
+import { modulePage } from '@/lib/platform-modules'
+import { TOOL_PATHS } from '@/lib/seo/links'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
@@ -41,6 +43,13 @@ const GUARANTEES = [
 
 const FAMILY_ORDER: readonly Family[] = ['record', 'resolve', 'prevent']
 
+/** The free tools (Phase 3): each runs a module's own logic in the browser. */
+const TOOLS = [
+  { href: TOOL_PATHS.riddor, title: 'RIDDOR checker', body: 'Is it reportable, and by when? The product’s own triage, one question at a time.' },
+  { href: TOOL_PATHS.matrix, title: '5×5 risk matrix', body: 'Score likelihood against severity and read the band and the action.' },
+  { href: TOOL_PATHS.afr, title: 'Accident frequency rate', body: 'The PQQ figure, with the working shown and the convention named.' },
+] as const
+
 export default function Page() {
   if (!PLATFORM_LAUNCH) notFound()
   const schema = jsonLd(graph(platformApplicationSchema(canonicalFor(PATH)), breadcrumbSchema(breadcrumbsFromTrail(CRUMBS))))
@@ -73,7 +82,7 @@ export default function Page() {
         </Section>
 
         <Section id="modules" tone="grey">
-          <SectionHeading eyebrow="Modules" title="What is in the platform today" lead="Grouped the way the work is grouped. A module marked Expanding ships part of what it will; the pages that are not linked yet arrive with Phase 3." tone="grey" />
+          <SectionHeading eyebrow="Modules" title="What is in the platform today" lead="Grouped the way the work is grouped. A module marked Expanding ships part of what it will; its page arrives when the product does." tone="grey" />
           <div className="mt-10 grid gap-10 lg:grid-cols-3">
             {FAMILY_ORDER.map((family) => (
               <div key={family} className="flex flex-col gap-4">
@@ -98,8 +107,9 @@ export default function Page() {
                         {module.path ? <ArrowRight className="ml-auto mt-2 size-4 shrink-0 text-brand-strong" aria-hidden="true" /> : null}
                       </>
                     )
+                    const bowtie = module.id === 'risk' ? modulePage('bowtie') : undefined
                     return (
-                      <li key={module.id}>
+                      <li key={module.id} className="flex flex-col gap-3">
                         {module.path ? (
                           <Link href={module.path} className="flex gap-4 rounded-control border border-line-1 bg-canvas p-4 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-grey-400 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
                             {inner}
@@ -107,6 +117,15 @@ export default function Page() {
                         ) : (
                           <Card className="flex gap-4 border-dashed p-4 shadow-none">{inner}</Card>
                         )}
+                        {bowtie ? (
+                          <Link href={bowtie.path} className="ml-6 flex items-center gap-3 rounded-control border border-line-1 bg-canvas px-4 py-3 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-grey-400 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+                            <span className="flex min-w-0 flex-col">
+                              <span className="text-sm font-bold text-ink-1">Bowtie analysis</span>
+                              <span className="type-small text-ink-4">A view inside every risk assessment, with its own page.</span>
+                            </span>
+                            <ArrowRight className="ml-auto size-4 shrink-0 text-brand-strong" aria-hidden="true" />
+                          </Link>
+                        ) : null}
                       </li>
                     )
                   })}
@@ -136,6 +155,33 @@ export default function Page() {
             </Link>
             .
           </p>
+        </Section>
+
+        <Section id="tools" tone="white" divider>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+            <SectionHeading eyebrow="Free tools" title="The same logic, in the open" lead="Three tools that run the product’s own code in your browser. No sign-up." />
+            <div className="flex flex-col gap-4">
+              <ul className="grid gap-4 sm:grid-cols-3">
+                {TOOLS.map((tool) => (
+                  <li key={tool.href}>
+                    <Link href={tool.href} className="flex h-full flex-col gap-3 rounded-control border border-brand-tint-18 bg-brand-tint-04 p-5 shadow-rest transition-[border-color,box-shadow] duration-200 ease-out-expo hover:border-brand hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+                      <span className="flex size-9 items-center justify-center rounded-control bg-canvas text-brand">
+                        <Calculator className="size-[18px]" aria-hidden="true" />
+                      </span>
+                      <span className="text-base font-bold text-ink-1">{tool.title}</span>
+                      <span className="type-small text-ink-4">{tool.body}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="type-small text-ink-5">
+                <Link href={TOOL_PATHS.hub} className="font-semibold text-brand-strong hover:underline">
+                  All free tools
+                </Link>
+                , and where each one comes from in the product.
+              </p>
+            </div>
+          </div>
         </Section>
 
         <Section id="tour" tone="grey">

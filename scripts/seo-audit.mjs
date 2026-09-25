@@ -232,10 +232,24 @@ export const PLATFORM_ONLY_PATHS = [
   'components/insights/module-backlink.tsx',
   'lib/platform.ts',
   'lib/platform-modules.ts',
+  'lib/platform-modules-phase-3.ts',
   'lib/product-images.ts',
   'lib/demo/',
   'lib/seo/links.ts',
   'content/seo/',
+  // Phase 3
+  'app/tools/',
+  'app/compare/',
+  'app/industries/construction/',
+  'app/industries/facilities-management/',
+  'app/industries/manufacturing-warehousing/',
+  'components/tools/',
+  'components/compare/',
+  'components/industries/',
+  'lib/industries/',
+  'lib/tools/',
+  'lib/compare.ts',
+  'lib/product-logic/',
 ]
 export const isPlatformOnly = (rel) => PLATFORM_ONLY_PATHS.some((p) => (p.endsWith('/') ? rel.startsWith(p) : rel === p))
 

@@ -26,6 +26,15 @@
 //
 // A sentence that negates the claim ("not available yet", "no push alerts",
 // "you submit to HSE") is allowed and listed as such; a positive claim fails.
+//
+// Phase 3: the comparison pages state what a competitor offers (SSO, an API,
+// AI, ISO 27001), which is a sourced fact about them, not a claim about
+// jobsafe. Competitor-side copy lives in the fields of lib/compare.ts that
+// `COMPETITOR_FIELDS` names and renders inside elements marked
+// data-claims="competitor"; both are left out of the scan. Everything said
+// about jobsafe on those pages is scanned like any other platform copy.
+// Pass --compare on with --base when the server was built with
+// NEXT_PUBLIC_COMPARE_PAGES=true so those routes are fetched too.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync, readdirSync, statSync } from 'node:fs'
@@ -40,6 +49,7 @@ const arg = (name) => {
   return i >= 0 ? args[i + 1] : null
 }
 const BASE = arg('--base')?.replace(/\/$/, '') ?? null
+const COMPARE = (arg('--compare') ?? (process.env.NEXT_PUBLIC_COMPARE_PAGES === 'true' ? 'on' : 'off')) === 'on'
 
 /** Claims that must never appear as a positive statement in platform copy. */
 export const FORBIDDEN = [
@@ -81,8 +91,8 @@ const REGIONS = {
   'lib/brand.ts': ['export const PRICE_BOOK', 'export function priceBookLabel'],
   'lib/schema.ts': ['export function platformApplicationSchema', 'export function breadcrumbsFromTrail'],
   'components/site/industry-page.tsx': ['export function IndustryPage', null],
-  'app/industries/healthcare/page.tsx': ['launch:', 'closing:'],
-  'app/industries/window-door-fitters/page.tsx': ['launch:', 'closing:'],
+  'app/industries/healthcare/phase-1.tsx': ['launch:', 'closing:'],
+  'app/industries/window-door-fitters/phase-1.tsx': ['launch:', 'closing:'],
 }
 
 const SOURCE_EXTS = new Set(['.ts', '.tsx', '.json'])
@@ -149,9 +159,42 @@ function regionOf(rel, source) {
 
 // ── source mode ──────────────────────────────────────────────────────────────
 
-export function checkSources() {
+/** lib/compare.ts fields that describe the competitor, or are identifiers rather than copy. Never scanned. */
+export const COMPETITOR_FIELDS = new Set(['them', 'quote', 'summary', 'chooseThem', 'url', 'name', 'shortName', 'formerName', 'legalNote', 'monitor', 'checked', 'label', 'website', 'id', 'slug', 'path', 'edge', 'href'])
+
+/** Every string under the jobsafe-side fields of a compare page, with the field path for the report. */
+export function jobsafeSideStrings(value, path = '', out = []) {
+  if (typeof value === 'string') out.push({ path, text: value })
+  else if (Array.isArray(value)) value.forEach((item, i) => jobsafeSideStrings(item, `${path}[${i}]`, out))
+  else if (value && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      if (COMPETITOR_FIELDS.has(key)) continue
+      jobsafeSideStrings(child, path ? `${path}.${key}` : key, out)
+    }
+  }
+  return out
+}
+
+async function checkCompareData() {
   const findings = []
-  const files = [...platformOnlyFiles(), ...Object.keys(REGIONS)]
+  let mod
+  try {
+    mod = await import('../lib/compare.ts')
+  } catch {
+    return findings
+  }
+  for (const page of mod.COMPARE_PAGES ?? []) {
+    for (const { path, text } of jobsafeSideStrings(page)) {
+      for (const hit of scan(text, [...FORBIDDEN, ...NEW_PAGE_ONLY].filter((rule) => !rule.renderedOnly))) findings.push({ where: `lib/compare.ts ${page.path} ${path}`, ...hit })
+    }
+  }
+  return findings
+}
+
+export async function checkSources() {
+  const findings = await checkCompareData()
+  // lib/compare.ts is checked field by field above; its competitor-side fields are facts about them, not claims about us.
+  const files = [...platformOnlyFiles().filter((rel) => rel !== 'lib/compare.ts'), ...Object.keys(REGIONS)]
   for (const rel of files) {
     let source
     try {
@@ -182,12 +225,34 @@ function regionLine(source, region, lineInRegion) {
 
 // ── rendered mode ────────────────────────────────────────────────────────────
 
-const ROUTES_PHASE_2 = ['/platform', '/platform/incident-reporting', '/platform/riddor', '/platform/risk-assessments', '/platform/permits-to-work', '/platform/offline', '/pricing', '/security', '/demo', '/contact']
-const ROUTES_PHASE_1 = ['/', '/about', '/industries/window-door-fitters', '/industries/healthcare', '/industries/field-services', '/industries/transport-logistics', '/academy', '/insights', '/toolkit', '/privacy-policy', '/terms', '/cookies', '/insights/riddor-reporting-explained', '/insights/near-miss-reporting-safety-culture', '/insights/lone-worker-safety-guide', '/insights/how-to-investigate-a-workplace-accident', '/insights/accident-book-requirements-uk', '/insights/rams-risk-assessments-method-statements', '/insights/first-aid-at-work-requirements', '/insights/riddor-changes-2026-consultation', '/insights/toolbox-talks-that-work']
+/**
+ * The routes of a flag-on server: every route the manifest makes public in
+ * this state (the comparisons only with --compare on) plus every article.
+ * "New" pages, which may not mention a trial, checkout or migration, are
+ * the platform routes, the homepage and the rebuilt industry pages.
+ */
+async function renderedRoutes() {
+  const { publicRoutes, STATIC_ROUTES } = await import('../lib/routes.ts')
+  const { PHASE_3_INPUTS } = await import('../lib/brand.ts')
+  const { getAllPosts } = await import('../lib/insights.ts')
+  const { KEYWORD_ROWS } = await import('../lib/seo/keyword-map.ts')
+  const live = publicRoutes(true, { compare: COMPARE, inputs: PHASE_3_INPUTS }).map((r) => r.path)
+  const platformOnly = new Set(STATIC_ROUTES.filter((r) => r.platformOnly).map((r) => r.path))
+  const rebuilt = new Set(KEYWORD_ROWS.filter((row) => row.prelaunch).map((row) => row.path))
+  return {
+    routes: [...live, ...getAllPosts().map((p) => `/insights/${p.slug}`)],
+    isNew: (route) => platformOnly.has(route) || rebuilt.has(route),
+  }
+}
+
+/** Competitor-side copy on a comparison page: a sourced fact about them, not a claim about jobsafe. */
+function stripCompetitorCopy(html) {
+  return html.replace(/<(td|th|li|p|dd|span|div|blockquote)\b[^>]*\bdata-claims="competitor"[^>]*>[\s\S]*?<\/\1>/g, ' ')
+}
 
 function textOf(html) {
   const jsonLd = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n')
-  const body = html
+  const body = stripCompetitorCopy(html)
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ' ')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, ' ')
     .replace(/<[^>]+>/g, ' ')
@@ -214,7 +279,7 @@ function anchors(html) {
 export async function checkRendered(base) {
   const findings = []
   const links = { signup: new Set(), login: new Set(), demo: new Set(), hosts: new Map() }
-  const routes = [...ROUTES_PHASE_2, ...ROUTES_PHASE_1]
+  const { routes, isNew } = await renderedRoutes()
   for (const route of routes) {
     const res = await fetch(base + route)
     if (!res.ok) {
@@ -223,8 +288,7 @@ export async function checkRendered(base) {
     }
     const html = await res.text()
     const { body, jsonLd } = textOf(html)
-    const isNew = ROUTES_PHASE_2.includes(route) || route === '/'
-    const rules = isNew ? [...FORBIDDEN, ...NEW_PAGE_ONLY] : FORBIDDEN
+    const rules = isNew(route) ? [...FORBIDDEN, ...NEW_PAGE_ONLY] : FORBIDDEN
     for (const hit of scan(stripUrls(body), rules)) findings.push({ where: route, ...hit })
     for (const hit of scan(jsonLd, FORBIDDEN)) findings.push({ where: `${route} (JSON-LD)`, ...hit })
     for (const a of anchors(html)) {
@@ -261,9 +325,9 @@ function report(findings) {
 async function main() {
   let failures = 0
   console.log('claims-check: source')
-  failures += report(checkSources())
+  failures += report(await checkSources())
   if (BASE) {
-    console.log(`\nclaims-check: rendered, ${BASE} (flag on)`)
+    console.log(`\nclaims-check: rendered, ${BASE} (flag on, comparisons ${COMPARE ? 'on' : 'off'})`)
     const { findings, links } = await checkRendered(BASE)
     failures += report(findings)
     console.log('\n  Sign up →', [...links.signup].join(', ') || '(none)')

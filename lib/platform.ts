@@ -11,6 +11,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { ProductImageId } from './product-images.ts'
+import { PHASE_3_INPUTS } from './brand.ts'
 
 export type Family = 'record' | 'resolve' | 'prevent'
 
@@ -65,6 +66,7 @@ export type IconName =
   | 'smartphone'
   | 'refresh-cw'
   | 'check'
+  | 'calendar'
 
 export type ModuleId =
   | 'incidents'
@@ -97,18 +99,18 @@ export const MODULES: readonly Module[] = [
   // Record
   { id: 'incidents', name: 'Incident & near-miss reporting', family: 'record', path: '/platform/incident-reporting', promise: 'Seven steps from any phone, with photos, GPS, people, vehicles and RIDDOR triage.', status: 'live', icon: 'clipboard-list' },
   { id: 'riddor', name: 'RIDDOR 2013', family: 'record', path: '/platform/riddor', promise: 'A live verdict on what is reportable and by when, then a register of what you submitted.', status: 'live', icon: 'gavel' },
-  { id: 'checklists', name: 'Checklists & inspections', family: 'record', path: null, promise: 'Walkarounds and inspections whose failures raise actions.', status: 'expanding', icon: 'list-checks' },
-  { id: 'fleet', name: 'Fleet & plant', family: 'record', path: null, promise: 'MOT, tax, insurance, service and LOLER dates on every vehicle and machine.', status: 'live', icon: 'truck' },
+  { id: 'checklists', name: 'Checklists & inspections', family: 'record', path: PHASE_3_INPUTS.checklistBuilderShipped ? '/platform/checklists' : null, promise: 'Walkarounds and inspections whose failures raise actions.', status: 'expanding', icon: 'list-checks' },
+  { id: 'fleet', name: 'Fleet & plant', family: 'record', path: '/platform/fleet-compliance', promise: 'MOT, tax, insurance, service and LOLER dates on every vehicle and machine.', status: 'live', icon: 'truck' },
   // Resolve
-  { id: 'investigations', name: 'Investigations', family: 'resolve', path: null, promise: 'Four-level ICAM root cause on the report itself, with the evidence beside it.', status: 'live', icon: 'search' },
-  { id: 'actions', name: 'Corrective actions', family: 'resolve', path: null, promise: 'Raised from reports, hazards, checklists and permits, each with an owner and a date.', status: 'live', icon: 'circle-check' },
+  { id: 'investigations', name: 'Investigations', family: 'resolve', path: '/platform/investigations', promise: 'Four-level ICAM root cause on the report itself, with the evidence beside it.', status: 'live', icon: 'search' },
+  { id: 'actions', name: 'Corrective actions', family: 'resolve', path: '/platform/corrective-actions', promise: 'Raised from reports, hazards, checklists and permits, each with an owner and a date.', status: 'live', icon: 'circle-check' },
   { id: 'permits', name: 'Permits to work', family: 'resolve', path: '/platform/permits-to-work', promise: 'Six permit types that will not issue until the contractor and the risk assessment check out.', status: 'live', icon: 'file-badge' },
-  { id: 'contractors', name: 'Contractors', family: 'resolve', path: null, promise: 'Insurance, RAMS, accreditation and audit dates, checked at the permit gate.', status: 'expanding', icon: 'hard-hat' },
+  { id: 'contractors', name: 'Contractors', family: 'resolve', path: PHASE_3_INPUTS.contractorCrudShipped ? '/platform/contractors' : null, promise: 'Insurance, RAMS, accreditation and audit dates, checked at the permit gate.', status: 'expanding', icon: 'hard-hat' },
   // Prevent
   { id: 'risk', name: 'Risk assessments & bowtie', family: 'prevent', path: '/platform/risk-assessments', promise: '5×5 scoring, hierarchy of control, six types, bowtie barriers and approval.', status: 'live', icon: 'shield-alert' },
-  { id: 'training', name: 'Training & competence', family: 'prevent', path: null, promise: 'A competency matrix that shows who is in date for what.', status: 'live', icon: 'graduation-cap' },
-  { id: 'documents', name: 'Document control', family: 'prevent', path: null, promise: 'Policies and procedures with the current version in front of the people who need it.', status: 'live', icon: 'folder-open' },
-  { id: 'dashboards', name: 'Dashboards', family: 'prevent', path: null, promise: 'Open incidents by site, RIDDOR due dates and overdue actions on one screen.', status: 'live', icon: 'layout-dashboard' },
+  { id: 'training', name: 'Training & competence', family: 'prevent', path: '/platform/training-competence', promise: 'A competency matrix that shows who is in date for what.', status: 'live', icon: 'graduation-cap' },
+  { id: 'documents', name: 'Document control', family: 'prevent', path: '/platform/document-control', promise: 'Policies and procedures with the current version in front of the people who need it.', status: 'live', icon: 'folder-open' },
+  { id: 'dashboards', name: 'Dashboards', family: 'prevent', path: '/platform/dashboards', promise: 'Open incidents by site, RIDDOR due dates and overdue actions on one screen.', status: 'live', icon: 'layout-dashboard' },
 ]
 
 export function moduleById(id: ModuleId): Module {

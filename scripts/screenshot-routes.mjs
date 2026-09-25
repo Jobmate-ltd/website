@@ -14,8 +14,10 @@
 //                          returning visitor sees it).
 // --banner                 also captures the homepage viewport with the banner
 //                          showing, as consent-banner-<width>.jpg.
-// --platform               also capture the Phase 2 routes (the server must be
-//                          built with NEXT_PUBLIC_PLATFORM_LAUNCH=true);
+// --platform               also capture the Phase 2 and Phase 3 routes (the
+//                          server must be built with NEXT_PUBLIC_PLATFORM_LAUNCH=true;
+//                          the comparisons also need NEXT_PUBLIC_COMPARE_PAGES=true
+//                          and are skipped when they 404);
 // --platform-only          capture just those.
 //
 // Requires Playwright (globally or in node_modules) and a running server.
@@ -86,7 +88,7 @@ export const ROUTES = [
   { slug: 'cookies', path: '/cookies', optional: true },
 ]
 
-/** Phase 2 routes, captured only against a server built with NEXT_PUBLIC_PLATFORM_LAUNCH=true (pass --platform). */
+/** Phase 2 and Phase 3 routes, captured only against a server built with NEXT_PUBLIC_PLATFORM_LAUNCH=true (pass --platform). */
 export const PLATFORM_ROUTES = [
   { slug: 'platform', path: '/platform' },
   { slug: 'platform-incident-reporting', path: '/platform/incident-reporting' },
@@ -98,6 +100,26 @@ export const PLATFORM_ROUTES = [
   { slug: 'security', path: '/security' },
   { slug: 'demo', path: '/demo' },
   { slug: 'contact', path: '/contact' },
+  // Phase 3
+  { slug: 'platform-investigations', path: '/platform/investigations' },
+  { slug: 'platform-corrective-actions', path: '/platform/corrective-actions' },
+  { slug: 'platform-fleet-compliance', path: '/platform/fleet-compliance' },
+  { slug: 'platform-training-competence', path: '/platform/training-competence' },
+  { slug: 'platform-document-control', path: '/platform/document-control' },
+  { slug: 'platform-dashboards', path: '/platform/dashboards' },
+  { slug: 'platform-bowtie-analysis', path: '/platform/bowtie-analysis' },
+  { slug: 'industries-construction', path: '/industries/construction' },
+  { slug: 'industries-facilities-management', path: '/industries/facilities-management' },
+  { slug: 'industries-manufacturing-warehousing', path: '/industries/manufacturing-warehousing' },
+  { slug: 'tools', path: '/tools' },
+  { slug: 'tools-riddor-checker', path: '/tools/riddor-checker' },
+  { slug: 'tools-risk-matrix', path: '/tools/risk-matrix' },
+  { slug: 'tools-accident-frequency-rate', path: '/tools/accident-frequency-rate' },
+  // Behind NEXT_PUBLIC_COMPARE_PAGES as well: optional, so a compare-off server skips them.
+  { slug: 'compare', path: '/compare', optional: true },
+  { slug: 'compare-mitti-safetyculture', path: '/compare/mitti-safetyculture', optional: true },
+  { slug: 'compare-evotix', path: '/compare/evotix', optional: true },
+  { slug: 'compare-ecoonline', path: '/compare/ecoonline', optional: true },
   { slug: 'not-found', path: '/this-page-does-not-exist', optional: true, allow404: true },
 ]
 

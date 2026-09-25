@@ -2,7 +2,7 @@
 /**
  * schema-check — structural validation of the JSON-LD every route serves.
  *
- *   node scripts/schema-check.mjs [--base http://localhost:3000] [--flag on|off]
+ *   node scripts/schema-check.mjs [--base http://localhost:3000] [--flag on|off] [--compare on|off]
  *
  * For each route it parses every <script type="application/ld+json">, checks
  * the graph is well-formed, and validates each node against the properties
@@ -31,11 +31,13 @@ const flag = (name, fallback) => {
 const base = (flag('--base', process.env.BASE_URL ?? 'http://localhost:3000') ?? '').replace(/\/$/, '')
 const launched = flag('--flag', process.env.NEXT_PUBLIC_PLATFORM_LAUNCH === 'true' ? 'on' : 'off') === 'on'
 
-const { STATIC_ROUTES } = await import('../lib/routes.ts')
+const compare = flag('--compare', process.env.NEXT_PUBLIC_COMPARE_PAGES === 'true' ? 'on' : 'off') === 'on'
+const { publicRoutes } = await import('../lib/routes.ts')
+const { PHASE_3_INPUTS } = await import('../lib/brand.ts')
 const { getAllPosts } = await import('../lib/insights.ts')
 
 const routes = [
-  ...STATIC_ROUTES.filter((r) => !r.platformOnly || launched).map((r) => r.path),
+  ...publicRoutes(launched, { compare, inputs: PHASE_3_INPUTS }).map((r) => r.path),
   ...getAllPosts().map((p) => `/insights/${p.slug}`),
 ]
 
@@ -163,7 +165,7 @@ for (const route of routes) {
   }
 }
 
-console.log(`schema-check against ${base} with the flag ${launched ? 'ON' : 'OFF'}: ${routes.length} routes, ${nodeCount} nodes`)
+console.log(`schema-check against ${base} with the flag ${launched ? 'ON' : 'OFF'}${launched ? ` and compare ${compare ? 'ON' : 'OFF'}` : ''}: ${routes.length} routes, ${nodeCount} nodes`)
 if (failures.length) {
   for (const f of failures) console.log(`  ✘ ${f}`)
   console.error(`\n✘ schema-check: ${failures.length} problem${failures.length === 1 ? '' : 's'}.`)

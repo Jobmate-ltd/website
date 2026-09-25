@@ -4,17 +4,22 @@
  * registry, in either flag state.
  *
  *   node scripts/seo-check.mjs --flag on  --base http://localhost:3000
+ *   node scripts/seo-check.mjs --flag on  --compare on --base http://localhost:3000
  *   node scripts/seo-check.mjs --flag off --base http://localhost:3000
  *
- * Run it against a production server built with the matching value of
- * NEXT_PUBLIC_PLATFORM_LAUNCH. It fetches every page in the map and checks:
+ * Run it against a production server built with the matching values of
+ * NEXT_PUBLIC_PLATFORM_LAUNCH and NEXT_PUBLIC_COMPARE_PAGES. It fetches every
+ * page in the map and checks:
  *   · <title>, meta description and the one H1 equal the row for that state
  *     (the pre-launch row while the flag is off);
  *   · the canonical is self-referencing;
- *   · flag off: every launch-only page returns 404;
- *   · flag on: every Phase 2 page has ≥ 3 contextual links out and ≥ 3 in
- *     per lib/seo/links.ts, and each declared link is present inside <main>
- *     of the served HTML (header and footer do not count);
+ *   · a page that does not exist in this state returns 404: every launch-only
+ *     page with the flag off, the comparisons with --compare off, a module
+ *     page whose Phase 3 input (lib/brand.ts PHASE_3_INPUTS) is false;
+ *   · flag on: every platform page that exists has ≥ 3 contextual links out
+ *     and ≥ 3 in per lib/seo/links.ts (links to pages that do not exist in
+ *     this state are ignored), and each declared link is present inside
+ *     <main> of the served HTML (header and footer do not count);
  *   · both: every route that existed before Phase 2 still returns 200, so no
  *     URL changed.
  * Exit code 1 on any failure. No dependencies beyond Node.
@@ -31,11 +36,21 @@ const flag = (name, fallback) => {
 }
 const base = (flag('--base', process.env.BASE_URL ?? 'http://localhost:3000') ?? '').replace(/\/$/, '')
 const launched = flag('--flag', process.env.NEXT_PUBLIC_PLATFORM_LAUNCH === 'true' ? 'on' : 'off') === 'on'
+// Phase 3: comparison pages also need NEXT_PUBLIC_COMPARE_PAGES; two module pages need a product input.
+const compare = flag('--compare', process.env.NEXT_PUBLIC_COMPARE_PAGES === 'true' ? 'on' : 'off') === 'on'
 
 const map = JSON.parse(readFileSync(join(root, 'content/seo/keyword-map.json'), 'utf8'))
-const { LINK_REGISTRY, linksTo } = await import('../lib/seo/links.ts')
-const { STATIC_ROUTES } = await import('../lib/routes.ts')
+const { registryFor } = await import('../lib/seo/links.ts')
+const { STATIC_ROUTES, publicRoutes } = await import('../lib/routes.ts')
+const { PHASE_3_INPUTS } = await import('../lib/brand.ts')
 const { getAllPosts } = await import('../lib/insights.ts')
+
+const liveRoutes = new Set(publicRoutes(launched, { compare, inputs: PHASE_3_INPUTS }).map((r) => r.path))
+const articles = new Set(getAllPosts().map((p) => `/insights/${p.slug}`))
+/** Does this row's page exist in the state under test? */
+const rowLive = (row) => liveRoutes.has(row.path)
+/** Does any page exist in this state? The registry is filtered to these before it is checked. */
+const pageLive = (path) => liveRoutes.has(path) || articles.has(path) || ['/insights', '/academy', '/toolkit'].includes(path)
 
 const failures = []
 const ok = []
@@ -49,7 +64,11 @@ const decode = (s) =>
     .replace(/&quot;/g, '"')
     .replace(/&#x27;|&#39;/g, "'")
     .replace(/&nbsp;/g, ' ')
-const text = (html) => decode(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
+// Inline emphasis inside an H1 (`<span class="text-brand">could</span> have`) is part of the same run of text; block tags separate words.
+const text = (html) =>
+  decode(html.replace(/<\/?(span|strong|em|b|i)\b[^>]*>/gi, '').replace(/<[^>]+>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim()
 const attr = (html, re) => {
   const m = html.match(re)
   return m ? decode(m[1]) : null
@@ -62,9 +81,10 @@ async function fetchPage(path) {
 }
 
 function rowFor(row) {
+  if (!rowLive(row)) return null
   if (launched) return { title: row.title, description: row.description, h1: row.h1 }
   if (row.prelaunch) return row.prelaunch
-  return row.phase === 1 ? { title: row.title, description: row.description, h1: row.h1 } : null
+  return { title: row.title, description: row.description, h1: row.h1 }
 }
 
 function mainOf(html) {
@@ -88,8 +108,9 @@ for (const row of map.rows) {
   const { status, html } = await fetchPage(row.path)
   pages.set(row.path, { status, html })
   if (!expected) {
-    if (status === 404) ok.push(`${row.path} → 404 while the flag is off`)
-    else fail(row.path, `expected 404 with the flag off, got ${status}`)
+    const why = !launched ? 'while the flag is off' : row.compare ? 'while the comparisons are off' : row.gated ? `while ${row.gated} is false` : 'in this state'
+    if (status === 404) ok.push(`${row.path} → 404 ${why}`)
+    else fail(row.path, `expected 404 ${why}, got ${status}`)
     continue
   }
   if (status !== 200) {
@@ -111,15 +132,18 @@ for (const row of map.rows) {
 
 // ── 2. The link registry (flag on) ───────────────────────────────────────────
 if (launched) {
-  const phase2 = map.rows.filter((row) => row.phase >= 2)
-  for (const row of phase2) {
-    const outs = LINK_REGISTRY[row.path] ?? []
+  // Only the pages that exist in this state: a gated module page or a comparison that is 404 is neither a source nor a target.
+  const registry = registryFor(pageLive)
+  const linksTo = (path) => Object.entries(registry).filter(([, targets]) => targets.includes(path)).map(([source]) => source)
+  const platformRows = map.rows.filter((row) => row.phase >= 2 && rowLive(row))
+  for (const row of platformRows) {
+    const outs = registry[row.path] ?? []
     const ins = linksTo(row.path)
     if (outs.length < 3) fail(row.path, `${outs.length} contextual links out in lib/seo/links.ts; need ≥ 3`)
     // The homepage is linked from the wordmark and the breadcrumb on every page; the registry counts contextual links between inner pages.
     if (ins.length < 3 && row.path !== '/') fail(row.path, `${ins.length} contextual links in from lib/seo/links.ts; need ≥ 3`)
   }
-  for (const [source, targets] of Object.entries(LINK_REGISTRY)) {
+  for (const [source, targets] of Object.entries(registry)) {
     let page = pages.get(source)
     if (!page) {
       page = await fetchPage(source)
@@ -134,7 +158,7 @@ if (launched) {
       if (!hrefs.has(target)) fail(source, `declared link to ${target} is not in <main>`)
     }
   }
-  if (!failures.some((f) => /contextual links|declared link/.test(f))) ok.push('link registry: every declared link is in the page, every Phase 2 page has ≥ 3 in and ≥ 3 out')
+  if (!failures.some((f) => /contextual links|declared link/.test(f))) ok.push(`link registry: every declared link is in the page, every platform page that exists (${platformRows.length}) has ≥ 3 in and ≥ 3 out`)
 }
 
 // ── 3. No existing URL changed ───────────────────────────────────────────────
@@ -146,7 +170,7 @@ for (const path of existing) {
 if (!failures.some((f) => /existing URL/.test(f))) ok.push(`${existing.length} pre-existing URLs still return 200`)
 
 // ── Report ───────────────────────────────────────────────────────────────────
-console.log(`seo-check against ${base} with the flag ${launched ? 'ON' : 'OFF'}`)
+console.log(`seo-check against ${base} with the flag ${launched ? 'ON' : 'OFF'}${launched ? `, comparisons ${compare ? 'ON' : 'OFF'}` : ''}`)
 for (const line of ok) console.log(`  ✔ ${line}`)
 for (const line of failures) console.log(`  ✘ ${line}`)
 if (failures.length) {

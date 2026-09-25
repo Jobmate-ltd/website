@@ -9,7 +9,8 @@ import { SectionHeading } from '@/components/ui/section-heading'
 /**
  * PlatformIndustries — section 8 of the homepage: one card per industry that
  * has a page, Transport first, each written in that sector's words
- * (docs/REBUILD.md §4). Industries without a page are not listed.
+ * (docs/REBUILD.md §4). Industries without a page in this flag state are
+ * not listed; with the flag on all seven Phase 3 pages exist.
  */
 const INDUSTRIES: readonly { href: string; name: string; copy: string; image: string; alt: string }[] = [
   {
@@ -20,11 +21,11 @@ const INDUSTRIES: readonly { href: string; name: string; copy: string; image: st
     alt: 'A haulage yard with an HGV backed onto a loading bay',
   },
   {
-    href: '/industries/window-door-fitters',
-    name: 'Window & door fitters',
-    copy: 'On site, up a ladder, with the van as the office. The near miss written down before the next job, and the evidence an insurer or a principal contractor will ask for.',
-    image: '/videos/window-fitter-hero-poster.jpg',
-    alt: 'A fitter installing a window frame on site',
+    href: '/industries/construction',
+    name: 'Construction',
+    copy: 'Sites, principal contractors and the trades. A hot-works permit that will not issue until the RAMS is live, and a fall triaged against RIDDOR before the phone call ends.',
+    image: '/images/industries/construction.png',
+    alt: 'A site manager in a hard hat and hi-vis watching two workers in harnesses on the steel frame of a building under construction',
   },
   {
     href: '/industries/field-services',
@@ -34,11 +35,32 @@ const INDUSTRIES: readonly { href: string; name: string; copy: string; image: st
     alt: 'A field engineer working at a customer site',
   },
   {
+    href: '/industries/facilities-management',
+    name: 'Facilities management',
+    copy: 'Occupied buildings, contractors you did not hire and a public that did not sign in. The permit gate, the incident with a visitor on it and the estate on one dashboard.',
+    image: '/images/industries/facilities.png',
+    alt: 'Two facilities staff in hard hats and hi-vis inspecting an empty commercial building with a row of loading-bay doors',
+  },
+  {
+    href: '/industries/manufacturing-warehousing',
+    name: 'Manufacturing & warehousing',
+    copy: 'Lines, high bays and forklifts. The guarding assessment scored 5×5, the thorough examination date on every truck, and the near miss in aisle 12 written down.',
+    image: '/images/industries/manufacturing.png',
+    alt: 'An engineer in hi-vis with a laptop on a gantry above an automated production line with robot arms',
+  },
+  {
     href: '/industries/healthcare',
-    name: 'Care & healthcare',
-    copy: 'Every shift, every incident, on the record. Staff safety on home visits and lone working, with the evidence a commissioner or an inspector expects to see.',
+    name: 'Care homes & home care',
+    copy: 'Staff safety, not resident records. The assault on nights reported before the shift ends, the moving and handling assessment on the phone, the refresher that lapsed.',
     image: '/images/industries/healthcare.png',
     alt: 'A carer helping a resident in a care home',
+  },
+  {
+    href: '/industries/window-door-fitters',
+    name: 'Window & door fitters',
+    copy: 'On site, up a ladder, with the van as the office. The near miss written down before the next job, and the evidence an insurer or a principal contractor will ask for.',
+    image: '/videos/window-fitter-hero-poster.jpg',
+    alt: 'A fitter installing a window frame on site',
   },
 ]
 
@@ -47,7 +69,7 @@ export function PlatformIndustries() {
   return (
     <Section id="industries" tone="grey">
       <SectionHeading eyebrow="Industries" title="Written for the work you actually do" lead="One platform, worded for each sector. Pick yours." tone="grey" />
-      <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {cards.map((industry) => (
           <li key={industry.href}>
             <Link

@@ -5,18 +5,41 @@
     {
       "path": "/",
       "phase": 2,
-      "primary": { "keyword": "health and safety software", "volume": 390, "kd": 63 },
+      "primary": {
+        "keyword": "health and safety software",
+        "volume": 390,
+        "kd": 63
+      },
       "supporting": [
-        { "keyword": "health and safety software uk", "volume": 70 },
-        { "keyword": "ehs software", "volume": 260 },
-        { "keyword": "health and safety app", "volume": 170 },
-        { "keyword": "workplace safety software", "volume": 110 },
-        { "keyword": "hse software", "volume": 70 }
+        {
+          "keyword": "health and safety software uk",
+          "volume": 70
+        },
+        {
+          "keyword": "ehs software",
+          "volume": 260
+        },
+        {
+          "keyword": "health and safety app",
+          "volume": 170
+        },
+        {
+          "keyword": "workplace safety software",
+          "volume": 110
+        },
+        {
+          "keyword": "hse software",
+          "volume": 70
+        }
       ],
       "title": "Health and safety software for UK operators | jobsafe",
       "description": "Incidents, RIDDOR, risk assessments, permits, fleet checks and training in one offline-first app, hosted in the UK. Book a 30-minute walkthrough.",
       "h1": "One health and safety platform. Built for UK law. Works without signal.",
-      "paa": ["What are some good health and safety apps?", "What is an EHS software?", "What are HSE software systems?"],
+      "paa": [
+        "What are some good health and safety apps?",
+        "What is an EHS software?",
+        "What are HSE software systems?"
+      ],
       "prelaunch": {
         "title": "jobsafe — incident reporting software for UK field teams",
         "description": "Incident reporting software for UK field teams. Works offline, with photo, GPS and timestamp evidence. From £3.00 + VAT a licence. Start your free trial.",
@@ -26,13 +49,32 @@
     {
       "path": "/platform",
       "phase": 2,
-      "primary": { "keyword": "health and safety management software", "volume": 110, "kd": 32 },
+      "primary": {
+        "keyword": "health and safety management software",
+        "volume": 110,
+        "kd": 32
+      },
       "supporting": [
-        { "keyword": "health and safety compliance software", "volume": 110 },
-        { "keyword": "safety management software", "volume": 70 },
-        { "keyword": "ehs management software", "volume": 50 },
-        { "keyword": "health and safety management system software", "volume": 30 },
-        { "keyword": "occupational health and safety software", "volume": 40 }
+        {
+          "keyword": "health and safety compliance software",
+          "volume": 110
+        },
+        {
+          "keyword": "safety management software",
+          "volume": 70
+        },
+        {
+          "keyword": "ehs management software",
+          "volume": 50
+        },
+        {
+          "keyword": "health and safety management system software",
+          "volume": 30
+        },
+        {
+          "keyword": "occupational health and safety software",
+          "volume": 40
+        }
       ],
       "title": "Health and safety management software | jobsafe",
       "description": "One record from first report to last certificate: incidents, RIDDOR, risk and bowtie, permits, checklists, fleet, training and documents. Offline.",
@@ -41,27 +83,61 @@
     {
       "path": "/platform/incident-reporting",
       "phase": 2,
-      "primary": { "keyword": "incident reporting software", "volume": 170, "kd": 57 },
+      "primary": {
+        "keyword": "incident reporting software",
+        "volume": 170,
+        "kd": 57
+      },
       "supporting": [
-        { "keyword": "incident management software", "volume": 170 },
-        { "keyword": "near miss reporting", "volume": 480 },
-        { "keyword": "incident reporting app", "volume": 30 },
-        { "keyword": "accident reporting software", "volume": 20 },
-        { "keyword": "near miss reporting software", "volume": 10 }
+        {
+          "keyword": "incident management software",
+          "volume": 170
+        },
+        {
+          "keyword": "near miss reporting",
+          "volume": 480
+        },
+        {
+          "keyword": "incident reporting app",
+          "volume": 30
+        },
+        {
+          "keyword": "accident reporting software",
+          "volume": 20
+        },
+        {
+          "keyword": "near miss reporting software",
+          "volume": 10
+        }
       ],
       "title": "Incident reporting software, offline and UK hosted | jobsafe",
       "description": "Seven-step incident and near-miss reports from any phone, with photos, GPS, people, vehicles and RIDDOR triage. Works offline. Hosted in the UK.",
       "h1": "Incident and near-miss reporting software",
-      "paa": ["What tool should be used for reporting incidents?"]
+      "paa": [
+        "What tool should be used for reporting incidents?"
+      ]
     },
     {
       "path": "/platform/riddor",
       "phase": 2,
-      "primary": { "keyword": "riddor reporting software", "volume": null, "kd": null },
+      "primary": {
+        "keyword": "riddor reporting software",
+        "volume": null,
+        "kd": null
+      },
       "supporting": [
-        { "keyword": "riddor form", "volume": 320 },
-        { "keyword": "f2508", "volume": 170 },
-        { "keyword": "riddor reporting timescales", "volume": 210 }
+        {
+          "keyword": "riddor form",
+          "volume": 320
+        },
+        {
+          "keyword": "f2508",
+          "volume": 170
+        },
+        {
+          "keyword": "riddor reporting timescales",
+          "volume": 210
+        }
       ],
       "title": "RIDDOR reporting software with deadlines built in | jobsafe",
       "description": "Statutory RIDDOR 2013 triage with a live verdict, 10 and 15-day deadlines and an F2508 register. You submit to HSE; jobsafe keeps you on time.",
@@ -70,26 +146,58 @@
     {
       "path": "/platform/risk-assessments",
       "phase": 2,
-      "primary": { "keyword": "risk assessment software", "volume": 260, "kd": 77 },
+      "primary": {
+        "keyword": "risk assessment software",
+        "volume": 260,
+        "kd": 77
+      },
       "supporting": [
-        { "keyword": "risk assessment app", "volume": 140 },
-        { "keyword": "coshh risk assessment", "volume": 1300 },
-        { "keyword": "suitable and sufficient risk assessment", "volume": 70 }
+        {
+          "keyword": "risk assessment app",
+          "volume": 140
+        },
+        {
+          "keyword": "coshh risk assessment",
+          "volume": 1300
+        },
+        {
+          "keyword": "suitable and sufficient risk assessment",
+          "volume": 70
+        }
       ],
       "title": "Risk assessment software with 5×5 scoring | jobsafe",
       "description": "Digital risk assessments with 5×5 scoring, hierarchy of control, COSHH, fire, DSE and manual handling types, bowtie analysis and approval.",
       "h1": "Risk assessment software",
-      "paa": ["What is the best risk assessment software?", "Can I do my own risk assessment?"]
+      "paa": [
+        "What is the best risk assessment software?",
+        "Can I do my own risk assessment?"
+      ]
     },
     {
       "path": "/platform/permits-to-work",
       "phase": 2,
-      "primary": { "keyword": "permit to work system", "volume": 390, "kd": 49 },
+      "primary": {
+        "keyword": "permit to work system",
+        "volume": 390,
+        "kd": 49
+      },
       "supporting": [
-        { "keyword": "permit to work software", "volume": 30 },
-        { "keyword": "electronic permit to work", "volume": 20 },
-        { "keyword": "digital permit to work", "volume": 10 },
-        { "keyword": "hot work permit", "volume": 1300 }
+        {
+          "keyword": "permit to work software",
+          "volume": 30
+        },
+        {
+          "keyword": "electronic permit to work",
+          "volume": 20
+        },
+        {
+          "keyword": "digital permit to work",
+          "volume": 10
+        },
+        {
+          "keyword": "hot work permit",
+          "volume": 1300
+        }
       ],
       "title": "Permit to work system, gated on competence | jobsafe",
       "description": "Hot works, confined space, height, electrical, excavation and roof permits that will not issue until contractor competence and a live risk assessment check out.",
@@ -98,8 +206,17 @@
     {
       "path": "/platform/offline",
       "phase": 2,
-      "primary": { "keyword": "offline health and safety app", "volume": null, "kd": null },
-      "supporting": [{ "keyword": "offline incident reporting", "volume": 0 }],
+      "primary": {
+        "keyword": "offline health and safety app",
+        "volume": null,
+        "kd": null
+      },
+      "supporting": [
+        {
+          "keyword": "offline incident reporting",
+          "volume": 0
+        }
+      ],
       "title": "Offline health and safety app that syncs itself | jobsafe",
       "description": "Every jobsafe module saves to the phone first and syncs when signal returns. Pending sync shows on each record, and the newest edit wins on every device.",
       "h1": "An offline health and safety app for the yard, the basement and the cab"
@@ -107,8 +224,17 @@
     {
       "path": "/pricing",
       "phase": 2,
-      "primary": { "keyword": "health and safety software pricing", "volume": 0, "kd": 15 },
-      "supporting": [{ "keyword": "health and safety software cost", "volume": 10 }],
+      "primary": {
+        "keyword": "health and safety software pricing",
+        "volume": 0,
+        "kd": 15
+      },
+      "supporting": [
+        {
+          "keyword": "health and safety software cost",
+          "volume": 10
+        }
+      ],
       "title": "Health and safety software pricing | jobsafe",
       "description": "Published prices in pounds with VAT shown, per user per month. Essentials, Professional and Enterprise, plus a cost-of-paper calculator. No form needed.",
       "h1": "Health and safety software pricing, in pounds with VAT shown"
@@ -116,7 +242,11 @@
     {
       "path": "/security",
       "phase": 2,
-      "primary": { "keyword": "uk hosted health and safety software", "volume": null, "kd": null },
+      "primary": {
+        "keyword": "uk hosted health and safety software",
+        "volume": null,
+        "kd": null
+      },
       "supporting": [],
       "title": "Security and UK data hosting | jobsafe",
       "description": "Where jobsafe keeps your safety records: London hosting, each organisation walled off, private file storage, six role levels and CSV export.",
@@ -125,7 +255,11 @@
     {
       "path": "/demo",
       "phase": 2,
-      "primary": { "keyword": "health and safety software demo", "volume": null, "kd": null },
+      "primary": {
+        "keyword": "health and safety software demo",
+        "volume": null,
+        "kd": null
+      },
       "supporting": [],
       "title": "Book a 30-minute jobsafe walkthrough | jobsafe",
       "description": "See incidents, RIDDOR, risk assessments, permits and fleet checks running on a UK haulier’s setup, walked through live by someone who knows the product.",
@@ -134,7 +268,11 @@
     {
       "path": "/contact",
       "phase": 2,
-      "primary": { "keyword": "contact jobsafe", "volume": null, "kd": null },
+      "primary": {
+        "keyword": "contact jobsafe",
+        "volume": null,
+        "kd": null
+      },
       "supporting": [],
       "title": "Contact sales and support | jobsafe",
       "description": "Talk to jobsafe sales or support: sales@jobsafe.cloud, support@jobsafe.cloud or 0333 8000 883. Made by Jobmate Ltd, Wolverhampton.",
@@ -143,7 +281,11 @@
     {
       "path": "/about",
       "phase": 1,
-      "primary": { "keyword": "jobsafe", "volume": null, "kd": null },
+      "primary": {
+        "keyword": "jobsafe",
+        "volume": null,
+        "kd": null
+      },
       "supporting": [],
       "title": "About jobsafe | UK health and safety platform",
       "description": "jobsafe is made by Jobmate Ltd in Wolverhampton: a UK health and safety platform for operators whose work happens in yards, sites, depots and vans.",
@@ -153,6 +295,551 @@
         "description": "jobsafe is a UK workplace incident reporting app made by Jobmate Ltd in Wolverhampton. Who we are, what the app does, and what it deliberately does not do.",
         "h1": "About jobsafe, UK workplace incident reporting"
       }
+    },
+    {
+      "path": "/platform/investigations",
+      "phase": 3,
+      "primary": {
+        "keyword": "incident investigation software",
+        "volume": 10,
+        "kd": 30
+      },
+      "supporting": [
+        {
+          "keyword": "incident investigation",
+          "volume": 140
+        },
+        {
+          "keyword": "root cause analysis",
+          "volume": 6600
+        }
+      ],
+      "title": "Incident investigation software with ICAM | jobsafe",
+      "description": "Four-level ICAM root-cause analysis, evidence, people, timeline and role-gated sign-off, linked straight to corrective actions. Works offline.",
+      "h1": "Incident investigation software"
+    },
+    {
+      "path": "/platform/corrective-actions",
+      "phase": 3,
+      "primary": {
+        "keyword": "corrective action software",
+        "volume": 10,
+        "kd": 39
+      },
+      "supporting": [
+        {
+          "keyword": "capa software",
+          "volume": 20
+        },
+        {
+          "keyword": "corrective and preventive action",
+          "volume": 590
+        }
+      ],
+      "title": "Corrective action software for health and safety | jobsafe",
+      "description": "One action register fed from reports, hazards, permits, fleet, checklists and training gaps. Owners, due dates, overdue tracking and board view.",
+      "h1": "Corrective action software"
+    },
+    {
+      "path": "/platform/fleet-compliance",
+      "phase": 3,
+      "primary": {
+        "keyword": "fleet compliance software",
+        "volume": 10,
+        "kd": 31
+      },
+      "supporting": [
+        {
+          "keyword": "hgv walkaround check",
+          "volume": 140
+        },
+        {
+          "keyword": "daily vehicle check",
+          "volume": 50
+        },
+        {
+          "keyword": "vehicle defect check app",
+          "volume": 0
+        },
+        {
+          "keyword": "loler inspection",
+          "volume": 1900
+        }
+      ],
+      "title": "Fleet and plant compliance software: MOT to LOLER | jobsafe",
+      "description": "HGVs, trailers, vans, forklifts and MEWPs with MOT, tax, insurance, service and LOLER dates, off-road status, defect history and DVSA walkaround checks.",
+      "h1": "Fleet and plant compliance software"
+    },
+    {
+      "path": "/platform/training-competence",
+      "phase": 3,
+      "primary": {
+        "keyword": "training matrix software",
+        "volume": 50,
+        "kd": 21
+      },
+      "supporting": [
+        {
+          "keyword": "competency management software",
+          "volume": 40
+        },
+        {
+          "keyword": "training records software",
+          "volume": 50
+        },
+        {
+          "keyword": "competency matrix",
+          "volume": 260
+        }
+      ],
+      "title": "Training matrix and competency software | jobsafe",
+      "description": "A competency matrix against role targets and a course matrix with expiries, critical-course gaps and development plans. Gaps raise actions.",
+      "h1": "Training matrix and competency management software"
+    },
+    {
+      "path": "/platform/document-control",
+      "phase": 3,
+      "primary": {
+        "keyword": "document control software",
+        "volume": 110,
+        "kd": 60
+      },
+      "supporting": [
+        {
+          "keyword": "document control",
+          "volume": 1300
+        }
+      ],
+      "title": "Document control software for health and safety | jobsafe",
+      "description": "Folders with access levels, automatic versioning, tags and permission-aware search for policies, RAMS, certificates and procedures.",
+      "h1": "Document control software"
+    },
+    {
+      "path": "/platform/dashboards",
+      "phase": 3,
+      "primary": {
+        "keyword": "health and safety kpis",
+        "volume": 110,
+        "kd": 41
+      },
+      "supporting": [
+        {
+          "keyword": "days since last accident",
+          "volume": 260
+        }
+      ],
+      "title": "Health and safety KPIs and dashboards | jobsafe",
+      "description": "Open high-severity reports, overdue actions, week-on-week incidents, days since the last lost-time injury, site hotspots and 12-week trends.",
+      "h1": "Health and safety dashboards and KPIs"
+    },
+    {
+      "path": "/platform/bowtie-analysis",
+      "phase": 3,
+      "primary": {
+        "keyword": "bowtie diagram",
+        "volume": 390,
+        "kd": 29
+      },
+      "supporting": [
+        {
+          "keyword": "bowtie analysis",
+          "volume": 390
+        },
+        {
+          "keyword": "bow tie risk assessment",
+          "volume": 210
+        }
+      ],
+      "title": "Bowtie analysis software and diagrams | jobsafe",
+      "description": "Build bowtie diagrams inside your risk assessments: threats, consequences, barriers, effectiveness and escalation factors, with a computed score.",
+      "h1": "Bowtie analysis, built into your risk assessments",
+      "paa": [
+        "What is a bowtie assessment?",
+        "What is the bow tie method?",
+        "What are the six components of a bow tie diagram?"
+      ]
+    },
+    {
+      "path": "/platform/checklists",
+      "phase": 3,
+      "primary": {
+        "keyword": "inspection software",
+        "volume": 90,
+        "kd": 59
+      },
+      "supporting": [
+        {
+          "keyword": "safety inspection app",
+          "volume": 10
+        },
+        {
+          "keyword": "health and safety inspection checklist",
+          "volume": 40
+        }
+      ],
+      "title": "Safety inspection and checklist app | jobsafe",
+      "description": "Run inspections and pre-use checks offline with pass, fail or N/A, photos and signatures. A failed item raises an action automatically.",
+      "h1": "Safety inspection and checklist software",
+      "gated": "checklistBuilderShipped"
+    },
+    {
+      "path": "/platform/contractors",
+      "phase": 3,
+      "primary": {
+        "keyword": "contractor management software",
+        "volume": 480,
+        "kd": 66
+      },
+      "supporting": [
+        {
+          "keyword": "contractor management",
+          "volume": 880
+        },
+        {
+          "keyword": "contractor compliance software",
+          "volume": 30
+        },
+        {
+          "keyword": "contractor safety management",
+          "volume": 10
+        }
+      ],
+      "title": "Contractor management software for UK sites | jobsafe",
+      "description": "Contractor insurance, RAMS, accreditation and audit dates in one place, checked automatically before any permit to work is issued.",
+      "h1": "Contractor management software",
+      "gated": "contractorCrudShipped"
+    },
+    {
+      "path": "/industries/transport-logistics",
+      "phase": 3,
+      "primary": {
+        "keyword": "workplace transport safety",
+        "volume": 70
+      },
+      "supporting": [
+        {
+          "keyword": "haulage health and safety",
+          "volume": 0
+        },
+        {
+          "keyword": "hgv walkaround check",
+          "volume": 140
+        },
+        {
+          "keyword": "banksman",
+          "volume": 2400
+        }
+      ],
+      "title": "Health and safety software for hauliers and depots | jobsafe",
+      "description": "Walkaround defects, yard near misses, forklift and tail-lift LOLER dates, banksman competence and RIDDOR, in one offline app for UK hauliers.",
+      "h1": "Health and safety software for hauliers and depot operators",
+      "prelaunch": {
+        "title": "Health and safety software for transport and logistics | jobsafe",
+        "description": "Incident and near-miss reporting for UK transport, logistics and warehousing operators. Evidence for PQQs, customer audits and the HSE. Start your free trial.",
+        "h1": "The fine is set by what could have happened"
+      }
+    },
+    {
+      "path": "/industries/construction",
+      "phase": 3,
+      "primary": {
+        "keyword": "health and safety software for construction",
+        "volume": 30,
+        "kd": 17
+      },
+      "supporting": [
+        {
+          "keyword": "construction safety software",
+          "volume": 40
+        },
+        {
+          "keyword": "construction health and safety software",
+          "volume": 30
+        },
+        {
+          "keyword": "construction safety app",
+          "volume": 10
+        }
+      ],
+      "title": "Construction health and safety software | jobsafe",
+      "description": "Permits to work, contractor checks, risk assessments, RIDDOR and training records for principal contractors and trades, offline on site.",
+      "h1": "Health and safety software for construction"
+    },
+    {
+      "path": "/industries/field-services",
+      "phase": 3,
+      "primary": {
+        "keyword": "field service health and safety",
+        "volume": 0,
+        "kd": 25
+      },
+      "supporting": [],
+      "title": "Health and safety software for field service teams | jobsafe",
+      "description": "Incidents on client premises, van checks, risk assessments and training records for engineers who work alone and offline. Built for UK teams.",
+      "h1": "Health and safety software for field service teams",
+      "prelaunch": {
+        "title": "Health and safety software for field service teams | jobsafe",
+        "description": "Incident and near-miss reporting for UK field service and mobile engineering teams. Works with no signal, with photo, GPS and timestamped evidence. Start your free trial.",
+        "h1": "Reporting that travels with your engineers"
+      }
+    },
+    {
+      "path": "/industries/facilities-management",
+      "phase": 3,
+      "primary": {
+        "keyword": "facilities management health and safety",
+        "volume": 20,
+        "kd": 23
+      },
+      "supporting": [],
+      "title": "Facilities management health and safety software | jobsafe",
+      "description": "Incidents involving the public, contractor permits, documents and multi-site dashboards for FM providers and estates teams across the UK.",
+      "h1": "Health and safety software for facilities management"
+    },
+    {
+      "path": "/industries/manufacturing-warehousing",
+      "phase": 3,
+      "primary": {
+        "keyword": "warehouse health and safety",
+        "volume": 320,
+        "kd": 41
+      },
+      "supporting": [
+        {
+          "keyword": "health and safety in warehouses",
+          "volume": 260
+        },
+        {
+          "keyword": "health and safety in manufacturing",
+          "volume": 170
+        }
+      ],
+      "title": "Warehouse and manufacturing safety software | jobsafe",
+      "description": "Manual handling and COSHH assessments, FLT and MEWP checks, training matrices and incident reporting for UK warehouses and production lines.",
+      "h1": "Health and safety software for warehouses and manufacturing"
+    },
+    {
+      "path": "/industries/healthcare",
+      "phase": 3,
+      "primary": {
+        "keyword": "care home health and safety",
+        "volume": 260,
+        "kd": 41
+      },
+      "supporting": [],
+      "title": "Health and safety software for care homes | jobsafe",
+      "description": "Staff incidents on every shift, moving and handling assessments, training records and governance evidence for UK care homes and home care.",
+      "h1": "Staff health and safety for care homes and home care",
+      "prelaunch": {
+        "title": "Health and safety software for care homes and healthcare | jobsafe",
+        "description": "Incident and near-miss reporting for UK care homes, home care and clinical teams. Photo, GPS and timestamped evidence an inspector can trust. Start your free trial.",
+        "h1": "Every shift, every incident, on the record."
+      }
+    },
+    {
+      "path": "/industries/window-door-fitters",
+      "phase": 3,
+      "primary": {
+        "keyword": "window fitter health and safety",
+        "volume": null
+      },
+      "supporting": [],
+      "title": "Health and safety for window and door fitters | jobsafe",
+      "description": "Incident reports from the van, working-at-height risk assessments, training records and evidence for insurers and tenders. Built for UK installers.",
+      "h1": "Health and safety software for window and door fitters",
+      "prelaunch": {
+        "title": "Health and safety software for window and door fitters | jobsafe",
+        "description": "Incident and near-miss reporting for UK window, door and glazing installers. Photo, GPS and timestamped evidence your insurer can trust. Start your free trial.",
+        "h1": "Fix your incident reporting before the next job."
+      }
+    },
+    {
+      "path": "/tools",
+      "phase": 3,
+      "primary": {
+        "keyword": "free health and safety tools",
+        "volume": null
+      },
+      "supporting": [],
+      "title": "Free health and safety tools | jobsafe",
+      "description": "Three free tools built from jobsafe’s own logic: a RIDDOR reportability checker, a 5×5 risk matrix calculator and an accident frequency rate calculator.",
+      "h1": "Free tools, built from the product"
+    },
+    {
+      "path": "/tools/riddor-checker",
+      "phase": 3,
+      "primary": {
+        "keyword": "riddor reportable incidents",
+        "volume": 1900,
+        "kd": 47
+      },
+      "supporting": [
+        {
+          "keyword": "riddor reportable",
+          "volume": 320
+        },
+        {
+          "keyword": "riddor dangerous occurrences",
+          "volume": 260
+        },
+        {
+          "keyword": "riddor specified injuries",
+          "volume": 140
+        },
+        {
+          "keyword": "over 7 day injury riddor",
+          "volume": 30
+        },
+        {
+          "keyword": "riddor 7 day rule",
+          "volume": 10
+        },
+        {
+          "keyword": "is it riddor reportable",
+          "volume": 0
+        }
+      ],
+      "title": "Is it RIDDOR reportable? Free RIDDOR checker | jobsafe",
+      "description": "Answer a few questions and see whether an incident is RIDDOR reportable, which category it falls in and your deadline to report to HSE. Free.",
+      "h1": "Is it RIDDOR reportable? Check in under a minute",
+      "paa": [
+        "What are the 8 categories of reportable incidents?",
+        "What is the 7-day rule for reporting RIDDOR incidents?",
+        "What is not RIDDOR reportable?"
+      ]
+    },
+    {
+      "path": "/tools/risk-matrix",
+      "phase": 3,
+      "primary": {
+        "keyword": "5x5 risk matrix",
+        "volume": 480,
+        "kd": 54
+      },
+      "supporting": [
+        {
+          "keyword": "risk matrix",
+          "volume": 4400
+        },
+        {
+          "keyword": "risk assessment matrix",
+          "volume": 2400
+        },
+        {
+          "keyword": "risk matrix calculator",
+          "volume": 20
+        }
+      ],
+      "title": "Free 5x5 risk matrix calculator | jobsafe",
+      "description": "Score likelihood and severity on a 5×5 risk matrix and see the risk band and required action instantly. Free, with the hierarchy of control explained.",
+      "h1": "5×5 risk matrix calculator",
+      "paa": [
+        "What is the 5x5 risk matrix?",
+        "What are the 5 risk rating levels?",
+        "What are the dimensions of the HSE 5x5 risk matrix?"
+      ]
+    },
+    {
+      "path": "/tools/accident-frequency-rate",
+      "phase": 3,
+      "primary": {
+        "keyword": "accident frequency rate calculation",
+        "volume": 70,
+        "kd": 26
+      },
+      "supporting": [
+        {
+          "keyword": "accident frequency rate",
+          "volume": 110
+        }
+      ],
+      "title": "Accident frequency rate calculator (AFR) | jobsafe",
+      "description": "Work out your accident frequency rate for PQQs and tenders: reportable injuries against hours worked, with the formula shown and explained.",
+      "h1": "Accident frequency rate calculator"
+    },
+    {
+      "path": "/compare",
+      "phase": 3,
+      "primary": {
+        "keyword": "best health and safety software uk",
+        "volume": 10,
+        "kd": 30
+      },
+      "supporting": [
+        {
+          "keyword": "best health and safety software",
+          "volume": 30
+        },
+        {
+          "keyword": "health and safety software comparison",
+          "volume": 0
+        }
+      ],
+      "title": "Compare health and safety software | jobsafe",
+      "description": "Honest, sourced comparisons of jobsafe with Mitti (formerly SafetyCulture), Evotix and EcoOnline: hosting, pricing, permits, RIDDOR and offline.",
+      "h1": "Compare health and safety software",
+      "compare": true
+    },
+    {
+      "path": "/compare/mitti-safetyculture",
+      "phase": 3,
+      "primary": {
+        "keyword": "safetyculture alternative",
+        "volume": 0,
+        "kd": 39
+      },
+      "supporting": [
+        {
+          "keyword": "mitti safetyculture",
+          "volume": 50
+        },
+        {
+          "keyword": "iauditor alternative",
+          "volume": 10
+        }
+      ],
+      "title": "jobsafe vs Mitti (formerly SafetyCulture)",
+      "description": "A sourced, dated comparison of jobsafe and Mitti (formerly SafetyCulture): UK hosting, GBP pricing, permits to work, RIDDOR and offline use.",
+      "h1": "jobsafe vs Mitti (formerly SafetyCulture)",
+      "compare": true
+    },
+    {
+      "path": "/compare/evotix",
+      "phase": 3,
+      "primary": {
+        "keyword": "evotix alternative",
+        "volume": 0,
+        "kd": 33
+      },
+      "supporting": [
+        {
+          "keyword": "evotix pricing",
+          "volume": 0
+        }
+      ],
+      "title": "jobsafe vs Evotix: a UK comparison",
+      "description": "A sourced, dated comparison of jobsafe and Evotix: published pricing, implementation, UK regulation depth, fleet compliance and offline use.",
+      "h1": "jobsafe vs Evotix",
+      "compare": true
+    },
+    {
+      "path": "/compare/ecoonline",
+      "phase": 3,
+      "primary": {
+        "keyword": "ecoonline alternative",
+        "volume": 0,
+        "kd": 39
+      },
+      "supporting": [
+        {
+          "keyword": "ecoonline pricing",
+          "volume": 0
+        }
+      ],
+      "title": "jobsafe vs EcoOnline: a UK comparison",
+      "description": "A sourced, dated comparison of jobsafe and EcoOnline: pricing, one product vs a suite, fleet compliance, permits, RIDDOR and offline use.",
+      "h1": "jobsafe vs EcoOnline",
+      "compare": true
     }
   ]
 }

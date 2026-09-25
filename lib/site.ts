@@ -238,13 +238,29 @@ const MODULE_DESCRIPTIONS = {
   dashboards: 'Open incidents, RIDDOR due, overdue actions.',
 } as const
 
+/** The free tools (Phase 3). Each runs a module's own logic in the browser; the hub explains where each comes from. */
+export const FREE_TOOL_LINKS: readonly NavChild[] = [
+  { label: 'RIDDOR checker', href: '/tools/riddor-checker', description: 'Is it reportable, and by when? One question at a time.' },
+  { label: '5×5 risk matrix', href: '/tools/risk-matrix', description: 'Score it on the product’s scales and read the band.' },
+  { label: 'Accident frequency rate', href: '/tools/accident-frequency-rate', description: 'The PQQ figure, with the working shown.' },
+  { label: 'All free tools', href: '/tools', description: 'Where each tool comes from in the product.' },
+]
+
+/** The comparisons (Phase 3). Behind NEXT_PUBLIC_COMPARE_PAGES; every claim on them is sourced and dated. */
+export const COMPARE_LINKS: readonly NavChild[] = [
+  { label: 'Compare', href: '/compare', description: 'Fifteen rows, every claim sourced and dated.' },
+  { label: 'jobsafe vs Mitti', href: '/compare/mitti-safetyculture', description: 'Formerly SafetyCulture.' },
+  { label: 'jobsafe vs Evotix', href: '/compare/evotix' },
+  { label: 'jobsafe vs EcoOnline', href: '/compare/ecoonline' },
+]
+
 export const PLATFORM_INDUSTRY_LINKS: readonly NavChild[] = [
   { label: 'Transport & logistics', href: '/industries/transport-logistics', description: 'Depots, yards, cabs and warehouses.' },
   { label: 'Construction & trades', href: '/industries/construction', description: 'Sites, principal contractors and plant.' },
   { label: 'Field services', href: '/industries/field-services', description: 'Lone and mobile engineers on sites you do not control.' },
   { label: 'Facilities management', href: '/industries/facilities-management', description: 'Estates, contractors and the public.' },
-  { label: 'Manufacturing & warehousing', href: '/industries/manufacturing', description: 'Lines, high bays, MHE and FLTs.' },
-  { label: 'Care & healthcare', href: '/industries/healthcare', description: 'Care homes, home care and clinical staff on shift.' },
+  { label: 'Manufacturing & warehousing', href: '/industries/manufacturing-warehousing', description: 'Lines, high bays, MHE and FLTs.' },
+  { label: 'Care homes & home care', href: '/industries/healthcare', description: 'Staff safety in care homes, home care and supported living.' },
   { label: 'Window & door fitters', href: '/industries/window-door-fitters', description: 'Glazing and installation crews on site and up ladders.' },
 ]
 
@@ -261,14 +277,14 @@ export const PLATFORM_NAV: NavConfig & { readonly promos: Readonly<Record<string
             { label: 'Incident & near-miss reporting', href: '/platform/incident-reporting', description: MODULE_DESCRIPTIONS.incidents },
             { label: 'RIDDOR 2013', href: '/platform/riddor', description: MODULE_DESCRIPTIONS.riddor },
             { label: 'Checklists & inspections', href: '/platform/checklists', description: MODULE_DESCRIPTIONS.checklists },
-            { label: 'Fleet & plant', href: '/platform/fleet', description: MODULE_DESCRIPTIONS.fleet },
+            { label: 'Fleet & plant', href: '/platform/fleet-compliance', description: MODULE_DESCRIPTIONS.fleet },
           ],
         },
         {
           heading: 'Resolve',
           items: [
             { label: 'Investigations', href: '/platform/investigations', description: MODULE_DESCRIPTIONS.investigations },
-            { label: 'Corrective actions', href: '/platform/actions', description: MODULE_DESCRIPTIONS.actions },
+            { label: 'Corrective actions', href: '/platform/corrective-actions', description: MODULE_DESCRIPTIONS.actions },
             { label: 'Permits to work', href: '/platform/permits-to-work', description: MODULE_DESCRIPTIONS.permits },
             { label: 'Contractors', href: '/platform/contractors', description: MODULE_DESCRIPTIONS.contractors },
           ],
@@ -277,8 +293,8 @@ export const PLATFORM_NAV: NavConfig & { readonly promos: Readonly<Record<string
           heading: 'Prevent',
           items: [
             { label: 'Risk assessments & bowtie', href: '/platform/risk-assessments', description: MODULE_DESCRIPTIONS.risk },
-            { label: 'Training & competence', href: '/platform/training', description: MODULE_DESCRIPTIONS.training },
-            { label: 'Document control', href: '/platform/documents', description: MODULE_DESCRIPTIONS.documents },
+            { label: 'Training & competence', href: '/platform/training-competence', description: MODULE_DESCRIPTIONS.training },
+            { label: 'Document control', href: '/platform/document-control', description: MODULE_DESCRIPTIONS.documents },
             { label: 'Dashboards', href: '/platform/dashboards', description: MODULE_DESCRIPTIONS.dashboards },
           ],
         },
@@ -320,11 +336,24 @@ export const PLATFORM_NAV: NavConfig & { readonly promos: Readonly<Record<string
     {
       label: 'Resources',
       href: '/insights',
-      children: [
-        { label: 'Insights', href: '/insights', description: 'Plain-English guides to RIDDOR, near misses, lone working and more.' },
-        { label: 'Academy', href: '/academy', description: 'Short recordings of jobsafe, exactly as your team will use it.' },
-        { label: 'Toolkit', href: '/toolkit', description: 'The free incident and near-miss reporting toolkit.' },
-        { label: 'Compare', href: '/compare' },
+      columns: [
+        {
+          heading: 'Learn',
+          items: [
+            { label: 'Insights', href: '/insights', description: 'Plain-English guides to RIDDOR, near misses, lone working and more.' },
+            { label: 'Academy', href: '/academy', description: 'Short recordings of jobsafe, exactly as your team will use it.' },
+            { label: 'Toolkit', href: '/toolkit', description: 'The free incident and near-miss reporting toolkit (PDF).' },
+          ],
+        },
+        {
+          heading: 'Free tools',
+          items: FREE_TOOL_LINKS,
+        },
+        {
+          // Rendered only with NEXT_PUBLIC_COMPARE_PAGES on; navForFlag drops the column while the pages are 404.
+          heading: 'Compare',
+          items: COMPARE_LINKS,
+        },
       ],
     },
     { label: 'Pricing', href: '/pricing' },
@@ -344,7 +373,7 @@ export const PLATFORM_NAV: NavConfig & { readonly promos: Readonly<Record<string
   },
 } as const
 
-/** The platform footer. Columns per the brief; a "Compare" column joins in Phase 3. */
+/** The platform footer. Columns per the brief; the "Compare" column renders only when the comparison pages exist. */
 export const PLATFORM_FOOTER: FooterConfig & { readonly addressLine: string } = {
   brand: {
     blurb: 'Record. Resolve. Prevent. The health and safety platform for UK operators whose work happens in yards, sites, depots and vans.',
@@ -372,7 +401,8 @@ export const PLATFORM_FOOTER: FooterConfig & { readonly addressLine: string } = 
         { label: 'Risk assessments & bowtie', href: '/platform/risk-assessments' },
         { label: 'Permits to work', href: '/platform/permits-to-work' },
         { label: 'Checklists & inspections', href: '/platform/checklists' },
-        { label: 'Fleet & plant', href: '/platform/fleet' },
+        { label: 'Fleet & plant', href: '/platform/fleet-compliance' },
+        { label: 'Bowtie analysis', href: '/platform/bowtie-analysis' },
         { label: 'Works offline', href: '/platform/offline' },
         { label: 'Pricing', href: '/pricing' },
       ],
@@ -387,8 +417,17 @@ export const PLATFORM_FOOTER: FooterConfig & { readonly addressLine: string } = 
         { label: 'Insights', href: '/insights' },
         { label: 'Academy', href: '/academy' },
         { label: 'Toolkit', href: '/toolkit' },
+        { label: 'Free tools', href: '/tools' },
+        { label: 'RIDDOR checker', href: '/tools/riddor-checker' },
+        { label: 'Risk matrix', href: '/tools/risk-matrix' },
+        { label: 'AFR calculator', href: '/tools/accident-frequency-rate' },
         { label: 'Book a demo', href: '/demo' },
       ],
+    },
+    {
+      // Phase 3: rendered only with NEXT_PUBLIC_COMPARE_PAGES on; footerForFlag drops the column otherwise.
+      heading: 'Compare',
+      links: COMPARE_LINKS.map(({ label, href }) => ({ label, href })),
     },
     {
       heading: 'Company',

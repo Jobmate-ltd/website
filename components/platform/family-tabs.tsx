@@ -69,6 +69,15 @@ export function FamilyTabs() {
                     )
                   })}
                 </ul>
+                {family === 'prevent' ? (
+                  <p className="type-small text-ink-5">
+                    Bowtie analysis is a view inside every risk assessment, with{' '}
+                    <Link href="/platform/bowtie-analysis" className="font-semibold text-brand-strong hover:underline">
+                      its own page
+                    </Link>
+                    .
+                  </p>
+                ) : null}
               </div>
               <ProductShot id={FAMILIES[family].screenshot} frame caption />
             </div>

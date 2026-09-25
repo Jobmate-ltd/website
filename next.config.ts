@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next'
 import { APEX_HOST, SITE_URL, isPlatformLaunched } from './lib/brand'
-import { STATIC_ROUTES } from './lib/routes'
+import { STATIC_ROUTES, publicRoutes } from './lib/routes'
 
 const nextConfig: NextConfig = {
   // The gated toolkit PDF lives in /private (never under /public), so it is only
@@ -38,7 +38,10 @@ const nextConfig: NextConfig = {
   },
 
   /**
-   * Phase 2 routes while NEXT_PUBLIC_PLATFORM_LAUNCH is off. Each page also
+   * Routes that do not exist in this build: every platform route while
+   * NEXT_PUBLIC_PLATFORM_LAUNCH is off, the comparisons while
+   * NEXT_PUBLIC_COMPARE_PAGES is off, and a module page whose product input
+   * (lib/brand.ts PHASE_3_INPUTS) is false. Each page also
    * calls `notFound()`, but a page-thrown 404 prerenders as Next's client-side
    * error shell (empty <body>, no lang, no fonts until JavaScript runs). A
    * rewrite to a path that has no route sends the request through the real
@@ -49,12 +52,17 @@ const nextConfig: NextConfig = {
    */
   async rewrites() {
     const none = { beforeFiles: [], afterFiles: [], fallback: [] }
-    if (isPlatformLaunched()) return none
+    // Phase 3: a route can also be held back by NEXT_PUBLIC_COMPARE_PAGES or by a
+    // product input; `publicRoutes()` applies all three, so whatever it leaves
+    // out is rewritten to the not-found route in this build.
+    const live = new Set(publicRoutes(isPlatformLaunched()).map((route) => route.path))
+    const held = STATIC_ROUTES.filter((route) => !live.has(route.path))
+    if (!held.length) return none
     // `beforeFiles`: a plain array is applied after the filesystem, where these
     // static pages would win. `:rest*` is optional, so it matches the bare path too.
     return {
       ...none,
-      beforeFiles: STATIC_ROUTES.filter((route) => route.platformOnly).map((route) => ({ source: `${route.path}/:rest*`, destination: '/__platform-not-launched' })),
+      beforeFiles: held.map((route) => ({ source: `${route.path}/:rest*`, destination: '/__platform-not-launched' })),
     }
   },
 
