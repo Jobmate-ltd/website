@@ -4,6 +4,11 @@
 // Every structured-data node the site emits is constructed here, from the
 // constants in `lib/brand.ts`. Nothing is hand-written into a page.
 //
+// seo-audit-ignore: no-checklists — `platformApplicationSchema()` describes
+// the platform, which has a Checklists & inspections module. It is emitted
+// only by pages behind NEXT_PUBLIC_PLATFORM_LAUNCH; the Phase 1 SoftwareApplication
+// node (`softwareApplicationSchema`) does not mention checklists.
+//
 // Two hard rules:
 //
 //   • NO `aggregateRating`. The previous homepage declared 4.8 stars from 47
@@ -24,6 +29,7 @@ import {
   ADDRESS,
   BRAND,
   CANONICAL_HOME,
+  canonicalFor,
   CURRENCY,
   EMAIL_SALES,
   LEGAL_NAME,
@@ -35,6 +41,7 @@ import {
   SAME_AS,
   SCHEMA_ID,
   SITE_URL,
+  PRICE_BOOK,
 } from './brand.ts'
 
 export type JsonLdNode = Record<string, unknown>
@@ -127,6 +134,51 @@ export function softwareApplicationSchema(url: string = CANONICAL_HOME): JsonLdN
   }
 }
 
+/** One `Offer` per price-book tier that has a number. Empty while prices are unset. */
+function priceBookOffers(): JsonLdNode[] {
+  return Object.values(PRICE_BOOK)
+    .filter((tier) => tier.pricePerUserMonthExVat !== null)
+    .map((tier) => ({
+      '@type': 'Offer',
+      name: `${tier.name} plan`,
+      price: (tier.pricePerUserMonthExVat as number).toFixed(2),
+      priceCurrency: CURRENCY,
+      availability: 'https://schema.org/InStock',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: (tier.pricePerUserMonthExVat as number).toFixed(2),
+        priceCurrency: CURRENCY,
+        unitText: 'user per month',
+        valueAddedTaxIncluded: false,
+      },
+    }))
+}
+
+/**
+ * The `SoftwareApplication` node for the platform (Phase 2, flag on): home,
+ * /platform and every module page. `operatingSystem` says what is true — an
+ * installable web app — with no store links, and `offers` is present only
+ * once PRICE_BOOK carries prices.
+ */
+export function platformApplicationSchema(url: string): JsonLdNode {
+  const offers = priceBookOffers()
+  return {
+    '@type': 'SoftwareApplication',
+    '@id': SCHEMA_ID.software,
+    name: BRAND,
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'Health and safety management',
+    operatingSystem: 'Web (installable on iOS and Android)',
+    description:
+      'Health and safety platform for UK operators: incidents, RIDDOR, risk assessments with bowtie, permits to work, checklists, fleet and plant, training and documents in one offline-first record, hosted in the UK.',
+    url,
+    image: `${SITE_URL}${OG_IMAGE.path}`,
+    publisher: { '@id': SCHEMA_ID.organization },
+    ...(offers.length ? { offers } : {}),
+    // NO aggregateRating. See the file header.
+  }
+}
+
 export interface Crumb {
   name: string
   /** Absolute URL. */
@@ -134,6 +186,11 @@ export interface Crumb {
 }
 
 /** `BreadcrumbList` — required on every non-homepage route (§5.2). */
+/** The visible trail (name + site path) → Crumb[] with absolute URLs. */
+export function breadcrumbsFromTrail(trail: readonly { readonly name: string; readonly href: string }[]): Crumb[] {
+  return trail.map((crumb) => ({ name: crumb.name, item: canonicalFor(crumb.href) }))
+}
+
 export function breadcrumbSchema(crumbs: readonly Crumb[]): JsonLdNode {
   return {
     '@type': 'BreadcrumbList',

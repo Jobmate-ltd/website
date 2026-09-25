@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { PLATFORM_LAUNCH } from '@/lib/brand'
 import type { InsightBlock } from '@/lib/insights'
 
 /**
@@ -54,7 +55,7 @@ function Block({ block, index }: { block: InsightBlock; index: number }) {
   const key = `b${index}`
   switch (block.type) {
     case 'p':
-      return <p className="type-body mb-6 text-ink-2">{renderInline(block.text, key)}</p>
+      return <p className="type-body mb-6 text-ink-2">{renderInline(PLATFORM_LAUNCH && block.launchText ? block.launchText : block.text, key)}</p>
     case 'h2':
       return (
         <h2 id={slugifyHeading(block.text)} className="type-h3 mb-4 mt-12 scroll-mt-28 text-ink-1 md:text-[26px]">

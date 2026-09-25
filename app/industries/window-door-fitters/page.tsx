@@ -142,6 +142,13 @@ const content: IndustryContent = {
     },
   ],
   faqIntro: 'Straight answers for installation businesses weighing up jobsafe.',
+  launch: {
+    faqs: {
+      "Can we export evidence for an insurer, a client or an auditor?": "Yes. Every report is timestamped and exportable, with its photos, video and documents linked to the record, so you can hand over an evidenced account rather than a reconstruction.",
+      "Can fitters attach photos and video from the job?": "Yes. Photos, short video clips and PDF documents are attached directly within the report, timestamped and geotagged at the point of capture, and linked to the incident record.",
+      "Does jobsafe replace our risk assessments and method statements?": "Risk assessments are now a jobsafe module: scored 5×5 with hierarchy of control, six types including work at height, approved before they go live, and required before a permit issues. Method statements stay yours; the RAMS a principal contractor asks for is a document you attach and a risk assessment jobsafe holds.",
+    },
+  },
   closing: {
     title: 'Be ready before you are asked.',
     copy: 'jobsafe would put in front of an insurer, a client or the HSE about your business today.',

@@ -230,7 +230,7 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
   `FeatureRow`, `Faq`, `CtaBand`, `Header` (driven by `NAV` in `lib/site.ts`),
   `Footer` (driven by `FOOTER`), `ConsentBanner`.
 - **Every page is server-rendered with metadata, canonical, OG and JSON-LD.**
-  Metadata goes through `pageMetadata()` in `lib/seo.ts` (self-referencing
+  Metadata goes through `buildMetadata()` / `pageMetadata()` in `lib/seo/` (self-referencing
   canonical, Open Graph, Twitter card); Open Graph images are
   `opengraph-image.tsx` files rendered by `lib/og.tsx`; JSON-LD comes from
   `lib/schema.ts`. `canonical-everywhere` fails the build on a page that
@@ -242,10 +242,29 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
   `lib/consent.ts`, `e2e/consent.spec.ts`).
 - **Real product UI only in screenshots; never generated UI.**
 - **The launch flag.** `NEXT_PUBLIC_PLATFORM_LAUNCH` (default `false`) and
-  `isPlatformLaunched()` in `lib/brand.ts` gate Phase 2. New routes return
-  `notFound()` in production until it is `true`, and are left out of the
-  sitemap (`lib/routes.ts`, `platformOnly`) and nav. Preview deployments set
-  it `true`.
+  `isPlatformLaunched()` in `lib/brand.ts` gate Phase 2. New routes are
+  marked `platformOnly` in `lib/routes.ts`; while the flag is off
+  `next.config.ts` rewrites them (and their Open Graph images) to a path
+  with no route, so they answer with the server-rendered `app/not-found.tsx`
+  and a 404, and each page also calls `notFound()` as the second line of
+  defence. They are left out of the sitemap and the nav (`navForFlag()`,
+  `footerForFlag()` in `lib/site.ts` drop any link whose page does not exist
+  in the current state, so nothing ever links to a 404). Preview deployments
+  set the flag `true`. The flag is read at build time: flipping it means a
+  redeploy, and `scripts/seo-check.mjs`, `scripts/schema-check.mjs` and
+  `scripts/claims-check.mjs` run against both states in CI.
+- **Platform-only files.** `PLATFORM_ONLY_PATHS` in `scripts/seo-audit.mjs`
+  lists the files that render only with the flag on. Rules about what the
+  live site may claim (`no-checklists`) skip them; a shared file that
+  carries a platform-only value beside Phase 1 ones (the price book, the
+  platform nav, the platform chat answers, `llms.txt`) opts out with a
+  `seo-audit-ignore` comment that says why. Add a path to the list only when
+  the page or component is gated by the flag.
+- **Claims are checked, not trusted.** `npm run claims:check` scans the
+  platform copy (source, and with `--base` the rendered HTML, JSON-LD and
+  `llms.txt`) for the "never" and "once built" lists above and for a free
+  trial, checkout or migration on a new page. A negated sentence ("not
+  available yet") passes; a positive claim fails the build.
 - **Phase 2 config** is typed and empty by default in `lib/brand.ts`:
   `PLATFORM_APP_URL`, `PLATFORM_SIGNUP_URL`, `PLATFORM_LOGIN_URL`,
   `LIVE_DEMO_URL`, `BOOK_DEMO_URL` (read from the environment, `null` when
@@ -266,7 +285,7 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
 | Constants (prices, URLs, trial, launch flag, Phase 2 config) | `lib/brand.ts` |
 | Nav and footer config | `lib/site.ts` |
 | Routes and sitemap dates | `lib/routes.ts` |
-| Metadata and canonicals | `lib/seo.ts` |
+| Metadata and canonicals | `lib/seo/` (`buildMetadata()`, `pageMetadata()`), `content/seo/keyword-map.json` |
 | Open Graph images | `lib/og.tsx`, `app/**/opengraph-image.tsx` |
 | JSON-LD | `lib/schema.ts` |
 | Consent | `lib/consent.ts`, `components/site/consent-banner.tsx`, `components/site/analytics.tsx`, `app/cookies/page.tsx` |

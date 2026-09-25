@@ -152,6 +152,12 @@ const content: IndustryContent = {
     },
   ],
   faqIntro: 'Straight answers for care and healthcare providers weighing up jobsafe.',
+  launch: {
+    faqs: {
+      "Can we export evidence for an inspector, a commissioner or an insurer?": "Yes. Every report is timestamped and exportable, with its photos, video and documents linked to the record, so you hand over an evidenced account rather than a reconstruction.",
+      "Does jobsafe replace our risk assessments and care plans?": "Care plans stay yours. Risk assessments are now a jobsafe module: general, COSHH, fire, DSE, manual handling and bespoke types, scored 5×5 with hierarchy of control and approved before they go live, on the same record as the incident. The reporting and the assessing now sit together.",
+    },
+  },
   closing: {
     title: 'Evidence, not recollection.',
     copy: 'jobsafe would put in front of an inspector, a commissioner or an insurer about your service today.',

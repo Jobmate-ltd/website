@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { pageMetadata } from '@/lib/seo'
-import { ENTRY_PRICE_EX_VAT_LABEL, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor } from '@/lib/brand'
+import { ENTRY_PRICE_EX_VAT_LABEL, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor, PLATFORM_LAUNCH } from '@/lib/brand'
 import { breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
@@ -14,6 +14,7 @@ import { Eyebrow } from '@/components/ui/eyebrow'
 import { HeroBackdrop } from '@/components/ui/hero-backdrop'
 import { MediaFrame } from '@/components/ui/frame'
 import { CtaBand } from '@/components/ui/cta-band'
+import { ModuleBacklink } from '@/components/insights/module-backlink'
 
 const PATH = '/toolkit'
 const URL = canonicalFor(PATH)
@@ -132,9 +133,9 @@ export default function ToolkitPage() {
           placement="toolkit-closing"
           title="Now do all of that from your phone"
           copy="Same report, same detail, from the phone in your pocket. It routes itself to the right person and tracks to close-out."
-          primary={{ label: 'Start your free trial', href: SIGNUP_TRIAL_URL }}
-          secondary={{ label: 'Book a demo', href: '/#get-started' }}
-          note={`From ${ENTRY_PRICE_EX_VAT_LABEL} per licence per month. ${TRIAL.label}.`}
+          primary={PLATFORM_LAUNCH ? undefined : { label: 'Start your free trial', href: SIGNUP_TRIAL_URL }}
+          secondary={PLATFORM_LAUNCH ? { label: 'Start your free trial', href: SIGNUP_TRIAL_URL } : { label: 'Book a demo', href: '/#get-started' }}
+          note={PLATFORM_LAUNCH ? <ModuleBacklink path={PATH} bare /> : `From ${ENTRY_PRICE_EX_VAT_LABEL} per licence per month. ${TRIAL.label}.`}
         />
       </main>
       <Footer />
