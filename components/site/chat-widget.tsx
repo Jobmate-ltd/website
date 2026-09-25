@@ -6,6 +6,11 @@
  * cookies: it answers common prospect questions from a local knowledge base
  * via simple keyword matching, and routes anything it cannot answer to a
  * human. Prices and trial terms come from lib/brand.ts — never typed here.
+ *
+ * seo-audit-ignore: no-checklists — PLATFORM_KNOWLEDGE_BASE describes the
+ * platform's modules, one of which is Checklists & inspections. It is selected
+ * only when NEXT_PUBLIC_PLATFORM_LAUNCH is on; the Phase 1 knowledge base does
+ * not mention checklists.
  */
 
 import * as React from 'react'
@@ -20,6 +25,8 @@ import {
   ENTRY_PRICE_EX_VAT_LABEL,
   PHONE_DISPLAY,
   PHONE_HREF,
+  PLATFORM_LAUNCH,
+  PRICE_UNSET_LABEL,
   PRICING_TIERS,
   SIGNUP_TRIAL_URL,
   VAT_SUFFIX,
@@ -135,15 +142,118 @@ const KNOWLEDGE_BASE: KbEntry[] = [
   },
 ]
 
+/**
+ * The platform knowledge base, used once NEXT_PUBLIC_PLATFORM_LAUNCH is on.
+ * No trial, no checkout, no store apps, no alerts that are not built: every
+ * answer is on the "say now" list in docs/REBUILD.md.
+ */
+const SEE_PLATFORM_PRICING: QuickAction = { label: 'See pricing', href: '/pricing' }
+const TAKE_TOUR: QuickAction = { label: 'Take the tour', href: '/platform#tour' }
+const HOW_DEMO_WORKS: QuickAction = { label: 'How the demo works', href: '/demo' }
+
+const PLATFORM_KNOWLEDGE_BASE: KbEntry[] = [
+  {
+    keywords: ['price', 'pricing', 'cost', 'how much', 'licence', 'license', 'per user', 'plan', 'plans', 'expensive', 'fee', 'quote', 'vat'],
+    answer: `Pricing is per user per month, in pounds, with VAT shown separately. Three tiers: Essentials, Professional and Enterprise. ${PRICE_UNSET_LABEL}: we quote for your team size on the call.`,
+    actions: [SEE_PLATFORM_PRICING, BOOK_DEMO],
+  },
+  {
+    keywords: ['trial', 'free', 'try', 'demo', 'test', 'evaluate', 'card', 'walkthrough'],
+    answer: `The way to try jobsafe is a ${DEMO_DURATION_LABEL} walkthrough on a UK haulier's setup, with someone who knows the product. Not ready to talk? The two-minute tour uses the same real screens.`,
+    actions: [BOOK_DEMO, TAKE_TOUR],
+  },
+  {
+    keywords: ['incident report', 'report an incident', 'log an incident', 'record an incident', 'create a report', 'new report', 'submit a report'],
+    answer: 'A report is seven steps on the phone: details, site and location with GPS, people involved, vehicle or asset, evidence (photo, video or PDF), RIDDOR triage, review. The draft autosaves and it works with no signal.',
+    actions: [{ label: 'Incident reporting', href: '/platform/incident-reporting' }, TAKE_TOUR],
+  },
+  {
+    keywords: ['hsse report', 'near miss', 'near-miss', 'hazard', 'observation', 'environmental concern'],
+    answer: 'Near miss is one of four report categories, alongside HSSE, incident and other, with the same seven steps. A hazard on a risk assessment raises an action on its own.',
+    actions: [{ label: 'Incident reporting', href: '/platform/incident-reporting' }, { label: 'Risk assessments', href: '/platform/risk-assessments' }],
+  },
+  {
+    keywords: ['resolve', 'close a report', 'closing a report', 'assign', 'follow up on a report', 'investigat', 'action'],
+    answer: 'Reports run Open → Investigating → Awaiting sign-off → Closed, each step gated by role. The investigation is a four-level ICAM analysis on the report, and its findings become actions with owners and dates on the board.',
+    actions: [{ label: 'Incident reporting', href: '/platform/incident-reporting' }, BOOK_DEMO],
+  },
+  {
+    keywords: ['dashboard', 'analytics', 'trends', 'admin'],
+    answer: 'The dashboard shows open high-severity reports, overdue actions, this week\u2019s incidents, RIDDOR due dates and hotspots by site, for every site or one.',
+    actions: [TAKE_TOUR, BOOK_DEMO],
+  },
+  {
+    keywords: ['mobile', 'android', 'ios', 'iphone', 'app store', 'play store', 'tablet', 'download the app', 'install'],
+    answer: 'jobsafe is an installable web app: add it to the home screen from the browser on iPhone, Android or desktop and it opens like an app, offline included. A native store app is not available yet.',
+    actions: [{ label: 'Works offline', href: '/platform/offline' }],
+  },
+  {
+    keywords: ['feature', 'features', 'what is', 'what does', 'capabilities', 'include', 'included', 'offer', 'do you', 'module'],
+    answer: 'One record for incidents and RIDDOR, investigations and actions, permits and contractors, risk assessments with bowtie, checklists, fleet and plant, training and documents, with dashboards on top. Every module works offline and it is all hosted in London.',
+    actions: [{ label: 'Platform overview', href: '/platform' }, SEE_PLATFORM_PRICING],
+  },
+  {
+    keywords: ['offline', 'no signal', 'connection', 'connectivity', 'internet', 'sync', 'gps'],
+    answer: 'Yes, in every module. A record saves to the phone first and shows \u201cPending sync\u201d until signal returns; then it syncs on its own. Signed-in phones open offline.',
+    actions: [{ label: 'Works offline', href: '/platform/offline' }],
+  },
+  {
+    keywords: ['riddor', 'compliance', 'hsse', 'iso', '45001', 'audit', 'regulation', 'legal', 'standard', 'hse'],
+    answer: 'RIDDOR 2013 is built in: a live verdict against Reg 4, over-7-day and Schedule 2, deadlines from the incident date and a register of what you submitted. You submit to HSE; jobsafe keeps you on time. It holds no certification and claims none.',
+    actions: [{ label: 'RIDDOR reporting', href: '/platform/riddor' }, BOOK_DEMO],
+  },
+  {
+    keywords: ['risk assessment', 'bowtie', 'coshh', 'permit', 'contractor', 'fleet', 'vehicle', 'training', 'checklist', 'document'],
+    answer: 'Risk assessments score 5\u00d75 with hierarchy of control and a bowtie view; permits will not issue until the contractor and a live risk assessment check out; fleet and plant keep MOT, tax, insurance, service and LOLER dates; training is a competency matrix. Checklists and contractors are expanding.',
+    actions: [{ label: 'Risk assessments', href: '/platform/risk-assessments' }, { label: 'Permits to work', href: '/platform/permits-to-work' }],
+  },
+  {
+    keywords: ['support', 'help', 'contact', 'phone', 'call', 'email', 'reach', 'speak', 'talk', 'human'],
+    answer: `You can reach us on ${PHONE_DISPLAY}, or email ${EMAIL_SUPPORT} (sales: ${EMAIL_SALES}). Support cover is 09:00\u201317:00 UK time on weekdays.`,
+    actions: [CALL_US, EMAIL_US],
+  },
+  {
+    keywords: ['enterprise', 'large', '1000', '1,000', 'big team', 'sla', 'account manager', 'dpa', 'invoice', 'bacs'],
+    answer: 'Enterprise adds onboarding, invoicing and BACS, and SLAs on top of Professional. Pricing is bespoke, quoted in pounds with VAT shown; a data processing agreement is available on request.',
+    actions: [BOOK_DEMO, EMAIL_US],
+  },
+  {
+    keywords: ['data', 'security', 'gdpr', 'privacy', 'secure', 'store', 'storage', 'hosted', 'hosting', 'where'],
+    answer: `Your records are hosted in the London region, each organisation walled off by row-level security with its own private file storage, and every register exports to CSV. A data processing agreement is available from ${EMAIL_SUPPORT}.`,
+    actions: [{ label: 'Security and hosting', href: '/security' }],
+  },
+  {
+    keywords: ['industry', 'industries', 'sector', 'who', 'suitable', 'construction', 'transport', 'field service', 'care', 'haulage', 'fitter'],
+    answer: 'jobsafe is built for UK operators whose work happens in yards, sites, depots and vans: transport and logistics, window and door fitters, field service and care, with more sector pages on the way.',
+    actions: [{ label: 'Industries', href: '/#industries' }, BOOK_DEMO],
+  },
+  {
+    keywords: ['start', 'sign up', 'signup', 'get started', 'begin', 'register', 'onboard', 'set up'],
+    answer: `Getting started begins with a ${DEMO_DURATION_LABEL} walkthrough: we show you the product on a real setup, agree a start date if it fits, and your administrator invites the team by email.`,
+    actions: [BOOK_DEMO, HOW_DEMO_WORKS],
+  },
+  {
+    keywords: ['how do i', 'how to', 'how does it work', 'tutorial', 'guide', 'learn', 'training video', 'show me', 'video', 'lesson', 'academy', 'tour'],
+    answer: 'The two-minute tour walks five real screens; the academy has short recordings of the product as your team will use it.',
+    actions: [TAKE_TOUR, VISIT_ACADEMY],
+  },
+]
+
+const ACTIVE_KNOWLEDGE_BASE: KbEntry[] = PLATFORM_LAUNCH ? PLATFORM_KNOWLEDGE_BASE : KNOWLEDGE_BASE
+
 const FALLBACK_ACTIONS: QuickAction[] = [BOOK_DEMO, VISIT_ACADEMY, EMAIL_US]
 
-const SUGGESTIONS = ['How much does it cost?', 'Is there a free trial?', 'Can I book a demo?', 'How do I create a report?', 'Does it work offline?', 'How do I get support?']
+const SUGGESTIONS = PLATFORM_LAUNCH
+  ? ['How much does it cost?', 'Can I book a demo?', 'Does it work offline?', 'Does it file RIDDOR for us?', 'Where is our data?', 'How do I get support?']
+  : ['How much does it cost?', 'Is there a free trial?', 'Can I book a demo?', 'How do I create a report?', 'Does it work offline?', 'How do I get support?']
 
-const GREETING = 'Hello. I am the jobsafe assistant. Ask me about pricing, features, compliance, or how to do something in the app, or pick a question below.'
+const GREETING = PLATFORM_LAUNCH
+  ? 'Hello. I am the jobsafe assistant. Ask me about the platform, pricing, RIDDOR, offline or hosting, or pick a question below.'
+  : 'Hello. I am the jobsafe assistant. Ask me about pricing, features, compliance, or how to do something in the app, or pick a question below.'
 
 function findAnswer(query: string): { text: string; actions: QuickAction[] } {
   const q = query.toLowerCase()
-  for (const entry of KNOWLEDGE_BASE) {
+  for (const entry of ACTIVE_KNOWLEDGE_BASE) {
     if (entry.keywords.some((k) => q.includes(k))) return { text: entry.answer, actions: entry.actions ?? [] }
   }
   return {

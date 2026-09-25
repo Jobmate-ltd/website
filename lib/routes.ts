@@ -25,6 +25,8 @@ export interface StaticRoute {
 
 /** Phase 1 shipped on 25/09/2026; every page it touched carries that date. */
 const PHASE_1 = '2026-09-25'
+/** Phase 2 pages carry the date the flag is flipped; until then this is their build date. */
+const PHASE_2 = '2026-09-25'
 
 export const STATIC_ROUTES: readonly StaticRoute[] = [
   { path: '/', updated: PHASE_1, changeFrequency: 'weekly', priority: 1.0 },
@@ -39,7 +41,23 @@ export const STATIC_ROUTES: readonly StaticRoute[] = [
   { path: '/privacy-policy', updated: PHASE_1, changeFrequency: 'yearly', priority: 0.2 },
   { path: '/terms', updated: PHASE_1, changeFrequency: 'yearly', priority: 0.2 },
   { path: '/cookies', updated: PHASE_1, changeFrequency: 'yearly', priority: 0.2 },
+  // Phase 2: the platform relaunch, held behind NEXT_PUBLIC_PLATFORM_LAUNCH.
+  { path: '/platform', updated: PHASE_2, changeFrequency: 'weekly', priority: 0.95, platformOnly: true },
+  { path: '/platform/incident-reporting', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/platform/riddor', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/platform/risk-assessments', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/platform/permits-to-work', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/platform/offline', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/pricing', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.9, platformOnly: true },
+  { path: '/security', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.7, platformOnly: true },
+  { path: '/demo', updated: PHASE_2, changeFrequency: 'monthly', priority: 0.8, platformOnly: true },
+  { path: '/contact', updated: PHASE_2, changeFrequency: 'yearly', priority: 0.6, platformOnly: true },
 ] as const
+
+/** Is `path` a page in this flag state? Nav and footer never render a link this returns false for. */
+export function routeExists(path: string, platformLaunched: boolean): boolean {
+  return publicRoutes(platformLaunched).some((route) => route.path === path)
+}
 
 /** Routes that should be public now. Phase 2 routes are held back by the flag. */
 export function publicRoutes(platformLaunched: boolean): readonly StaticRoute[] {

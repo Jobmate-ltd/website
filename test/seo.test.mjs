@@ -13,7 +13,7 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
-import { runAudit, checkMetaDescription, pngDimensions, RULES } from '../scripts/seo-audit.mjs'
+import { runAudit, checkMetaDescription, pngDimensions, RULES, PLATFORM_ONLY_PATHS, isPlatformOnly } from '../scripts/seo-audit.mjs'
 
 /** Builds a throwaway repo from `{ path: contents }` and audits it. */
 function auditFixture(files) {
@@ -142,6 +142,29 @@ describe('no checklists (§0.4)', () => {
   test('permits a documented negative claim', () => {
     assert.ok(!has(auditFixture({ 'app/about/page.tsx': '// seo-audit-ignore: no-checklists\nconst s = "jobsafe has no checklist module."' }), RULES.NO_CHECKLISTS))
   })
+
+  // Phase 2: the platform behind NEXT_PUBLIC_PLATFORM_LAUNCH has a Checklists
+  // & inspections module, so the rule is scoped to what the live site renders.
+  test('permits the module inside a platform-only file', () => {
+    assert.ok(!has(auditFixture({ 'app/platform/checklists/page.tsx': 'title: "Checklists & inspections"' }), RULES.NO_CHECKLISTS))
+    assert.ok(!has(auditFixture({ 'components/platform/module-loop.tsx': 'label: "A checklist failure raises an action."' }), RULES.NO_CHECKLISTS))
+    assert.ok(!has(auditFixture({ 'lib/platform.ts': "name: 'Checklists & inspections'" }), RULES.NO_CHECKLISTS))
+  })
+
+  test('still catches the claim on a Phase 1 surface', () => {
+    assert.ok(has(auditFixture({ 'components/home/home-phase-1.tsx': 'title: "Inspection checklists"' }), RULES.NO_CHECKLISTS))
+    assert.ok(has(auditFixture({ 'app/industries/construction/page.tsx': 'const s = "site checklists"' }), RULES.NO_CHECKLISTS))
+    assert.ok(has(auditFixture({ 'lib/site.ts': "label: 'Checklists'" }), RULES.NO_CHECKLISTS))
+  })
+
+  test('the platform-only list is exact paths and directories, nothing broader', () => {
+    for (const p of PLATFORM_ONLY_PATHS) assert.match(p, /^(app|components|lib|content)\//)
+    assert.ok(isPlatformOnly('app/platform/riddor/page.tsx'))
+    assert.ok(isPlatformOnly('components/about/about-platform.tsx'))
+    assert.ok(!isPlatformOnly('components/about/about-phase-1.tsx'))
+    assert.ok(!isPlatformOnly('app/platform-notes.tsx'))
+    assert.ok(!isPlatformOnly('lib/platform.tsx'))
+  })
 })
 
 describe('single offer (defect T3)', () => {
@@ -181,6 +204,38 @@ describe('FAQ server rendering (defect T7)', () => {
   test('passes a native <details>, which the browser collapses and never unmounts', () => {
     const v = auditFixture({ 'components/ui/faq.tsx': 'faqPageSchema(items)\n<details className="faq"><summary>{q}</summary><p>{a}</p></details>' })
     assert.ok(!has(v, RULES.FAQ_SERVER_RENDERED))
+  })
+
+  // Phase 2: the collapse lives in the shared shadcn/ui accordion primitive.
+  const FAQ_VIA_SHARED = "import { Accordion, AccordionContent } from '@/components/ui/accordion'\nfaqPageSchema(items)\n<AccordionContent>{a}</AccordionContent>"
+
+  test('passes a FAQ built on the shared accordion when that accordion force-mounts and collapses', () => {
+    const v = auditFixture({
+      'components/platform/faq-accordion.tsx': FAQ_VIA_SHARED,
+      'components/ui/accordion.tsx': '<AccordionPrimitive.Content forceMount className="overflow-hidden data-[state=closed]:h-0">',
+    })
+    assert.ok(!has(v, RULES.FAQ_SERVER_RENDERED))
+  })
+
+  test('catches a shared accordion that unmounts closed content', () => {
+    const v = auditFixture({
+      'components/platform/faq-accordion.tsx': FAQ_VIA_SHARED,
+      'components/ui/accordion.tsx': '<AccordionPrimitive.Content className="overflow-hidden">',
+    })
+    assert.ok(has(v, RULES.FAQ_SERVER_RENDERED))
+  })
+
+  test('catches a shared accordion that force-mounts without the collapse class', () => {
+    const v = auditFixture({
+      'components/platform/faq-accordion.tsx': FAQ_VIA_SHARED,
+      'components/ui/accordion.tsx': '<AccordionPrimitive.Content forceMount className="overflow-hidden">',
+    })
+    assert.ok(has(v, RULES.FAQ_SERVER_RENDERED))
+  })
+
+  test('catches a FAQ that imports the shared accordion when that file is missing', () => {
+    const v = auditFixture({ 'components/platform/faq-accordion.tsx': FAQ_VIA_SHARED })
+    assert.ok(has(v, RULES.FAQ_SERVER_RENDERED))
   })
 })
 
@@ -334,6 +389,10 @@ describe('canonical everywhere (Workstream C.7)', () => {
 
   test('passes a page built with pageMetadata()', () => {
     assert.ok(!has(auditFixture({ 'app/terms/page.tsx': "export const metadata = pageMetadata({ path: '/terms', title: 'Terms', description: '…' })" }), RULES.CANONICAL_EVERYWHERE))
+  })
+
+  test('passes a page built with buildMetadata() from the keyword map (Phase 2)', () => {
+    assert.ok(!has(auditFixture({ 'app/platform/page.tsx': "export const metadata = buildMetadata('/platform')" }), RULES.CANONICAL_EVERYWHERE))
   })
 })
 

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Download, ExternalLink, Mail, Phone } from 'lucide-react'
-import { FOOTER, type FooterConfig, type FooterLink } from '@/lib/site'
+import { activeFooter, type FooterConfig, type FooterLink } from '@/lib/site'
 import { Container } from '@/components/ui/container'
 import { Wordmark } from '@/components/ui/wordmark'
 import { BookDemoButton } from '@/components/ui/book-demo-button'
@@ -62,8 +62,10 @@ function contactIcon(link: FooterLink) {
 
 const linkClass = 'inline-flex min-h-8 items-center gap-2 text-sm text-ink-4 transition-colors hover:text-ink-1'
 
-export function Footer({ config = FOOTER }: { config?: FooterConfig }) {
+export function Footer({ config = activeFooter() }: { config?: FooterConfig & { readonly addressLine?: string } }) {
   const year = new Date().getFullYear()
+  // The three-column form is the Phase 1 string exactly, so the flag-off HTML does not change.
+  const columnsClass = config.columns.length > 3 ? 'md:grid-cols-2 md:gap-8 lg:grid-cols-[1.3fr_repeat(5,minmax(0,1fr))]' : 'md:grid-cols-[1.4fr_repeat(3,1fr)] md:gap-8'
 
   return (
     <footer className="border-t border-line-1 bg-bg">
@@ -77,7 +79,7 @@ export function Footer({ config = FOOTER }: { config?: FooterConfig }) {
           <NewsletterSignup />
         </div>
 
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)] md:gap-8">
+        <div className={`grid grid-cols-1 gap-12 ${columnsClass}`}>
           <div className="flex flex-col items-start gap-5">
             <Link href="/" aria-label="jobsafe home">
               <Wordmark height={40} />
@@ -129,7 +131,9 @@ export function Footer({ config = FOOTER }: { config?: FooterConfig }) {
               <ul className="flex flex-col gap-0.5">
                 {column.links.map((link) => (
                   <li key={link.href + link.label}>
-                    {link.href.startsWith('http') ? (
+                    {link.action === 'cookie-settings' ? (
+                      <CookieSettingsLink className={linkClass}>{link.label}</CookieSettingsLink>
+                    ) : link.href.startsWith('http') ? (
                       <a href={link.href} className={linkClass}>
                         {link.label}
                       </a>
@@ -152,7 +156,7 @@ export function Footer({ config = FOOTER }: { config?: FooterConfig }) {
             <p className="type-small text-ink-4">
               {config.copyright} {year}. All rights reserved. {config.brand.maker}
             </p>
-            <p className="type-small text-ink-5">{config.brand.madeIn}</p>
+            <p className="type-small text-ink-5">{config.addressLine ?? config.brand.madeIn}</p>
           </div>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-1">
             {config.legal.map((link) => (

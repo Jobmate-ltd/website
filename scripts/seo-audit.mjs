@@ -209,13 +209,50 @@ export function checkMetaDescription(description) {
   return violations
 }
 
-/** §0.4. jobsafe has no checklists feature. Permanently out of scope. */
+/**
+ * Files that render only once `NEXT_PUBLIC_PLATFORM_LAUNCH` is on. With the
+ * flag off (production today) every route in them answers 404 and the
+ * build-time constant strips their imports, so a rule about what the live
+ * site may claim does not apply to them. Kept as one list so the exemption
+ * is visible and testable; add a path here only when the page or component
+ * is gated by the flag, never because a rule is inconvenient.
+ */
+export const PLATFORM_ONLY_PATHS = [
+  'app/platform/',
+  'app/pricing/',
+  'app/security/',
+  'app/demo/',
+  'app/contact/',
+  'app/api/demo/',
+  'components/platform/',
+  'components/pricing/',
+  'components/about/about-platform.tsx',
+  'components/site/platform-header.tsx',
+  'components/site/demo-form.tsx',
+  'components/insights/module-backlink.tsx',
+  'lib/platform.ts',
+  'lib/platform-modules.ts',
+  'lib/product-images.ts',
+  'lib/demo/',
+  'lib/seo/links.ts',
+  'content/seo/',
+]
+export const isPlatformOnly = (rel) => PLATFORM_ONLY_PATHS.some((p) => (p.endsWith('/') ? rel.startsWith(p) : rel === p))
+
+/**
+ * §0.4, as re-scoped for Phase 2. The incident-reporting product sold on the
+ * live site has no checklists feature, so no Phase 1 surface may claim one.
+ * The platform behind `NEXT_PUBLIC_PLATFORM_LAUNCH` does have a Checklists &
+ * inspections module, so the word is allowed in the platform-only files
+ * (PLATFORM_ONLY_PATHS) and, with a stated reason, in the shared constants
+ * files that carry a platform-only value next to Phase 1 ones.
+ */
 function checkNoChecklists(files, root) {
   return forbid(files, root, {
     rule: RULES.NO_CHECKLISTS,
     pattern: /\bchecklists?\b|\bform builder\b/i,
-    message: 'jobsafe has no checklists feature (§0.4). If this is a deliberate negative claim, add "seo-audit-ignore: no-checklists" and say why',
-    skip: isTooling,
+    message: 'the live product has no checklists feature (§0.4); only the platform behind NEXT_PUBLIC_PLATFORM_LAUNCH does. Keep the word in a platform-only file (PLATFORM_ONLY_PATHS) or, for a deliberate negative claim or a platform constant in a shared file, add "seo-audit-ignore: no-checklists" and say why',
+    skip: (rel) => isTooling(rel) || isPlatformOnly(rel),
   })
 }
 
@@ -240,17 +277,26 @@ function checkSingleOffer(root) {
  * either a native <details> (collapsed by the browser, never unmounted) or a
  * Radix accordion with `forceMount` and the `data-[state=closed]:h-0` collapse.
  */
+const SHARED_ACCORDION = 'components/ui/accordion.tsx'
+const SHARED_ACCORDION_IMPORT = /from\s+['"]@\/components\/ui\/accordion['"]/
+
 function checkFaqServerRendered(files, root) {
   const violations = []
   for (const file of files) {
     const rel = relative(root, file)
     if (!rel.startsWith('components/')) continue
-    const source = readFileSync(file, 'utf8')
+    let source = readFileSync(file, 'utf8')
     if (!/faqPageSchema\(/.test(source)) continue
+    // Since Phase 2 the collapse may live in the shared shadcn/ui accordion
+    // the component imports; audit that primitive as part of this file.
+    if (SHARED_ACCORDION_IMPORT.test(source)) {
+      const shared = join(root, SHARED_ACCORDION)
+      if (existsSync(shared)) source += '\n' + readFileSync(shared, 'utf8')
+    }
     const usesDetails = /<details\b/.test(source)
     const forcesMount = /forceMount/.test(source)
     if (!usesDetails && !forcesMount) {
-      violations.push({ rule: RULES.FAQ_SERVER_RENDERED, file: rel, line: 0, message: 'emits FAQPage schema but the answers are not in the server-rendered HTML. Use <details>, or forceMount with a CSS collapse.' })
+      violations.push({ rule: RULES.FAQ_SERVER_RENDERED, file: rel, line: 0, message: 'emits FAQPage schema but the answers are not in the server-rendered HTML. Use <details>, or forceMount with a CSS collapse (in the file or in components/ui/accordion.tsx).' })
     } else if (forcesMount && !usesDetails && !/data-\[state=closed\]:h-0/.test(source)) {
       violations.push({ rule: RULES.FAQ_SERVER_RENDERED, file: rel, line: 0, message: 'forceMount without `data-[state=closed]:h-0` renders every answer open on first paint.' })
     }
@@ -389,8 +435,9 @@ function checkVatShown(files, root) {
 
 /**
  * Workstream C.7. Every page sets a self-referencing canonical, Open Graph and
- * Twitter block through `pageMetadata()` from lib/seo.ts, which cannot forget
- * any of them.
+ * Twitter block through `pageMetadata()` from lib/seo, which cannot forget
+ * any of them — or, since Phase 2, through `buildMetadata()`, which reads the
+ * keyword map and calls `pageMetadata()` itself.
  */
 function checkCanonicalEverywhere(files, root) {
   const violations = []
@@ -399,8 +446,8 @@ function checkCanonicalEverywhere(files, root) {
     if (!rel.startsWith('app/') || !/\/page\.tsx$/.test(rel)) continue
     const source = readFileSync(file, 'utf8')
     if (ignoresRule(source, RULES.CANONICAL_EVERYWHERE)) continue
-    if (!/pageMetadata\(/.test(source)) {
-      violations.push({ rule: RULES.CANONICAL_EVERYWHERE, file: rel, line: 0, message: 'page does not build its metadata with pageMetadata() from lib/seo.ts, so its canonical, OG and Twitter tags are not guaranteed.' })
+    if (!/\b(?:pageMetadata|buildMetadata)\(/.test(source)) {
+      violations.push({ rule: RULES.CANONICAL_EVERYWHERE, file: rel, line: 0, message: 'page does not build its metadata with pageMetadata() or buildMetadata() from lib/seo, so its canonical, OG and Twitter tags are not guaranteed.' })
     }
   }
   return violations

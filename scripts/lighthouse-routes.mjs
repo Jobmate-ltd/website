@@ -7,7 +7,7 @@
  *
  *   Accessibility 100 · SEO 100 · Best practices ≥ 95 · Performance ≥ 90
  *
- *   node scripts/lighthouse-routes.mjs [--base http://localhost:3000] [--out docs/lighthouse/phase-1]
+ *   node scripts/lighthouse-routes.mjs [--base http://localhost:3000] [--out docs/lighthouse/phase-1] [--routes phase-1|phase-2]
  *
  * Needs the `lighthouse` CLI on the path (npx resolves it) and a Chrome;
  * point CHROME_PATH at one if the machine has no download access. Run it on
@@ -26,11 +26,25 @@ const base = flag('--base', process.env.BASE_URL ?? 'http://localhost:3000')
 const out = flag('--out', 'docs/lighthouse/phase-1')
 mkdirSync(out, { recursive: true })
 
-const ROUTES = [
-  { slug: 'home', path: '/' },
-  { slug: 'industry-healthcare', path: '/industries/healthcare' },
-  { slug: 'article-riddor', path: '/insights/riddor-reporting-explained' },
-]
+const PRESETS = {
+  // Phase 1 Definition of done: home, one industry page, one article.
+  'phase-1': [
+    { slug: 'home', path: '/' },
+    { slug: 'industry-healthcare', path: '/industries/healthcare' },
+    { slug: 'article-riddor', path: '/insights/riddor-reporting-explained' },
+  ],
+  // Phase 2 Definition of done: home, /platform, /pricing and one module page,
+  // against a server built with NEXT_PUBLIC_PLATFORM_LAUNCH=true.
+  'phase-2': [
+    { slug: 'home', path: '/' },
+    { slug: 'platform', path: '/platform' },
+    { slug: 'pricing', path: '/pricing' },
+    { slug: 'module-riddor', path: '/platform/riddor' },
+  ],
+}
+const preset = flag('--routes', 'phase-1')
+const ROUTES = PRESETS[preset]
+if (!ROUTES) throw new Error(`--routes must be one of ${Object.keys(PRESETS).join(', ')}`)
 
 const TARGETS = { performance: 90, accessibility: 100, 'best-practices': 95, seo: 100 }
 
@@ -70,7 +84,7 @@ for (const route of ROUTES) {
 writeFileSync(join(out, 'summary.json'), JSON.stringify(rows, null, 2))
 
 const md = [
-  `# Lighthouse — Phase 1`,
+  `# Lighthouse — ${preset.replace(/^phase-(\d+)$/, 'Phase $1')}`,
   ``,
   `Mobile preset (simulated slow 4G, 4× CPU slowdown), Lighthouse ${rows[0]?.lighthouseVersion}, run ${rows[0]?.fetchTime} against \`${base}\`. Targets: Accessibility 100 · SEO 100 · Best practices ≥ 95 · Performance ≥ 90.`,
   ``,
@@ -88,4 +102,4 @@ if (misses.length) {
   console.error('✘ Lighthouse targets missed:\n  ' + misses.join('\n  '))
   process.exit(1)
 }
-console.log(`✔ every route meets the Phase 1 targets; reports in ${out}`)
+console.log(`✔ every route meets the targets; reports in ${out}`)

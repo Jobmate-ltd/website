@@ -10,6 +10,10 @@
 //   2. UK English. Dates DD/MM/YYYY.
 //   7. Never fabricate customers, testimonials, ratings or statistics.
 //
+// seo-audit-ignore: no-checklists — PRICE_BOOK below lists the platform's
+// modules, one of which is Checklists & inspections. It renders only behind
+// NEXT_PUBLIC_PLATFORM_LAUNCH; nothing in the Phase 1 constants claims one.
+//
 // Last verified against checkout (the Inputs block of the Phase 1 brief):
 // 25/09/2026. Worker £3.00, Admin £12.00, volume £2.75 for 500–1,000, annual
 // "2 months free", 14-day trial with a card required at sign-up.
@@ -73,6 +77,13 @@ export const ADDRESS = {
   postalCode: 'WV1 4TF',
   addressCountry: 'GB',
 } as const
+
+/** The address on one line, for the footer and the contact page. */
+export const ADDRESS_LINE = `${ADDRESS.streetAddress}, ${ADDRESS.addressLocality} ${ADDRESS.postalCode}` as const
+
+/** Where the platform's data lives. Quoted on every page that talks about hosting. */
+export const HOSTING_LINE = 'Hosted in London' as const
+export const HOSTING_DETAIL = 'London region (Supabase on AWS eu-west-2)' as const
 
 // ── Pricing ──────────────────────────────────────────────────────────────────
 // Two licence types, priced per licence per month, ex VAT. Meta descriptions,
@@ -326,43 +337,55 @@ export interface PriceBookTier {
   readonly pricePerUserMonthExVat: number | null
   /** e.g. "2 months free". `null` = not yet set. */
   readonly annualTerms: string | null
-  /** Module names, as the platform labels them. Empty until Phase 2. */
+  /** What the tier includes, in the words the price list uses. */
   readonly includedModules: readonly string[]
+  /** A label instead of a number, e.g. "Talk to us" for a bespoke tier. */
+  readonly priceNote?: string
 }
+
+/** Shown wherever a tier's price is not set. Never a number. */
+export const PRICE_UNSET_LABEL = 'Book a demo for pricing' as const
 
 /**
  * The Phase 2 price book. Every tier is empty by default; `priceBookLabel()`
  * renders "Book a demo" for an unset price and never a number nobody agreed.
  */
 export const PRICE_BOOK: Readonly<Record<PriceBookTierId, PriceBookTier>> = {
+  // Prices and annual terms are still open inputs (the brief left them in
+  // brackets), so they stay null and every page renders PRICE_UNSET_LABEL.
   essentials: {
     id: 'essentials',
     name: 'Essentials',
     pricePerUserMonthExVat: null,
     annualTerms: null,
-    includedModules: [],
+    includedModules: ['Incident and near-miss reporting', 'Investigations', 'Corrective actions', 'RIDDOR', 'Dashboard', 'SOS', 'Sites and people', 'Offline app'],
   },
   professional: {
     id: 'professional',
     name: 'Professional',
     pricePerUserMonthExVat: null,
     annualTerms: null,
-    includedModules: [],
+    includedModules: ['Everything in Essentials', 'Risk assessments and bowtie', 'Permits and contractors', 'Checklists', 'Fleet and plant', 'Training', 'Documents'],
   },
   enterprise: {
     id: 'enterprise',
     name: 'Enterprise',
     pricePerUserMonthExVat: null,
     annualTerms: null,
-    includedModules: [],
+    priceNote: 'Talk to us',
+    includedModules: ['Everything in Professional', 'Onboarding', 'Invoicing', 'SLAs'],
   },
 } as const
 
-/** `£x.xx + VAT per user per month`, or the fallback label when unset. */
+/** `£x.xx + VAT per user per month`, the tier's own note, or the unset label. Never an invented number. */
 export function priceBookLabel(tier: PriceBookTier): string {
-  return tier.pricePerUserMonthExVat === null
-    ? FALLBACK_CTA.label
-    : `${formatPriceExVat(tier.pricePerUserMonthExVat)} per user per month`
+  if (tier.pricePerUserMonthExVat !== null) return `${formatPriceExVat(tier.pricePerUserMonthExVat)} per user per month`
+  return tier.priceNote ?? PRICE_UNSET_LABEL
+}
+
+/** True once at least one tier has a number, i.e. prices may be published and put in schema. */
+export function priceBookHasPrices(): boolean {
+  return Object.values(PRICE_BOOK).some((tier) => tier.pricePerUserMonthExVat !== null)
 }
 
 // ── Entity links ─────────────────────────────────────────────────────────────

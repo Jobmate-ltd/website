@@ -151,6 +151,13 @@ const content: IndustryContent = {
     },
   ],
   faqIntro: 'Straight answers for field service businesses weighing up jobsafe.',
+  // Phase 2, flag on: the product attaches photos, video and PDFs; voice notes are not built.
+  launch: {
+    faqs: {
+      "An incident happened on a client’s premises. Whose record is it?": "Yours, and you keep it. The report belongs to your account and is exportable with its photos, video and documents attached, so you can hand the client, their principal contractor or your insurer an evidenced account of what your engineer found and did, without giving up your own record of it.",
+      "Can engineers attach photos and video from the job?": "Yes. Photos, short video clips and PDF documents are attached directly within the report, timestamped and geotagged at the point of capture, and linked to the incident record. An engineer in gloves on a cold roof can take the photo and finish the words later; the draft waits on the phone.",
+    },
+  },
   closing: {
     title: 'Your engineers are already out there.',
     copy: 'jobsafe would put in front of a client, an insurer or the HSE about your business today.',
