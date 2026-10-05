@@ -3,6 +3,7 @@ import { CANONICAL_HOME, DEMO_DURATION_LABEL } from '@/lib/brand'
 import { HOME_FAQS, HOME_PAA, PLATFORM_FACTS } from '@/lib/platform'
 import { graph, jsonLd, platformApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Section } from '@/components/ui/section'
 import { SectionHeading } from '@/components/ui/section-heading'
@@ -32,7 +33,7 @@ export function PlatformHomePage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: homeGraph }} />
         <PlatformHero />
         <FactStrip variant="marquee" facts={PLATFORM_FACTS.map((fact) => ({ icon: <PlatformIcon name={fact.icon} />, label: fact.label, detail: fact.detail }))} />
@@ -68,7 +69,7 @@ export function PlatformHomePage() {
           copy={`${DEMO_DURATION_LABEL}, on a real setup, with someone who knows the product.`}
           secondary={{ label: 'How the demo works', href: '/demo' }}
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

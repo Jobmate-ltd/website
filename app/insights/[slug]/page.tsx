@@ -7,6 +7,7 @@ import { formatDate, getAllPosts, getPostBySlug, getRelatedPosts } from '@/lib/i
 import { OG_IMAGE, SIGNUP_TRIAL_URL, SITE_URL, canonicalFor } from '@/lib/brand'
 import { blogPostingSchema, breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PostBody } from '@/components/insights/post-body'
@@ -77,11 +78,11 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
         <article>
           <header className="relative overflow-hidden border-b border-line-1 bg-canvas">
-            <HeroBackdrop radial="right" beam={false} />
+            <HeroBackdrop radial="right" />
             <Container size="prose" className="relative pb-10 pt-10 md:pb-12 md:pt-14">
               <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Insights', href: '/insights' }, { name: post.title, href: path }]} className="mb-8" />
               <Eyebrow className="mb-4">{post.category}</Eyebrow>
@@ -169,7 +170,7 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
             </Link>
           </Section>
         ) : null}
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

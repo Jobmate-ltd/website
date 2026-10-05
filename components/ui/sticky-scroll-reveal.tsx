@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'
-import { FrameScope } from '@/components/ui/frame-scope'
 
 /**
  * StickyScroll — Aceternity UI `sticky-scroll-reveal`
@@ -54,7 +53,7 @@ export function StickyScroll({ steps, className, mediaClassName }: { steps: read
   }, [steps.length])
 
   return (
-    <div className={cn('grid gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-16', className)}>
+    <div className={cn('grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16 xl:gap-20', className)}>
       <ol ref={listRef} className="flex flex-col gap-10 lg:gap-0">
         {steps.map((step, index) => {
           const current = index === active
@@ -69,22 +68,18 @@ export function StickyScroll({ steps, className, mediaClassName }: { steps: read
               <h3 className={cn('type-h3', current ? 'text-ink-1' : 'lg:text-ink-4')}>{step.title}</h3>
               <div className={cn('type-body', current ? 'text-ink-4' : 'lg:text-ink-5')}>{step.description}</div>
               {/* Inline picture for small screens. */}
-              <FrameScope value="inline">
-                <div className="lg:hidden">{step.media}</div>
-              </FrameScope>
+              <div className="lg:hidden">{step.media}</div>
             </li>
           )
         })}
       </ol>
       <div className="hidden lg:block">
         <div className={cn('sticky top-28', mediaClassName)}>
-          <FrameScope value="sticky">
-            {steps.map((step, index) => (
-              <div key={step.title} className={cn(index === active ? 'block' : 'hidden')} aria-hidden={index !== active}>
-                {step.media}
-              </div>
-            ))}
-          </FrameScope>
+          {steps.map((step, index) => (
+            <div key={step.title} className={cn(index === active ? 'block' : 'hidden')} aria-hidden={index !== active}>
+              {step.media}
+            </div>
+          ))}
         </div>
       </div>
     </div>

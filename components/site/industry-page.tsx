@@ -8,6 +8,7 @@ import { modulesWithPages } from '@/lib/platform'
 import { PlatformIcon } from '@/components/platform/icons'
 import { PricingTeaser } from '@/components/platform/pricing-teaser'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { Pricing } from '@/components/site/pricing'
@@ -123,10 +124,10 @@ export function IndustryPage({ content }: { content: IndustryContent }) {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
 
-        {/* Hero: text left, framed footage or still right, on the grid. */}
+        {/* Hero: text left, framed footage or still right, under the crimson radial. */}
         <section className="relative overflow-hidden bg-canvas">
           <HeroBackdrop radial="right" />
           <Container size="wide" className="relative pb-14 pt-10 md:pb-20 md:pt-14">
@@ -291,7 +292,7 @@ export function IndustryPage({ content }: { content: IndustryContent }) {
             </>
           }
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

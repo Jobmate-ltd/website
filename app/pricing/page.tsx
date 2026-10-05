@@ -5,6 +5,7 @@ import { EMAIL_SALES, PLATFORM_LAUNCH, canonicalFor, priceBookHasPrices } from '
 import { buildMetadata, h1For } from '@/lib/seo'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema, type FaqEntry } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -44,7 +45,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={CRUMBS} />}
@@ -100,7 +101,7 @@ export default function Page() {
             </>
           }
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

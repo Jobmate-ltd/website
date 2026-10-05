@@ -11,7 +11,7 @@ import { ProductShot } from '@/components/platform/product-shot'
  */
 export function IncidentStory() {
   return (
-    <Section id="how-it-works" tone="grey">
+    <Section id="how-it-works" tone="grey" container="wide">
       <SectionHeading
         eyebrow="One incident, end to end"
         title="From a tail lift in the yard to a closed training gap"
@@ -24,7 +24,7 @@ export function IncidentStory() {
             label: `Step ${i + 1}`,
             title: step.title,
             description: step.description,
-            media: <ProductShot id={step.screenshot} frame className={step.screenshot.endsWith('-phone') ? 'mx-auto max-w-[300px]' : undefined} />,
+            media: <ProductShot id={step.screenshot} />,
           }))}
         />
       </div>

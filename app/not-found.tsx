@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_HREF, PLATFORM_LAUNCH } from '@/lib/brand'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { PageHero } from '@/components/site/page-hero'
 import { Section } from '@/components/ui/section'
@@ -35,7 +36,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <PageHero container="narrow" eyebrow="404" title="That page is not here." lead="The address may be mistyped, or the page has moved. Nothing has been lost on your side." />
         <Section container="narrow">
           <div className="flex flex-col gap-8">
@@ -72,7 +73,7 @@ export default function NotFound() {
             </p>
           </div>
         </Section>
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

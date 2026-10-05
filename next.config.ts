@@ -3,6 +3,14 @@ import { APEX_HOST, SITE_URL, isPlatformLaunched } from './lib/brand'
 import { STATIC_ROUTES } from './lib/routes'
 
 const nextConfig: NextConfig = {
+  // React's <ViewTransition> on route changes: every page's <main> and the
+  // footer animate out and in (components/site/page-main.tsx, the `page`
+  // rules in app/globals.css) while the header holds still. Browsers without
+  // the View Transitions API navigate exactly as before, just without motion.
+  experimental: {
+    viewTransition: true,
+  },
+
   // The gated toolkit PDF lives in /private (never under /public), so it is only
   // reachable through the signed download route. Ship it with that route's lambda.
   outputFileTracingIncludes: {

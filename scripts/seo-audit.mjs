@@ -52,6 +52,7 @@ export const RULES = {
   MAKER_LINE: 'maker-line',
   VAT_SHOWN: 'vat-shown',
   CANONICAL_EVERYWHERE: 'canonical-everywhere',
+  NO_GRID_TEXTURE: 'no-grid-texture',
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -395,6 +396,24 @@ function checkTrialCardClaim(files, root) {
   })
 }
 
+/**
+ * The 60px grid texture is retired site-wide: heroes, Open Graph images and
+ * every section are lit by the crimson radial alone. Catches the component,
+ * the utility and the two-gradient hairline recipe it was drawn with, so the
+ * grid cannot come back under a new name.
+ */
+export const GRID_TEXTURE = /\bGridPattern\b|grid-pattern|\bhero-grid\b|backgroundSize:\s*['"`]\d+px \d+px|background-size:\s*\d+px \d+px|transparent 1px\)[^\n]*linear-gradient\(90deg/
+
+function checkNoGridTexture(files, root) {
+  return forbid(files, root, {
+    rule: RULES.NO_GRID_TEXTURE,
+    pattern: GRID_TEXTURE,
+    message: 'the grid texture is retired. Light a hero with HeroBackdrop (the crimson radial) instead',
+    skip: isTooling,
+    exts: new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.css']),
+  })
+}
+
 /** Workstream C.6. One maker line everywhere: "jobsafe is made by Jobmate Ltd." */
 function checkMakerLine(files, root) {
   return forbid(files, root, {
@@ -492,6 +511,7 @@ export function runAudit(root = process.cwd()) {
     ...checkMakerLine(files, root),
     ...checkVatShown(files, root),
     ...checkCanonicalEverywhere(files, root),
+    ...checkNoGridTexture(files, root),
   ]
 }
 

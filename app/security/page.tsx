@@ -6,6 +6,7 @@ import { EMAIL_PRIVACY, EMAIL_SUPPORT, HOSTING_DETAIL, PLATFORM_LAUNCH } from '@
 import { buildMetadata, h1For } from '@/lib/seo'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, type FaqEntry } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -42,7 +43,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={CRUMBS} />}
@@ -156,7 +157,7 @@ export default function Page() {
 
         <FaqAccordion items={FAQS} tone="white" lead="The questions an IT lead asks before sign-off." />
         <CtaBand tone="grey" placement="security-closing" title="Bring your IT lead to the demo." copy="Thirty minutes, and we will answer the security questionnaire on the call." secondary={{ label: 'How the demo works', href: '/demo' }} />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

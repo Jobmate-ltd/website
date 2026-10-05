@@ -1,4 +1,5 @@
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Hero } from '@/components/home/hero'
 import { Industries } from '@/components/home/industries'
@@ -52,7 +53,7 @@ export function HomePhase1() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: homeGraph }} />
         <Hero />
         <Industries />
@@ -68,7 +69,7 @@ export function HomePhase1() {
         <Pricing />
         <Faq items={FAQS} lead="Everything you need to know about jobsafe." />
         <Closing />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

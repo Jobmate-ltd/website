@@ -6,6 +6,7 @@ import { formatDate, getAllPosts } from '@/lib/insights'
 import { BRAND, OG_IMAGE, SITE_URL, canonicalFor } from '@/lib/brand'
 import { blogSchema, breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -53,7 +54,7 @@ export default function InsightsIndex() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Insights', href: PATH }]} />}
@@ -94,7 +95,7 @@ export default function InsightsIndex() {
             ))}
           </ul>
         </Section>
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

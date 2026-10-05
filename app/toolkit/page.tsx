@@ -4,6 +4,7 @@ import { pageMetadata } from '@/lib/seo'
 import { ENTRY_PRICE_EX_VAT_LABEL, SIGNUP_TRIAL_URL, SITE_URL, TRIAL, canonicalFor, PLATFORM_LAUNCH } from '@/lib/brand'
 import { breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { LeadForm } from '@/components/toolkit/lead-form'
@@ -69,7 +70,7 @@ export default function ToolkitPage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
 
         {/* Hero: message left, gate right. The form is the CTA, so there is no second one here. */}
@@ -137,7 +138,7 @@ export default function ToolkitPage() {
           secondary={PLATFORM_LAUNCH ? { label: 'Start your free trial', href: SIGNUP_TRIAL_URL } : { label: 'Book a demo', href: '/#get-started' }}
           note={PLATFORM_LAUNCH ? <ModuleBacklink path={PATH} bare /> : `From ${ENTRY_PRICE_EX_VAT_LABEL} per licence per month. ${TRIAL.label}.`}
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

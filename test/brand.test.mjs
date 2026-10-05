@@ -31,6 +31,8 @@ import {
   PRICE_BOOK,
   PRICING_TIERS,
   SIGNUP_TRIAL_URL,
+  TAGLINE,
+  TAGLINE_WORDS,
   TRIAL,
   VAT_SUFFIX,
   VOLUME_PRICE_LABEL,
@@ -110,6 +112,13 @@ describe('links that must not change in Phase 1', () => {
     assert.equal(FOOTER.brand.madeIn, 'Made by Jobmate Ltd, Wolverhampton')
     assert.ok(FOOTER.legal.some((l) => l.action === 'cookie-settings'))
     assert.ok(FOOTER.legal.some((l) => l.href === '/cookies'))
+  })
+})
+
+describe('the tagline', () => {
+  test('is "Record. Resolve. Prevent." in that order, one word per family', () => {
+    assert.deepEqual([...TAGLINE_WORDS], ['Record.', 'Resolve.', 'Prevent.'])
+    assert.equal(TAGLINE, 'Record. Resolve. Prevent.')
   })
 })
 

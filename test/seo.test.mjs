@@ -325,6 +325,27 @@ describe('colour literals (Workstream A)', () => {
   })
 })
 
+describe('no grid texture (the grid is retired site-wide)', () => {
+  test('catches the component, the utility and the hairline recipe', () => {
+    for (const bad of [
+      "import { GridPattern } from '@/components/ui/grid-pattern'",
+      '<div className="hero-grid absolute inset-0" />',
+      "backgroundSize: '60px 60px',",
+      '  background-size: 60px 60px;',
+      'backgroundImage: `linear-gradient(${ink} 1px, transparent 1px), linear-gradient(90deg, ${ink} 1px, transparent 1px)`',
+    ]) {
+      assert.ok(has(auditFixture({ 'components/x.tsx': bad }), RULES.NO_GRID_TEXTURE), `${bad} should fail`)
+    }
+    assert.ok(has(auditFixture({ 'app/globals.css': '@utility hero-grid { background-size: 60px 60px; }' }), RULES.NO_GRID_TEXTURE))
+  })
+
+  test('permits layout grids, the radial and the docs that describe the retirement', () => {
+    assert.ok(!has(auditFixture({ 'components/x.tsx': 'className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"' }), RULES.NO_GRID_TEXTURE))
+    assert.ok(!has(auditFixture({ 'components/x.tsx': '<div className="hero-radial absolute -top-40 size-[720px]" />' }), RULES.NO_GRID_TEXTURE))
+    assert.ok(!has(auditFixture({ 'docs/REBUILD.md': 'The 60px grid (`hero-grid`, `GridPattern`) is retired.' }), RULES.NO_GRID_TEXTURE))
+  })
+})
+
 describe('unsourced numbers (Workstream C.5)', () => {
   test('catches every number the brief named', () => {
     for (const bad of ['3× faster reporting', '<60s per report', 'over 70%', '£10,000+ enforcement notice', 'live within 30 minutes', 'set up in 24 hours']) {

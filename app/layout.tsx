@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { LateWidgets } from '@/components/site/late-widgets'
+import { RouteProgress } from '@/components/site/route-progress'
+import { SmoothScroll } from '@/components/site/smooth-scroll'
 import { BRAND, ENTRY_PRICE_EX_VAT_LABEL, LEGAL_NAME, PARENT_ORG_URL, SITE_URL, TWITTER_HANDLE } from '@/lib/brand'
 import { graph, jsonLd, organizationSchema, websiteSchema } from '@/lib/schema'
 import { token } from '@/lib/tokens'
@@ -113,6 +115,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </div>
         <LateWidgets />
+        <RouteProgress />
+        <SmoothScroll />
       </body>
     </html>
   )
