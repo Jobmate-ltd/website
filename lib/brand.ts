@@ -28,6 +28,16 @@ export const LEGAL_NAME = 'Jobmate Ltd' as const
 /** The one maker line, used verbatim everywhere the maker is named. */
 export const MAKER_LINE = `${BRAND} is made by ${LEGAL_NAME}.` as const
 
+/**
+ * The tagline, word by word. It is also the information architecture (the
+ * Record / Resolve / Prevent families in lib/platform.ts) and the largest
+ * type on the site (components/ui/tagline.tsx).
+ */
+export const TAGLINE_WORDS = ['Record.', 'Resolve.', 'Prevent.'] as const
+
+/** The tagline as one line. */
+export const TAGLINE = TAGLINE_WORDS.join(' ')
+
 /** Footer credit. */
 export const MADE_IN_LINE = `Made by ${LEGAL_NAME}, Wolverhampton` as const
 

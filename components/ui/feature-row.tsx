@@ -8,9 +8,9 @@ import { Eyebrow } from '@/components/ui/eyebrow'
  * FeatureRow — alternating media and text with three sub-points and an
  * optional "See it in the tour" link.
  *
- * `media` is any framed image, video or phone mock; `reverse` puts it on the
- * right. Sub-points render as a definition list so the icon, title and detail
- * are associated for assistive tech.
+ * `media` is any framed image, video or phone mock, in the wider of the two
+ * columns; `reverse` puts it on the left. Sub-points render as a definition
+ * list so the icon, title and detail are associated for assistive tech.
  *
  * @example
  *   <FeatureRow eyebrow="How it works" title="…" points={[…]} media={<PhoneFrame>…</PhoneFrame>}
@@ -39,7 +39,15 @@ export interface FeatureRowProps {
 export function FeatureRow({ eyebrow, title, lead, points, media, reverse = false, link, level = 'h2', id, className }: FeatureRowProps) {
   const Heading = level
   return (
-    <div id={id} className={cn('grid items-center gap-10 lg:grid-cols-2 lg:gap-16', className)}>
+    // The media column is the wider one: product shots are shown large.
+    <div
+      id={id}
+      className={cn(
+        'grid items-center gap-12 lg:gap-16 xl:gap-20',
+        reverse ? 'lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]' : 'lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]',
+        className,
+      )}
+    >
       <div className={cn('flex flex-col gap-6', reverse && 'lg:order-2')}>
         <div className="flex flex-col gap-4">
           {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}

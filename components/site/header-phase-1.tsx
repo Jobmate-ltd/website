@@ -258,7 +258,7 @@ export function HeaderPhase1({ nav = NAV }: { nav?: NavConfig }) {
 
   return (
     <header
-      className="sticky z-50 border-b border-line-1 bg-canvas/85 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/85"
+      className="sticky z-50 border-b border-line-1 bg-canvas/85 backdrop-blur-md [view-transition-name:site-header] supports-[backdrop-filter]:bg-canvas/85"
       style={{ top: 'env(safe-area-inset-top, 0px)' }}
     >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">

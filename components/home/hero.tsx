@@ -6,6 +6,8 @@ import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { BookDemoButton } from '@/components/ui/book-demo-button'
 import { HeroBackdrop } from '@/components/ui/hero-backdrop'
+import { GlassFrame } from '@/components/ui/glass-frame'
+import { Tagline } from '@/components/ui/tagline'
 import { FactStrip, type Fact } from '@/components/ui/fact-strip'
 import { VideoDialog } from '@/components/ui/video-dialog'
 
@@ -29,16 +31,10 @@ export function Hero() {
       <section id="hero" className="relative overflow-hidden bg-canvas">
         <HeroBackdrop radial="right" />
         <Container size="wide" className="relative pb-14 pt-12 md:pb-20 md:pt-20">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14 xl:gap-20">
             <div className="flex flex-col gap-7">
               <Eyebrow>UK workplace incident reporting</Eyebrow>
-              <h1 className="type-display text-ink-1">
-                Record.
-                <br />
-                <span className="text-brand">Resolve.</span>
-                <br />
-                Prevent.
-              </h1>
+              <Tagline as="h1" />
               <p className="type-lead measure text-ink-4">
                 The mobile incident reporting app built for real-world risk. jobsafe brings HSSE reporting to construction,
                 field service, care and transport environments where paper-based reporting is not good enough.
@@ -65,17 +61,17 @@ export function Hero() {
             </div>
 
             <div className="flex justify-center lg:justify-end">
-              <div className="w-full max-w-xl rounded-frame border border-line-1 bg-bg p-6 shadow-frame sm:p-10">
+              <GlassFrame variant="bare" className="max-w-2xl lg:max-w-none" screenClassName="bg-bg px-4 py-8 sm:px-10 sm:py-12">
                 <Image
                   src="/images/jobsafe-hero-duo.png"
                   alt="Two smartphones showing the jobsafe app: the HSSE and incident report menu, and the analytics dashboard with reports by category, site breakdown and 12-week trend"
                   width={793}
                   height={773}
                   priority
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  className="mx-auto h-auto w-full max-w-md"
+                  sizes="(min-width: 1280px) 600px, (min-width: 1024px) 48vw, 100vw"
+                  className="mx-auto h-auto w-full max-w-[560px]"
                 />
-              </div>
+              </GlassFrame>
             </div>
           </div>
         </Container>

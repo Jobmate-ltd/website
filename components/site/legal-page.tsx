@@ -2,6 +2,7 @@ import * as React from 'react'
 import { SITE_URL, canonicalFor } from '@/lib/brand'
 import { breadcrumbSchema, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -39,7 +40,7 @@ export function LegalPage({
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
         <PageHero
           container="narrow"
@@ -58,7 +59,7 @@ export function LegalPage({
             {children}
           </div>
         </Section>
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

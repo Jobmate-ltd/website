@@ -1,23 +1,24 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { PRODUCT_IMAGES, type ProductImageId } from '@/lib/product-images'
-import { Safari } from '@/components/ui/safari'
-import { Iphone } from '@/components/ui/iphone'
+import { GlassFrame, PHONE_GLASS_WIDTH } from '@/components/ui/glass-frame'
 
 /**
  * ProductShot — a real product screenshot from lib/product-images.ts, with
  * its own width, height and alt text, served through next/image (AVIF/WebP
- * at the rendered size). `frame` wraps it in the Safari or iPhone chrome.
+ * at the rendered size), always in its own liquid-glass pane (GlassFrame).
+ *
+ * Desktop captures get the glass window bar (with `url` in it); phone
+ * captures get the glass bezel, centred in their column.
  *
  * Never point this at anything but a capture from scripts/capture-product.mjs.
  *
  * @example
- *   <ProductShot id="riddor-verdict-desktop" frame priority />
+ *   <ProductShot id="riddor-verdict-desktop" priority />
  */
 export interface ProductShotProps {
   id: ProductImageId
-  /** Wrap in the device chrome that matches the capture. */
-  frame?: boolean
   priority?: boolean
   sizes?: string
   className?: string
@@ -25,38 +26,37 @@ export interface ProductShotProps {
   alt?: string
   caption?: boolean
   url?: string
+  /** Rendered over the screen, positioned in screen percentages. */
+  overlay?: ReactNode
 }
 
-export function ProductShot({ id, frame = false, priority = false, sizes, className, alt, caption = false, url }: ProductShotProps) {
+export function ProductShot({ id, priority = false, sizes, className, alt, caption = false, url = 'app.jobsafe.cloud', overlay }: ProductShotProps) {
   const image = PRODUCT_IMAGES[id]
-  const defaultSizes = image.kind === 'phone' ? '(min-width: 1024px) 320px, 70vw' : '(min-width: 1024px) 640px, 100vw'
-  const img = (
-    <Image
-      src={image.webp}
-      alt={alt ?? image.alt}
-      width={image.width}
-      height={image.height}
-      priority={priority}
-      sizes={sizes ?? defaultSizes}
-      className={cn('block h-auto w-full', frame && 'object-cover object-top')}
-    />
-  )
-  const framed = frame ? (
-    image.kind === 'phone' ? (
-      <Iphone className={className}>{img}</Iphone>
-    ) : (
-      <Safari url={url} className={className}>
-        {img}
-      </Safari>
-    )
-  ) : (
-    <div className={cn('overflow-hidden rounded-frame border border-line-1 bg-canvas shadow-frame', className)}>{img}</div>
+  const phone = image.kind === 'phone'
+  const defaultSizes = phone ? '(min-width: 1024px) 360px, 80vw' : '(min-width: 1280px) 760px, (min-width: 1024px) 60vw, 100vw'
+  const framed = (
+    <GlassFrame
+      variant={phone ? 'phone' : 'desktop'}
+      url={phone ? undefined : url}
+      overlay={overlay}
+      className={caption ? undefined : className}
+    >
+      <Image
+        src={image.webp}
+        alt={alt ?? image.alt}
+        width={image.width}
+        height={image.height}
+        priority={priority}
+        sizes={sizes ?? defaultSizes}
+        className="block h-auto w-full"
+      />
+    </GlassFrame>
   )
   if (!caption) return framed
   return (
-    <figure className="flex flex-col gap-3">
+    <figure className={cn('flex w-full flex-col gap-5', className)}>
       {framed}
-      <figcaption className="type-small text-ink-5">{image.caption}</figcaption>
+      <figcaption className={cn('type-small text-ink-5', phone && cn('mx-auto text-center', PHONE_GLASS_WIDTH))}>{image.caption}</figcaption>
     </figure>
   )
 }

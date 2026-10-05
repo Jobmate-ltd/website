@@ -23,7 +23,7 @@ const IN_DEPTH = [
 export function HowItWorks() {
   return (
     <>
-      <Section id="how-it-works" tone="grey" divider>
+      <Section id="how-it-works" tone="grey" divider container="wide">
         <FeatureRow
           eyebrow="How it works"
           title="Four steps from incident to insight"
@@ -37,13 +37,13 @@ export function HowItWorks() {
                 alt="jobsafe admin dashboard showing reports by category, a weekly site breakdown and the depot incident summary"
                 width={379}
                 height={842}
-                sizes="300px"
+                sizes="(min-width: 640px) 340px, 80vw"
               />
             </PhoneFrame>
           }
         />
       </Section>
-      <Section id="in-depth" divider>
+      <Section id="in-depth" divider container="wide">
         <FeatureRow
           eyebrow="In depth"
           title="All incidents under one app"
@@ -51,13 +51,13 @@ export function HowItWorks() {
           points={IN_DEPTH}
           reverse
           media={
-            <PhoneFrame caption="The employee app: HSSE, incident, other and near-miss report tiles.">
+            <PhoneFrame caption="The employee app: HSSE, incident, other and near-miss report tiles." screenClassName="bg-ink-1">
               <Image
                 src="/images/screens/employee-app.png"
                 alt="jobsafe employee app incident capture screen showing HSSE, Incident, Other and Near Miss report tiles"
                 width={927}
                 height={1665}
-                sizes="300px"
+                sizes="(min-width: 640px) 340px, 80vw"
               />
             </PhoneFrame>
           }

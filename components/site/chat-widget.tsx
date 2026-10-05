@@ -346,7 +346,7 @@ export function ChatWidget() {
             </button>
           </div>
 
-          <div ref={scrollRef} aria-live="polite" className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+          <div ref={scrollRef} aria-live="polite" data-lenis-prevent className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
             {messages.map((m) => (
               <div key={m.id} className={m.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
                 <div className={m.role === 'user' ? 'max-w-[85%] rounded-frame rounded-br-[2px] bg-ink-1 px-3.5 py-2.5 text-sm text-canvas' : 'max-w-[90%] rounded-frame rounded-bl-[2px] border border-line-1 bg-bg px-3.5 py-2.5 text-sm text-ink-2'}>

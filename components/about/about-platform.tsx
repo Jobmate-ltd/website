@@ -3,6 +3,7 @@ import { ADDRESS, EMAIL_SALES, HOSTING_DETAIL, HOSTING_LINE, LEGAL_NAME, MAKER_L
 import { h1For } from '@/lib/seo'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, organizationSchema, platformApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -39,7 +40,7 @@ export function AboutPlatform() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           container="narrow"
@@ -140,7 +141,7 @@ export function AboutPlatform() {
           </div>
         </Section>
         <CtaBand tone="grey" placement="about-closing" title="See the platform on a real setup." copy="Thirty minutes, on a UK haulier’s data, with someone who knows the product." secondary={{ label: 'How the demo works', href: '/demo' }} />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

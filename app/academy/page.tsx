@@ -4,6 +4,7 @@ import { FEATURED_VIDEO, LESSONS } from '@/lib/academy'
 import { SIGNUP_TRIAL_URL, SITE_URL, canonicalFor, trialSentence } from '@/lib/brand'
 import { breadcrumbSchema, graph, itemListSchema, jsonLd, videoObjectSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -60,7 +61,7 @@ export default function AcademyPage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageGraph }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Academy', href: PATH }]} />}
@@ -93,7 +94,7 @@ export default function AcademyPage() {
           copy={`Everything in these lessons is in the app from day one. ${trialSentence()}`}
           secondary={{ label: 'Sign up now', href: SIGNUP_TRIAL_URL }}
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

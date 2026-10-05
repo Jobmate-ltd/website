@@ -6,6 +6,7 @@ import { ADDRESS, EMAIL_SALES, EMAIL_SUPPORT, LEGAL_NAME, PHONE_DISPLAY, PHONE_H
 import { buildMetadata, h1For } from '@/lib/seo'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -32,7 +33,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={CRUMBS} />}
@@ -95,7 +96,7 @@ export default function Page() {
             Security and hosting questions are answered on the <Link href="/security" className="font-semibold text-brand-strong hover:underline">security page</Link>; the company is described on the <Link href="/about" className="font-semibold text-brand-strong hover:underline">about page</Link>; prices are on the <Link href="/pricing" className="font-semibold text-brand-strong hover:underline">pricing page</Link>.
           </p>
         </Section>
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

@@ -26,7 +26,10 @@ interface TourStop {
   readonly screenshot: keyof typeof PRODUCT_IMAGES
   readonly title: string
   readonly content: string
-  /** Where the spotlight sits over the screenshot, as percentages. */
+  /**
+   * Where the spotlight sits over the screen, as percentages of the whole,
+   * uncropped capture (the glass pane's screen box), not of the pane.
+   */
   readonly spot: { left: number; top: number; width: number; height: number }
   readonly side: 'top' | 'bottom' | 'left' | 'right'
 }
@@ -37,7 +40,7 @@ const STOPS: readonly TourStop[] = [
     screenshot: 'dashboard-hero-desktop',
     title: 'Start on the dashboard',
     content: 'Open high-severity reports, overdue actions, this week’s incidents and the live feed, for every site or one. RIDDOR due dates sit here too.',
-    spot: { left: 13, top: 8, width: 86, height: 16 },
+    spot: { left: 18.5, top: 1.2, width: 73.4, height: 17.2 },
     side: 'bottom',
   },
   {
@@ -45,7 +48,7 @@ const STOPS: readonly TourStop[] = [
     screenshot: 'report-detail-desktop',
     title: 'Open a report',
     content: 'Evidence gallery, the people, the vehicle by its number plate, and the four-level ICAM root cause, on the record itself.',
-    spot: { left: 14, top: 12, width: 84, height: 60 },
+    spot: { left: 14, top: 5.1, width: 84.2, height: 60.2 },
     side: 'bottom',
   },
   {
@@ -53,7 +56,7 @@ const STOPS: readonly TourStop[] = [
     screenshot: 'riddor-verdict-desktop',
     title: 'Watch the RIDDOR verdict',
     content: 'The panel says reportable or not and works out the deadline from the incident date while you answer.',
-    spot: { left: 60, top: 12, width: 38, height: 60 },
+    spot: { left: 60, top: 5.1, width: 38.1, height: 60.2 },
     side: 'left',
   },
   {
@@ -61,7 +64,7 @@ const STOPS: readonly TourStop[] = [
     screenshot: 'permits-gate-desktop',
     title: 'See a permit blocked',
     content: 'Five checks before Approved: contractor not suspended, insurance, RAMS and accreditation in date, an audit within 12 months, a live risk assessment, every control confirmed.',
-    spot: { left: 14, top: 14, width: 84, height: 50 },
+    spot: { left: 14, top: 7.1, width: 84.2, height: 50.2 },
     side: 'bottom',
   },
   {
@@ -69,7 +72,7 @@ const STOPS: readonly TourStop[] = [
     screenshot: 'risk-bowtie-desktop',
     title: 'Finish on a bowtie',
     content: 'Threats, consequences and the barriers between them, each rated Effective, Degraded, Failed or Missing, with a barrier audit that flags a single-barrier leg.',
-    spot: { left: 14, top: 14, width: 84, height: 70 },
+    spot: { left: 14, top: 7.1, width: 84.2, height: 70.3 },
     side: 'top',
   },
 ]
@@ -141,9 +144,9 @@ function StartButton() {
 
 function Gallery() {
   return (
-    <ol className="mt-10 grid gap-8">
+    <ol className="mt-10 grid gap-14 lg:gap-20">
       {STOPS.map((stop, i) => (
-        <li key={stop.id} className={cn('grid items-start gap-6 lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-10')}>
+        <li key={stop.id} className={cn('grid items-start gap-6 lg:grid-cols-[minmax(0,17rem)_1fr] lg:gap-12')}>
           <div className="flex flex-col gap-2 lg:sticky lg:top-28">
             <span className="type-mono text-xs font-medium text-brand-strong" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
@@ -151,15 +154,17 @@ function Gallery() {
             <h3 className="type-h3 text-ink-1">{stop.title}</h3>
             <p className="type-small text-ink-4">{stop.content}</p>
           </div>
-          <div className="relative">
-            <ProductShot id={stop.screenshot} frame />
-            <div
-              id={`tour-spot-${stop.id}`}
-              aria-hidden="true"
-              className="pointer-events-none absolute rounded-control"
-              style={{ left: `${stop.spot.left}%`, top: `${stop.spot.top}%`, width: `${stop.spot.width}%`, height: `${stop.spot.height}%` }}
-            />
-          </div>
+          <ProductShot
+            id={stop.screenshot}
+            overlay={
+              <div
+                id={`tour-spot-${stop.id}`}
+                aria-hidden="true"
+                className="pointer-events-none absolute rounded-control"
+                style={{ left: `${stop.spot.left}%`, top: `${stop.spot.top}%`, width: `${stop.spot.width}%`, height: `${stop.spot.height}%` }}
+              />
+            }
+          />
         </li>
       ))}
     </ol>

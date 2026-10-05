@@ -7,6 +7,7 @@ import { buildMetadata, h1For } from '@/lib/seo'
 import { FAMILIES, MODULES, type Family } from '@/lib/platform'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -47,7 +48,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={CRUMBS} />}
@@ -62,7 +63,7 @@ export default function Page() {
               </Button>
             </>
           }
-          media={<ProductShot id="dashboard-hero-desktop" frame priority />}
+          media={<ProductShot id="dashboard-hero-desktop" priority />}
         />
 
         <Section id="loop" tone="white">
@@ -138,7 +139,7 @@ export default function Page() {
           </p>
         </Section>
 
-        <Section id="tour" tone="grey">
+        <Section id="tour" tone="grey" container="wide">
           <SectionHeading eyebrow="Take the tour" title="Two minutes, five screens" tone="grey" />
           <div className="mt-8">
             <ProductTour />
@@ -146,7 +147,7 @@ export default function Page() {
         </Section>
 
         <CtaBand tone="white" placement="platform-closing" title="Then see it on your own sites." copy="A 30-minute walkthrough with someone who knows the product, on a UK haulier’s data." secondary={{ label: 'How the demo works', href: '/demo' }} />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

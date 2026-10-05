@@ -2,7 +2,7 @@
 // Open Graph images, generated with next/og in the light theme.
 //
 // Every route has an `opengraph-image.tsx` that is three lines long and calls
-// `ogImage()` below, so the wordmark, the grid texture, the type and the
+// `ogImage()` below, so the wordmark, the crimson radial, the type and the
 // colours are decided once. Colours are read from app/globals.css through
 // lib/tokens.ts; fonts are the static TTF instances in assets/fonts (satori
 // cannot instance a variable font). Runs on the Node runtime.
@@ -52,8 +52,6 @@ export async function ogImage({ eyebrow, title, subtitle }: OgImageProps): Promi
   const brand = token('brand')
   const brandStrong = token('brand-strong')
   const brandTint = token('brand-tint-08')
-  const gridInk = withAlpha('ink-1', 0.045)
-  const canvasClear = withAlpha('canvas', 0)
   const brandClear = withAlpha('brand', 0)
 
   const titleSize = title.length > 70 ? 54 : title.length > 44 ? 62 : 72
@@ -72,31 +70,6 @@ export async function ogImage({ eyebrow, title, subtitle }: OgImageProps): Promi
           position: 'relative',
         }}
       >
-        {/* The 60px grid at 4.5% ink, top of the frame only. */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: 420,
-            display: 'flex',
-            backgroundImage: `linear-gradient(${gridInk} 1px, transparent 1px), linear-gradient(90deg, ${gridInk} 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-        />
-        {/* Fade the grid out downwards. */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 160,
-            left: 0,
-            width: '100%',
-            height: 300,
-            display: 'flex',
-            backgroundImage: `linear-gradient(to bottom, ${canvasClear}, ${canvas})`,
-          }}
-        />
         {/* One soft crimson radial. */}
         <div
           style={{

@@ -6,6 +6,7 @@ import { buildMetadata, h1For } from '@/lib/seo'
 import { modulesWithPages } from '@/lib/platform'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema, type FaqEntry } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { PageHero } from '@/components/site/page-hero'
@@ -59,7 +60,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
         <PageHero
           breadcrumbs={<Breadcrumbs items={CRUMBS} />}
@@ -74,7 +75,7 @@ export default function Page() {
               </Button>
             </>
           }
-          media={<ProductShot id="pending-sync-phone" frame priority className="max-w-[300px]" />}
+          media={<ProductShot id="pending-sync-phone" priority />}
         />
 
         <Section id="signal" tone="grey">
@@ -152,7 +153,7 @@ export default function Page() {
 
         <FaqAccordion items={FAQS} tone="grey" lead="What people ask about offline before they trust it." />
         <CtaBand tone="white" placement="offline-closing" title="See it lose signal and not lose the report." copy="A 30-minute walkthrough on a UK haulier’s setup, with the phone in flight mode." secondary={{ label: 'How the demo works', href: '/demo' }} />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

@@ -20,7 +20,7 @@ const FAMILY_ORDER: readonly Family[] = ['record', 'resolve', 'prevent']
 
 export function FamilyTabs() {
   return (
-    <Section id="features" tone="white">
+    <Section id="features" tone="white" container="wide">
       <SectionHeading
         eyebrow="Record. Resolve. Prevent."
         title="Three jobs, one record"
@@ -36,7 +36,7 @@ export function FamilyTabs() {
         </TabsList>
         {FAMILY_ORDER.map((family) => (
           <TabsContent key={family} value={family}>
-            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-14">
+            <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-14 xl:gap-20">
               <div className="flex flex-col gap-6">
                 <p className="type-lead text-ink-4">{FAMILIES[family].promise}</p>
                 <ul className="divide-y divide-line-1 border-y border-line-1">
@@ -70,7 +70,7 @@ export function FamilyTabs() {
                   })}
                 </ul>
               </div>
-              <ProductShot id={FAMILIES[family].screenshot} frame caption />
+              <ProductShot id={FAMILIES[family].screenshot} caption />
             </div>
           </TabsContent>
         ))}

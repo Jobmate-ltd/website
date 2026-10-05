@@ -32,9 +32,9 @@ are read (`lib/brand.ts`, `lib/newsletter.ts`, `lib/toolkit/leads.ts`).
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm test` | Unit tests for the constants, routes, consent store and every audit rule |
-| `npm run seo:audit` | The build guard: brand casing, one price with VAT, no OTTO script, no colour literals outside `app/globals.css`, no unsourced numbers, canonicals everywhere… |
+| `npm run seo:audit` | The build guard: brand casing, one price with VAT, no OTTO script, no colour literals outside `app/globals.css`, no unsourced numbers, no grid texture, canonicals everywhere… |
 | `npm run build` | `seo:audit` then `next build` |
-| `npm run test:e2e` | Playwright: axe (WCAG 2.2 AA) on every route at 320 / 768 / 1280, the consent gate and, with `E2E_PLATFORM=on` against a flag-on build, the Phase 2 routes and the keyboard-only flows |
+| `npm run test:e2e` | Playwright: axe (WCAG 2.2 AA) on every route at 320 / 768 / 1280, the consent gate, the look and motion (no grid, every product shot in glass, the tagline, smooth scroll, page transitions) and, with `E2E_PLATFORM=on` against a flag-on build, the Phase 2 routes and the keyboard-only flows |
 | `npm run seo:check -- --flag on\|off` | Against a running build: titles, descriptions, H1s and canonicals match `content/seo/keyword-map.json`; Phase 2 routes 404 with the flag off; ≥ 3 contextual links in and out with it on |
 | `npm run schema:check -- --flag on\|off` | Against a running build: every JSON-LD node validates (required properties, breadcrumb URLs resolve, FAQ text is in the HTML) |
 | `npm run claims:check [-- --base URL]` | Nothing on the "never" or "once built" lists in platform copy, JSON-LD or `llms.txt`; the Sign up / Log in / Book a demo destinations |
@@ -59,6 +59,8 @@ routes and the keyboard flows, on every pull request.
 | Nav and footer (both flag states) | `lib/site.ts` |
 | Routes, sitemap dates, `platformOnly` | `lib/routes.ts` |
 | Tokens, type roles, motion | `app/globals.css` |
+| Liquid glass, tagline | `components/ui/glass-frame.tsx`, `components/ui/tagline.tsx` |
+| Smooth scroll, page transitions, route progress | `components/site/smooth-scroll.tsx`, `components/site/page-main.tsx`, `components/site/route-progress.tsx` |
 | Metadata, Open Graph, JSON-LD | `lib/seo/` (`buildMetadata()` reads the keyword map), `lib/og.tsx`, `lib/schema.ts` |
 | Keyword map and link registry | `content/seo/keyword-map.json`, `lib/seo/links.ts`, `docs/SEO.md` |
 | Platform content model, module pages | `lib/platform.ts`, `lib/platform-modules.ts`, `components/platform/` |

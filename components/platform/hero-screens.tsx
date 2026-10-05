@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 import { PRODUCT_IMAGES, type ProductImageId } from '@/lib/product-images'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BorderBeam } from '@/components/ui/border-beam'
+import { GlassFrame } from '@/components/ui/glass-frame'
 
 /**
  * HeroScreens — the tabbed product screenshot in the homepage hero, on the
  * shadcnblocks "Hero 195" pattern: a TabsList with icons on desktop, a wide
- * 16:10 capture with a hairline, a quiet shadow and a crimson border beam,
- * dashed ornamental frame lines, and a dot navigation with the active icon on
+ * 2:1 capture in a liquid-glass pane (GlassFrame) with a crimson border beam
+ * running round the glass, and a dot navigation with the active icon on
  * small screens.
  *
  * Four real screens cycle every four seconds (dashboard → RIDDOR verdict →
@@ -29,9 +30,7 @@ const SCREENS: readonly { id: ProductImageId; title: string; icon: LucideIcon }[
 ]
 
 const INTERVAL_MS = 4000
-const SIZES = '(min-width: 1280px) 1152px, 100vw'
-const FADE = 'pointer-events-none absolute -inset-x-[20%] h-px [mask-image:linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]'
-const FADE_Y = 'pointer-events-none absolute -inset-y-[20%] w-px [mask-image:linear-gradient(to_bottom,transparent_1%,black_10%,black_90%,transparent_99%)]'
+const SIZES = '(min-width: 1536px) 1360px, 100vw'
 
 export function HeroScreens() {
   const [active, setActive] = React.useState<ProductImageId>(SCREENS[0].id)
@@ -97,34 +96,16 @@ export function HeroScreens() {
           </TabsList>
         </div>
 
-        <div className="relative isolate">
-          <div className="relative z-10">
-            {SCREENS.map((screen) => {
-              const image = PRODUCT_IMAGES[screen.id]
-              return (
-                <TabsContent key={screen.id} value={screen.id} className="relative mt-0 animate-fade-in rounded-frame bg-canvas">
-                  <Image
-                    src={image.webp}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    priority={screen.id === SCREENS[0].id}
-                    sizes={SIZES}
-                    className="block aspect-[2/1] w-full rounded-frame border border-line-1 object-cover object-top shadow-frame"
-                  />
-                  <BorderBeam duration={8} size={140} />
-                </TabsContent>
-              )
-            })}
-          </div>
-          {/* Ornamental frame lines, in line-1 with a fade at each end. */}
-          <span aria-hidden="true" className={cn(FADE, 'top-0 -z-10 bg-line-1')} />
-          <span aria-hidden="true" className={cn(FADE, 'bottom-0 -z-10 bg-line-1')} />
-          <span aria-hidden="true" className={cn(FADE, 'top-12 border-t border-dashed border-line-1')} />
-          <span aria-hidden="true" className={cn(FADE, 'bottom-12 border-t border-dashed border-line-1')} />
-          <span aria-hidden="true" className={cn(FADE_Y, 'left-[16.666%] border-r border-dashed border-line-1')} />
-          <span aria-hidden="true" className={cn(FADE_Y, 'right-[16.666%] border-r border-dashed border-line-1')} />
-        </div>
+        <GlassFrame url="app.jobsafe.cloud" adornment={<BorderBeam duration={10} size={180} />} screenAspect="2 / 1">
+          {SCREENS.map((screen) => {
+            const image = PRODUCT_IMAGES[screen.id]
+            return (
+              <TabsContent key={screen.id} value={screen.id} className="mt-0 size-full animate-fade-in">
+                <Image src={image.webp} alt={image.alt} width={image.width} height={image.height} priority={screen.id === SCREENS[0].id} sizes={SIZES} />
+              </TabsContent>
+            )
+          })}
+        </GlassFrame>
 
         {/* Small screens: dots plus the active screen's icon and name. */}
         <nav className="mt-6 flex flex-col items-center gap-3 md:hidden" aria-label="Product screens">

@@ -5,8 +5,10 @@ import { Eyebrow } from '@/components/ui/eyebrow'
 import { HeroBackdrop } from '@/components/ui/hero-backdrop'
 
 /**
- * PageHero — the hero band for an inner page: the grid texture, an eyebrow,
- * the H1, a lead, optional actions and optional media on the right.
+ * PageHero — the hero band for an inner page: the crimson radial, an eyebrow,
+ * the H1, a lead, optional actions and optional media on the right. With
+ * media, a `default` container widens to `wide` and the media takes the
+ * larger column, so a product shot is shown big.
  *
  * @example
  *   <PageHero eyebrow="About" title="About jobsafe" lead="…" breadcrumbs={<Breadcrumbs … />} />
@@ -29,8 +31,8 @@ export function PageHero({ eyebrow, title, lead, breadcrumbs, actions, media, no
   return (
     <section id={id} className={cn('relative overflow-hidden border-b border-line-1 bg-canvas', className)}>
       <HeroBackdrop radial={media ? 'right' : 'center'} />
-      <Container size={container} className="relative pb-14 pt-12 md:pb-20 md:pt-16">
-        <div className={cn('grid items-center gap-10', media && 'lg:grid-cols-[1.05fr_0.95fr] lg:gap-16')}>
+      <Container size={media && container === 'default' ? 'wide' : container} className="relative pb-14 pt-12 md:pb-20 md:pt-16">
+        <div className={cn('grid items-center gap-12', media && 'lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 xl:gap-20')}>
           <div className="flex flex-col gap-6">
             {breadcrumbs}
             <div className="flex flex-col gap-4">
@@ -41,7 +43,7 @@ export function PageHero({ eyebrow, title, lead, breadcrumbs, actions, media, no
             {actions ? <div className="flex flex-wrap items-center gap-3">{actions}</div> : null}
             {note ? <p className="type-small text-ink-5">{note}</p> : null}
           </div>
-          {media ? <div className="flex justify-center lg:justify-end">{media}</div> : null}
+          {media ? <div className="flex w-full justify-center lg:justify-end">{media}</div> : null}
         </div>
       </Container>
     </section>

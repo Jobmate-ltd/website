@@ -157,6 +157,8 @@ Both families are loaded with `next/font/local` from `assets/fonts/`
 
 | Role | Size | Weight | Tracking | Line height | Utility |
 | --- | --- | --- | --- | --- | --- |
+| Tagline, stacked (Phase 1 home H1) | `clamp(56px, 19vw, 120px)`; from 1024px `clamp(92px, 9.4vw, 136px)` | 800 | −0.045em | 0.94 | `type-tagline` |
+| Tagline, one line (above the Phase 2 home H1) | `clamp(30px, 4.6vw, 60px)` | 800 | −0.035em | 1.04 | `type-tagline-inline` |
 | Display (hero H1) | `clamp(40px, 6vw, 68px)` | 800 | −0.035em | 1.02 | `type-display` |
 | H2 | `clamp(30px, 3.6vw, 44px)` | 800 | −0.025em | 1.1 | `type-h2` |
 | H3 | 22px | 700 | −0.015em | 1.25 | `type-h3` |
@@ -165,6 +167,9 @@ Both families are loaded with `next/font/local` from `assets/fonts/`
 | Small | 14px | 400 | normal | normal | `type-small` |
 | Eyebrow | 12px | 800 | 0.12em | normal | `type-eyebrow` |
 
+- "Record. Resolve. Prevent." is the largest type on the site, always through
+  `components/ui/tagline.tsx` (words from `TAGLINE_WORDS` in `lib/brand.ts`),
+  with "Resolve." in `brand` (display size, so the lighter crimson passes).
 - Eyebrows are uppercase and set in `brand-strong` (`components/ui/eyebrow.tsx`).
 - Headings use `text-wrap: balance`.
 - Keep running text near 65 characters wide (`measure`).
@@ -172,25 +177,47 @@ Both families are loaded with `next/font/local` from `assets/fonts/`
 ### Shape and depth
 
 - **Radii follow the product, which is deliberately squared.** Buttons,
-  inputs and cards use 4px (`rounded-control`). Large screenshot frames and
-  the hero device use 8px (`rounded-frame`). Pills and avatars use 9999px
-  (`rounded-pill`). Nothing else goes above 8px; the default Tailwind radius
-  scale is removed from the theme so nothing larger can be reached by accident.
+  inputs and cards use 4px (`rounded-control`). Photo and video frames,
+  dialogs and panels use 8px (`rounded-frame`). Pills and avatars use 9999px
+  (`rounded-pill`). The one exception is the liquid glass around product
+  screenshots: 28px for a desktop pane (20px under 640px) and 54px for a
+  phone bezel (`--radius-glass`, `--radius-glass-phone`), with the screen
+  inside concentric (pane radius minus pane thickness). Nothing else goes
+  above 8px; the default Tailwind radius scale is removed from the theme so
+  nothing larger can be reached by accident.
 - **Borders do the separating.** Use a `line-1` hairline; shadows stay quiet.
 - **Shadows:**
   - `0 1px 2px rgb(15 23 42 / .04)` at rest (`shadow-rest`)
   - `0 1px 2px rgb(15 23 42 / .04), 0 4px 12px rgb(15 23 42 / .06)` on hover
     (`shadow-hover`)
-  - `0 24px 60px rgb(15 23 42 / .10)` for screenshot frames only
+  - `0 24px 60px rgb(15 23 42 / .10)` for photo and video frames
     (`shadow-frame`)
+  - the layered glass depth in `.liquid-glass` for product screenshots
 
-### Signature texture
+### Hero light
 
-Keep the brand's 60px grid, now as ink at 4.5% opacity. It sits behind heroes
-only and fades out downwards with a mask. Place one soft crimson radial per
-hero at 8–10% opacity (`components/ui/hero-backdrop.tsx`, `hero-grid` and
-`hero-radial` utilities). The grain overlay, the ambient red glow and the
-animated border beams are gone; they belonged to the dark world.
+One soft crimson radial per hero at 8–10% opacity
+(`components/ui/hero-backdrop.tsx`, the `hero-radial` utility). **No grid.**
+The 60px grid texture is retired everywhere, Open Graph images included;
+`scripts/seo-audit.mjs` (`no-grid-texture`) fails the build if the component,
+the utility or the hairline recipe comes back. The grain overlay, the ambient
+red glow and the animated border beams are gone too; they belonged to the
+dark world.
+
+### Liquid glass
+
+Every product screenshot sits in its own liquid-glass pane
+(`components/ui/glass-frame.tsx`; `.liquid-glass`, `.glass-screen` and
+`.glass-aura` in `app/globals.css`): a translucent, blurred and saturated
+pane with a bright specular rim at the top-left and a softer return at the
+bottom-right, an inner glow and layered depth. Glass on a white page has
+nothing to refract, so each pane carries its own aura behind it, a blurred
+crimson-and-ink wash the backdrop filter picks up and tints. Desktop captures
+get a slim window bar (three dots and the address) in the glass; phone
+captures get a glass bezel, never wider than keeps the whole phone in the
+viewport. Product shots are shown large: the media column is the wider one
+in every split layout, and the hero carousel runs wider than the text above
+it. `e2e/motion.spec.ts` fails if a product screenshot renders outside a pane.
 
 ### Motion
 
@@ -199,7 +226,25 @@ animated border beams are gone; they belonged to the dark world.
   never left at `opacity: 0` waiting for an observer
   (`components/ui/reveal.tsx` only marks an element pending once it has
   confirmed the element is below the fold).
-- Everything goes instant under `prefers-reduced-motion`.
+- **Smooth scroll.** Lenis (`components/site/smooth-scroll.tsx`) eases the
+  real document scroll, so sticky, IntersectionObserver, find-in-page and the
+  keyboard behave natively. Same-page anchors glide and land below the header
+  (Lenis reads `scroll-padding-top`). It pauses while a dialog or menu locks
+  the page and leaves anything that scrolls by itself (`dialog`,
+  `[role=dialog]`, `[data-lenis-prevent]`) alone. Loaded after hydration.
+- **Page load.** On the first paint, everything under the header settles up
+  into place once (`page-enter`, 640ms). It starts at 1% opacity, not 0, so
+  the hero still paints and counts as the LCP on the first frame.
+- **Page change.** Every page's `<main>` and the footer sit in a React
+  `<ViewTransition>` (`components/site/page-main.tsx`,
+  `experimental.viewTransition` in `next.config.ts`): the old page lifts away
+  and fades in 200ms, the new one rises in over 420ms a beat later, and the
+  header (named `site-header`) holds still. A 2px crimson progress line runs
+  across the top while the next page loads
+  (`components/site/route-progress.tsx`). Browsers without the View
+  Transitions API navigate as before, without motion.
+- Everything goes instant under `prefers-reduced-motion`: Lenis never
+  starts, and the load and page-change animations are switched off.
 
 ### Wordmark
 
@@ -215,8 +260,9 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
 - The dark-graded hero photos and videos from the old site may stay for now,
   cropped into 8px-radius frames on a light ground rather than full-bleed
   dark heroes.
-- Product screenshots are replaced in Phase 2 with real product UI. For now
-  the existing ones are framed on light (`BrowserFrame`, `PhoneFrame`).
+- Product screenshots are real product UI, each in its own liquid-glass pane
+  (`GlassFrame`, or `ProductShot` / `BrowserFrame` / `PhoneFrame`, which wrap
+  it). Photos and footage stay in 8px `MediaFrame`s.
 
 ## 7. Build rules
 
@@ -226,9 +272,10 @@ by design; do not trace one by hand. Favicon and app icon are unchanged.
   `maker-line`) fails the build if one does.
 - **Pages are composed from the component set** in `components/ui` and
   `components/site`: `Container`, `Section`, `Eyebrow`, `SectionHeading`,
-  `Button`, `Chip`/`StatusPill`, `BrowserFrame`/`PhoneFrame`, `FactStrip`,
-  `FeatureRow`, `Faq`, `CtaBand`, `Header` (driven by `NAV` in `lib/site.ts`),
-  `Footer` (driven by `FOOTER`), `ConsentBanner`.
+  `Button`, `Chip`/`StatusPill`, `GlassFrame` (and `BrowserFrame`/`PhoneFrame`),
+  `MediaFrame`, `Tagline`, `FactStrip`, `FeatureRow`, `Faq`, `CtaBand`,
+  `Header` (driven by `NAV` in `lib/site.ts`), `PageMain` (every page's
+  `<main>`), `Footer` (driven by `FOOTER`), `ConsentBanner`.
 - **Every page is server-rendered with metadata, canonical, OG and JSON-LD.**
   Metadata goes through `buildMetadata()` / `pageMetadata()` in `lib/seo/` (self-referencing
   canonical, Open Graph, Twitter card); Open Graph images are

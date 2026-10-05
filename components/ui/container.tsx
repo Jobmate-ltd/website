@@ -5,18 +5,20 @@ import { cn } from '@/lib/utils'
  * Container — centres content with the site's side gutters.
  *
  * `size` sets the max width: `prose` (~65ch for running text), `narrow`
- * (56rem), `default` (72rem) or `wide` (80rem).
+ * (56rem), `default` (72rem), `wide` (80rem) or `full` (88rem, for a product
+ * screenshot that should run wider than the text around it).
  *
  * @example
  *   <Container size="narrow"><h1>…</h1></Container>
  */
-export type ContainerSize = 'prose' | 'narrow' | 'default' | 'wide'
+export type ContainerSize = 'prose' | 'narrow' | 'default' | 'wide' | 'full'
 
 const SIZES: Record<ContainerSize, string> = {
   prose: 'max-w-3xl',
   narrow: 'max-w-4xl',
   default: 'max-w-6xl',
   wide: 'max-w-7xl',
+  full: 'max-w-[88rem]',
 }
 
 export function Container({

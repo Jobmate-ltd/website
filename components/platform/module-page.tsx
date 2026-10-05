@@ -10,6 +10,7 @@ import { h1For } from '@/lib/seo'
 import { getPostBySlug } from '@/lib/insights'
 import { breadcrumbSchema, breadcrumbsFromTrail, graph, jsonLd, platformApplicationSchema } from '@/lib/schema'
 import { Header } from '@/components/site/header'
+import { PageMain } from '@/components/site/page-main'
 import { Footer } from '@/components/site/footer'
 import { Breadcrumbs } from '@/components/site/breadcrumbs'
 import { Container } from '@/components/ui/container'
@@ -67,14 +68,14 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <PageMain>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
 
         {/* 1–3: breadcrumb, eyebrow, hero */}
         <section className="relative overflow-hidden border-b border-line-1 bg-canvas">
           <HeroBackdrop radial="right" />
-          <Container className="relative pb-14 pt-10 md:pb-20 md:pt-14">
-            <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <Container size="wide" className="relative pb-14 pt-10 md:pb-20 md:pt-14">
+            <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-14 xl:gap-20">
               <div className="flex flex-col gap-6">
                 <Breadcrumbs items={crumbs} />
                 <div className="flex flex-col gap-4">
@@ -98,7 +99,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
                   ))}
                 </ul>
               </div>
-              <ProductShot id={page.hero} frame priority />
+              <ProductShot id={page.hero} priority />
             </div>
           </Container>
         </section>
@@ -128,7 +129,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
         </Section>
 
         {/* 6: three feature rows with real screens */}
-        <Section tone="white">
+        <Section tone="white" container="wide">
           <div className="flex flex-col gap-20 md:gap-28">
             {page.features.map((feature, i) => (
               <FeatureRow
@@ -137,7 +138,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
                 lead={feature.lead}
                 reverse={i % 2 === 1}
                 points={feature.points.map((point) => ({ icon: <PlatformIcon name={point.icon} />, title: point.title, detail: point.detail }))}
-                media={<ProductShot id={feature.screenshot} frame caption className={feature.screenshot.endsWith('-phone') ? 'max-w-[300px]' : undefined} />}
+                media={<ProductShot id={feature.screenshot} caption />}
               />
             ))}
           </div>
@@ -283,7 +284,7 @@ export function ModulePageTemplate({ id }: { id: ModuleId }) {
           copy="A 30-minute walkthrough with someone who knows the product, on a UK haulier’s data."
           secondary={{ label: 'How the demo works', href: '/demo' }}
         />
-      </main>
+      </PageMain>
       <Footer />
     </>
   )

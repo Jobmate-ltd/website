@@ -1,10 +1,15 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
+import { GlassFrame } from '@/components/ui/glass-frame'
 
 /**
- * BrowserFrame / PhoneFrame / MediaFrame — frames for product screenshots and
- * photography on a light ground: 8px radius, a line-1 hairline, the frame
- * shadow and an optional caption. The child is the image or video itself.
+ * BrowserFrame / PhoneFrame / MediaFrame — frames on a light ground, each
+ * with an optional caption. The child is the image or video itself.
+ *
+ * Product screenshots go in glass: `BrowserFrame` and `PhoneFrame` are the
+ * liquid-glass pane (GlassFrame) with its window bar or its phone bezel.
+ * `MediaFrame` is for photography and footage: 8px radius, a line-1
+ * hairline and the frame shadow.
  *
  * @example
  *   <BrowserFrame caption="The admin dashboard" url="app.jobsafe.cloud">
@@ -36,7 +41,7 @@ export function MediaFrame({ caption, className, children, ...props }: FrameProp
   )
 }
 
-/** A browser window chrome around a desktop screenshot. */
+/** A desktop screenshot in a liquid-glass window. */
 export function BrowserFrame({
   caption,
   url,
@@ -45,35 +50,19 @@ export function BrowserFrame({
   ...props
 }: FrameProps & { url?: string }) {
   return (
-    <Figure caption={caption} className={className} {...props}>
-      <div className="overflow-hidden rounded-frame border border-line-1 bg-canvas shadow-frame">
-        <div className="flex items-center gap-2 border-b border-line-1 bg-canvas-muted px-3 py-2">
-          <span aria-hidden="true" className="flex gap-1.5">
-            <span className="size-2.5 rounded-pill border border-grey-400" />
-            <span className="size-2.5 rounded-pill border border-grey-400" />
-            <span className="size-2.5 rounded-pill border border-grey-400" />
-          </span>
-          {url ? (
-            <span className="ml-2 flex-1 truncate rounded-control border border-line-1 bg-canvas px-2 py-0.5 type-mono text-[11px] text-ink-5">
-              {url}
-            </span>
-          ) : null}
-        </div>
-        <div className="[&>img]:block [&>img]:w-full">{children}</div>
-      </div>
+    <Figure caption={caption} className={cn('gap-5', className)} {...props}>
+      <GlassFrame url={url}>{children}</GlassFrame>
     </Figure>
   )
 }
 
-/** A phone bezel around a mobile screenshot. Deliberately plain: hairline, not gloss. */
-export function PhoneFrame({ caption, className, children, ...props }: FrameProps) {
+/** A phone screenshot in a liquid-glass bezel. `screenClassName` sets the screen's ground. */
+export function PhoneFrame({ caption, className, screenClassName, children, ...props }: FrameProps & { screenClassName?: string }) {
   return (
-    <Figure caption={caption} className={cn('items-center', className)} {...props}>
-      <div className="w-full max-w-[300px] rounded-[28px] border border-line-1 bg-canvas p-2 shadow-frame">
-        <div className="overflow-hidden rounded-[20px] border border-line-1 bg-ink-1 [&>img]:block [&>img]:w-full">
-          {children}
-        </div>
-      </div>
+    <Figure caption={caption} className={cn('items-center gap-5 [&>figcaption]:max-w-[360px] [&>figcaption]:text-center', className)} {...props}>
+      <GlassFrame variant="phone" screenClassName={screenClassName}>
+        {children}
+      </GlassFrame>
     </Figure>
   )
 }
